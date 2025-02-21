@@ -1,2 +1,16 @@
 # Ignore virtual environment
 venv-fastapi/
+.DS_Store
+Thumbs.db
+
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+*.egg-info/
+.env
+.venv
+venv/
+Pipfile.lock
+poetry.lock
