@@ -19,6 +19,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../utility/Logo";
 import medicalBackground from "../../assets/pics/medical.webp";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -331,6 +332,8 @@ const Sidebar = () => {
 };
 
 export default function SignUp() {
+  const { width, height } = useWindowSize();
+  console.log(width);
   return (
     <Box
       sx={{
@@ -357,58 +360,65 @@ export default function SignUp() {
           gap: 4,
         }}
       >
-        {/* Foreground Text Section */}
-        <Grid2 container sx={{ textAlign: "center", maxWidth: "60%" }}>
-          <Grid2
-            item="true"
-            xs={12}
-            sx={{
-              backdropFilter: "blur(1px)",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              borderRadius: "10px",
-              padding: "15px",
-              boxShadow: "0 2px 6px rgba(0, 0, 0, 0.15)", // Softer shadow
-              textAlign: "center",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: 20,
-                fontFamily: "ECA, sans-serif",
-                fontWeight: "Regular",
-                color: "#F5F5F5",
-              }}
-            >
-              An AI-powered tool that simplifies medical reports, explains
-              medications, and enables interactive feedback to enhance patient
-              understanding and health literacy.
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: 20,
-                fontFamily: "ECA, sans-serif",
-                fontWeight: "Regular",
-                color: "#F5F5F5",
-                textDecoration: "underline",
-              }}
-            >
-              <br />
-              Learn more about us
-            </Typography>
-          </Grid2>
-        </Grid2>
-
         {/* Background Image Section */}
-        <Box
-          sx={{
-            width: "60%",
-            height: "60%",
-            backgroundImage: `url(${medicalBackground})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
+        {/* Foreground Text Section */}
+        {width > 768 ? (
+          <Grid2 container sx={{ textAlign: "center", maxWidth: "60%" }}>
+            <Grid2
+              item="true"
+              xs={12}
+              sx={{
+                backdropFilter: "blur(1px)",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                borderRadius: "10px",
+                padding: "15px",
+                boxShadow: "0 2px 6px rgba(0, 0, 0, 0.15)", // Softer shadow
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: 20,
+                  fontFamily: "ECA, sans-serif",
+                  fontWeight: "Regular",
+                  color: "#F5F5F5",
+                }}
+              >
+                An AI-powered tool that simplifies medical reports, explains
+                medications, and enables interactive feedback to enhance patient
+                understanding and health literacy.
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 20,
+                  fontFamily: "ECA, sans-serif",
+                  fontWeight: "Regular",
+                  color: "#F5F5F5",
+                  textDecoration: "underline",
+                }}
+              >
+                <br />
+                Learn more about us
+              </Typography>
+            </Grid2>
+          </Grid2>
+        ) : (
+          <></>
+        )}
+        {width > 1024 ? (
+          <Box
+            sx={{
+              width: "60%",
+              height: "60%",
+              backgroundImage: `url(${medicalBackground})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     </Box>
   );
