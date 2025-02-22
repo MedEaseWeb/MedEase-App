@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import medicalBackground from "../../assets/pics/medical.webp";
 import Logo from "../utility/Logo";
 import useWindowSize from "../../hooks/useWindowSize";
+import { motion } from "framer-motion";
+import Blob from "../utility/Blob";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -91,19 +93,23 @@ const Sidebar = () => {
             }}
           >
             Don't have an account?{" "}
-            <span
-              style={{
-                color: "#0077b6",
-                cursor: "pointer",
-                userSelect: "all",
-                textDecoration: "underline",
-              }}
+            <motion.span
+              whileHover={{ scale: 1.05 }}
               onClick={() => {
                 navigate("/signup");
               }}
+              style={{ cursor: "pointer", display: "inline-block" }}
             >
-              Sign Up
-            </span>
+              <span
+                style={{
+                  color: "#0077b6",
+                  fontFamily: "ECA, sans-serif",
+                  textDecoration: "underline",
+                }}
+              >
+                Sign Up
+              </span>
+            </motion.span>
           </Typography>
         </Box>
         {/* input boxes */}
@@ -191,22 +197,33 @@ const Sidebar = () => {
 
         {/* submit button */}
         <Box pt={5}>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={!validateAll().allValid}
-            onClick={handleSignup}
-            sx={{
-              fontFamily: "ECA, sans-serif",
-              fontWeight: "Regular",
-              fontSize: "14px",
-              maxWidth: "30%",
-              maxHeight: "30px",
-              backgroundColor: "#00684A",
+          <motion.div
+            whileHover={
+              validateAll().allValid ? { scale: 1.1, originX: 0 } : {}
+            }
+            style={{
+              width: "fit-content",
+              display: "inline-block",
             }}
           >
-            Log in
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={!validateAll().allValid}
+              onClick={handleSignup}
+              sx={{
+                fontFamily: "ECA, sans-serif",
+                fontWeight: "Regular",
+                fontSize: "14px",
+                minWidth: "100px",
+                maxWidth: "100px",
+                maxHeight: "30px",
+                backgroundColor: "#00684A",
+              }}
+            >
+              Log in
+            </Button>
+          </motion.div>
         </Box>
       </Box>
     </Drawer>
@@ -228,6 +245,8 @@ export default function Login() {
         left: 0,
       }}
     >
+      <Blob></Blob>
+
       {/* Sidebar */}
       <Sidebar />
 
@@ -240,6 +259,7 @@ export default function Login() {
           alignItems: "center",
           justifyContent: "center",
           gap: 4,
+          zIndex: 2,
         }}
       >
         {/* Background Image Section */}
