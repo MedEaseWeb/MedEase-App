@@ -1,0 +1,30 @@
+on: [push]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Publish to Cloudflare Pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Run a build step here if your project requires
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 1051268839@qq.com
+          projectName: MedEaseFrontEnd
+          directory: frontend
+          # Optional: Enable GitHub Deployments
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: Specify branch if needed
+          branch: main
+          # Optional: Set working directory
+          workingDirectory: my-site
+          # Optional: Use a specific Wrangler version
+          wranglerVersion: "3"
