@@ -11,20 +11,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Run a build step here if your project requires
+      - name: Build Frontend
+        working-directory: frontend
+        run: |
+          npm install
+          npm run build
 
       - name: Publish to Cloudflare Pages
+        working-directory: frontend
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 07e6df68b3b730b5f78b5014184f0818
           projectName: medease
-          directory: frontend
-          # Optional: Enable GitHub Deployments
+          directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          # Optional: Specify branch if needed
           branch: main
-          # Optional: Set working directory
-          workingDirectory: my-site
-          # Optional: Use a specific Wrangler version
           wranglerVersion: "3"
