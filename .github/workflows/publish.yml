@@ -18,13 +18,12 @@ jobs:
           npm run build
 
       - name: Publish to Cloudflare Pages
-        working-directory: frontend
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 07e6df68b3b730b5f78b5014184f0818
           projectName: medease
-          directory: dist
+          directory: frontend/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: main
           wranglerVersion: "3"
