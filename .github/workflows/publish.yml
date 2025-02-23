@@ -17,7 +17,7 @@ jobs:
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: 1051268839@qq.com
+          accountId: 07e6df68b3b730b5f78b5014184f0818
           projectName: MedEaseFrontEnd
           directory: frontend
           # Optional: Enable GitHub Deployments
