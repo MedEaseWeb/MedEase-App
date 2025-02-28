@@ -36,3 +36,9 @@ pip freeze > requirements.txt
 
 
 ```
+
+### ⚙️ 4. Spin up local server
+```bash
+uvicorn main:app --reload --port 8081
+```
+
