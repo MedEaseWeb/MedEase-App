@@ -22,6 +22,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import Logo from "../utility/Logo";
 import { motion } from "framer-motion";
 import Blob from "../utility/Blob";
+import axios from "axios";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -58,16 +59,29 @@ const Sidebar = () => {
   };
 
   // @TODO: send logic
-  const handleSignup = () => {
+
+  const handleSignup = async () => {
     const validation = validateAll();
-    if (validation.allValid) {
-      console.log({
+    if (!validation.allValid) {
+      console.log("Validation failed:", validation);
+      return;
+    }
+
+    console.log("Submitting signup request");
+
+    try {
+      const response = await axios.post("http://localhost:8081/auth/register", {
         email: email,
         password: password,
       });
-      // navigate("/login");
-    } else {
-      console.log("Validation failed:", validation);
+
+      console.log("Signup successful:", response.data);
+      navigate("/login"); // Redirect after successful signup
+    } catch (error) {
+      console.error(
+        "Signup error:",
+        error.response ? error.response.data : error
+      );
     }
   };
 
@@ -328,7 +342,10 @@ const Sidebar = () => {
               variant="contained"
               color="primary"
               disabled={!validateAll().allValid}
-              onClick={handleSignup}
+              onClick={() => {
+                console.log("Sign Up button clicked");
+                handleSignup();
+              }}
               sx={{
                 fontFamily: "ECA, sans-serif",
                 fontWeight: "Regular",

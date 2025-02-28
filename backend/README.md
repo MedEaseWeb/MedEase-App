@@ -7,8 +7,8 @@ Follow these steps to set up and configure the environment for this project:
 Run the following command to clone the repository and navigate into the project directory:
 
 ```bash
-git clone https://github.com/wenyuanhuizi/CS329_FinalProject.git
-cd CS329_Project_Backend
+git clone https://github.com/MedEaseWeb/MedEase-App.git
+cd backend
 ```
 
 ### ⚙️ 2. Configure the Virtual Environment
@@ -25,4 +25,14 @@ source venv-fastapi/bin/activate
 
 # Install required packages
 pip install -r requirements.txt
+
+```
+
+### ⚙️ 3. Developer Commands Notes
+
+```bash
+# add all current pip packages to requirement.txt
+pip freeze > requirements.txt
+
+
 ```
