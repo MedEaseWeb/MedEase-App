@@ -30,25 +30,25 @@ async def register(user: UserCreate):
 
     return UserResponse(id=new_user.id, email=user.email, created_at=new_user.created_at, is_disabled=new_user.is_disabled)
 
-# # User Login (JWT Issuance)
-# @auth_router.post("/login")
-# async def login(user: UserCreate, response: Response):
-#     """Authenticate and issue a JWT"""
-#     existing_user = await user_collection.find_one({"email": user.email})
+# User Login (JWT Issuance)
+@auth_router.post("/login")
+async def login(user: UserCreate, response: Response):
+    """Authenticate and issue a JWT"""
+    existing_user = await user_collection.find_one({"email": user.email})
 
-#     if not existing_user or not bcrypt.checkpw(user.password.encode(), existing_user["hashed_password"].encode()):
-#         raise HTTPException(status_code=401, detail="Invalid email or password")
+    if not existing_user or not bcrypt.checkpw(user.password.encode(), existing_user["hashed_password"].encode()):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
-#     if existing_user.get("is_disabled", False):
-#         raise HTTPException(status_code=403, detail="User account is disabled")
+    if existing_user.get("is_disabled", False):
+        raise HTTPException(status_code=403, detail="User account is disabled")
 
-#     # Generate JWT token
-#     token = create_jwt({"user_id": str(existing_user["_id"]), "email": existing_user["email"]})
+    # Generate JWT token
+    token = create_jwt({"user_id": str(existing_user["_id"]), "email": existing_user["email"]})
 
-#     # Set JWT in HttpOnly cookie
-#     response.set_cookie(key="Authorization", value=token, httponly=True, secure=True, samesite="Lax")
+    # Set JWT in HttpOnly cookie
+    response.set_cookie(key="Authorization", value=token, httponly=True, secure=True, samesite="Lax")
 
-#     return {"message": "Login successful", "token": token}
+    return {"message": "Login successful", "token": token}
 
 # # Get User Info (Protected Route)
 # @auth_router.get("/user", response_model=UserResponse)

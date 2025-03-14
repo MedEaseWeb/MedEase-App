@@ -4,6 +4,7 @@ import ReportSimplifier from "./pages/ReportSimplifier";
 import NotFound from "./pages/utility/NotFound";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
+import Medication from "./pages/medication/textBox";
 import "./styles/fonts.css";
 import "./index.css";
 
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reportsimplifier" element={<ReportSimplifier />} />
+        <Route path="/medication" element={<Medication/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
