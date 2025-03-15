@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Menu as MenuIcon, Logout as LogoutIcon } from "@mui/icons-material";
-import Logo from "../utility/Logo";
+import Logo from "./Logo";
 import { styled } from "@mui/material/styles";
 
 const NavButton = styled(Button)(({ theme }) => ({

@@ -24,12 +24,6 @@ import { useNavigate } from "react-router-dom";
 const reportSimplificationPage = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* App Bar */}
-      {/* <TopBar
-        onMenuClick={() => console.log("Menu Clicked")}
-        onLogoutClick={() => console.log("Logout Clicked")}
-      /> */}
-
       <Box sx={{ p: 3 }}>
         <Typography variant="h4">report simplification Page</Typography>
       </Box>

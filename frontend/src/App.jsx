@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/utility/NotFound";
 import Login from "./pages/auth/Login";
@@ -13,7 +18,7 @@ import "./index.css";
 
 function Layout() {
   const location = useLocation();
-  const hideTopBarRoutes = ["/login", "/signup"]; 
+  const hideTopBarRoutes = ["/login", "/signup"];
 
   return (
     <>
