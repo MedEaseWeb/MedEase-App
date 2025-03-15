@@ -52,6 +52,7 @@ const PasteBox = () => {
         maxWidth: 800, // Adjusted width for better readability
       }}
     >
+      
       {/* Title */}
       <Typography variant="h5" sx={{ fontWeight: "bold", color: "#004D40" }}>
         Paste Your Medication Report or Prescription
