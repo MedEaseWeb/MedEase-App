@@ -2,30 +2,29 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import logo from "../../assets/pics/logo-green.svg";
 
-export default function Logo() {
+export default function Logo({ imgSize = 60, fontSize = 48 }) {
   return (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
         gap: 1.5, // Space between icon & text
-        // padding: "10px 20px",
       }}
     >
-      {/* pics */}
+      {/* Image with dynamic size */}
       <Box
         component="img"
         src={logo}
         alt="Project Logo"
-        sx={{ width: 60, height: 60 }}
+        sx={{ width: imgSize, height: imgSize }}
       />
-      {/* name */}
+      {/* Text with dynamic font size */}
       <Typography
         sx={{
           fontFamily: "ECA, sans-serif",
           fontWeight: "bold",
           color: "#00684A",
-          fontSize: 48,
+          fontSize: fontSize,
         }}
       >
         MedEase

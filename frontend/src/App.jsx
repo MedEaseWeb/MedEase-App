@@ -1,25 +1,42 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import ReportSimplifier from "./pages/ReportSimplifier";
 import NotFound from "./pages/utility/NotFound";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
-import Medication from "./pages/medication/textBox";
+import Medication from "./pages/medication/MedicationPage";
+import ReportSimplification from "./pages/report/reportSimplificationPage";
+import CareGiver from "./pages/careGiver/caregiverPage";
+import TopBar from "./pages/utility/topBar";
+
 import "./styles/fonts.css";
 import "./index.css";
 
-function App() {
+function Layout() {
+  const location = useLocation();
+  const hideTopBarRoutes = ["/login", "/signup"]; 
+
   return (
     <>
+      {!hideTopBarRoutes.includes(location.pathname) && <TopBar />}
+
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/reportsimplifier" element={<ReportSimplifier />} />
-        <Route path="/medication" element={<Medication/>} />
+        <Route path="/reportsimplifier" element={<ReportSimplification />} />
+        <Route path="/medication" element={<Medication />} />
+        <Route path="/caregiver" element={<CareGiver />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Layout />
+    </Router>
   );
 }
 

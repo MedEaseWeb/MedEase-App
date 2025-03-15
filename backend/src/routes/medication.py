@@ -5,20 +5,19 @@ from bson import ObjectId
 from datetime import datetime
 import bcrypt
 from src.LLMmodel.ChatGPT import extract_medication_info
+from src.utils.jwtUtils import get_current_user
 
 medication_router = APIRouter()
 
 @medication_router.post("/extract-medication", response_model=MedicationNoteInDB)
-async def process_medication_text(request: MedicationTextRequest):
+async def process_medication_text(request: MedicationTextRequest, user_id: str = Depends(get_current_user)):
     """Extracts medication details using ChatGPT and stores them in MongoDB."""
-    user_id = request.user_id
     text = request.text
-    # text = sanitize_text(text)
-
+    # print(f"User ID extracted from JWT: {user_id}")
     extracted_data = await extract_medication_info(text)
 
     # Validate user
-    user = await user_collection.find_one({"id": user_id})
+    user = await user_collection.find_one({"user_id": user_id})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
@@ -60,3 +59,5 @@ async def process_medication_text(request: MedicationTextRequest):
     await medication_collection.insert_one(new_note.dict())
 
     return new_note
+
+

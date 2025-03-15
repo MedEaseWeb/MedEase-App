@@ -9,7 +9,7 @@ class UserCreate(BaseModel):
  
 class UserResponse(BaseModel):
     """Schema for API response when retrieving user info."""
-    id: str
+    user_id: str
     email: EmailStr
     created_at: datetime
     is_disabled: bool
@@ -59,5 +59,4 @@ class MedicationNoteInDB(BaseModel):
     is_disabled: bool 
 
 class MedicationTextRequest(BaseModel):
-    user_id: str
     text: str

@@ -19,7 +19,7 @@ async def register(user: UserCreate):
     hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt()).decode()
 
     new_user = UserInDB(
-        id=str(ObjectId()),
+        user_id=str(ObjectId()),
         email=user.email,
         hashed_password=hashed_password,
         created_at=datetime.utcnow(),
@@ -28,7 +28,7 @@ async def register(user: UserCreate):
 
     await user_collection.insert_one(new_user.dict())
 
-    return UserResponse(id=new_user.id, email=user.email, created_at=new_user.created_at, is_disabled=new_user.is_disabled)
+    return UserResponse(user_id=new_user.user_id, email=user.email, created_at=new_user.created_at, is_disabled=new_user.is_disabled)
 
 # User Login (JWT Issuance)
 @auth_router.post("/login")
@@ -43,12 +43,21 @@ async def login(user: UserCreate, response: Response):
         raise HTTPException(status_code=403, detail="User account is disabled")
 
     # Generate JWT token
-    token = create_jwt({"user_id": str(existing_user["_id"]), "email": existing_user["email"]})
+    token = create_jwt({"user_id": str(existing_user["user_id"]), "email": existing_user["email"]})
 
     # Set JWT in HttpOnly cookie
-    response.set_cookie(key="Authorization", value=token, httponly=True, secure=True, samesite="Lax")
+    # TODO: Set secure=True in production
+    response.set_cookie(key="access_token", value=token, httponly=True, secure=False, samesite="Lax", domain="localhost")
 
     return {"message": "Login successful", "token": token}
+
+# User Logout
+@auth_router.post("/logout")
+async def logout(response: Response):
+    """Clear the authentication token"""
+    response.delete_cookie(key="access_token")  
+    return {"message": "Logged out successfully"}
+
 
 # # Get User Info (Protected Route)
 # @auth_router.get("/user", response_model=UserResponse)
@@ -76,9 +85,3 @@ async def login(user: UserCreate, response: Response):
 
 #     return {"message": "User account deleted successfully"}
 
-# # User Logout
-# @auth_router.post("/logout")
-# async def logout(response: Response):
-#     """Clear the authentication token"""
-#     response.delete_cookie("Authorization")  
-#     return {"message": "Logged out successfully"}
