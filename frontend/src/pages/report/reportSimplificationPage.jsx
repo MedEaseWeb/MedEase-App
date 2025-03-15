@@ -18,7 +18,7 @@ import {
   LocalPharmacy,
 } from "@mui/icons-material";
 import axios from "axios";
-import TopBar from "../utility/topBar";
+import TopBar from "../utility/TopBar";
 import { useNavigate } from "react-router-dom";
 
 const reportSimplificationPage = () => {

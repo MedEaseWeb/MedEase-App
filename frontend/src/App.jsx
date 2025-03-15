@@ -11,7 +11,7 @@ import SignUp from "./pages/auth/SignUp";
 import Medication from "./pages/medication/MedicationPage";
 import ReportSimplification from "./pages/report/reportSimplificationPage";
 import CareGiver from "./pages/careGiver/caregiverPage";
-import TopBar from "./pages/utility/topBar";
+import TopBarComponent from "./pages/utility/TopBar";
 
 import "./styles/fonts.css";
 import "./index.css";
@@ -22,7 +22,7 @@ function Layout() {
 
   return (
     <>
-      {!hideTopBarRoutes.includes(location.pathname) && <TopBar />}
+      {!hideTopBarRoutes.includes(location.pathname) && <TopBarComponent />}
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
