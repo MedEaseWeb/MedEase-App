@@ -24,6 +24,7 @@ async def process_medication_text(request: MedicationTextRequest, user_id: str =
     # Create medication note entry
     new_note = MedicationNoteInDB(
         user_id=user_id,  # Use the user_id passed to the function
+        medication_id=str(ObjectId()),
         medication_name=extracted_data["medication_name"],
         common_name=extracted_data.get("common_name"),  # Optional
         purpose=extracted_data["purpose"],
@@ -52,7 +53,8 @@ async def process_medication_text(request: MedicationTextRequest, user_id: str =
             disposal_instructions=extracted_data["safety_info"]["disposal_instructions"],
             storage_instructions=extracted_data["safety_info"]["storage_instructions"]
         ),
-        is_disabled=False  
+        is_disabled=False,
+        created_at=datetime.utcnow()
     )
 
     # Insert new medication note into MongoDB
@@ -60,4 +62,16 @@ async def process_medication_text(request: MedicationTextRequest, user_id: str =
 
     return new_note
 
-
+# TODO: might not need this endpoint 
+@medication_router.get("/latest", response_model=MedicationNoteInDB)
+async def get_latest_medication_note(user_id: str = Depends(get_current_user)):
+    """Fetch the latest medication note for a user."""
+    note = await medication_collection.find_one(
+        {"user_id": user_id}, 
+        sort=[("created_at", -1)] 
+    )
+    
+    if not note:
+        raise HTTPException(status_code=404, detail="No medication notes found")
+    
+    return note

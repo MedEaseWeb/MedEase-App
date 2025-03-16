@@ -49,6 +49,7 @@ class SafetyInfo(BaseModel):
 class MedicationNoteInDB(BaseModel):
     """Schema for structured medication note storage in MongoDB."""
     user_id: str  # Stores the `user_id` from users collection
+    medication_id: str
     medication_name: str  # Professional name
     common_name: Optional[str] = None  # Widely recognized name
     purpose: str  # Two sentences explaining what it's for
@@ -56,7 +57,8 @@ class MedicationNoteInDB(BaseModel):
     prescription_details: PrescriptionDetails
     pharmacy: PharmacyInfo
     safety_info: SafetyInfo
-    is_disabled: bool 
+    is_disabled: bool
+    created_at: datetime
 
 class MedicationTextRequest(BaseModel):
     text: str

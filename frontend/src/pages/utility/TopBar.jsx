@@ -15,7 +15,7 @@ import { styled } from "@mui/material/styles";
 const NavButton = styled(Button)(({ theme }) => ({
   borderRadius: "10px",
   padding: "9px 25px", // Adjust size
-  fontSize: "1rem",
+  fontSize: "1.2rem",
   fontWeight: "bold",
   textTransform: "none", // Keep original lowercase
   color: "#333", // Default text color
