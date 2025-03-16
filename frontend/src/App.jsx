@@ -9,7 +9,7 @@ import NotFound from "./pages/utility/NotFound";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Medication from "./pages/medication/MedicationPage";
-import ReportSimplification from "./pages/report/reportSimplificationPage";
+import ReportSimplification from "./pages/report/ReportSimplificationPage";
 import CareGiver from "./pages/careGiver/caregiverPage";
 import TopBarComponent from "./pages/utility/TopBar";
 

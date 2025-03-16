@@ -11,9 +11,6 @@ import {
 import HistoryIcon from "@mui/icons-material/History";
 import CloseIcon from "@mui/icons-material/Close";
 
-// Optionally, import a separate component that displays the full note details.
-// For example, if you have an `AIResultBox` or `MedicationNoteDisplay` component, import it:
-// import AIResultBox from "./AIResultBox";
 
 const HistoryTab = ({ history }) => {
   const [open, setOpen] = useState(false);
