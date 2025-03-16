@@ -29,7 +29,7 @@ const Disclaimer = () => (
   </Paper>
 );
 
-const ReportSimplificationPage = () => {
+const reportSimplificationPage = () => {
   const [originalReport, setOriginalReport] = useState("");
   const [simplifiedReport, setSimplifiedReport] = useState("");
   const [loading, setLoading] = useState(false);
@@ -270,4 +270,4 @@ const ReportSimplificationPage = () => {
   );
 };
 
-export default ReportSimplificationPage;
+export default reportSimplificationPage;

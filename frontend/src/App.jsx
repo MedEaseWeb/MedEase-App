@@ -9,8 +9,8 @@ import NotFound from "./pages/utility/NotFound";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Medication from "./pages/medication/MedicationPage";
-import ReportSimplificationPage from "./pages/report/ReportSimplificationPage";
-import CareGiver from "./pages/careGiver/caregiverPage";
+import ReportSimplification from "./pages/report/reportSimplificationPage";
+import CareGiver from "./pages/caregiver/CareGiverPage";
 import TopBarComponent from "./pages/utility/TopBar";
 
 import "./styles/fonts.css";
@@ -28,7 +28,7 @@ function Layout() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/reportsimplifier" element={<ReportSimplificationPage />} />
+        <Route path="/reportsimplifier" element={<ReportSimplification />} />
         <Route path="/medication" element={<Medication />} />
         <Route path="/caregiver" element={<CareGiver />} />
         <Route path="*" element={<NotFound />} />
