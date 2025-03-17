@@ -16,6 +16,8 @@ import Logo from "../utility/Logo";
 import useWindowSize from "../../hooks/useWindowSize";
 import { motion } from "framer-motion";
 import Blob from "../utility/Blob";
+import axios from "axios";
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -41,19 +43,35 @@ const Sidebar = () => {
     };
   };
 
-  // @TODO: send logic
-  const handleSignup = () => {
-    const validation = validateAll();
-    if (validation.allValid) {
-      console.log({
+  
+ 
+const handleLogin = async () => {
+  const validation = validateAll();
+  if (!validation.allValid) {
+    console.log("Validation failed:", validation);
+    return;
+  }
+  try {
+    const response = await axios.post(
+      "http://localhost:8081/auth/login",
+      {
         email: email,
         password: password,
-      });
-      // navigate("/login");
-    } else {
-      console.log("Validation failed:", validation);
-    }
-  };
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log("Login successful");
+    navigate("/medication"); // Redirect after successful login
+  } catch (error) {
+    console.error(
+      "Login error:",
+      error.response ? error.response.data : error
+    );
+  }
+};
 
   return (
     <Drawer
@@ -210,7 +228,7 @@ const Sidebar = () => {
               variant="contained"
               color="primary"
               disabled={!validateAll().allValid}
-              onClick={handleSignup}
+              onClick={handleLogin}
               sx={{
                 fontFamily: "ECA, sans-serif",
                 fontWeight: "Regular",
@@ -313,7 +331,7 @@ export default function Login() {
               width: "60%",
               height: "60%",
               backgroundImage: `url(${medicalBackground})`,
-              backgroundSize: "cover",
+              backgroundSize: "</Logo>cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
