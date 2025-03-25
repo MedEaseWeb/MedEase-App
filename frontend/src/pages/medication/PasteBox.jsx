@@ -21,7 +21,7 @@ const PasteBox = ({ onNewSubmission = () => {} }) => {
     setResult(null); // Clear previous results
     try {
       const response = await fetch(
-        "http://localhost:8081/medication/extract-medication",
+        "http://localhost:8081/medication/extract-medication", // TODO
         {
           method: "POST",
           headers: {

@@ -23,6 +23,7 @@ import {
   ArrowForward as ArrowForwardIcon,
 } from "@mui/icons-material";
 import axios from "axios";
+import Chatbox from "../utility/ChatBox";
 
 // If you have a top bar component, import it
 // import TopBar from "../utility/TopBar";
@@ -59,10 +60,8 @@ const CaregiverPage = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* If you have a top bar, uncomment below */}
-      {/* <TopBar /> */}
-
-      {/* Hero / Intro Section */}
+      
+      <Chatbox />
       <Box
         sx={{
           p: 4,

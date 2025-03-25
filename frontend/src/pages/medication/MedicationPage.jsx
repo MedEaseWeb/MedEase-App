@@ -4,9 +4,7 @@ import {
   Typography,
   Box,
   Paper,
-  TextField,
   Grid,
-  CircularProgress,
 } from "@mui/material";
 import {
   Medication as MedicationIcon,
@@ -15,23 +13,20 @@ import {
   Event,
   LocalPharmacy,
 } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import PasteBox from "./PasteBox";
 import HistoryTab from "./HistoryTab";
 
-const FeatureButtons = () => (
-  <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
-    {[
-      { icon: <Event />, text: "Add reminder to Google Calendar" },
-      { icon: <LocalPharmacy />, text: "Track pharmacy location" },
-      { icon: <MedicationIcon />, text: "Medication Interactions" },
-      { icon: <Restaurant />, text: "Dietary Advice" },
-      { icon: <FitnessCenter />, text: "Lifestyle Suggestions" },
-    ].map(({ icon, text }, index) => (
+const FeatureButtons = () => {
+  const handleConnectGoogle = () => {
+    window.location.href = "http://localhost:8081/google/connect-google"; //TODO
+  };
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
       <Button
-        key={index}
         variant="contained"
-        startIcon={icon}
+        startIcon={<Event />}
+        onClick={handleConnectGoogle}
         sx={{
           borderRadius: "20px",
           backgroundColor: "#00684A",
@@ -40,11 +35,26 @@ const FeatureButtons = () => (
         }}
         fullWidth
       >
-        {text}
+        Add reminder to Google Calendar
       </Button>
-    ))}
-  </Box>
-);
+
+      <Button
+        variant="contained"
+        startIcon={<LocalPharmacy />}
+        sx={{
+          borderRadius: "20px",
+          backgroundColor: "#00684A",
+          color: "white",
+          "&:hover": { backgroundColor: "#00684A" },
+        }}
+        fullWidth
+      >
+        Track pharmacy location
+      </Button>
+    </Box>
+  );
+};
+
 
 const Disclaimer = () => (
   <Paper sx={{ p: 2, mt: 3, backgroundColor: "#FFF3CD", borderRadius: 2 }}>
