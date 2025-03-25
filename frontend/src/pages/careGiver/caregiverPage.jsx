@@ -39,7 +39,7 @@ const CaregiverPage = () => {
       try {
         // Replace with your real endpoint
         const response = await axios.get(
-          "http://localhost:8081/caregiver/patients",
+          "https://medease-454522.uc.r.appspot.com/caregiver/patients",
           {
             withCredentials: true,
           }

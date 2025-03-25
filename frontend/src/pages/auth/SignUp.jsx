@@ -70,7 +70,7 @@ const Sidebar = () => {
     console.log("Submitting signup request");
 
     try {
-      const response = await axios.post("http://localhost:8081/auth/register", {
+      const response = await axios.post("https://medease-454522.uc.r.appspot.com/auth/register", {
         email: email,
         password: password,
       });

@@ -53,7 +53,7 @@ const handleLogin = async () => {
   }
   try {
     const response = await axios.post(
-      "http://localhost:8081/auth/login",
+      "https://medease-454522.uc.r.appspot.com/auth/login",
       {
         email: email,
         password: password,
