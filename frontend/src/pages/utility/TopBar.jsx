@@ -74,8 +74,16 @@ const TopBar = ({ onMenuClick }) => {
 
   return (
     <AppBar position="static" color="inherit" elevation={1} sx={{ px: 2 }}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Left Section: Menu Icon + Logo */}
+<Toolbar
+  sx={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",    // ✅ allows toolbar content to wrap on small screens
+    rowGap: 1,           // ✅ adds spacing if things wrap
+    py: 1,               // ✅ consistent padding
+  }}
+>        {/* Left Section: Menu Icon + Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <IconButton
             edge="start"
@@ -95,18 +103,29 @@ const TopBar = ({ onMenuClick }) => {
           </Box>
         </Box>
 
-        {/* Center Section: Navigation Buttons */}
-        <Box sx={{ display: "flex", gap: 8, ml: -12, mt: 1 }}>
-          <NavButton component={NavLink} to="/reportsimplifier">
-            Report Simplifier
-          </NavButton>
-          <NavButton component={NavLink} to="/medication">
-            Medication Help
-          </NavButton>
-          <NavButton component={NavLink} to="/caregiver">
-            CareGiver Mode
-          </NavButton>
-        </Box>
+{/* Center Section: Navigation Buttons */}
+<Box
+  sx={{
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 2,
+    flex: 1,
+    mx: 1,
+    flexShrink: 0,       // ✅ prevents nav bar from growing vertically
+    minWidth: 0,         // ✅ lets content shrink properly inside container
+  }}
+>
+  <NavButton component={NavLink} to="/reportsimplifier">
+    Report Simplifier
+  </NavButton>
+  <NavButton component={NavLink} to="/medication">
+    Medication Help
+  </NavButton>
+  <NavButton component={NavLink} to="/caregiver">
+    CareGiver Mode
+  </NavButton>
+</Box>
 
         {/* Right Section: User Email + Logout Button */}
         <Box
