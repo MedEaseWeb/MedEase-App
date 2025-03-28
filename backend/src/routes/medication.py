@@ -14,6 +14,8 @@ async def process_medication_text(request: MedicationTextRequest, user_id: str =
     """Extracts medication details using ChatGPT and stores them in MongoDB."""
     text = request.text
     # print(f"User ID extracted from JWT: {user_id}")
+    if not text:
+        raise HTTPException(status_code=400, detail="Input text cannot be empty.")
     extracted_data = await extract_medication_info(text)
 
     # Validate user
