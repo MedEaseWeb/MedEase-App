@@ -43,11 +43,12 @@ async def login(user: UserCreate, response: Response):
         raise HTTPException(status_code=403, detail="User account is disabled")
 
     # Generate JWT token
+    # Currently in production mode 
     token = create_jwt({"user_id": str(existing_user["user_id"]), "email": existing_user["email"]})
 
     # Set JWT in HttpOnly cookie
     # TODO: Set secure=True in production
-    response.set_cookie(key="access_token", value=token, httponly=True, secure=False, samesite="Lax", domain="localhost")
+    response.set_cookie(key="access_token", value=token, httponly=True, secure=False, samesite="None")
 
     return {"message": "Login successful", "token": token}
 

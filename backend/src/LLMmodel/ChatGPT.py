@@ -48,5 +48,3 @@ Output Schema:
     extracted_json = json.loads(extracted_data)  
     
     return extracted_json
-
-

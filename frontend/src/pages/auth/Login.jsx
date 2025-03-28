@@ -53,7 +53,7 @@ const handleLogin = async () => {
   }
   try {
     const response = await axios.post(
-      "https://medease-454522.uc.r.appspot.com/auth/login",
+      "https://medease-454522.uc.r.appspot.com/auth/login"  || "localhost:8081/auth/login", // Fallback to local server for development
       {
         email: email,
         password: password,

@@ -18,7 +18,7 @@ import HistoryTab from "./HistoryTab";
 
 const FeatureButtons = () => {
   const handleConnectGoogle = () => {
-    window.location.href = "https://medease-454522.uc.r.appspot.com/google/connect-google"; //TODO
+    window.location.href = "https://medease-454522.uc.r.appspot.com/google/connect-google" || "localhost:8081/google/connect-google"; //TODO
   };
 
   return (

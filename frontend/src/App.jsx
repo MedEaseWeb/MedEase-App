@@ -18,7 +18,7 @@ import "./index.css";
 
 function Layout() {
   const location = useLocation();
-  const hideTopBarRoutes = ["/login", "/signup"];
+  const hideTopBarRoutes = ["/login", "/signup", "/"];
 
   return (
     <>

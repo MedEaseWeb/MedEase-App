@@ -39,7 +39,7 @@ const CaregiverPage = () => {
       try {
         // Replace with your real endpoint
         const response = await axios.get(
-          "https://medease-454522.uc.r.appspot.com/caregiver/patients",
+          "https://medease-454522.uc.r.appspot.com/caregiver/patients" || "localhost:8081/caregiver/patients", // Fallback to local server for development
           {
             withCredentials: true,
           }
@@ -61,7 +61,7 @@ const CaregiverPage = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       
-      <Chatbox />
+      <Chatbox /> 
       <Box
         sx={{
           p: 4,
@@ -275,7 +275,7 @@ const CaregiverPage = () => {
                   variant="h6"
                   sx={{ fontWeight: "bold", color: "#004D40" }}
                 >
-                  Notifications
+                  Picture Diary 
                 </Typography>
                 <IconButton
                   sx={{
@@ -289,9 +289,9 @@ const CaregiverPage = () => {
               </Box>
               <Divider sx={{ mb: 2 }} />
               <Typography variant="body2" color="textSecondary">
-                - Urgent alerts from patients <br />
-                - Prescription refill reminders <br />- System updates and
-                messages
+                - able to upload pictures recording patients' health condition <br />
+                - Shareable  <br />
+                - caregiver can upload pictures and add text ina formatted way so that can share to family members
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
 
@@ -317,7 +317,7 @@ const CaregiverPage = () => {
             </Paper>
           </Grid>
 
-          {/* Communication / Chat Section */}
+          {/* Accommodation Letter Section */}
           <Grid item xs={12} md={6}>
             <Paper
               elevation={6}
@@ -353,7 +353,8 @@ const CaregiverPage = () => {
               </Box>
               <Divider sx={{ mb: 2 }} />
               <Typography variant="body2" color="textSecondary">
-                - generate letter according to school template
+                - we have pre-inserted templates for several institutions such as  <br />
+                - connect to email service <br />
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
 

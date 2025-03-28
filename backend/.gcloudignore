@@ -31,9 +31,3 @@ venv-fastapi/
 
 # Ignore documentation and local files
 README.md
-
-# Ignore test scripts and unnecessary models
-src/LLMmodel/testT5.py
-src/LLMmodel/testBart.py
-
-

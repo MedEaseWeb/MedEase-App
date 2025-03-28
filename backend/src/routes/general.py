@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from src.database import user_collection
-from src.models.userModel import MedicationNoteInDB, MedicationSchedule, MedicationTextRequest, PharmacyInfo, PrescriptionDetails, SafetyInfo
+from src.models.medicationModel import MedicationNoteInDB, MedicationSchedule, MedicationTextRequest, PharmacyInfo, PrescriptionDetails, SafetyInfo
 from bson import ObjectId
 from datetime import datetime
 import bcrypt
