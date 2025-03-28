@@ -35,7 +35,7 @@ const TopBar = ({ onMenuClick }) => {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const response = await fetch("http://localhost:8081/general/email", {
+        const response = await fetch("https://medease-454522.uc.r.appspot.com/general/email", {
           method: "GET",
           credentials: "include",
         });
@@ -56,7 +56,7 @@ const TopBar = ({ onMenuClick }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8081/auth/logout", {
+      const response = await fetch("https://medease-454522.uc.r.appspot.com/auth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -79,9 +79,9 @@ const TopBar = ({ onMenuClick }) => {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    flexWrap: "wrap",    // ✅ allows toolbar content to wrap on small screens
-    rowGap: 1,           // ✅ adds spacing if things wrap
-    py: 1,               // ✅ consistent padding
+    flexWrap: "wrap",   
+    rowGap: 1,           
+    py: 1,               
   }}
 >        {/* Left Section: Menu Icon + Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -112,8 +112,8 @@ const TopBar = ({ onMenuClick }) => {
     gap: 2,
     flex: 1,
     mx: 1,
-    flexShrink: 0,       // ✅ prevents nav bar from growing vertically
-    minWidth: 0,         // ✅ lets content shrink properly inside container
+    flexShrink: 0,      
+    minWidth: 0,         
   }}
 >
   <NavButton component={NavLink} to="/reportsimplifier">
