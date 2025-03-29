@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import Blob from "../utility/Blob";
 import axios from "axios";
 
+const backendBaseUrl = import.meta.env.VITE_API_URL;
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -43,35 +44,34 @@ const Sidebar = () => {
     };
   };
 
-  
- 
-const handleLogin = async () => {
-  const validation = validateAll();
-  if (!validation.allValid) {
-    console.log("Validation failed:", validation);
-    return;
-  }
-  try {
-    const response = await axios.post(
-      "https://medease-454522.uc.r.appspot.com/auth/login" || "localhost:8081/auth/login", // Adjust the URL based on your environment
-      {
-        email: email,
-        password: password,
-      },
-      {
-        withCredentials: true,
-      }
-    );
+  const handleLogin = async () => {
+    const validation = validateAll();
+    if (!validation.allValid) {
+      console.log("Validation failed:", validation);
+      return;
+    }
+    
+    try {
+      const response = await axios.post(
+        `${backendBaseUrl}/auth/login`,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-    console.log("Login successful");
-    navigate("/medication"); // Redirect after successful login
-  } catch (error) {
-    console.error(
-      "Login error:",
-      error.response ? error.response.data : error
-    );
-  }
-};
+      console.log("Login successful");
+      navigate("/medication"); // Redirect after successful login
+    } catch (error) {
+      console.error(
+        "Login error:",
+        error.response ? error.response.data : error
+      );
+    }
+  };
 
   return (
     <Drawer

@@ -24,44 +24,15 @@ import {
 } from "@mui/icons-material";
 import axios from "axios";
 import Chatbox from "../utility/ChatBox";
-
-// If you have a top bar component, import it
-// import TopBar from "../utility/TopBar";
+import MyPatients from "./MyPatients";
+import Reminder from "./Reminder";
+import PictureDiary from "./PictureDiary";
+import AccommodationLetter from "./AccommodationLetter";
 
 const CaregiverPage = () => {
-  const [patients, setPatients] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // Example: load patients from an API
-  useEffect(() => {
-    const fetchPatients = async () => {
-      setLoading(true);
-      try {
-        // Replace with your real endpoint
-        const response = await axios.get(
-          "https://medease-454522.uc.r.appspot.com/caregiver/patients" || "localhost:8081/caregiver/patients", // Fallback to local server for development
-          {
-            withCredentials: true,
-          }
-        );
-        setPatients(response.data || []);
-      } catch (error) {
-        console.error("Error fetching patients:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPatients();
-  }, []);
-
-  const handleAddPatient = () => {
-    alert("Add Patient functionality coming soon!");
-  };
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      
-      <Chatbox /> 
+      <Chatbox />
       <Box
         sx={{
           p: 4,
@@ -83,7 +54,8 @@ const CaregiverPage = () => {
       {/* Main Content */}
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Grid container spacing={3}>
-          {/* Patients Section */}
+          
+          {/* My Patients Section */}
           <Grid item xs={12} md={6}>
             <Paper
               elevation={6}
@@ -98,79 +70,11 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#004D40" }}
-                >
-                  My Patients
-                </Typography>
-                <Tooltip title="Add Patient">
-                  <IconButton
-                    onClick={handleAddPatient}
-                    sx={{
-                      backgroundColor: "#00897B",
-                      color: "#fff",
-                      "&:hover": { backgroundColor: "#00695C" },
-                      borderRadius: "50%",
-                    }}
-                  >
-                    <PersonAddIcon />
-                  </IconButton>
-                </Tooltip>
-              </Box>
-              <Divider sx={{ mb: 2 }} />
-
-              {loading ? (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <CircularProgress size={24} />
-                  <Typography variant="body2" color="textSecondary">
-                    Loading patients...
-                  </Typography>
-                </Box>
-              ) : (
-                <List sx={{ flexGrow: 1, overflowY: "auto" }}>
-                  {patients.length === 0 ? (
-                    <Typography variant="body2" color="textSecondary">
-                      - Add patients to get started. <br />- Can get patients
-                      condition from the medical record. <br />- Generate
-                      AI-advised caregiver plan for each patient.
-                    </Typography>
-                  ) : (
-                    patients.map((patient, index) => (
-                      <ListItem
-                        key={index}
-                        button
-                        sx={{
-                          backgroundColor: "#fff",
-                          mb: 1,
-                          borderRadius: 2,
-                          "&:hover": { backgroundColor: "#e0f2f1" },
-                        }}
-                      >
-                        <ListItemIcon>
-                          <MedicationIcon sx={{ color: "#004D40" }} />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={patient.name}
-                          secondary={`Last update: ${
-                            patient.lastUpdate || "N/A"
-                          }`}
-                        />
-                        <IconButton edge="end" sx={{ color: "#004D40" }}>
-                          <ArrowForwardIcon />
-                        </IconButton>
-                      </ListItem>
-                    ))
-                  )}
-                </List>
-              )}
+              <MyPatients />
             </Paper>
           </Grid>
 
-          {/* Reminders / Tasks Section */}
+          {/* Reminder Section */}
           <Grid item xs={12} md={6}>
             <Paper
               elevation={6}
@@ -185,75 +89,10 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#004D40" }}
-                >
-                  Reminders & Tasks
-                </Typography>
-                <IconButton
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    "&:hover": { backgroundColor: "#00695C" },
-                  }}
-                >
-                  <EventNoteIcon />
-                </IconButton>
-              </Box>
-              <Divider sx={{ mb: 2 }} />
-              <Typography variant="body2" color="textSecondary">
-                - Check medication schedules for each patient <br />
-                - Schedule upcoming visits or telehealth calls <br />- Log
-                completed tasks and reminders
-              </Typography>
-              <Box sx={{ flexGrow: 1 }} />
-
-              {/* Example Action Buttons */}
-              <Box sx={{ textAlign: "right", mt: 2 }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    borderRadius: "25px",
-                    fontWeight: "bold",
-                    textTransform: "none",
-                    mr: 1,
-                    "&:hover": {
-                      backgroundColor: "#00695C",
-                      transform: "translateY(-2px)",
-                      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  Add Reminder
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    borderRadius: "25px",
-                    fontWeight: "bold",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "#00695C",
-                      transform: "translateY(-2px)",
-                      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  View All
-                </Button>
-              </Box>
+              <Reminder />
             </Paper>
           </Grid>
-
-          {/* Notifications Section */}
+          {/* Picture Diary Section */}
           <Grid item xs={12} md={6}>
             <Paper
               elevation={6}
@@ -268,52 +107,7 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#004D40" }}
-                >
-                  Picture Diary 
-                </Typography>
-                <IconButton
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    "&:hover": { backgroundColor: "#00695C" },
-                  }}
-                >
-                  <NotificationsIcon />
-                </IconButton>
-              </Box>
-              <Divider sx={{ mb: 2 }} />
-              <Typography variant="body2" color="textSecondary">
-                - able to upload pictures recording patients' health condition <br />
-                - Shareable  <br />
-                - caregiver can upload pictures and add text ina formatted way so that can share to family members
-              </Typography>
-              <Box sx={{ flexGrow: 1 }} />
-
-              <Box sx={{ textAlign: "right", mt: 2 }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    borderRadius: "25px",
-                    fontWeight: "bold",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "#00695C",
-                      transform: "translateY(-2px)",
-                      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  Manage
-                </Button>
-              </Box>
+              <PictureDiary />
             </Paper>
           </Grid>
 
@@ -332,51 +126,7 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <Box
-                sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "#004D40" }}
-                >
-                  Accommodation Letter
-                </Typography>
-                <IconButton
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    "&:hover": { backgroundColor: "#00695C" },
-                  }}
-                >
-                  <ChatIcon />
-                </IconButton>
-              </Box>
-              <Divider sx={{ mb: 2 }} />
-              <Typography variant="body2" color="textSecondary">
-                - we have pre-inserted templates for several institutions such as  <br />
-                - connect to email service <br />
-              </Typography>
-              <Box sx={{ flexGrow: 1 }} />
-
-              <Box sx={{ textAlign: "right", mt: 2 }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#00897B",
-                    color: "#fff",
-                    borderRadius: "25px",
-                    fontWeight: "bold",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "#00695C",
-                      transform: "translateY(-2px)",
-                      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  Open Chat
-                </Button>
-              </Box>
+              <AccommodationLetter/>
             </Paper>
           </Grid>
         </Grid>

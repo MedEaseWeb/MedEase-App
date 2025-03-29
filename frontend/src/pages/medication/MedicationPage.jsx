@@ -16,9 +16,11 @@ import {
 import PasteBox from "./PasteBox";
 import HistoryTab from "./HistoryTab";
 
+const backendBaseUrl = import.meta.env.VITE_API_URL;
+
 const FeatureButtons = () => {
   const handleConnectGoogle = () => {
-    window.location.href = "https://medease-454522.uc.r.appspot.com/google/connect-google" || "localhost:8081/google/connect-google"; //TODO
+    window.location.href = `${backendBaseUrl}/google/connect-google`; 
   };
 
   return (

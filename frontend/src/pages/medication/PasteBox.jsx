@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import AIResult from "./AIResult";
 
+const backendBaseUrl = import.meta.env.VITE_API_URL;
+
 // Note we have both Paste box and AIResult in this component
 const PasteBox = ({ onNewSubmission = () => {} }) => {
   const [text, setText] = useState("");
@@ -21,7 +23,7 @@ const PasteBox = ({ onNewSubmission = () => {} }) => {
     setResult(null); // Clear previous results
     try {
       const response = await fetch(
-        "https://medease-454522.uc.r.appspot.com/medication/extract-medication", // TODO
+        `${backendBaseUrl}/medication/extract-medication`, // TODO
         {
           method: "POST",
           headers: {

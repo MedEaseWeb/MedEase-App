@@ -12,6 +12,8 @@ import { Menu as MenuIcon, Logout as LogoutIcon } from "@mui/icons-material";
 import Logo from "./Logo";
 import { styled } from "@mui/material/styles";
 
+const backendBaseUrl = import.meta.env.VITE_API_URL;
+
 const NavButton = styled(Button)(({ theme }) => ({
   borderRadius: "10px",
   padding: "9px 25px", // Adjust size
@@ -35,11 +37,10 @@ const TopBar = ({ onMenuClick }) => {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const response = await fetch("https://medease-454522.uc.r.appspot.com/general/email", {
+        const response = await fetch(`${backendBaseUrl}/general/email`, {
           method: "GET",
           credentials: "include",
         });
-
         if (response.ok) {
           const data = await response.json();
           setUserEmail(data.email);
@@ -56,7 +57,7 @@ const TopBar = ({ onMenuClick }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://medease-454522.uc.r.appspot.com/auth/logout", {
+      const response = await fetch(`${backendBaseUrl}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

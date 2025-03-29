@@ -68,9 +68,11 @@ const Sidebar = () => {
     }
 
     console.log("Submitting signup request");
+    const backendBaseUrl = import.meta.env.BACKEND_API_URL;
 
     try {
-      const response = await axios.post("https://medease-454522.uc.r.appspot.com/auth/register", {
+      const response = await axios.post(
+       `${backendBaseUrl}/auth/register`,{
         email: email,
         password: password,
       });
