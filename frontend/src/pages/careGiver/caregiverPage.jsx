@@ -4,25 +4,9 @@ import {
   Grid,
   Paper,
   Typography,
-  Button,
-  IconButton,
-  Tooltip,
-  Divider,
-  CircularProgress,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+
 } from "@mui/material";
-import {
-  PersonAdd as PersonAddIcon,
-  EventNote as EventNoteIcon,
-  Medication as MedicationIcon,
-  Notifications as NotificationsIcon,
-  Chat as ChatIcon,
-  ArrowForward as ArrowForwardIcon,
-} from "@mui/icons-material";
-import axios from "axios";
+
 import Chatbox from "../utility/ChatBox";
 import MyPatients from "./MyPatients";
 import Reminder from "./Reminder";
