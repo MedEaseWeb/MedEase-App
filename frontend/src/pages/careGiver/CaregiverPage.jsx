@@ -6,7 +6,6 @@ import {
   Typography,
 
 } from "@mui/material";
-
 import Chatbox from "../utility/ChatBox";
 import MyPatients from "./MyPatients";
 import Reminder from "./Reminder";
