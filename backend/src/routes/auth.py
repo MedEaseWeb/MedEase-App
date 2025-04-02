@@ -48,7 +48,8 @@ async def login(user: UserCreate, response: Response):
 
     # Set JWT in HttpOnly cookie
     # TODO: Set secure=True in production
-    response.set_cookie(key="access_token", value=token, httponly=True, secure=True, samesite="None")
+    # response.set_cookie(key="access_token", value=token, httponly=True, secure=True, samesite="None") # Production Mode
+    response.set_cookie(key="access_token", value=token, httponly=True, secure=False, samesite="Lax") # Developement Mode
 
     return {"message": "Login successful", "token": token}
 

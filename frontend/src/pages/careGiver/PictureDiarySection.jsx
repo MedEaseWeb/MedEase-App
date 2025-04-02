@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Notifications as NotificationsIcon } from "@mui/icons-material";
 
-const PictureDiary = () => {
+const PictureDiarySection = () => {
   return (
     <>
       {/* Header + Icon */}
@@ -69,4 +69,4 @@ const PictureDiary = () => {
   );
 };
 
-export default PictureDiary;
+export default PictureDiarySection;

@@ -7,12 +7,12 @@ import {
 
 } from "@mui/material";
 import Chatbox from "../utility/ChatBox";
-import MyPatients from "./MyPatients";
-import Reminder from "./Reminder";
-import PictureDiary from "./PictureDiary";
-import AccommodationLetter from "./AccommodationLetter";
+import MyPatientsSection from "./MyPatientsSection";
+import ReminderSection from "./ReminderSection";
+import PictureDiarySection from "./PictureDiarySection";
+import AccommodationLetterSection from "./AccommodationLetterSection";
 
-const CaregiverPage = () => {
+const CaregiverMainPage = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Chatbox />
@@ -53,7 +53,7 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <MyPatients />
+              <MyPatientsSection />
             </Paper>
           </Grid>
 
@@ -72,7 +72,7 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <Reminder />
+              <ReminderSection />
             </Paper>
           </Grid>
           {/* Picture Diary Section */}
@@ -90,7 +90,7 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <PictureDiary />
+              <PictureDiarySection />
             </Paper>
           </Grid>
 
@@ -109,7 +109,7 @@ const CaregiverPage = () => {
                 flexDirection: "column",
               }}
             >
-              <AccommodationLetter/>
+              <AccommodationLetterSection />
             </Paper>
           </Grid>
         </Grid>
@@ -118,4 +118,4 @@ const CaregiverPage = () => {
   );
 };
 
-export default CaregiverPage;
+export default CaregiverMainPage;

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { EventNote as EventNoteIcon } from "@mui/icons-material";
 
-const Reminder = () => {
+const ReminderSection = () => {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
@@ -86,4 +86,4 @@ const Reminder = () => {
   );
 };
 
-export default Reminder;
+export default ReminderSection;

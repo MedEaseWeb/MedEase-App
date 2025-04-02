@@ -11,6 +11,7 @@ import {
 import { Menu as MenuIcon, Logout as LogoutIcon } from "@mui/icons-material";
 import Logo from "./Logo";
 import { styled } from "@mui/material/styles";
+import LeftMenu from "./LeftMenu";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -33,6 +34,7 @@ const NavButton = styled(Button)(({ theme }) => ({
 const TopBar = ({ onMenuClick }) => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const fetchEmail = async () => {
@@ -75,59 +77,47 @@ const TopBar = ({ onMenuClick }) => {
 
   return (
     <AppBar position="static" color="inherit" elevation={1} sx={{ px: 2 }}>
-<Toolbar
-  sx={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",   
-    rowGap: 1,           
-    py: 1,               
-  }}
->        {/* Left Section: Menu Icon + Logo */}
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          rowGap: 1,
+          py: 1,
+        }}
+      >
+        {/* Left Section: Menu Icon + Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={onMenuClick}
-            sx={{
-              ml: -3,
-              "& svg": { fontSize: 27 }, // Adjusts the size of the MenuIcon
-              "&:hover": { color: "#00684A" },
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-
+          <LeftMenu drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Logo imgSize={40} fontSize={31} />
           </Box>
         </Box>
 
-{/* Center Section: Navigation Buttons */}
-<Box
-  sx={{
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: 2,
-    flex: 1,
-    mx: 1,
-    flexShrink: 0,      
-    minWidth: 0,         
-  }}
->
-  <NavButton component={NavLink} to="/reportsimplifier">
-    Report Simplifier
-  </NavButton>
-  <NavButton component={NavLink} to="/medication">
-    Medication Help
-  </NavButton>
-  <NavButton component={NavLink} to="/caregiver">
-    CareGiver Mode
-  </NavButton>
-</Box>
-
+        {/* Center Section: Navigation Buttons */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 2,
+            flex: 1,
+            mx: 1,
+            flexShrink: 0,
+            minWidth: 0,
+          }}
+        >
+          <NavButton component={NavLink} to="/reportsimplifier">
+            Report Simplifier
+          </NavButton>
+          <NavButton component={NavLink} to="/medication">
+            Medication Help
+          </NavButton>
+          <NavButton component={NavLink} to="/caregiver">
+            CareGiver Mode
+          </NavButton>
+        </Box>
         {/* Right Section: User Email + Logout Button */}
         <Box
           sx={{

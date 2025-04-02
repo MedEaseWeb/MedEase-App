@@ -16,7 +16,7 @@ import {
   ArrowForward as ArrowForwardIcon,
 } from "@mui/icons-material";
 
-const MyPatients = () => {
+const MyPatientsSection = () => {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
@@ -92,4 +92,4 @@ const MyPatients = () => {
   );
 };
 
-export default MyPatients;
+export default MyPatientsSection;

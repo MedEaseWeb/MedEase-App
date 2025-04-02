@@ -7,6 +7,7 @@ from src.utils.jwtUtils import get_current_user
 caregiver_router = APIRouter()
 
 # @caregiver_router.post("/websocket")
-@caregiver_router.get("/")
+# add the logic to fetch patients by patient id 
+@caregiver_router.get("patients")
 def hello_world():
     return {"message": "Hello World"}
