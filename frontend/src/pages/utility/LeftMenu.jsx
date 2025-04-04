@@ -20,7 +20,8 @@ import PrivacyTipIcon from "@mui/icons-material/PrivacyTip";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 
-const EXPIRATION_TIME_MS = 2 * 60 * 1000; // 2 minutes
+const backendBaseUrl = import.meta.env.VITE_API_URL;
+const EXPIRATION_TIME_MS = 60 * 60 * 1000; // 1 hour 
 
 const generateRandomKey = () => {
   return (
@@ -45,13 +46,32 @@ const LeftMenu = () => {
     setDrawerOpen(open);
   };
 
-  const handleGenerateKey = () => {
+  const handleGenerateKey = async () => {
+    const keyValue = generateRandomKey();
     const newKey = {
       value: generateRandomKey(),
       createdAt: Date.now(),
       copied: false,
     };
-    setGeneratedKeys((prev) => [newKey, ...prev]);
+    try {
+      const response = await fetch(`${backendBaseUrl}/general/generate-key`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ generated_key: keyValue }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate key");
+      }
+
+      const data = await response.json();
+      setGeneratedKeys((prev) => [newKey, ...prev]);
+    } catch (error) {
+      console.error("Error generating key:", error);
+    }
   };
 
   const handleCopy = async (keyValue) => {

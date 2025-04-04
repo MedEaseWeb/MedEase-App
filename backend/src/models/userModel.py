@@ -17,3 +17,13 @@ class UserInDB(UserResponse):
     """Schema for user storage in MongoDB (includes hashed password)."""
     hashed_password: str
 
+
+class KeyRequest(BaseModel):
+    generated_key: str
+    
+class UserKey(BaseModel):
+    """Schema for user key generation."""
+    user_id: str
+    generated_key: str
+    is_disabled: bool = False
+    created_at: datetime

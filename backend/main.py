@@ -6,8 +6,8 @@ from src.routes.general import general_router
 from src.routes.google import google_oauth_router
 from src.routes.caregiver import caregiver_router
 from fastapi.middleware.cors import CORSMiddleware
-from src.socket_server import register_socketio_events
-from fastapi_socketio import SocketManager
+# from src.socket_server import register_socketio_events
+# from fastapi_socketio import SocketManager
 
 app = FastAPI()
 
@@ -27,10 +27,10 @@ app.include_router(google_oauth_router, prefix="/google")
 app.include_router(caregiver_router, prefix="/caregiver")
 
 # Create SocketManager and register it
-socket_manager = SocketManager(app=app)
+# socket_manager = SocketManager(app=app)
 
 # Register events
-register_socketio_events(socket_manager)
+# register_socketio_events(socket_manager)
 
 @app.get("/")
 def hello_world():

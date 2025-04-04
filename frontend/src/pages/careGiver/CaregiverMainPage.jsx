@@ -6,7 +6,7 @@ import {
   Typography,
 
 } from "@mui/material";
-import Chatbox from "../utility/ChatBox";
+// import Chatbox from "../utility/ChatBox";
 import MyPatientsSection from "./MyPatientsSection";
 import ReminderSection from "./ReminderSection";
 import PictureDiarySection from "./PictureDiarySection";
@@ -15,7 +15,7 @@ import AccommodationLetterSection from "./AccommodationLetterSection";
 const CaregiverMainPage = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <Chatbox />
+      {/* <Chatbox /> */}
       <Box
         sx={{
           p: 4,

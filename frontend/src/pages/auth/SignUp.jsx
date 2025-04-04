@@ -24,6 +24,8 @@ import { motion } from "framer-motion";
 import Blob from "../utility/Blob";
 import axios from "axios";
 
+const backendBaseUrl = import.meta.env.VITE_API_URL;
+
 const Sidebar = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -68,7 +70,6 @@ const Sidebar = () => {
     }
 
     console.log("Submitting signup request");
-    const backendBaseUrl = import.meta.env.BACKEND_API_URL;
 
     try {
       const response = await axios.post(

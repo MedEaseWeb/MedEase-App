@@ -8,8 +8,6 @@ import {
 } from "@mui/material";
 import {
   Medication as MedicationIcon,
-  Restaurant,
-  FitnessCenter,
   Event,
   LocalPharmacy,
 } from "@mui/icons-material";
