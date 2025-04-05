@@ -25,8 +25,20 @@ import {
 const MyPatientsSection = () => {
   const [open, setOpen] = useState(false);
   const [patients, setPatients] = useState([
-    { name: "John Doe", lastUpdate: "March 28, 2025" },
-    { name: "Jane Smith", lastUpdate: "March 25, 2025" },
+    {
+      name: "John Doe",
+      lastUpdate: "March 28, 2025",
+      email: "johndoe@example.com",
+      phone: "1234567890",
+      notes: "Patient with chronic conditions.",
+    },
+    {
+      name: "Jane Smith",
+      lastUpdate: "March 25, 2025",
+      email: "janesmith@example.com",
+      phone: "0987654321",
+      notes: "Needs reminders for medication.",
+    },
   ]);
 
   const [formData, setFormData] = useState({
@@ -38,6 +50,7 @@ const MyPatientsSection = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   const handleInputChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -77,6 +90,9 @@ const MyPatientsSection = () => {
         day: "numeric",
         year: "numeric",
       }),
+      email: formData.email,
+      phone: formData.phone,
+      notes: formData.notes,
     };
 
     setPatients((prev) => [...prev, newPatient]);
@@ -124,6 +140,7 @@ const MyPatientsSection = () => {
           <ListItem
             key={idx}
             button
+            onClick={() => setSelectedPatient(patient)}
             sx={{
               backgroundColor: "#fff",
               mb: 1,
@@ -159,7 +176,6 @@ const MyPatientsSection = () => {
           },
         }}
       >
-        {/* Header */}
         <DialogTitle
           sx={{
             fontWeight: "bold",
@@ -175,7 +191,6 @@ const MyPatientsSection = () => {
           Add Patient
         </DialogTitle>
 
-        {/* Main content */}
         <DialogContent
           sx={{
             display: "flex",
@@ -189,11 +204,7 @@ const MyPatientsSection = () => {
           <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
             <TextField
               fullWidth
-              label={
-                <span>
-                  First Name<span style={{ color: "red" }}>*</span>
-                </span>
-              }
+              label={<span>First Name<span style={{ color: "red" }}>*</span></span>}
               name="firstName"
               value={formData.firstName}
               onChange={handleInputChange}
@@ -202,11 +213,7 @@ const MyPatientsSection = () => {
             />
             <TextField
               fullWidth
-              label={
-                <span>
-                  Last Name<span style={{ color: "red" }}>*</span>
-                </span>
-              }
+              label={<span>Last Name<span style={{ color: "red" }}>*</span></span>}
               name="lastName"
               value={formData.lastName}
               onChange={handleInputChange}
@@ -222,11 +229,7 @@ const MyPatientsSection = () => {
           <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
             <TextField
               fullWidth
-              label={
-                <span>
-                  Patient's Email<span style={{ color: "red" }}>*</span>
-                </span>
-              }
+              label={<span>Patient's Email<span style={{ color: "red" }}>*</span></span>}
               name="email"
               value={formData.email}
               onChange={handleInputChange}
@@ -255,7 +258,6 @@ const MyPatientsSection = () => {
           />
         </DialogContent>
 
-        {/* Footer */}
         <DialogActions
           sx={{
             backgroundColor: "#f0f0f0",
@@ -282,6 +284,131 @@ const MyPatientsSection = () => {
             }}
           >
             Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Patient Detail Modal */}
+      <Dialog
+        open={!!selectedPatient}
+        onClose={() => setSelectedPatient(null)}
+        fullWidth
+        maxWidth="lg"
+        PaperProps={{
+          sx: {
+            borderRadius: 5,
+            minHeight: "600px",
+            backgroundColor: "#f9f9f9",
+            px: 4,
+            py: 3,
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            fontWeight: "bold",
+            fontSize: "1.7rem",
+            color: "#004D40",
+            borderBottom: "1px solid #ddd",
+            mb: 2,
+          }}
+        >
+          {selectedPatient?.name}
+        </DialogTitle>
+
+        <DialogContent>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            Contact Information
+          </Typography>
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body1">
+              <strong>Email:</strong> {selectedPatient?.email || "Not available"}
+            </Typography>
+            <Typography variant="body1">
+              <strong>Phone:</strong> {selectedPatient?.phone || "Not available"}
+            </Typography>
+          </Box>
+
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            Patient Files
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 3,
+              mb: 3,
+              flexWrap: "wrap",
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                minWidth: "300px",
+                p: 2,
+                border: "1px solid #ccc",
+                borderRadius: 3,
+                backgroundColor: "#f0f0f0",
+              }}
+            >
+              <Typography fontWeight={600} gutterBottom>
+                Report Simplifier Records
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                "Patient uploaded a complex report on 3/21 and received summary..."
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                flex: 1,
+                minWidth: "300px",
+                p: 2,
+                border: "1px solid #ccc",
+                borderRadius: 3,
+                backgroundColor: "#f0f0f0",
+              }}
+            >
+              <Typography fontWeight={600} gutterBottom>
+                Medication Help Records
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                "Patient’s prescription was analyzed and AI suggestions provided."
+              </Typography>
+            </Box>
+          </Box>
+
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            Caregiver's Notes
+          </Typography>
+          <Box
+            sx={{
+              p: 2,
+              border: "1px solid #ccc",
+              borderRadius: 3,
+              backgroundColor: "#f0f0f0",
+            }}
+          >
+            <Typography variant="body2">
+              {selectedPatient?.notes || "No notes provided."}
+            </Typography>
+          </Box>
+        </DialogContent>
+
+        <DialogActions sx={{ pt: 3 }}>
+          <Button
+            onClick={() => setSelectedPatient(null)}
+            sx={{
+              backgroundColor: "#00684A",
+              color: "#fff",
+              fontWeight: "bold",
+              borderRadius: "20px",
+              px: 4,
+              "&:hover": {
+                backgroundColor: "#004D40",
+              },
+            }}
+          >
+            Close
           </Button>
         </DialogActions>
       </Dialog>
