@@ -10,14 +10,23 @@ general_router = APIRouter()
 
 @general_router.get("/email")
 async def get_user_profile(user_id: str = Depends(get_current_user)):
-    """Fetch user profile information from MongoDB."""
-    user = await user_collection.find_one({"user_id": user_id}, {"hashed_password": 0})  # Exclude password
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    return {"email": user["email"]}
+    return user_id["email"]
+# i don't really understand the point of this call because user email is self contained in the user_id. user_id is an object containing id, email, and hashed password.
+#     print(f"Im looking for user info with id: {user_id}")
+#     """Fetch user profile information from MongoDB."""
+#     user = await user_collection.find_one(
+#     {"user_id": user_id},  # Filter to match the document with the specific user_id
+#     {"email": 1, "_id": 0}  # Projection to include 'email' and exclude '_id'
+# )
 
-# The current expiration time for the key is set to 1 hour (3600 seconds)
+#     print(f"Debugging line: user is found to be: {user}")
+#     if not user:
+#         raise HTTPException(status_code=404, detail=f"User not found for {user_id}")
+    
+#     return {"email": user["email"]}
+
+
+# The current expiration time for the key is set to 1 hour (3600 seconds) when is this call ever used? idk
 @general_router.post("/generate-key")
 async def generate_user_key(key_req: KeyRequest, user_id: str = Depends(get_current_user)):
     """Store the frontend-generated key for the user."""

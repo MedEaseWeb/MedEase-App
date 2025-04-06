@@ -73,8 +73,7 @@ const Sidebar = () => {
     console.log("Submitting signup request");
 
     try {
-      const response = await axios.post(
-       `${backendBaseUrl}/auth/register`,{
+      const response = await axios.post(`${backendBaseUrl}/auth/register`, {
         email: email,
         password: password,
       });
@@ -178,7 +177,7 @@ const Sidebar = () => {
           </Box>
           {/* checklines: email address */}
           <Grid2 container direction={"column"} pt={1}>
-            <Grid2 item="true" xs={12} ml={7}>
+            <Grid2 ml={7}>
               <Box>
                 <Typography
                   variant="caption"
@@ -255,7 +254,7 @@ const Sidebar = () => {
           </Box>
           {/* check lines */}
           <Grid2 container direction={"column"}>
-            <Grid2 item="true" xs={12} ml={7}>
+            <Grid2 ml={7}>
               <Box>
                 <Typography
                   variant="caption"
@@ -279,7 +278,7 @@ const Sidebar = () => {
                 </Typography>
               </Box>
             </Grid2>
-            <Grid2 item="true" xs={12} ml={7}>
+            <Grid2 ml={7}>
               <Box>
                 <Typography
                   variant="caption"
@@ -405,8 +404,6 @@ export default function SignUp() {
         {width > 768 ? (
           <Grid2 container sx={{ textAlign: "center", maxWidth: "60%" }}>
             <Grid2
-              item="true"
-              xs={12}
               sx={{
                 backdropFilter: "blur(1px)",
                 backgroundColor: "rgba(255, 255, 255, 0.1)",

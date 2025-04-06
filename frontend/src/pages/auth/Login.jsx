@@ -50,7 +50,7 @@ const Sidebar = () => {
       console.log("Validation failed:", validation);
       return;
     }
-    
+
     try {
       const response = await axios.post(
         `${backendBaseUrl}/auth/login`,
@@ -64,7 +64,9 @@ const Sidebar = () => {
       );
 
       console.log("Login successful");
-      navigate("/medication"); // Redirect after successful login
+      console.log("Debugging lines: this is run");
+      const navigateTo = navigate;
+      navigateTo("/reportsimplifier");
     } catch (error) {
       console.error(
         "Login error:",
@@ -250,7 +252,7 @@ const Sidebar = () => {
 
 export default function Login() {
   const { width, height } = useWindowSize();
-  console.log(width);
+  // console.log(width);
   return (
     <Box
       sx={{
@@ -285,8 +287,6 @@ export default function Login() {
         {width > 768 ? (
           <Grid2 container sx={{ textAlign: "center", maxWidth: "60%" }}>
             <Grid2
-              item="true"
-              xs={12}
               sx={{
                 backdropFilter: "blur(1px)",
                 backgroundColor: "rgba(255, 255, 255, 0.1)",

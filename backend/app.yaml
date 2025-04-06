@@ -1,7 +1,7 @@
 runtime: python
 runtime_config:
-    operating_system: "ubuntu22"
-    runtime_version: "3.12"
+  operating_system: "ubuntu22"
+  runtime_version: "3.12"
 env: flex
 entrypoint: uvicorn main:app --host 0.0.0.0 --port=8080
 

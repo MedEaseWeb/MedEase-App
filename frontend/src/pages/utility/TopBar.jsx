@@ -76,7 +76,7 @@ const TopBar = ({ onMenuClick }) => {
   };
 
   return (
-    <AppBar position="static" color="inherit" elevation={1} sx={{ px: 2 }}>
+    <AppBar position="fixed" color="inherit" elevation={1} sx={{ px: 2 }}>
       <Toolbar
         sx={{
           display: "flex",
@@ -90,7 +90,7 @@ const TopBar = ({ onMenuClick }) => {
         {/* Left Section: Menu Icon + Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <LeftMenu drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
             <Logo imgSize={40} fontSize={31} />
           </Box>
         </Box>
@@ -109,13 +109,40 @@ const TopBar = ({ onMenuClick }) => {
           }}
         >
           <NavButton component={NavLink} to="/reportsimplifier">
-            Report Simplifier
+            <Typography
+              sx={{
+                fontSize: 20,
+                fontFamily: "ECA, sans-serif",
+                fontWeight: "Bold",
+                color: "#00684A",
+              }}
+            >
+              Report Simplifier
+            </Typography>
           </NavButton>
           <NavButton component={NavLink} to="/medication">
-            Medication Help
+            <Typography
+              sx={{
+                fontSize: 20,
+                fontFamily: "ECA, sans-serif",
+                fontWeight: "Bold",
+                color: "#00684A",
+              }}
+            >
+              Medication Help
+            </Typography>
           </NavButton>
           <NavButton component={NavLink} to="/caregiver">
-            CareGiver Mode
+            <Typography
+              sx={{
+                fontSize: 20,
+                fontFamily: "ECA, sans-serif",
+                fontWeight: "Bold",
+                color: "#00684A",
+              }}
+            >
+              CareGiver Mode
+            </Typography>
           </NavButton>
         </Box>
         {/* Right Section: User Email + Logout Button */}
@@ -151,7 +178,16 @@ const TopBar = ({ onMenuClick }) => {
               "&:hover": { color: "#00684A" },
             }}
           >
-            Logout
+            <Typography
+              sx={{
+                fontSize: 18,
+                fontFamily: "ECA, sans-serif",
+                fontWeight: "Regular",
+                color: "#222222",
+              }}
+            >
+              Logout
+            </Typography>
           </Button>
         </Box>
       </Toolbar>

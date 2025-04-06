@@ -1,13 +1,13 @@
 @font-face {
   font-family: "ECA";
-  src: url("/assets/fonts/MyFont-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/Euclid-Circular-A-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "ECA";
-  src: url("/assets/fonts/MyFont-Bold.ttf") format("truetype");
+  src: url("/assets/fonts/Euclid-Circular-A-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }

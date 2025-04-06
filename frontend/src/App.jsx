@@ -1,20 +1,23 @@
 import {
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
   useLocation,
 } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import NotFound from "./pages/utility/NotFound";
+
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
+import CareGiver from "./pages/careGiver/CaregiverMainPage";
+import LandingPage from "./pages/LandingPage";
 import Medication from "./pages/medication/MedicationPage";
 import ReportSimplification from "./pages/report/reportSimplificationPage";
-import CareGiver from "./pages/careGiver/CaregiverMainPage";
+import NotFound from "./pages/utility/NotFound";
 import TopBarComponent from "./pages/utility/TopBar";
+import ProtectedRoute from "./context/ProtectedRoutes";
 
-import "./styles/fonts.css";
 import "./index.css";
+import "./styles/fonts.css";
+import { Box } from "@mui/material";
 
 function Layout() {
   const location = useLocation();
@@ -23,26 +26,49 @@ function Layout() {
   return (
     <>
       {!hideTopBarRoutes.includes(location.pathname) && <TopBarComponent />}
+      <Box sx={{ mt: !hideTopBarRoutes.includes(location.pathname) ? 12 : 0 }}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
 
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/reportsimplifier" element={<ReportSimplification />} />
-        <Route path="/medication" element={<Medication />} />
-        <Route path="/caregiver" element={<CareGiver />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Wrap protected routes here */}
+          <Route
+            path="/reportsimplifier"
+            element={
+              <ProtectedRoute>
+                <ReportSimplification />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/medication"
+            element={
+              <ProtectedRoute>
+                <Medication />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/caregiver"
+            element={
+              <ProtectedRoute>
+                <CareGiver />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Box>
     </>
   );
 }
 
-function App() {
+export default function App() {
   return (
     <Router>
       <Layout />
     </Router>
   );
 }
-
-export default App;
