@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Drawer,
   List,
@@ -12,6 +12,7 @@ import {
   Divider,
   Button,
   Tooltip,
+  ListItemButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -19,9 +20,14 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import PrivacyTipIcon from "@mui/icons-material/PrivacyTip";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import useWindowSize from "../../hooks/useWindowSize";
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
+import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
-const EXPIRATION_TIME_MS = 60 * 60 * 1000; // 1 hour 
+const EXPIRATION_TIME_MS = 60 * 60 * 1000; // 1 hour
 
 const generateRandomKey = () => {
   return (
@@ -35,6 +41,7 @@ const LeftMenu = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [generatedKeys, setGeneratedKeys] = useState([]);
   const navigate = useNavigate();
+  const { width, height } = useWindowSize();
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -47,6 +54,7 @@ const LeftMenu = () => {
   };
 
   const handleGenerateKey = async () => {
+    console.log(width);
     const keyValue = generateRandomKey();
     const newKey = {
       value: generateRandomKey(),
@@ -101,9 +109,41 @@ const LeftMenu = () => {
       text: "Documentation",
       icon: <DescriptionIcon />,
       path: "/documentation",
+      key: "documentation",
     },
-    { text: "Terms of Service", icon: <GavelIcon />, path: "/terms" },
-    { text: "Privacy Policy", icon: <PrivacyTipIcon />, path: "/privacy" },
+    {
+      text: "Terms of Service",
+      icon: <GavelIcon />,
+      path: "/terms",
+      key: "termsofservice",
+    },
+    {
+      text: "Privacy Policy",
+      icon: <PrivacyTipIcon />,
+      path: "/privacy",
+      key: "privacy",
+    },
+  ];
+
+  const navDrawerItems = [
+    {
+      text: "Report Simplifier",
+      icon: <SummarizeIcon />,
+      path: "/reportsimplifier",
+      key: "reportsimplifier",
+    },
+    {
+      text: "Medication Help",
+      icon: <MedicalInformationIcon />,
+      path: "/medication",
+      key: "medication",
+    },
+    {
+      text: "CareGiver Mode",
+      icon: <EscalatorWarningIcon />,
+      path: "/caregiver",
+      key: "caregiver",
+    },
   ];
 
   const drawerContent = (
@@ -130,7 +170,14 @@ const LeftMenu = () => {
             py: 2,
           }}
         >
-          <Typography variant="h6" color="#00684A" fontWeight="bold">
+          <Typography
+            sx={{
+              fontFamily: "ECA, sans-serif",
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "#00684A",
+            }}
+          >
             MedEase Menu
           </Typography>
           <IconButton
@@ -138,25 +185,58 @@ const LeftMenu = () => {
             sx={{
               width: 30,
               height: 30,
-              borderRadius: "20px",
+              borderRadius: "50%",
               backgroundColor: "#f2f2f2",
               "&:hover": {
                 backgroundColor: "#E6F4F1",
               },
               transition: "all 0.2s ease-in-out",
             }}
+            aria-label="close drawer"
           >
-            <Typography variant="h6" color="text.secondary">
-              ✕
-            </Typography>
+            <KeyboardArrowLeftIcon />
           </IconButton>
         </Box>
+        {width < 800 ? (
+          <Box>
+            <Divider />
+            <List onClick={toggleDrawer(false)}>
+              {navDrawerItems.map((item) => (
+                <ListItemButton
+                  key={item.key}
+                  onClick={() => navigate(item.path)}
+                  sx={{
+                    "&:hover": {
+                      bgcolor: "#E6F4F1",
+                      color: "#00684A",
+                    },
+                    px: 3,
+                    py: 1.5,
+                  }}
+                >
+                  <ListItemIcon sx={{ color: "#00684A" }}>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    primaryTypographyProps={{
+                      fontFamily: "ECA, sans-serif",
+                      color: "black",
+                    }}
+                  />
+                </ListItemButton>
+              ))}
+            </List>
+          </Box>
+        ) : (
+          <></>
+        )}
+
         <Divider />
         <List onClick={toggleDrawer(false)}>
           {drawerItems.map((item) => (
-            <ListItem
-              button
-              key={item.text}
+            <ListItemButton
+              key={item.key}
               onClick={() => navigate(item.path)}
               sx={{
                 "&:hover": {
@@ -170,9 +250,12 @@ const LeftMenu = () => {
               <ListItemIcon sx={{ color: "#00684A" }}>{item.icon}</ListItemIcon>
               <ListItemText
                 primary={item.text}
-                primaryTypographyProps={{ fontSize: "1rem" }}
+                primaryTypographyProps={{
+                  fontFamily: "ECA, sans-serif",
+                  color: "black",
+                }}
               />
-            </ListItem>
+            </ListItemButton>
           ))}
         </List>
 
@@ -195,7 +278,15 @@ const LeftMenu = () => {
               },
             }}
           >
-            Generate Key
+            <Typography
+              sx={{
+                fontFamily: "ECA, sans-serif",
+                fontSize: 14,
+                fontWeight: "bold",
+              }}
+            >
+              Generate Key
+            </Typography>
           </Button>
 
           {generatedKeys.map((key, index) => {

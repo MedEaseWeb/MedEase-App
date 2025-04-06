@@ -12,6 +12,7 @@ import { Menu as MenuIcon, Logout as LogoutIcon } from "@mui/icons-material";
 import Logo from "./Logo";
 import { styled } from "@mui/material/styles";
 import LeftMenu from "./LeftMenu";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -32,6 +33,8 @@ const NavButton = styled(Button)(({ theme }) => ({
 }));
 
 const TopBar = ({ onMenuClick }) => {
+  const { width, height } = useWindowSize();
+  console.log(width);
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -88,63 +91,77 @@ const TopBar = ({ onMenuClick }) => {
         }}
       >
         {/* Left Section: Menu Icon + Logo */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <LeftMenu drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-            <Logo imgSize={40} fontSize={31} />
+        {width > 1140 ? (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <LeftMenu drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+            <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+              <Logo imgSize={40} fontSize={30} />
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <LeftMenu drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+          </Box>
+        )}
 
         {/* Center Section: Navigation Buttons */}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: 2,
-            flex: 1,
-            mx: 1,
-            flexShrink: 0,
-            minWidth: 0,
-          }}
-        >
-          <NavButton component={NavLink} to="/reportsimplifier">
-            <Typography
-              sx={{
-                fontSize: 20,
-                fontFamily: "ECA, sans-serif",
-                fontWeight: "Bold",
-                color: "#00684A",
-              }}
-            >
-              Report Simplifier
-            </Typography>
-          </NavButton>
-          <NavButton component={NavLink} to="/medication">
-            <Typography
-              sx={{
-                fontSize: 20,
-                fontFamily: "ECA, sans-serif",
-                fontWeight: "Bold",
-                color: "#00684A",
-              }}
-            >
-              Medication Help
-            </Typography>
-          </NavButton>
-          <NavButton component={NavLink} to="/caregiver">
-            <Typography
-              sx={{
-                fontSize: 20,
-                fontFamily: "ECA, sans-serif",
-                fontWeight: "Bold",
-                color: "#00684A",
-              }}
-            >
-              CareGiver Mode
-            </Typography>
-          </NavButton>
-        </Box>
+        {width < 800 ? (
+          // placeholder
+          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+            <Logo imgSize={40} fontSize={30} />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 2,
+              flex: 1,
+              mx: 1,
+              flexShrink: 0,
+              minWidth: 0,
+            }}
+          >
+            <NavButton component={NavLink} to="/reportsimplifier">
+              <Typography
+                sx={{
+                  fontSize: 20,
+                  fontFamily: "ECA, sans-serif",
+                  fontWeight: "Bold",
+                  color: "#00684A",
+                }}
+              >
+                Report Simplifier
+              </Typography>
+            </NavButton>
+            <NavButton component={NavLink} to="/medication">
+              <Typography
+                sx={{
+                  fontSize: 20,
+                  fontFamily: "ECA, sans-serif",
+                  fontWeight: "Bold",
+                  color: "#00684A",
+                }}
+              >
+                Medication Help
+              </Typography>
+            </NavButton>
+            <NavButton component={NavLink} to="/caregiver">
+              <Typography
+                sx={{
+                  fontSize: 20,
+                  fontFamily: "ECA, sans-serif",
+                  fontWeight: "Bold",
+                  color: "#00684A",
+                }}
+              >
+                CareGiver Mode
+              </Typography>
+            </NavButton>
+          </Box>
+        )}
+
         {/* Right Section: User Email + Logout Button */}
         <Box
           sx={{
@@ -167,28 +184,32 @@ const TopBar = ({ onMenuClick }) => {
             </Typography>
           )}
           {/* Logout Button */}
-          <Button
-            color="inherit"
-            startIcon={<LogoutIcon />}
-            onClick={handleLogout}
-            sx={{
-              fontSize: "1rem",
-              fontWeight: "bold",
-              textTransform: "uppercase",
-              "&:hover": { color: "#00684A" },
-            }}
-          >
-            <Typography
+          {width > 900 ? (
+            <Button
+              color="inherit"
+              startIcon={<LogoutIcon />}
+              onClick={handleLogout}
               sx={{
-                fontSize: 18,
-                fontFamily: "ECA, sans-serif",
-                fontWeight: "Regular",
-                color: "#222222",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                textTransform: "uppercase",
+                "&:hover": { color: "#00684A" },
               }}
             >
-              Logout
-            </Typography>
-          </Button>
+              <Typography
+                sx={{
+                  fontSize: 16,
+                  fontFamily: "ECA, sans-serif",
+                  fontWeight: "Regular",
+                  color: "#222222",
+                }}
+              >
+                Logout
+              </Typography>
+            </Button>
+          ) : (
+            <></>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

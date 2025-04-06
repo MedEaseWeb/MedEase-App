@@ -24,17 +24,18 @@ import axios from "axios";
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
 const Disclaimer = () => (
-  <Paper sx={{ p: 2, mt: 3, backgroundColor: "#FFF3CD", borderRadius: 2 }}>
+  <Paper elevation={0} sx={{ p: 2, mt: 3, backgroundColor: "#FFF3CD" }}>
     <Typography
       sx={{
         fontFamily: "ECA, sans-serif",
+        fontSize: 20,
         fontWeight: "bold",
         color: "#D39E00",
       }}
     >
       ⚠ Disclaimer
     </Typography>
-    <Typography sx={{ fontFamily: "ECA, sans-serif", fontSize: 14 }}>
+    <Typography sx={{ fontFamily: "ECA, sans-serif", fontSize: 16 }}>
       The generated reports are for informational purposes only and{" "}
       <strong>do not</strong> guarantee accuracy or completeness. Always consult
       a qualified healthcare professional for medical advice.
@@ -342,7 +343,7 @@ const reportSimplificationPage = () => {
         </Grid>
 
         {/* Disclaimer at the Bottom */}
-        <Box sx={{ p: 3, mt: 3 }}>
+        <Box sx={{ mt: 9 }}>
           <Disclaimer />
         </Box>
       </Box>
