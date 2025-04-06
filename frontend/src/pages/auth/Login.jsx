@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import medicalBackground from "../../assets/pics/medical.webp";
 import Logo from "../utility/Logo";
@@ -23,7 +23,7 @@ const backendBaseUrl = import.meta.env.VITE_API_URL;
 const Sidebar = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loginSuccessful, setLoginSuccessful] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -37,6 +37,12 @@ const Sidebar = () => {
 
   const validation_password = validatePassword(password);
   const validation_email = validateEmail(email);
+
+  useEffect(() => {
+    if (loginSuccessful === true) {
+      navigate("/reportsimplifier");
+    }
+  }, [loginSuccessful, navigate]);
 
   const validateAll = () => {
     return {
@@ -62,11 +68,8 @@ const Sidebar = () => {
           withCredentials: true,
         }
       );
-
-      console.log("Login successful");
-      console.log("Debugging lines: this is run");
-      const navigateTo = navigate;
-      navigateTo("/reportsimplifier");
+      setLoginSuccessful(true);
+      console.log("Logged in successfully.");
     } catch (error) {
       console.error(
         "Login error:",
