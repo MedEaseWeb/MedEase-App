@@ -68,8 +68,8 @@ const reportSimplificationPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/simplify/dummy-stream", // dummy call, return lorem ipsum
-        // "http://localhost:8080/simplify/stream", // the actual call
+        `${backendBaseUrl}/simplify/dummy-stream`,
+        // `${backendBaseUrl}/simplify/stream`,
         {
           method: "POST",
           headers: {
