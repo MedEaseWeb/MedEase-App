@@ -14,18 +14,19 @@ import { useNavigate } from "react-router-dom";
 import medicalBackground from "../../assets/pics/medical.webp";
 import Logo from "../utility/Logo";
 import useWindowSize from "../../hooks/useWindowSize";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 import Blob from "../utility/Blob";
-import axios from "axios";
+import {useAuth} from "../../context/AuthContext";
+
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [loginSuccessful, setLoginSuccessful] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const { login } = useAuth();
 
   const validateEmail = (email) => ({
     isValid: email.trim().length != 0,
@@ -37,12 +38,6 @@ const Sidebar = () => {
 
   const validation_password = validatePassword(password);
   const validation_email = validateEmail(email);
-
-  useEffect(() => {
-    if (loginSuccessful === true) {
-      navigate("/reportsimplifier");
-    }
-  }, [loginSuccessful, navigate]);
 
   const validateAll = () => {
     return {
@@ -56,25 +51,12 @@ const Sidebar = () => {
       console.log("Validation failed:", validation);
       return;
     }
-
     try {
-      const response = await axios.post(
-        `${backendBaseUrl}/auth/login`,
-        {
-          email: email,
-          password: password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      setLoginSuccessful(true);
-      console.log("Logged in successfully.");
+      await login(email, password); 
+      navigate("/reportsimplifier"); // <-- redirect AFTER context is updated
+      console.log("Logged in and redirected.");
     } catch (error) {
-      console.error(
-        "Login error:",
-        error.response ? error.response.data : error
-      );
+      console.error("Login error:", error);
     }
   };
 
