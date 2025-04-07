@@ -4,7 +4,7 @@ from src.models.userModel import UserCreate, UserResponse, UserInDB
 from bson import ObjectId
 from datetime import datetime
 import bcrypt
-from src.utils.jwtUtils import create_jwt, get_current_user
+from src.utils.jwtUtils import create_jwt, get_current_user_auth
 
 auth_router = APIRouter()
 
@@ -69,7 +69,7 @@ async def logout(response: Response):
 
 # Get current user
 @auth_router.get("/user", response_model=UserResponse)
-async def get_user(payload: dict = Depends(get_current_user)):
+async def get_user(payload: dict = Depends(get_current_user_auth)):
     user = await user_collection.find_one({"user_id": payload["user_id"]})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
