@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -7,12 +7,16 @@ import {
   Typography,
   Box,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { Menu as MenuIcon, Logout as LogoutIcon } from "@mui/icons-material";
 import Logo from "./Logo";
 import { styled } from "@mui/material/styles";
 import LeftMenu from "./LeftMenu";
+import { motion } from "framer-motion";
 import useWindowSize from "../../hooks/useWindowSize";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -38,6 +42,7 @@ const TopBar = ({ onMenuClick }) => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchEmail = async () => {
@@ -123,42 +128,62 @@ const TopBar = ({ onMenuClick }) => {
               minWidth: 0,
             }}
           >
-            <NavButton component={NavLink} to="/reportsimplifier">
-              <Typography
-                sx={{
-                  fontSize: 20,
-                  fontFamily: "ECA, sans-serif",
-                  fontWeight: "Bold",
-                  color: "#00684A",
-                }}
-              >
-                Report Simplifier
-              </Typography>
-            </NavButton>
-            <NavButton component={NavLink} to="/medication">
-              <Typography
-                sx={{
-                  fontSize: 20,
-                  fontFamily: "ECA, sans-serif",
-                  fontWeight: "Bold",
-                  color: "#00684A",
-                }}
-              >
-                Medication Help
-              </Typography>
-            </NavButton>
-            <NavButton component={NavLink} to="/caregiver">
-              <Typography
-                sx={{
-                  fontSize: 20,
-                  fontFamily: "ECA, sans-serif",
-                  fontWeight: "Bold",
-                  color: "#00684A",
-                }}
-              >
-                CareGiver Mode
-              </Typography>
-            </NavButton>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavButton component={NavLink} to="/reportsimplifier">
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    fontFamily: "ECA, sans-serif",
+                    fontWeight:
+                      location.pathname === "/reportsimplifier"
+                        ? "Bold"
+                        : "Regular",
+                    color:
+                      location.pathname === "/reportsimplifier"
+                        ? "#00684A"
+                        : "#222222",
+                  }}
+                >
+                  Report Simplifier
+                </Typography>
+              </NavButton>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavButton component={NavLink} to="/medication">
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    fontFamily: "ECA, sans-serif",
+                    fontWeight:
+                      location.pathname === "/medication" ? "Bold" : "Regular",
+                    color:
+                      location.pathname === "/medication"
+                        ? "#00684A"
+                        : "#222222",
+                  }}
+                >
+                  Medication Help
+                </Typography>
+              </NavButton>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <NavButton component={NavLink} to="/caregiver">
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    fontFamily: "ECA, sans-serif",
+                    fontWeight:
+                      location.pathname === "/caregiver" ? "Bold" : "Regular",
+                    color:
+                      location.pathname === "/caregiver"
+                        ? "#00684A"
+                        : "#222222",
+                  }}
+                >
+                  CareGiver Mode
+                </Typography>
+              </NavButton>
+            </motion.div>
           </Box>
         )}
 
@@ -171,45 +196,7 @@ const TopBar = ({ onMenuClick }) => {
             mr: -1,
           }}
         >
-          {userEmail && (
-            <Typography
-              sx={{
-                fontSize: "1rem",
-                fontWeight: "bold",
-                color: "#00684A",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {userEmail}
-            </Typography>
-          )}
-          {/* Logout Button */}
-          {width > 900 ? (
-            <Button
-              color="inherit"
-              startIcon={<LogoutIcon />}
-              onClick={handleLogout}
-              sx={{
-                fontSize: "1rem",
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                "&:hover": { color: "#00684A" },
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: 16,
-                  fontFamily: "ECA, sans-serif",
-                  fontWeight: "Regular",
-                  color: "#222222",
-                }}
-              >
-                Logout
-              </Typography>
-            </Button>
-          ) : (
-            <></>
-          )}
+          <Profile handleLogout={handleLogout} userEmail={userEmail} />
         </Box>
       </Toolbar>
     </AppBar>
@@ -217,3 +204,93 @@ const TopBar = ({ onMenuClick }) => {
 };
 
 export default TopBar;
+
+function Profile({ handleLogout, userEmail }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <Button
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        color="black"
+      >
+        <AccountCircleIcon sx={{ fontSize: 30 }} />
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem>
+          <Typography sx={{ fontFamily: "ECA, sans-serif" }}>
+            {userEmail}
+          </Typography>
+        </MenuItem>
+
+        <MenuItem onClick={handleLogout}>
+          <Typography sx={{ fontFamily: "ECA, sans-serif" }}>Logout</Typography>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+}
+// {
+//   userEmail && (
+//     <Typography
+//       sx={{
+//         fontSize: "1rem",
+//         fontWeight: "bold",
+//         color: "#00684A",
+//         whiteSpace: "nowrap",
+//       }}
+//     >
+//       {userEmail}
+//     </Typography>
+//   );
+// }
+// {
+//   /* Logout Button */
+// }
+// {
+//   width > 900 ? (
+//     <Button
+//       color="inherit"
+//       startIcon={<LogoutIcon />}
+//       onClick={handleLogout}
+//       sx={{
+//         fontSize: "1rem",
+//         fontWeight: "bold",
+//         textTransform: "uppercase",
+//         "&:hover": { color: "#00684A" },
+//       }}
+//     >
+//       <Typography
+//         sx={{
+//           fontSize: 16,
+//           fontFamily: "ECA, sans-serif",
+//           fontWeight: "Regular",
+//           color: "#222222",
+//         }}
+//       >
+//         Logout
+//       </Typography>
+//     </Button>
+//   ) : (
+//     <></>
+//   );
+// }
