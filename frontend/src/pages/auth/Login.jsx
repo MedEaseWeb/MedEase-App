@@ -14,10 +14,9 @@ import { useNavigate } from "react-router-dom";
 import medicalBackground from "../../assets/pics/medical.webp";
 import Logo from "../utility/Logo";
 import useWindowSize from "../../hooks/useWindowSize";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import Blob from "../utility/Blob";
-import {useAuth} from "../../context/AuthContext";
-
+import { useAuth } from "../../context/AuthContext";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -52,7 +51,7 @@ const Sidebar = () => {
       return;
     }
     try {
-      await login(email, password); 
+      await login(email, password);
       navigate("/reportsimplifier"); // <-- redirect AFTER context is updated
       console.log("Logged in and redirected.");
     } catch (error) {
@@ -237,7 +236,7 @@ const Sidebar = () => {
 
 export default function Login() {
   const { width, height } = useWindowSize();
-  // console.log(width);
+
   return (
     <Box
       sx={{

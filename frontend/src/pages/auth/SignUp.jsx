@@ -370,7 +370,7 @@ const Sidebar = () => {
 
 export default function SignUp() {
   const { width, height } = useWindowSize();
-  console.log(width);
+
   return (
     <Box
       sx={{

@@ -8,18 +8,19 @@ import {
   Grid,
   IconButton,
   Paper,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 
+import AspectRatioIcon from "@mui/icons-material/AspectRatio";
+import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ShareIcon from "@mui/icons-material/Share";
-import AspectRatioIcon from "@mui/icons-material/AspectRatio";
-import CloseIcon from "@mui/icons-material/Close";
+import DragDropTextField from "./DragDropTextField";
+import { motion } from "framer-motion";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -48,6 +49,10 @@ const reportSimplificationPage = () => {
   const [simplifiedReport, setSimplifiedReport] = useState("");
   const [loading, setLoading] = useState(false);
   const [fullScreenOpen, setFullScreenOpen] = useState(false);
+
+  // useEffect(() => {
+  //   console.log(originalReport);
+  // }, [originalReport]);
 
   // for auto scrolling on simplified report
   const simplifiedScrollRef = useRef(null);
@@ -250,61 +255,29 @@ const reportSimplificationPage = () => {
                 >
                   Original Report
                 </Typography>
-                <TextField
-                  multiline
-                  rows={11}
-                  variant="outlined"
-                  placeholder="Paste your original medical report here..."
-                  fullWidth
-                  value={originalReport}
-                  onChange={(e) => setOriginalReport(e.target.value)}
-                  sx={{
-                    backgroundColor: "#fff",
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: "#ccc",
-                        transition: "border-color 0.3s ease",
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "#00897B",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "#004D40",
-                      },
-                    },
-                  }}
-                  slotProps={{
-                    inputLabel: {
-                      sx: {
-                        fontFamily: "ECA, sans-serif",
-                        fontWeight: "Regular",
-                      },
-                    },
-                    input: {
-                      sx: {
-                        fontFamily: "ECA, sans-serif",
-                        fontWeight: "Regular",
-                      },
-                    },
-                  }}
+                <DragDropTextField
+                  originalReport={originalReport}
+                  setOriginalReport={setOriginalReport}
                 />
-                <Box sx={{ textAlign: "right", mt: 2 }}>
-                  <Button
-                    variant="contained"
-                    onClick={handleSimplify}
-                    sx={{
-                      backgroundColor: "#00897B",
-                      color: "#fff",
-                      borderRadius: "25px",
-                      fontWeight: "bold",
-                      textTransform: "none",
-                    }}
-                  >
-                    <Typography sx={{ fontFamily: "ECA, sans-serif" }}>
-                      Simplify
-                    </Typography>
-                  </Button>
-                </Box>
+                <motion.div whileHover={{ scale: 1 }}>
+                  <Box sx={{ textAlign: "right", mt: 2 }}>
+                    <Button
+                      variant="contained"
+                      onClick={handleSimplify}
+                      sx={{
+                        backgroundColor: "#00897B",
+                        color: "#fff",
+                        borderRadius: "25px",
+                        fontWeight: "bold",
+                        textTransform: "none",
+                      }}
+                    >
+                      <Typography sx={{ fontFamily: "ECA, sans-serif" }}>
+                        Simplify
+                      </Typography>
+                    </Button>
+                  </Box>
+                </motion.div>
               </Paper>
             </Box>
           </Grid>

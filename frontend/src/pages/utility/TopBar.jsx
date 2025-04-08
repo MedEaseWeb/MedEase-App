@@ -38,7 +38,7 @@ const NavButton = styled(Button)(({ theme }) => ({
 
 const TopBar = ({ onMenuClick }) => {
   const { width, height } = useWindowSize();
-  console.log(width);
+
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -126,6 +126,7 @@ const TopBar = ({ onMenuClick }) => {
               mx: 1,
               flexShrink: 0,
               minWidth: 0,
+              ml: -5,
             }}
           >
             <motion.div whileHover={{ scale: 1.1 }}>
