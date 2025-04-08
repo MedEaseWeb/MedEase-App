@@ -8,33 +8,41 @@ from src.routes.caregiver import caregiver_router
 from src.routes.simplify import router as simplify_router
 from fastapi.middleware.cors import CORSMiddleware
 
-# from src.socket_server import register_socketio_events
-# from fastapi_socketio import SocketManager
+import socketio
+from src.socket_server import register_socketio_events
 
-app = FastAPI()
-
-# Enable CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://medease.pages.dev", "http://localhost:5173"],  # Frontend lUR
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+# Socket.IO AsyncServer instance
+sio = socketio.AsyncServer(
+    async_mode="asgi",
+    cors_allowed_origins=["http://localhost:5173", "https://medease.pages.dev"], 
+    logger=False, 
+    engineio_logger=False
 )
 
-app.include_router(auth_router, prefix="/auth")
-app.include_router(medication_router, prefix="/medication")
-app.include_router(general_router, prefix="/general")
-app.include_router(google_oauth_router, prefix="/google")
-app.include_router(caregiver_router, prefix="/caregiver")
-app.include_router(simplify_router, prefix="/simplify")
+api_app = FastAPI()
 
-# Create SocketManager and register it
-# socket_manager = SocketManager(app=app)
+# CORS on api_app
+api_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://medease.pages.dev", "http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Register events
-# register_socketio_events(socket_manager)
+api_app.include_router(auth_router, prefix="/auth")
+api_app.include_router(medication_router, prefix="/medication")
+api_app.include_router(general_router, prefix="/general")
+api_app.include_router(google_oauth_router, prefix="/google")
+api_app.include_router(caregiver_router, prefix="/caregiver")
+api_app.include_router(simplify_router, prefix="/simplify")
 
-@app.get("/")
+# Define HTTP routes on the FastAPI app.
+@api_app.get("/")
 def hello_world():
     return {"message": "Hello World"}
+
+register_socketio_events(sio)
+
+# Wrap FastAPI app with the Socket.IO ASGI app
+app = socketio.ASGIApp(sio, other_asgi_app=api_app, socketio_path="/ws/socket.io")
