@@ -25,7 +25,6 @@ import Blob from "../utility/Blob";
 import axios from "axios";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
-// const backendBaseUrl = "http://localhost:8081"
 
 const Sidebar = () => {
   const navigate = useNavigate();

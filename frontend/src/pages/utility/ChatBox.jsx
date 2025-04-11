@@ -5,9 +5,11 @@ import { io } from "socket.io-client";
 import Draggable from "react-draggable";
 import Paper from "@mui/material/Paper";
 
+const backendBaseUrl = import.meta.env.VITE_API_URL;
+
 // Create a singleton socket connection to your FastAPI backend.
 // Adjust the URL as needed for your environment.
-const socket = io("http://localhost:8081", {
+const socket = io(backendBaseUrl, {
   path: "/ws/socket.io",
 });
 
