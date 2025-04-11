@@ -19,6 +19,8 @@ import useWindowSize from "../../hooks/useWindowSize";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
+// const backendBaseUrl = "https://medease-454522.uc.r.appspot.com";
+
 
 const NavButton = styled(Button)(({ theme }) => ({
   borderRadius: "10px",

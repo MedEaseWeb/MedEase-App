@@ -25,3 +25,15 @@ def generate_presigned_url(bucket_name: str, object_name: str, content_type: str
     except ClientError as e:
         print(f"Error generating presigned URL: {e}")
         return None
+
+def generate_presigned_get_url(bucket_name: str, object_name: str, expiration=3600):
+    try:
+        response = s3_client.generate_presigned_url(
+            "get_object",
+            Params={"Bucket": bucket_name, "Key": object_name},
+            ExpiresIn=expiration
+        )
+        return response
+    except ClientError as e:
+        print(f"Error generating presigned GET URL: {e}")
+        return None
