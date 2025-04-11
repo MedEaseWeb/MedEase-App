@@ -1,11 +1,12 @@
 from fastapi import APIRouter, HTTPException, Query, Depends
 from botocore.exceptions import ClientError
-from src.utils.s3Connection import generate_presigned_url
+from src.utils.s3Connection import generate_presigned_url, generate_presigned_get_url
 from src.config import AWS_BUCKET_NAME
 from src.models.diaryModel import DiaryEntryUploadRequest
 from src.utils.jwtUtils import get_current_user
 from src.database import patient_diary_collection
 from datetime import datetime
+from bson import ObjectId
 
 caregiver_router = APIRouter()
 
@@ -55,3 +56,46 @@ async def diary_entry_upload(
     except Exception as e:
         print(f"Error saving diary entry: {e}")
         raise HTTPException(status_code=500, detail="Error saving diary entry: " + str(e))
+
+@caregiver_router.get("/generate-view-url")
+def generate_view_url(
+    object_key: str = Query(...),
+    expires_in: int = Query(3600)
+):
+    if not AWS_BUCKET_NAME:
+        raise HTTPException(status_code=500, detail="Bucket name not configured.")
+    
+    view_url = generate_presigned_get_url(
+        bucket_name=AWS_BUCKET_NAME,
+        object_name=object_key,
+        expiration=expires_in
+    )
+
+    if not view_url:
+        raise HTTPException(status_code=500, detail="Could not generate view URL")
+
+    return {
+        "view_url": view_url
+    }
+
+# TODO: THIS IS NOT WORKING 
+@caregiver_router.delete("/diary-entry-delete/{entry_id}")
+async def delete_diary_entry(
+    entry_id: str, 
+    current_user_id: str = Depends(get_current_user)
+):
+    # Convert the entry id to an ObjectId if you're using Mongo's _id field.
+    try:
+        object_id = ObjectId(entry_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Invalid diary entry ID format")
+    
+    result = await patient_diary_collection.delete_one({
+        "_id": object_id,
+        "caregiver_id": str(current_user_id)  # ensure that the user owns this diary entry
+    })
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Diary entry not found or not authorized")
+    
+    return {"message": "Diary entry deleted successfully"}
