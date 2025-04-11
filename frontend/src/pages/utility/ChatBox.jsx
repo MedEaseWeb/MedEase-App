@@ -64,6 +64,8 @@ const Chatbox = () => {
         style={{
           zIndex: 9999,
           position: "absolute",
+          top: "150px", // Adjust the initial position of draggable chatbox 
+          left: "1100px", 
           width: expanded ? "500px" : "280px",
           height: expanded ? "600px" : "60px",
           overflow: "hidden",
