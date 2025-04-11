@@ -59,6 +59,7 @@ const Sidebar = () => {
     }
   };
 
+  console.log("Debugging lines: ");
   console.log("VITE_API_URL =", import.meta.env.VITE_API_URL);
 
   return (
