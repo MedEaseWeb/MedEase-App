@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-
-} from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import Chatbox from "../utility/ChatBox";
 import MyPatientsSection from "./MyPatientsSection";
 import ReminderSection from "./ReminderSection";
@@ -16,6 +10,8 @@ const CaregiverMainPage = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Chatbox />
+
+      {/* DashBoard Banner */}
       <Box
         sx={{
           p: 4,
@@ -37,7 +33,6 @@ const CaregiverMainPage = () => {
       {/* Main Content */}
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Grid container spacing={3}>
-          
           {/* My Patients Section */}
           <Grid item xs={12} md={6}>
             <Paper
