@@ -24,12 +24,9 @@ import { motion } from "framer-motion";
 import Blob from "../utility/Blob";
 import axios from "axios";
 
-<<<<<<< HEAD
 // const backendBaseUrl = import.meta.env.VITE_API_URL;
-=======
-// const backendBaseUrl = import.meta.env.VITE_API_URL;
+
 const backendBaseUrl = "https://medease-454522.uc.r.appspot.com";
->>>>>>> 3b8b352 (test deployment sign up)
 
 const Sidebar = () => {
   const navigate = useNavigate();
