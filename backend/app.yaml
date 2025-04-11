@@ -5,6 +5,9 @@ runtime_config:
 env: flex
 entrypoint: uvicorn main:app --host 0.0.0.0 --port=8080
 
+readiness_check:
+  app_start_timeout_sec: 300
+
 resources:
   cpu: 1
   memory_gb: 1
