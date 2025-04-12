@@ -1,14 +1,23 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from src.services.classifier_service import classifier  # reuse the singleton
+from src.services.classifier_service import stream_classification_result
+
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("CHAT_GPT_API_KEY"))
 
 def stream_simplified_response(prompt: str):
-    """
-    Uses OpenAI's v1+ API to stream simplified content.
-    """
+    # Stream classification
+    yield from stream_classification_result(prompt)
+
+    if not classifier.is_medical(prompt):
+        yield "\nSimplification terminated.\n"
+        return
+
+    yield "\nStarting simplification...\n\n"
+
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[

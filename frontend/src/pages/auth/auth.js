@@ -1,9 +1,11 @@
 // src/api/auth.js
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-// const BASE_URL = "https://medease-454522.uc.r.appspot.com";
 
 export async function login(email, password) {
+  console.log(
+    `sending login request to: ${BASE_URL}/auth/login with load: ${password}, ${email}`
+  );
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     credentials: "include", // Send cookies
@@ -12,6 +14,7 @@ export async function login(email, password) {
     },
     body: JSON.stringify({ email, password }),
   });
+  console.log("getting response:", res);
 
   if (!res.ok) throw new Error("Invalid login");
 

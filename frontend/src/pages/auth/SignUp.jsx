@@ -26,8 +26,6 @@ import axios from "axios";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
-// const backendBaseUrl = "https://medease-454522.uc.r.appspot.com";
-
 const Sidebar = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
