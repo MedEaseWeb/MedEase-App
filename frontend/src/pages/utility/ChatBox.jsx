@@ -1,57 +1,181 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, TextField, Button, IconButton } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  IconButton,
+  Paper,
+  CircularProgress,
+  Grid,
+} from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import { io } from "socket.io-client";
 import Draggable from "react-draggable";
-import Paper from "@mui/material/Paper";
+import axios from "axios";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
-// Create a singleton socket connection to your FastAPI backend.
-// Adjust the URL as needed for your environment.
-const socket = io(backendBaseUrl, {
-  path: "/ws/socket.io",
-});
+// Create a singleton socket connection to your backend.
+const socket = io(backendBaseUrl, { path: "/ws/socket.io" });
+
+const patientFlowSteps = [
+  { field: "firstName", prompt: "Please enter patient's first name here:" },
+  { field: "lastName", prompt: "Please enter patient's last name here:" },
+  { field: "email", prompt: "Please enter patient's email here:" },
+  { field: "phone", prompt: "If you would love to, please enter patient's phone number here (optional):" },
+  { field: "notes", prompt: "Do you have any summary or notes about the patient to share? (optional):" },
+];
 
 const Chatbox = () => {
+  // Main chat state.
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [expanded, setExpanded] = useState(true);
   const nodeRef = useRef(null);
 
-  // Set up Socket.IO event listeners.
+  // Patient info flow state.
+  const [patientFlowActive, setPatientFlowActive] = useState(false);
+  const [patientFlowStep, setPatientFlowStep] = useState(0);
+  const [patientInfo, setPatientInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    notes: "",
+  });
+
+  // On mount, add a welcome message after a 500ms delay.
   useEffect(() => {
-    // Log connection status
+    const timeoutId = setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { text: "Hello, welcome to MedEase, how can I help you?", sender: "bot" }
+      ]);
+    }, 500);
+
     socket.on("connect", () => {
       console.log("Connected to backend via Socket.IO");
     });
-
     socket.on("disconnect", () => {
       console.log("Disconnected from backend");
     });
-
-    // Listen for messages from the bot
     socket.on("bot-message", (message) => {
-      console.log("🤖 GPT says:", message);
       setMessages((prev) => [...prev, { text: message, sender: "bot" }]);
     });
-
-    // Clean up the event listeners on unmount.
     return () => {
+      clearTimeout(timeoutId);
       socket.off("connect");
       socket.off("disconnect");
       socket.off("bot-message");
     };
   }, []);
 
-  // Function to send a message to the backend.
+  // Submit patient info to backend.
+  const handleSubmitPatientInfo = async (patientData) => {
+    try {
+      // POST to /api/patients using the fields from patientData.
+      const res = await axios.post(`${backendBaseUrl}/api/patients`, patientData);
+      console.log("Patient record created:", res.data);
+      setMessages((prev) => [
+        ...prev,
+        { text: "Thank you. Your patient info has been recorded.", sender: "bot" }
+      ]);
+    } catch (error) {
+      console.error("Error submitting patient info:", error);
+      setMessages((prev) => [
+        ...prev,
+        { text: "There was an error recording your patient info. Please try again.", sender: "bot" }
+      ]);
+    }
+  };
+
+  // Send message handler.
   const sendMessage = () => {
     if (input.trim() === "") return;
-    // Append the user's message locally.
-    setMessages((prev) => [...prev, { text: input, sender: "user" }]);
-    // Emit the message to the backend.
-    socket.emit("user_message", input);
-    setInput("");
+
+    // If we're in a patient info flow, process the sequential prompts.
+    if (patientFlowActive) {
+      const currentStep = patientFlowSteps[patientFlowStep];
+      // Save the user's response for the current field.
+      setPatientInfo((prev) => ({
+        ...prev,
+        [currentStep.field]: input.trim(),
+      }));
+      setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
+      setInput("");
+
+      if (patientFlowStep < patientFlowSteps.length - 1) {
+        const nextStep = patientFlowStep + 1;
+        setPatientFlowStep(nextStep);
+        setTimeout(() => {
+          setMessages((prev) => [
+            ...prev,
+            { text: patientFlowSteps[nextStep].prompt, sender: "bot" }
+          ]);
+        }, 300);
+      } else {
+        // All prompts completed; finalize the flow.
+        setPatientFlowActive(false);
+        setPatientFlowStep(0);
+        // Optionally, combine firstName and lastName to form patient_name.
+        const patientData = {
+          user_id: "current_user_id", // Replace with actual user id from context if needed.
+          firstName: patientInfo.firstName,
+          lastName: patientInfo.lastName,
+          email: patientInfo.email,
+          phone: patientInfo.phone,
+          notes: patientInfo.notes,
+        };
+        setMessages((prev) => [
+          ...prev,
+          { text: "Submitting your patient info...", sender: "bot" }
+        ]);
+        handleSubmitPatientInfo(patientData);
+      }
+    } else {
+      // Normal chat flow.
+      setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
+      socket.emit("user_message", input.trim());
+      setInput("");
+    }
+  };
+
+  // Handle selection button clicks.
+  const handleSelection = (option) => {
+    if (option === "patients") {
+      // Start the patient info flow.
+      setPatientFlowActive(true);
+      setPatientFlowStep(0);
+      setPatientInfo({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        notes: "",
+      });
+      // Push the first prompt into the messages.
+      setMessages((prev) => [
+        ...prev,
+        { text: patientFlowSteps[0].prompt, sender: "bot" }
+      ]);
+    } else {
+      let message = "";
+      switch (option) {
+        case "reminders":
+          message = "Navigate to: Reminders & Tasks";
+          break;
+        case "diary":
+          message = "Navigate to: Picture Diary Upload";
+          break;
+        case "accommodation":
+          message = "Navigate to: Accommodation Letter";
+          break;
+        default:
+          message = "Unknown option selected";
+      }
+      setMessages((prev) => [...prev, { text: message, sender: "user" }]);
+      socket.emit("user_message", message);
+    }
   };
 
   const toggleExpanded = () => setExpanded(!expanded);
@@ -64,13 +188,13 @@ const Chatbox = () => {
         style={{
           zIndex: 9999,
           position: "absolute",
-          top: "150px", // Adjust the initial position of draggable chatbox 
-          left: "1100px", 
+          top: "150px",    // Adjust as needed
+          left: "1100px",  // Adjust as needed
           width: expanded ? "500px" : "280px",
           height: expanded ? "600px" : "60px",
           overflow: "hidden",
           borderRadius: "20px",
-          border: "2px solid #027555",
+          border: "2px solid #027555"
         }}
       >
         <Box
@@ -79,8 +203,7 @@ const Chatbox = () => {
             flexDirection: "column",
             height: "100%",
             backgroundColor: "#ffffff",
-            fontFamily: "system-ui, sans-serif",
-            transition: "width 0.3s, height 0.3s",
+            transition: "width 0.3s, height 0.3s"
           }}
         >
           {/* Draggable Header */}
@@ -94,13 +217,12 @@ const Chatbox = () => {
               alignItems: "center",
               justifyContent: "space-between",
               fontSize: "18px",
-              fontWeight: "600",
+              fontWeight: "600"
             }}
           >
             Caregiver AI Assistant
-            {/* Separate Toggle Button */}
             <IconButton
-              className="chatbox-non-drag" // see next section for explanation
+              className="chatbox-non-drag"
               size="small"
               sx={{ color: "white" }}
               onClick={(e) => {
@@ -112,12 +234,11 @@ const Chatbox = () => {
             </IconButton>
           </Box>
 
-          {/* Conditionally Render the Rest of the Chat Content */}
           {expanded && (
             <>
-              {/* Message list */}
+              {/* Chat Message List */}
               <Box
-                className="chatbox-non-drag" // ensure clicks here don’t trigger dragging
+                className="chatbox-non-drag"
                 sx={{
                   flex: 1,
                   padding: "12px",
@@ -125,7 +246,7 @@ const Chatbox = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: "8px",
-                  backgroundColor: "#f8f9fa",
+                  backgroundColor: "#f8f9fa"
                 }}
               >
                 {messages.map((msg, index) => (
@@ -135,13 +256,10 @@ const Chatbox = () => {
                       padding: "10px 14px",
                       borderRadius: "18px",
                       maxWidth: "75%",
-                      alignSelf:
-                        msg.sender === "user" ? "flex-end" : "flex-start",
-                      backgroundColor:
-                        msg.sender === "user" ? "#D1E7DD" : "#E2E3E5",
-                      color: "#212529",
+                      alignSelf: msg.sender === "user" ? "flex-end" : "flex-start",
+                      backgroundColor: msg.sender === "user" ? "#D1E7DD" : "#E2E3E5",
                       fontSize: "15px",
-                      lineHeight: "1.4",
+                      lineHeight: "1.4"
                     }}
                   >
                     {msg.text}
@@ -149,14 +267,14 @@ const Chatbox = () => {
                 ))}
               </Box>
 
-              {/* Input box */}
+              {/* Input Area */}
               <Box
                 className="chatbox-non-drag"
                 sx={{
                   display: "flex",
                   padding: "12px",
                   borderTop: "1px solid #dee2e6",
-                  backgroundColor: "#ffffff",
+                  backgroundColor: "#ffffff"
                 }}
               >
                 <TextField
@@ -175,28 +293,103 @@ const Chatbox = () => {
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": { borderColor: "#ced4da" },
                       "&:hover fieldset": { borderColor: "#198754" },
-                      "&.Mui-focused fieldset": { borderColor: "#198754" },
-                    },
+                      "&.Mui-focused fieldset": { borderColor: "#198754" }
+                    }
                   }}
                 />
                 <Button
                   className="chatbox-non-drag"
                   onClick={sendMessage}
                   sx={{
-                    marginLeft: "10px",
+                    ml: 1,
                     backgroundColor: "#027555",
                     color: "white",
                     borderRadius: "10px",
                     padding: "6px 16px",
                     textTransform: "none",
                     fontWeight: 500,
-                    "&:hover": {
-                      backgroundColor: "#00684A",
-                    },
+                    "&:hover": { backgroundColor: "#00684A" }
                   }}
                 >
                   Send
                 </Button>
+              </Box>
+
+              {/* Four Selection Buttons */}
+              <Box
+                className="chatbox-non-drag"
+                sx={{
+                  p: 2,
+                  borderTop: "1px solid #dee2e6",
+                  backgroundColor: "#ffffff"
+                }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        backgroundColor: "#00897B",
+                        color: "white",
+                        borderRadius: 2,
+                        fontWeight: "bold",
+                        textTransform: "none"
+                      }}
+                      onClick={() => handleSelection("patients")}
+                    >
+                      My Patients Info Upload
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        backgroundColor: "#00897B",
+                        color: "white",
+                        borderRadius: 2,
+                        fontWeight: "bold",
+                        textTransform: "none"
+                      }}
+                      onClick={() => handleSelection("reminders")}
+                    >
+                      Reminders & Tasks
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        backgroundColor: "#00897B",
+                        color: "white",
+                        borderRadius: 2,
+                        fontWeight: "bold",
+                        textTransform: "none"
+                      }}
+                      onClick={() => handleSelection("diary")}
+                    >
+                      Picture Diary Upload
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        backgroundColor: "#00897B",
+                        color: "white",
+                        borderRadius: 2,
+                        fontWeight: "bold",
+                        textTransform: "none"
+                      }}
+                      onClick={() => handleSelection("accommodation")}
+                    >
+                      Accommodation Letter
+                    </Button>
+                  </Grid>
+                </Grid>
               </Box>
             </>
           )}

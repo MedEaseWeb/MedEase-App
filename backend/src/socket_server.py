@@ -2,10 +2,10 @@
 from openai import OpenAI
 from src.config import CHAT_GPT_API_KEY
 
-# GPT client
+# Initialize GPT client
 client = OpenAI(api_key=CHAT_GPT_API_KEY)
 
-# System prompt for the assistant
+# System prompt for the caregiver assistant.
 preprompt = (
     "You are a friendly and knowledgeable caregiver assistant. "
     "Answer questions helpfully and clearly, tailored to the user's needs."
