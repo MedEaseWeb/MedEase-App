@@ -10,7 +10,7 @@ import SignUp from "./pages/auth/SignUp";
 import CareGiver from "./pages/careGiver/CaregiverMainPage";
 import LandingPage from "./pages/LandingPage";
 import Medication from "./pages/medication/MedicationPage";
-import ReportSimplification from "./pages/report/reportSimplificationPage";
+import ReportSimplification from "./pages/reportsimplification/reportSimplificationPage";
 import NotFound from "./pages/utility/NotFound";
 import TopBarComponent from "./pages/utility/TopBar";
 import ProtectedRoute from "./context/ProtectedRoutes";

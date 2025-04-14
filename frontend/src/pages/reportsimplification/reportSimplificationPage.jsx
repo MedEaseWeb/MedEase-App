@@ -73,8 +73,8 @@ const reportSimplificationPage = () => {
 
     try {
       const response = await fetch(
-        `${backendBaseUrl}/simplify/dummy-stream`,
-        // `${backendBaseUrl}/simplify/stream`,
+        // `${backendBaseUrl}/simplify/dummy-stream`,
+        `${backendBaseUrl}/simplify/stream`,
         {
           method: "POST",
           headers: {
