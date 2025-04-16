@@ -7,6 +7,9 @@ from src.services.dummy_simplify_service import dummy_stream_response
 from fastapi.responses import StreamingResponse, JSONResponse
 from src.services.classifier_service import stream_classification_result
 
+from src.models.simplificationModel import MedicalReport
+from src.database import medical_report_collection
+from datetime import datetime
 
 router = APIRouter()
 
@@ -21,3 +24,22 @@ async def dummy_simplify_text():
 @router.post("/classify")
 async def classify_text(request: SimplifyRequest):
     return StreamingResponse(stream_classification_result(request.text), media_type="text/plain")
+
+
+# TODO: DELETE this endpoint after testing
+@router.post("/submit-report")
+async def submit_medical_report(report: MedicalReport):
+    report_dict = report.dict()
+    # Optional: Convert datetime to ISO format or let MongoDB handle it
+    report_dict["date_created"] = report.date_created or datetime.utcnow()
+
+    inserted = await medical_report_collection.insert_one(report_dict)
+    return JSONResponse({
+        "message": "Medical report inserted successfully.",
+        "inserted_id": str(inserted.inserted_id)
+    })
+
+
+
+
+

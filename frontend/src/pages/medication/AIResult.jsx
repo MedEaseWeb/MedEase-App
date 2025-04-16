@@ -13,7 +13,7 @@ const AIResult = ({ note }) => {
         p: 2,
         borderRadius: 2,
         backgroundColor: "#f9f9f9",
-        maxHeight: 400,
+        maxHeight: 510,
         overflowY: "auto",
       }}
     >

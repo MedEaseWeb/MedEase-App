@@ -9,21 +9,24 @@ import {
   Grid,
 } from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
-import { io } from "socket.io-client";
 import Draggable from "react-draggable";
 import axios from "axios";
-
-const backendBaseUrl = import.meta.env.VITE_API_URL;
-
-// Create a singleton socket connection to your backend.
-const socket = io(backendBaseUrl, { path: "/ws/socket.io" });
+import socket from "../../pages/utility/SocketConnection";
 
 const patientFlowSteps = [
   { field: "firstName", prompt: "Please enter patient's first name here:" },
   { field: "lastName", prompt: "Please enter patient's last name here:" },
   { field: "email", prompt: "Please enter patient's email here:" },
-  { field: "phone", prompt: "If you would love to, please enter patient's phone number here (optional):" },
-  { field: "notes", prompt: "Do you have any summary or notes about the patient to share? (optional):" },
+  {
+    field: "phone",
+    prompt:
+      "If you would love to, please enter patient's phone number here (optional):",
+  },
+  {
+    field: "notes",
+    prompt:
+      "Do you have any summary or notes about the patient to share? (optional):",
+  },
 ];
 
 const Chatbox = () => {
@@ -49,7 +52,10 @@ const Chatbox = () => {
     const timeoutId = setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { text: "Hello, welcome to MedEase, how can I help you?", sender: "bot" }
+        {
+          text: "Hello, welcome to MedEase, how can I help you?",
+          sender: "bot",
+        },
       ]);
     }, 500);
 
@@ -71,23 +77,23 @@ const Chatbox = () => {
   }, []);
 
   // Submit patient info to backend.
-  const handleSubmitPatientInfo = async (patientData) => {
-    try {
-      // POST to /api/patients using the fields from patientData.
-      const res = await axios.post(`${backendBaseUrl}/api/patients`, patientData);
-      console.log("Patient record created:", res.data);
-      setMessages((prev) => [
-        ...prev,
-        { text: "Thank you. Your patient info has been recorded.", sender: "bot" }
-      ]);
-    } catch (error) {
-      console.error("Error submitting patient info:", error);
-      setMessages((prev) => [
-        ...prev,
-        { text: "There was an error recording your patient info. Please try again.", sender: "bot" }
-      ]);
-    }
-  };
+  // const handleSubmitPatientInfo = async (patientData) => {
+  //   try {
+  //     // POST to /api/patients using the fields from patientData.
+  //     const res = await axios.post(`${backendBaseUrl}/api/patients`, patientData);
+  //     console.log("Patient record created:", res.data);
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       { text: "Thank you. Your patient info has been recorded.", sender: "bot" }
+  //     ]);
+  //   } catch (error) {
+  //     console.error("Error submitting patient info:", error);
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       { text: "There was an error recording your patient info. Please try again.", sender: "bot" }
+  //     ]);
+  //   }
+  // };
 
   // Send message handler.
   const sendMessage = () => {
@@ -110,7 +116,7 @@ const Chatbox = () => {
         setTimeout(() => {
           setMessages((prev) => [
             ...prev,
-            { text: patientFlowSteps[nextStep].prompt, sender: "bot" }
+            { text: patientFlowSteps[nextStep].prompt, sender: "bot" },
           ]);
         }, 300);
       } else {
@@ -128,7 +134,7 @@ const Chatbox = () => {
         };
         setMessages((prev) => [
           ...prev,
-          { text: "Submitting your patient info...", sender: "bot" }
+          { text: "Submitting your patient info...", sender: "bot" },
         ]);
         handleSubmitPatientInfo(patientData);
       }
@@ -156,7 +162,7 @@ const Chatbox = () => {
       // Push the first prompt into the messages.
       setMessages((prev) => [
         ...prev,
-        { text: patientFlowSteps[0].prompt, sender: "bot" }
+        { text: patientFlowSteps[0].prompt, sender: "bot" },
       ]);
     } else {
       let message = "";
@@ -188,13 +194,13 @@ const Chatbox = () => {
         style={{
           zIndex: 9999,
           position: "absolute",
-          top: "150px",    // Adjust as needed
-          left: "1100px",  // Adjust as needed
+          top: "150px", // Adjust as needed
+          left: "1100px", // Adjust as needed
           width: expanded ? "500px" : "280px",
           height: expanded ? "600px" : "60px",
           overflow: "hidden",
           borderRadius: "20px",
-          border: "2px solid #027555"
+          border: "2px solid #027555",
         }}
       >
         <Box
@@ -203,7 +209,7 @@ const Chatbox = () => {
             flexDirection: "column",
             height: "100%",
             backgroundColor: "#ffffff",
-            transition: "width 0.3s, height 0.3s"
+            transition: "width 0.3s, height 0.3s",
           }}
         >
           {/* Draggable Header */}
@@ -217,7 +223,7 @@ const Chatbox = () => {
               alignItems: "center",
               justifyContent: "space-between",
               fontSize: "18px",
-              fontWeight: "600"
+              fontWeight: "600",
             }}
           >
             Caregiver AI Assistant
@@ -246,7 +252,7 @@ const Chatbox = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: "8px",
-                  backgroundColor: "#f8f9fa"
+                  backgroundColor: "#f8f9fa",
                 }}
               >
                 {messages.map((msg, index) => (
@@ -256,10 +262,12 @@ const Chatbox = () => {
                       padding: "10px 14px",
                       borderRadius: "18px",
                       maxWidth: "75%",
-                      alignSelf: msg.sender === "user" ? "flex-end" : "flex-start",
-                      backgroundColor: msg.sender === "user" ? "#D1E7DD" : "#E2E3E5",
+                      alignSelf:
+                        msg.sender === "user" ? "flex-end" : "flex-start",
+                      backgroundColor:
+                        msg.sender === "user" ? "#D1E7DD" : "#E2E3E5",
                       fontSize: "15px",
-                      lineHeight: "1.4"
+                      lineHeight: "1.4",
                     }}
                   >
                     {msg.text}
@@ -274,7 +282,7 @@ const Chatbox = () => {
                   display: "flex",
                   padding: "12px",
                   borderTop: "1px solid #dee2e6",
-                  backgroundColor: "#ffffff"
+                  backgroundColor: "#ffffff",
                 }}
               >
                 <TextField
@@ -293,8 +301,8 @@ const Chatbox = () => {
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": { borderColor: "#ced4da" },
                       "&:hover fieldset": { borderColor: "#198754" },
-                      "&.Mui-focused fieldset": { borderColor: "#198754" }
-                    }
+                      "&.Mui-focused fieldset": { borderColor: "#198754" },
+                    },
                   }}
                 />
                 <Button
@@ -308,7 +316,7 @@ const Chatbox = () => {
                     padding: "6px 16px",
                     textTransform: "none",
                     fontWeight: 500,
-                    "&:hover": { backgroundColor: "#00684A" }
+                    "&:hover": { backgroundColor: "#00684A" },
                   }}
                 >
                   Send
@@ -321,7 +329,7 @@ const Chatbox = () => {
                 sx={{
                   p: 2,
                   borderTop: "1px solid #dee2e6",
-                  backgroundColor: "#ffffff"
+                  backgroundColor: "#ffffff",
                 }}
               >
                 <Grid container spacing={2}>
@@ -334,7 +342,7 @@ const Chatbox = () => {
                         color: "white",
                         borderRadius: 2,
                         fontWeight: "bold",
-                        textTransform: "none"
+                        textTransform: "none",
                       }}
                       onClick={() => handleSelection("patients")}
                     >
@@ -350,7 +358,7 @@ const Chatbox = () => {
                         color: "white",
                         borderRadius: 2,
                         fontWeight: "bold",
-                        textTransform: "none"
+                        textTransform: "none",
                       }}
                       onClick={() => handleSelection("reminders")}
                     >
@@ -366,7 +374,7 @@ const Chatbox = () => {
                         color: "white",
                         borderRadius: 2,
                         fontWeight: "bold",
-                        textTransform: "none"
+                        textTransform: "none",
                       }}
                       onClick={() => handleSelection("diary")}
                     >
@@ -382,7 +390,7 @@ const Chatbox = () => {
                         color: "white",
                         borderRadius: 2,
                         fontWeight: "bold",
-                        textTransform: "none"
+                        textTransform: "none",
                       }}
                       onClick={() => handleSelection("accommodation")}
                     >

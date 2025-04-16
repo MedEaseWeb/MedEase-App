@@ -1,11 +1,17 @@
 from pydantic import BaseModel
-from typing import  List
+from typing import  List, Optional
 
 class PatientData(BaseModel):
-    user_id: str
-    patient_name: str
+    patient_id: str
+    caregiver_id: str
+    patient_email: str
+    patient_name: Optional[str] = None
+    patient_phone: Optional[str] = None
+    medical_reports: Optional[List[dict]] = None
+    medication_note: Optional[List[dict]] = None
+    caregiver_note: Optional[str] = None
+
+class PatientDataRequest(BaseModel):
     patient_email: str
     generated_key: str
-    simplified_report: List[str]
-    medication_note: str
-
+   

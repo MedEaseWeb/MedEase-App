@@ -55,8 +55,9 @@ const LeftMenu = () => {
 
   const handleGenerateKey = async () => {
     const keyValue = generateRandomKey();
+
     const newKey = {
-      value: generateRandomKey(),
+      value: keyValue,
       createdAt: Date.now(),
       copied: false,
     };

@@ -18,7 +18,6 @@ async def get_user_profile(user_id: str = Depends(get_current_user)):
     return {"email": user["email"]}
 
 
-# The current expiration time for the key is set to 1 hour (3600 seconds) when is this call ever used? idk
 @general_router.post("/generate-key")
 async def generate_user_key(key_req: KeyRequest, user_id: str = Depends(get_current_user)):
     """Store the frontend-generated key for the user."""

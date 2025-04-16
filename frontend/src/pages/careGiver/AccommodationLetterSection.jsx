@@ -46,12 +46,69 @@ const AccommodationLetterSection = () => {
       to: "accessibility@emory.edu",
       subject: "Documentation for Disability Accommodations",
       content:
-        "Dear Accessibility Services Team,\n\n[Insert student name and details...]",
+        `Dear Accessibility Services Team,
+I am writing to provide documentation for [Student’s Full Name], who is under my care for [disability/condition]. I am a [professional title], licensed in the state of [State], with experience in treating/advising adolescent and adult populations.
+Diagnosis & Background
+[Student’s Name] has been diagnosed with [condition], confirmed via [clinical assessments, evaluations, diagnostic criteria used]. This condition substantially limits the student’s ability to [specify major life activities such as learning, concentrating, reading, or attending class].
+Current Functional Impact
+Academic Challenges: [e.g., difficulty sustaining attention, slower reading speed]
+
+
+Daily Functioning: [e.g., medical fatigue, executive dysfunction]
+
+
+Stability: The condition is expected to be [chronic/stable/episodic].
+
+
+Recommendations for Accommodations
+To support equitable academic access, I recommend:
+Extended testing time (50% or 100%)
+
+
+Access to note-taking assistance
+
+
+Flexibility in attendance policies
+
+
+Breaks during exams or class sessions
+
+
+Treatment Plan & Medications
+The student is currently being treated with [therapy/medication], which may cause [any side effects, if applicable].
+All documentation submitted is confidential and intended solely to support reasonable accommodation decisions under ADA/Section 504.
+Please contact me if additional clarification is needed.
+Sincerely,
+ [Name, Credentials]
+ Title / License # / State
+ Contact Information
+`,
     },
     professor: {
       to: "",
       subject: "Accommodation Notification",
-      content: "Dear Professor [Last Name],\n\n[Insert message content...]",
+      content: `Dear Professor [Last Name],
+This letter is to inform you that [Student’s Full Name], a student in your [Course Name] class, has a documented disability that may affect their academic performance and participation. As the student’s treating professional, I am not disclosing specific medical information but confirming the need for academic accommodations, which are essential for equitable access.
+The recommended accommodations may include:
+Extended time on tests or assignments
+
+
+A distraction-reduced testing environment
+
+
+Flexibility with attendance or participation policies
+
+
+Use of assistive technologies or note-taking support
+
+
+These accommodations are in line with ADA and Section 504 and have been submitted to Emory’s Department of Accessibility Services. I appreciate your collaboration in creating an inclusive learning environment.
+Should you require more detailed guidance, DAS is available to support implementation while preserving student privacy.
+Thank you for your understanding and professionalism.
+Sincerely,
+ [Name, Credentials]
+ Licensed [Psychologist/MD/etc.]
+`,
     },
     employer: {
       to: "",

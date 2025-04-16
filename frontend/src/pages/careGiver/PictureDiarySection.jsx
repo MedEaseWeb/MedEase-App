@@ -12,12 +12,13 @@ import {
   Tooltip,
   Card,
   CardContent,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import { Add as AddIcon, Close as CloseIcon } from "@mui/icons-material";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
-// Helper to format dates (you can adjust formatting as desired)
 const formatDate = (dateStr) => {
   const d = new Date(dateStr);
   return d.toLocaleDateString();
@@ -32,36 +33,23 @@ const formatTime = (dateStr) => {
 // into the diary card format.
 const convertDiaryEntry = (rawEntry) => {
   return {
-    // Combine first and last names
     patientName: `${rawEntry.patient_first_name} ${rawEntry.patient_last_name}`,
-    // Format date and time – adjust according to your needs
     recordedTime: formatTime(rawEntry.date_uploaded),
     dateDetail: formatDate(rawEntry.date_uploaded),
-    // Count photos from the images array
     photoCount: rawEntry.images ? rawEntry.images.length : 0,
     note: rawEntry.caregiver_notes,
-    // Here we assume rawEntry.images contains the S3 object keys, not the full URL.
     images: rawEntry.images || [],
-    // Optionally include the _id for keys etc.
     id: rawEntry._id || rawEntry.id,
   };
 };
 
-
 const PictureDiarySection = () => {
-  // You might get the currentUserID from your auth context or similar.
-  // For this example, we hardcode it.
-  const currentUserID = "user_123"; // adjust this as needed
+  const currentUserID = "user_123"; // TODO: adjust this as needed
 
-  // Manage diary list state.
   const [diaryEntries, setDiaryEntries] = useState([]);
-  // For viewing an existing diary entry.
   const [selectedDiary, setSelectedDiary] = useState(null);
-  // New state for storing the presigned view URLs for images.
   const [presignedImageUrls, setPresignedImageUrls] = useState([]);
-  // For opening the add new diary entry dialog.
   const [openAddDialog, setOpenAddDialog] = useState(false);
-  // For holding new diary entry form data.
   const [newDiaryEntry, setNewDiaryEntry] = useState({
     patientFirstName: "",
     patientLastName: "",
@@ -69,10 +57,8 @@ const PictureDiarySection = () => {
     pictures: null,
     note: "",
   });
-  // For previewing uploaded pictures in the Add Dialog.
   const [picturePreviews, setPicturePreviews] = useState([]);
 
-  // On mount, load any cached diary entries for the current user.
   useEffect(() => {
     const cacheKey = `diaryEntries_${currentUserID}`;
     const cachedEntries = localStorage.getItem(cacheKey);
@@ -81,7 +67,7 @@ const PictureDiarySection = () => {
     }
   }, [currentUserID]);
 
-  // Save diaryEntries to localStorage whenever they change.
+  // Save diaryEntries to localStorage whenever they change. (Will Update to GET endpoint later)
   useEffect(() => {
     const cacheKey = `diaryEntries_${currentUserID}`;
     localStorage.setItem(cacheKey, JSON.stringify(diaryEntries));
@@ -95,13 +81,12 @@ const PictureDiarySection = () => {
           const urls = await Promise.all(
             selectedDiary.images.map(async (objectKey) => {
               try {
-                // Call your backend endpoint that generates a presigned GET URL.
                 const response = await fetch(
                   `${backendBaseUrl}/caregiver/generate-view-url?object_key=${objectKey}`
                 );
                 if (!response.ok) {
                   console.error(`Failed to fetch view URL for ${objectKey}`);
-                  return objectKey; // Fallback if desired.
+                  return objectKey;
                 }
                 const data = await response.json();
                 return data.view_url;
@@ -122,23 +107,19 @@ const PictureDiarySection = () => {
     fetchPresignedUrls();
   }, [selectedDiary]);
 
-  // Handle click for each diary entry card.
   const handleItemClick = (diary) => {
     setSelectedDiary(diary);
   };
 
-  // Handle closing the detailed diary view.
   const handleClose = () => {
     setSelectedDiary(null);
     setPresignedImageUrls([]);
   };
 
-  // Open Add Dialog.
   const handleOpenAddDialog = () => {
     setOpenAddDialog(true);
   };
 
-  // Close Add Dialog and clear form data.
   const handleCloseAddDialog = () => {
     setOpenAddDialog(false);
     setNewDiaryEntry({
@@ -151,7 +132,6 @@ const PictureDiarySection = () => {
     setPicturePreviews([]);
   };
 
-  // Handle text input changes.
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewDiaryEntry((prev) => ({
@@ -160,7 +140,6 @@ const PictureDiarySection = () => {
     }));
   };
 
-  // Handle file input changes.
   const handleFileChange = (e) => {
     const files = e.target.files;
     setNewDiaryEntry((prev) => ({
@@ -168,7 +147,6 @@ const PictureDiarySection = () => {
       pictures: files,
     }));
 
-    // Generate previews for the selected files.
     const previews = [];
     for (let i = 0; i < files.length; i++) {
       previews.push(URL.createObjectURL(files[i]));
@@ -176,7 +154,7 @@ const PictureDiarySection = () => {
     setPicturePreviews(previews);
   };
 
-  // Function to upload pictures to S3 via backend's presigned URL endpoint.
+  // Upload pictures to S3 via backend's presigned URL endpoint.
   const uploadPictures = async () => {
     if (!newDiaryEntry.pictures || newDiaryEntry.pictures.length === 0) {
       return [];
@@ -185,7 +163,6 @@ const PictureDiarySection = () => {
     for (let i = 0; i < newDiaryEntry.pictures.length; i++) {
       const file = newDiaryEntry.pictures[i];
       try {
-        // Construct query parameters to call the backend endpoint.
         const queryParams = new URLSearchParams({
           filename: file.name,
           content_type: file.type,
@@ -197,7 +174,6 @@ const PictureDiarySection = () => {
           throw new Error(`Failed to get presigned URL for ${file.name}`);
         }
         const presignedData = await presignedResponse.json();
-        // Upload the file using the presigned URL.
         const uploadResponse = await fetch(presignedData.upload_url, {
           method: "PUT",
           headers: {
@@ -208,7 +184,6 @@ const PictureDiarySection = () => {
         if (!uploadResponse.ok) {
           throw new Error(`Upload failed for file ${file.name}`);
         }
-        // Instead of constructing a public URL, store the object key for later use.
         uploadedUrls.push(presignedData.object_key);
       } catch (error) {
         console.error("Error uploading file:", error);
@@ -220,11 +195,9 @@ const PictureDiarySection = () => {
   // Handle saving the new diary entry (POST to backend).
   const handleSaveNewEntry = async () => {
     try {
-      // Upload pictures and get their object keys.
       const uploadedPictureKeys = await uploadPictures();
       console.log("Uploaded Picture Keys:", uploadedPictureKeys);
 
-      // Build the payload.
       const diaryEntryPayload = {
         patient_first_name: newDiaryEntry.patientFirstName,
         patient_last_name: newDiaryEntry.patientLastName,
@@ -252,17 +225,12 @@ const PictureDiarySection = () => {
 
       const responseData = await response.json();
       console.log("Diary Entry Saved:", responseData);
-      // Assume your backend returns the raw diary entry data.
       const rawEntry = responseData.entry;
-      // For example, add _id to the raw data if needed.
       if (!rawEntry._id && responseData.id) {
         rawEntry._id = responseData.id;
       }
-      // Convert raw data into the displayed format.
       const newEntryConverted = convertDiaryEntry(rawEntry);
-      // Update the diary list (prepend new entry).
       setDiaryEntries((prev) => [newEntryConverted, ...prev]);
-      // Close the Add Dialog.
       handleCloseAddDialog();
     } catch (error) {
       console.error("Error saving new diary entry:", error);
@@ -271,18 +239,17 @@ const PictureDiarySection = () => {
 
   const handleDeleteEntry = async (entryId) => {
     try {
-      // Call the backend DELETE endpoint.
-      const response = await fetch(
-        `${backendBaseUrl}/caregiver/diary-entry-delete/${entryId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to delete diary entry");
-      }
-      // If deletion is successful, filter out the entry from state.
+      // // Call the backend DELETE endpoint. (TODO: adjustment in backned needed)
+      // const response = await fetch(
+      //   `${backendBaseUrl}/caregiver/diary-entry-delete/${entryId}`,
+      //   {
+      //     method: "DELETE",
+      //     credentials: "include",
+      //   }
+      // );
+      // if (!response.ok) {
+      //   throw new Error("Failed to delete diary entry");
+      // }
       setDiaryEntries((prevEntries) =>
         prevEntries.filter((entry) => entry.id !== entryId)
       );
@@ -291,7 +258,6 @@ const PictureDiarySection = () => {
       console.error("Error deleting diary entry:", error);
     }
   };
-  
 
   return (
     <>
@@ -354,26 +320,23 @@ const PictureDiarySection = () => {
             onClick={() => handleItemClick(entry)}
           >
             <CardContent>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Box sx={{ flex: 1 }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    {entry.patientName}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    sx={{ textAlign: "center" }}
-                  >
-                    {entry.dateDetail}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    sx={{ textAlign: "right" }}
-                  >
-                    {entry.photoCount} photos
-                  </Typography>
-                </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  {entry.patientName}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {entry.dateDetail}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {entry.photoCount} photos
+                </Typography>
+
                 {/* Delete Button */}
                 <IconButton
                   sx={{
@@ -382,13 +345,11 @@ const PictureDiarySection = () => {
                     right: 4,
                     width: 20,
                     height: 20,
-                    backgroundColor: "#004D40", // red background for delete
+                    backgroundColor: "#004D40",
                     color: "#fff",
                     "&:hover": { backgroundColor: "#d32f2f" },
                   }}
                   onClick={(e) => {
-                    // Stop propagation so that clicking the delete button
-                    // doesn't trigger the card's onClick for viewing details.
                     e.stopPropagation();
                     handleDeleteEntry(entry.id);
                   }}
@@ -406,7 +367,7 @@ const PictureDiarySection = () => {
         open={Boolean(selectedDiary)}
         onClose={handleClose}
         fullWidth
-        maxWidth="sm"
+        maxWidth="lg"
       >
         {/* Close Button */}
         <Box sx={{ position: "absolute", top: 8, right: 8 }}>
@@ -414,38 +375,47 @@ const PictureDiarySection = () => {
             <CloseIcon />
           </IconButton>
         </Box>
+
         <DialogContent>
           {selectedDiary && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-                {selectedDiary.patientName}'s Diary Entry
+                {selectedDiary.patientName}'s Picture Diary
               </Typography>
+
               <Typography variant="body2" sx={{ mb: 1 }}>
                 Date: {selectedDiary.dateDetail}{" "}
-                <span style={{ marginLeft: 8 }}>
+                <Box component="span" sx={{ ml: 1, color: "text.secondary" }}>
                   ({selectedDiary.recordedTime})
-                </span>
+                </Box>
               </Typography>
-              {/* Display pictures using the presigned GET URLs */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 1,
-                  mb: 2,
-                }}
-              >
-                {presignedImageUrls.map((imgUrl, idx) => (
-                  <img
-                    key={idx}
-                    src={imgUrl}
-                    alt={`Diary pic ${idx}`}
-                    style={{ width: 100, height: 100, objectFit: "cover" }}
-                  />
+
+              {/* 1. Gallery view */}
+              <ImageList cols={4} gap={8} sx={{ mb: 2 }}>
+                {presignedImageUrls.map((url, idx) => (
+                  <ImageListItem key={idx}>
+                    <img
+                      src={url}
+                      alt={`Diary pic ${idx + 1}`}
+                      loading="lazy"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: 4,
+                      }}
+                    />
+                  </ImageListItem>
                 ))}
-              </Box>
-              {/* Note Text */}
-              <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
+              </ImageList>
+
+              {/* 2. Diary Notes subtitle */}
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
+                Diary Notes From Caregiver
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ whiteSpace: "pre-line", color: "text.primary" }}
+              >
                 {selectedDiary.note}
               </Typography>
             </Box>
