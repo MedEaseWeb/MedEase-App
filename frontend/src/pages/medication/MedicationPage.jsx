@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Typography,
-  Box,
-  Paper,
-  Grid,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Button, Typography, Box, Paper, Grid } from "@mui/material";
 import {
   Medication as MedicationIcon,
   Event,
@@ -13,12 +7,38 @@ import {
 } from "@mui/icons-material";
 import PasteBox from "./PasteBox";
 import HistoryTab from "./HistoryTab";
+import axios from "axios";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
 const FeatureButtons = () => {
-  const handleConnectGoogle = () => {
-    window.location.href = `${backendBaseUrl}/google/connect-google`; 
+  const [isCalendarConnected, setIsCalendarConnected] = useState(false);
+
+  useEffect(() => {
+    const checkCalendarStatus = async () => {
+      try {
+        const res = await fetch(
+          `${backendBaseUrl}/google/is-google-calendar-connected`,
+          {
+            credentials: "include",
+          }
+        );
+        const data = await res.json();
+        setIsCalendarConnected(data.isConnected);
+      } catch (error) {
+        console.error("Failed to check Gmail connection:", error);
+      }
+    };
+
+    checkCalendarStatus();
+  }, []);
+
+  const handleConnectGoogleCalendar = () => {
+    window.location.href = `${backendBaseUrl}/google/connect-google-calendar`;
+  };
+
+  const handleViewGoogleCalendar = () => {
+    window.location.href = `${backendBaseUrl}/google/view-google-calendar`;
   };
 
   return (
@@ -26,7 +46,7 @@ const FeatureButtons = () => {
       <Button
         variant="contained"
         startIcon={<Event />}
-        onClick={handleConnectGoogle}
+        onClick={handleConnectGoogleCalendar}
         sx={{
           borderRadius: "20px",
           backgroundColor: "#00684A",
@@ -54,7 +74,6 @@ const FeatureButtons = () => {
     </Box>
   );
 };
-
 
 const Disclaimer = () => (
   <Paper sx={{ p: 2, mt: 3, backgroundColor: "#FFF3CD", borderRadius: 2 }}>

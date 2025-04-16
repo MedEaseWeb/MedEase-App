@@ -113,7 +113,30 @@ Sincerely,
     employer: {
       to: "",
       subject: "Workplace Accommodation Verification",
-      content: "Dear [HR/Team Name],\n\n[Insert message content...]",
+      content: `Dear [Name/Team],
+This letter serves to confirm that [Student’s Full Name] has a disability that may impact their work performance or require specific workplace accommodations. The nature of the condition falls under protections afforded by the Americans with Disabilities Act (ADA), and this individual qualifies for reasonable accommodations.
+While the specific diagnosis is confidential, functional limitations include:
+[e.g., Difficulty with sustained concentration, energy limitations, or sensory sensitivity]
+
+
+[e.g., Need for structured schedules or reduced distractions]
+
+
+Suggested accommodations may include:
+Flexible scheduling or break times
+
+
+Quiet workspace or noise-canceling equipment
+
+
+Written instructions to support task clarity
+
+
+These modifications are intended to enable the student to perform the essential functions of their role without undue hardship on the organization.
+Please feel free to contact me with any questions about how to best support this employee, while ensuring legal compliance and ethical standards.
+Sincerely,
+ [Name, Credentials]
+ Title / License / Contact Info`,
     },
   });
 
