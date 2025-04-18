@@ -26,6 +26,7 @@ import {
 import AIResult from "../medication/AIResult";
 import MedicalReports from "./MedicalReports";
 
+
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
 const MyPatientsSection = () => {
