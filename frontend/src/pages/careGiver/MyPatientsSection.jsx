@@ -29,6 +29,7 @@ import MedicalReports from "./MedicalReports";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
+
 const MyPatientsSection = () => {
   const [patients, setPatients] = useState([]);
   const [open, setOpen] = useState(false);
