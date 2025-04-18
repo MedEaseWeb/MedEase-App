@@ -4,7 +4,7 @@ from src.database import google_calendar_collection, gmail_collection
 from src.utils.jwtUtils import get_current_user
 import httpx
 from fastapi.responses import JSONResponse, RedirectResponse
-from src.models.googleCalendarModel import GoogleCalendarToken
+from src.models.googleCalendarModel import GoogleCalendarToken, CalendarEventRequest
 from src.models.gmailModel import GmailToken, SendGmailRequest
 import urllib.parse
 from datetime import datetime, timedelta
@@ -12,6 +12,7 @@ import base64
 
 google_oauth_router = APIRouter()
 
+### Google Calendar OAuth2.0 ###
 # connect to Google Calendar
 @google_oauth_router.get("/connect-google-calendar")
 async def connect_google(request: Request, user_id: str = Depends(get_current_user)):
@@ -22,7 +23,7 @@ async def connect_google(request: Request, user_id: str = Depends(get_current_us
         "client_id": GOOGLE_CLIENT_ID,
         "redirect_uri": GOOGLE_REDIRECT_URI,
         "response_type": "code",
-        "scope": "https://www.googleapis.com/auth/calendar",
+        "scope": "openid email https://www.googleapis.com/auth/calendar",
         "access_type": "offline",
         "prompt": "consent",
         "state": user_id
@@ -35,50 +36,65 @@ async def connect_google(request: Request, user_id: str = Depends(get_current_us
 # Redirect user to Google Calendar OAuth consent screen
 @google_oauth_router.get("/oauth2callback")
 async def oauth2callback(code: str, state: str):
-    """
-    Handle Google's redirect with code; exchange it for access/refresh tokens and store them
-    """
     token_url = "https://oauth2.googleapis.com/token"
     data = {
         "code": code,
         "client_id": GOOGLE_CLIENT_ID,
         "client_secret": GOOGLE_CLIENT_SECRET,
         "redirect_uri": GOOGLE_REDIRECT_URI,
-        "grant_type": "authorization_code"
+        "grant_type": "authorization_code",
     }
 
     async with httpx.AsyncClient() as client:
-        res = await client.post(token_url, data=data)
-        token_data = res.json()
+        # 2a) Exchange authorization code for tokens
+        token_res = await client.post(token_url, data=data)
+        token_data = token_res.json()
+        if "access_token" not in token_data:
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Token exchange failed", "details": token_data},
+            )
 
-    if "access_token" not in token_data:
-        return JSONResponse(status_code=400, content={"error": "Token exchange failed", "details": token_data})
+        access_token = token_data["access_token"]
+        refresh_token = token_data.get("refresh_token")
+        expires_in = token_data.get("expires_in", 3600)
+        expiry_date = datetime.utcnow() + timedelta(seconds=expires_in)
 
-    # Calculate expiry_date from current time + expires_in
-    expires_in = token_data.get("expires_in", 3600)
-    expiry_date = datetime.utcnow() + timedelta(seconds=expires_in)
-
-    # Create validated token model
+        # 2b) Fetch the user’s email (must stay inside the same `client` context)
+        userinfo_res = await client.get(
+            "https://www.googleapis.com/oauth2/v3/userinfo",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+        userinfo_data = userinfo_res.json()
+        calendar_email = userinfo_data.get("email")
+        if not calendar_email:
+            raise HTTPException(
+                status_code=500,
+                detail="Could not fetch calendar email from Google userinfo",
+            )
+    
+        # 2c) Build & upsert our token document (including calendar_email)
     google_token = GoogleCalendarToken(
         user_id=state,
-        access_token=token_data["access_token"],
-        refresh_token=token_data.get("refresh_token"),
+        access_token=access_token,
+        refresh_token=refresh_token,
         scope=token_data.get("scope"),
         token_type=token_data.get("token_type", "Bearer"),
         expires_in=expires_in,
-        expiry_date=expiry_date
+        expiry_date=expiry_date,
+        calendar_email=calendar_email,
     )
-
-    # Store in MongoDB (upsert = insert or update)
     await google_calendar_collection.update_one(
         {"user_id": state},
         {"$set": google_token.dict()},
-        upsert=True
+        upsert=True,
     )
 
-    # return JSONResponse(content={"message": "Google Calendar connected successfully!"})
-    return RedirectResponse(url="http://localhost:5173/caregiver")# TODO: Change this with deployed frontend URL
+    # Redirect back to your frontend
+    return RedirectResponse(url="http://localhost:5173/caregiver")
 
+
+# simple check point
 @google_oauth_router.get("/is-google-calendar-connected")
 async def is_gmail_connected(user_id: str = Depends(get_current_user)):
     user_token = await google_calendar_collection.find_one({"user_id": user_id})
@@ -89,21 +105,83 @@ async def is_gmail_connected(user_id: str = Depends(get_current_user)):
 
 @google_oauth_router.get("/view-google-calendar")
 async def view_google_calendar(user_id: str = Depends(get_current_user)):
-    """
-    Redirect user to their Google Calendar Web UI.
-    Requires the user to have already connected their calendar.
-    """
     token_data = await google_calendar_collection.find_one({"user_id": user_id})
     if not token_data:
         return JSONResponse(
             status_code=400,
-            content={"error": "Google Calendar not connected for this user"}
+            content={"error": "Google Calendar not connected for this user"},
         )
 
-    # Redirect to the Google Calendar web interface (standard for all users)
-    return RedirectResponse("https://calendar.google.com/calendar/u/0/r")
+    calendar_email = token_data.get("calendar_email")
+    if not calendar_email:
+        raise HTTPException(500, "No calendar_email stored for this user")
+
+    # authuser=email ensures the correct account session
+    redirect_url = (
+        "https://calendar.google.com/calendar/r"
+        f"?authuser={urllib.parse.quote_plus(calendar_email)}"
+    )
+    return RedirectResponse(redirect_url)
+
+# add an event to google calendar
+@google_oauth_router.post("/add-calendar-event")
+async def add_google_calendar_event(
+    event: CalendarEventRequest,
+    user_id: str = Depends(get_current_user)
+):
+    token_record = await google_calendar_collection.find_one({"user_id": user_id})
+    if not token_record:
+        return RedirectResponse(url="/connect-google-calendar")
+
+    access_token = token_record.get("access_token")
+    expiry_date = token_record.get("expiry_date")
+    refresh_token = token_record.get("refresh_token")
+
+    # Refresh token if expired
+    if expiry_date and datetime.utcnow() >= expiry_date:
+        if not refresh_token:
+            return RedirectResponse(url="/connect-google-calendar")
+        access_token, new_expiry = await refresh_access_token(refresh_token)
+        await google_calendar_collection.update_one(
+            {"user_id": user_id},
+            {"$set": {"access_token": access_token, "expiry_date": new_expiry}}
+        )
+
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json"
+    }
+
+    event_payload = {
+        "summary": event.summary,
+        "description": event.description or "",
+        "location": event.location or "",
+        "start": {
+            "dateTime": event.start_time.isoformat(),
+            "timeZone": "UTC"
+        },
+        "end": {
+            "dateTime": event.end_time.isoformat(),
+            "timeZone": "UTC"
+        }
+    }
+
+    async with httpx.AsyncClient() as client:
+        res = await client.post(
+            "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+            headers=headers,
+            json=event_payload
+        )
+
+    body = res.json()
+    print("Google Calendar API error:", res.status_code, body)
+    if res.status_code == 200 or res.status_code == 201:
+        return {"message": "Event added successfully"}
+    else:
+        raise HTTPException(status_code=res.status_code, detail=body)
 
 
+### Gmail OAuth2.0 ###
 # Redirect to Gmail OAuth (Send messages only)
 @google_oauth_router.get("/connect-gmail")
 async def connect_gmail(request: Request, user_id: str = Depends(get_current_user)):
@@ -252,3 +330,5 @@ Content-Type: text/plain; charset="UTF-8"
         return {"message": "Email sent successfully"}
     else:
         raise HTTPException(status_code=response.status_code, detail=response.json())
+
+

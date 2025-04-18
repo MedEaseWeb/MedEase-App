@@ -116,11 +116,8 @@ const MyPatientsSection = () => {
         { withCredentials: true }
       );
 
-      // The API returns a PatientData object with additional fields.
       const result = response.data;
 
-      // Build a new patient object for the UI and localStorage.
-      // Convert null arrays to empty arrays so you can map them later.
       const newPatient = {
         name: result.patient_name || "",
         email: result.patient_email,
@@ -154,7 +151,6 @@ const MyPatientsSection = () => {
     try {
       const updatedPatients = patients.filter((p) => p.email !== patientEmail);
       updatePatients(updatedPatients);
-      // If the selected patient is the one deleted, remove it from state.
       if (selectedPatient && selectedPatient.email === patientEmail) {
         setSelectedPatient(null);
       }
@@ -164,12 +160,25 @@ const MyPatientsSection = () => {
     }
   };
 
+  // Common button styles
+  const commonButtonStyles = {
+    backgroundColor: "#00897B",
+    color: "#fff",
+    borderRadius: "25px",
+    fontWeight: "bold",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#00695C",
+      transform: "translateY(-2px)",
+      boxShadow: "0px 4px 12px rgba(0,0,0,0.2)",
+    },
+  };
+
   // Update patient information
   const handleUpdatePatient = async () => {
     if (!selectedPatient) return;
 
     try {
-      // Prepare payload for the update endpoint
       const data = {
         patient_id: selectedPatient.patient_id,
         name: patientEdits.name,
@@ -183,7 +192,6 @@ const MyPatientsSection = () => {
         { withCredentials: true }
       );
 
-      // Update the patient in the local state
       const updatedPatients = patients.map((p) => {
         if (p.email === selectedPatient.email) {
           return {
@@ -214,13 +222,13 @@ const MyPatientsSection = () => {
         }),
       });
 
-      // Reset edit modes and changes flag
       setEditMode({ name: false, phone: false, notes: false });
       setHasChanges(false);
     } catch (error) {
       console.error("Error updating patient:", error);
       window.alert(
-        error.response?.data?.detail || "Error updating patient. Please try again."
+        error.response?.data?.detail ||
+          "Error updating patient. Please try again."
       );
     }
   };
@@ -418,17 +426,7 @@ const MyPatientsSection = () => {
           <Button
             variant="contained"
             onClick={handleAddPatient}
-            sx={{
-              backgroundColor: "#00684A",
-              color: "#fff",
-              borderRadius: "25px",
-              fontWeight: "bold",
-              textTransform: "none",
-              fontSize: "1rem",
-              px: 4,
-              py: 1,
-              "&:hover": { backgroundColor: "#004D40" },
-            }}
+            sx={commonButtonStyles}
           >
             Submit
           </Button>
@@ -646,7 +644,7 @@ const MyPatientsSection = () => {
                 <EditIcon fontSize="small" />
               </IconButton>
             </Box>
-            
+
             <Box
               sx={{
                 p: 2,

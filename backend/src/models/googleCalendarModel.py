@@ -11,4 +11,11 @@ class GoogleCalendarToken(BaseModel):
     token_type: Optional[str] = "Bearer"
     expires_in: Optional[int]
     expiry_date: Optional[datetime]
+    calendar_email: str
 
+class CalendarEventRequest(BaseModel):
+    summary: str
+    description: Optional[str] = None
+    location: Optional[str] = None
+    start_time: datetime  # ISO format
+    end_time: datetime    # ISO format

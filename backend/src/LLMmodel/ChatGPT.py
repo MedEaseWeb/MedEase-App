@@ -36,6 +36,12 @@ Output Schema:
         "disposal_instructions": ["string"],  
         "storage_instructions": ["string"]  
     },
+    "patient_guidance": {
+        "follow_up_steps": ["string"],  
+        "lifestyle_tips": ["string"],  
+        "emergency_contacts": ["string"],  
+        "questions_for_doctor": ["string"]  
+    }
 }
 """  
     client = OpenAI(api_key=CHAT_GPT_API_KEY)

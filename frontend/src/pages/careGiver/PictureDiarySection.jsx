@@ -259,6 +259,19 @@ const PictureDiarySection = () => {
     }
   };
 
+  const commonButtonStyles = {
+    backgroundColor: "#00897B",
+    color: "#fff",
+    borderRadius: "25px",
+    fontWeight: "bold",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#00695C",
+      transform: "translateY(-2px)",
+      boxShadow: "0px 4px 12px rgba(0,0,0,0.2)",
+    },
+  };
+
   return (
     <>
       {/* Header and Add Icon */}
@@ -436,7 +449,10 @@ const PictureDiarySection = () => {
           </IconButton>
         </Box>
         <DialogContent>
-          <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", color: "#004D40", fontSize: "1.3rem" }}
+          >
             Add New Diary Entry
           </Typography>
           <TextField
@@ -445,7 +461,22 @@ const PictureDiarySection = () => {
             value={newDiaryEntry.patientFirstName}
             onChange={handleInputChange}
             fullWidth
-            sx={{ mb: 2 }}
+            InputLabelProps={{
+              sx: {
+                color: "#757575",
+                "&.Mui-focused": {
+                  color: "#004D40",
+                },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#004D40",
+                },
+              },
+              mb: 2,
+            }}
           />
           <TextField
             label="Patient Last Name"
@@ -453,7 +484,22 @@ const PictureDiarySection = () => {
             value={newDiaryEntry.patientLastName}
             onChange={handleInputChange}
             fullWidth
-            sx={{ mb: 2 }}
+            InputLabelProps={{
+              sx: {
+                color: "#757575",
+                "&.Mui-focused": {
+                  color: "#004D40",
+                },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#004D40",
+                },
+              },
+              mb: 2,
+            }}
           />
           <TextField
             label="Patient Email"
@@ -461,10 +507,35 @@ const PictureDiarySection = () => {
             value={newDiaryEntry.patientEmail}
             onChange={handleInputChange}
             fullWidth
-            sx={{ mb: 2 }}
+            InputLabelProps={{
+              sx: {
+                color: "#757575",
+                "&.Mui-focused": {
+                  color: "#004D40",
+                },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#004D40",
+                },
+              },
+              mb: 2,
+            }}
           />
           {/* Upload Pictures Button */}
-          <Button variant="outlined" component="label" fullWidth sx={{ mb: 2 }}>
+          <Button
+            variant="outlined"
+            component="label"
+            fullWidth
+            sx={{
+              mb: 2,
+              color: "#004D40",
+              borderColor: "#004D40",
+              fontWeight: "bold",
+            }}
+          >
             Upload Pictures
             <input type="file" hidden multiple onChange={handleFileChange} />
           </Button>
@@ -476,6 +547,11 @@ const PictureDiarySection = () => {
                 flexWrap: "wrap",
                 gap: 1,
                 mb: 2,
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#004D40",
+                  },
+                },
               }}
             >
               {picturePreviews.map((src, idx) => (
@@ -496,17 +572,42 @@ const PictureDiarySection = () => {
             multiline
             rows={4}
             fullWidth
-            sx={{ mb: 2 }}
+            InputLabelProps={{
+              sx: {
+                color: "#757575",
+                "&.Mui-focused": {
+                  color: "#004D40",
+                },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#004D40",
+                },
+              },
+              mb: 2,
+            }}
           />
         </DialogContent>
         <DialogActions sx={{ p: 2 }}>
-          <Button onClick={handleCloseAddDialog} color="secondary">
+          <Button
+            onClick={handleCloseAddDialog}
+            color="secondary"
+            sx={{
+              textTransform: "none",
+              color: "#004D40",
+              fontWeight: "bold",
+              borderRadius: 20,
+            }}
+          >
             Cancel
           </Button>
           <Button
             onClick={handleSaveNewEntry}
             variant="contained"
             color="primary"
+            sx={commonButtonStyles}
           >
             Save
           </Button>

@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import Draggable from "react-draggable";
-import axios from "axios";
 import socket from "../../pages/utility/SocketConnection";
 
 const patientFlowSteps = [
