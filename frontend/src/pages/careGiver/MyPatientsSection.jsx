@@ -21,6 +21,7 @@ import {
   PersonAdd as PersonAddIcon,
   Medication as MedicationIcon,
   Close as CloseIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import AIResult from "../medication/AIResult";
 import MedicalReports from "./MedicalReports";
@@ -33,6 +34,17 @@ const MyPatientsSection = () => {
   const [formData, setFormData] = useState({ email: "", key: "" });
   const [errors, setErrors] = useState({});
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [editMode, setEditMode] = useState({
+    name: false,
+    phone: false,
+    notes: false,
+  });
+  const [patientEdits, setPatientEdits] = useState({
+    name: "",
+    phone: "",
+    notes: "",
+  });
+  const [hasChanges, setHasChanges] = useState(false);
 
   // Load patients from localStorage (Update to GET in backend later)
   useEffect(() => {
@@ -42,6 +54,18 @@ const MyPatientsSection = () => {
     }
   }, []);
 
+  // Set up edit form data when a patient is selected
+  useEffect(() => {
+    if (selectedPatient) {
+      setPatientEdits({
+        name: selectedPatient.name || "",
+        phone: selectedPatient.phone || "",
+        notes: selectedPatient.notes || "",
+      });
+      setHasChanges(false);
+    }
+  }, [selectedPatient]);
+
   const updatePatients = (newPatientsList) => {
     setPatients(newPatientsList);
     localStorage.setItem("patients", JSON.stringify(newPatientsList));
@@ -49,6 +73,15 @@ const MyPatientsSection = () => {
 
   const handleInputChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleEditChange = (field, value) => {
+    setPatientEdits((prev) => ({ ...prev, [field]: value }));
+    setHasChanges(true);
+  };
+
+  const toggleEditMode = (field) => {
+    setEditMode((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
   const validateForm = () => {
@@ -91,6 +124,7 @@ const MyPatientsSection = () => {
       const newPatient = {
         name: result.patient_name || "",
         email: result.patient_email,
+        phone: result.patient_phone || "",
         key: formData.key,
         lastUpdate: new Date().toLocaleDateString("en-US", {
           month: "long",
@@ -100,6 +134,7 @@ const MyPatientsSection = () => {
         notes: result.caregiver_note || "",
         medical_reports: result.medical_reports || [],
         medication_notes: result.medication_note || [],
+        patient_id: result.patient_id,
       };
 
       updatePatients([...patients, newPatient]);
@@ -126,6 +161,67 @@ const MyPatientsSection = () => {
     } catch (error) {
       console.error("Error deleting patient:", error);
       window.alert("Error deleting patient. Please try again.");
+    }
+  };
+
+  // Update patient information
+  const handleUpdatePatient = async () => {
+    if (!selectedPatient) return;
+
+    try {
+      // Prepare payload for the update endpoint
+      const data = {
+        patient_id: selectedPatient.patient_id,
+        name: patientEdits.name,
+        phone: patientEdits.phone,
+        caregiver_note: patientEdits.notes,
+      };
+
+      const response = await axios.put(
+        `${backendBaseUrl}/caregiver/update-patient-info`,
+        data,
+        { withCredentials: true }
+      );
+
+      // Update the patient in the local state
+      const updatedPatients = patients.map((p) => {
+        if (p.email === selectedPatient.email) {
+          return {
+            ...p,
+            name: patientEdits.name,
+            phone: patientEdits.phone,
+            notes: patientEdits.notes,
+            lastUpdate: new Date().toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            }),
+          };
+        }
+        return p;
+      });
+
+      updatePatients(updatedPatients);
+      setSelectedPatient({
+        ...selectedPatient,
+        name: patientEdits.name,
+        phone: patientEdits.phone,
+        notes: patientEdits.notes,
+        lastUpdate: new Date().toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        }),
+      });
+
+      // Reset edit modes and changes flag
+      setEditMode({ name: false, phone: false, notes: false });
+      setHasChanges(false);
+    } catch (error) {
+      console.error("Error updating patient:", error);
+      window.alert(
+        error.response?.data?.detail || "Error updating patient. Please try again."
+      );
     }
   };
 
@@ -184,7 +280,7 @@ const MyPatientsSection = () => {
               <MedicationIcon sx={{ color: "#004D40" }} />
             </ListItemIcon>
             <ListItemText
-              primary={patient.email}
+              primary={patient.name || patient.email}
               secondary={`Last update: ${patient.lastUpdate}`}
             />
             <IconButton
@@ -362,9 +458,18 @@ const MyPatientsSection = () => {
             color: "#004D40",
             borderBottom: "1px solid #ddd",
             mb: 2,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          {selectedPatient?.name || ""}
+          <span>{selectedPatient?.name || selectedPatient?.email || ""}</span>
+          <IconButton
+            onClick={() => setSelectedPatient(null)}
+            sx={{ color: "#004D40" }}
+          >
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
 
         <DialogContent>
@@ -373,9 +478,94 @@ const MyPatientsSection = () => {
             Contact Info
           </Typography>
           <Box sx={{ mb: 3 }}>
-            <Typography variant="body1">
-              <strong>Email:</strong> {selectedPatient?.email || ""}
-            </Typography>
+            {/* Name Field - Editable */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 1,
+                p: 1,
+                borderRadius: 1,
+                border: "1px solid #e0e0e0",
+                backgroundColor: editMode.name ? "#f5f5f5" : "transparent",
+              }}
+            >
+              {editMode.name ? (
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Name"
+                  value={patientEdits.name}
+                  onChange={(e) => handleEditChange("name", e.target.value)}
+                  size="small"
+                  sx={{ mr: 1 }}
+                />
+              ) : (
+                <Typography variant="body1">
+                  <strong>Name:</strong> {patientEdits.name || "Not provided"}
+                </Typography>
+              )}
+              <IconButton
+                onClick={() => toggleEditMode("name")}
+                sx={{ color: "#004D40" }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Box>
+
+            {/* Email Field - Read Only */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 1,
+                p: 1,
+                borderRadius: 1,
+                border: "1px solid #e0e0e0",
+              }}
+            >
+              <Typography variant="body1">
+                <strong>Email:</strong> {selectedPatient?.email || ""}
+              </Typography>
+            </Box>
+
+            {/* Phone Field - Editable */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 1,
+                p: 1,
+                borderRadius: 1,
+                border: "1px solid #e0e0e0",
+                backgroundColor: editMode.phone ? "#f5f5f5" : "transparent",
+              }}
+            >
+              {editMode.phone ? (
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Phone"
+                  value={patientEdits.phone}
+                  onChange={(e) => handleEditChange("phone", e.target.value)}
+                  size="small"
+                  sx={{ mr: 1 }}
+                />
+              ) : (
+                <Typography variant="body1">
+                  <strong>Phone:</strong> {patientEdits.phone || "Not provided"}
+                </Typography>
+              )}
+              <IconButton
+                onClick={() => toggleEditMode("phone")}
+                sx={{ color: "#004D40" }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Box>
           </Box>
 
           {/* Patient Files */}
@@ -436,41 +626,86 @@ const MyPatientsSection = () => {
             </Box>
           </Box>
 
-          {/* Caregiver's Notes */}
-          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-            Caregiver's Notes
-          </Typography>
-          <Box
-            sx={{
-              p: 2,
-              border: "1px solid #ccc",
-              borderRadius: 3,
-              backgroundColor: "#f0f0f0",
-              maxHeight: "150px",
-              overflowY: "auto",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            <Typography variant="body2">
-              {selectedPatient?.notes || ""}
-            </Typography>
+          {/* Caregiver's Notes - Editable */}
+          <Box sx={{ mb: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mb: 1,
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                Caregiver's Notes
+              </Typography>
+              <IconButton
+                onClick={() => toggleEditMode("notes")}
+                sx={{ color: "#004D40" }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Box>
+            
+            <Box
+              sx={{
+                p: 2,
+                border: "1px solid #ccc",
+                borderRadius: 3,
+                backgroundColor: editMode.notes ? "#f5f5f5" : "#f0f0f0",
+                maxHeight: editMode.notes ? "none" : "150px",
+                overflowY: "auto",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {editMode.notes ? (
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                  value={patientEdits.notes}
+                  onChange={(e) => handleEditChange("notes", e.target.value)}
+                />
+              ) : (
+                <Typography variant="body2">
+                  {patientEdits.notes || "No notes available."}
+                </Typography>
+              )}
+            </Box>
           </Box>
         </DialogContent>
 
         <DialogActions sx={{ pt: 3 }}>
-          <Button
-            onClick={() => setSelectedPatient(null)}
-            sx={{
-              backgroundColor: "#00684A",
-              color: "#fff",
-              fontWeight: "bold",
-              borderRadius: "20px",
-              px: 4,
-              "&:hover": { backgroundColor: "#004D40" },
-            }}
-          >
-            Close
-          </Button>
+          {hasChanges ? (
+            <Button
+              onClick={handleUpdatePatient}
+              sx={{
+                backgroundColor: "#00684A",
+                color: "#fff",
+                fontWeight: "bold",
+                borderRadius: "20px",
+                px: 4,
+                "&:hover": { backgroundColor: "#004D40" },
+              }}
+            >
+              Update
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setSelectedPatient(null)}
+              sx={{
+                backgroundColor: "#00684A",
+                color: "#fff",
+                fontWeight: "bold",
+                borderRadius: "20px",
+                px: 4,
+                "&:hover": { backgroundColor: "#004D40" },
+              }}
+            >
+              Close
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </>

@@ -1,16 +1,84 @@
 from fastapi import APIRouter, HTTPException, Query, Depends
-from botocore.exceptions import ClientError
-from src.utils.s3Connection import generate_presigned_url, generate_presigned_get_url
 from src.config import AWS_BUCKET_NAME
 from src.models.diaryModel import DiaryEntryUploadRequest
 from src.models.patientDataModel import PatientDataRequest, PatientData
 from src.utils.jwtUtils import get_current_user
 from src.database import patient_diary_collection, patient_key_collection, user_collection, patient_data_collection, medication_collection, medical_report_collection
 from datetime import datetime
-from bson import ObjectId
+from pydantic import BaseModel
+from src.utils.s3Connection import generate_presigned_url, generate_presigned_get_url
 
 caregiver_router = APIRouter()
 
+# Add this model to src/models/patientDataModel.py
+class PatientUpdateRequest(BaseModel):
+    patient_id: str
+    name: str = None
+    phone: str = None
+    caregiver_note: str = None
+
+@caregiver_router.put("/update-patient-info")
+async def update_patient_info(
+    request: PatientUpdateRequest,
+    caregiver_id: str = Depends(get_current_user)
+):
+    """
+    Update a patient's information (name, phone, caregiver's note)
+    """
+    # Check if patient exists in database
+    patient_data = await patient_data_collection.find_one({"user_id": request.patient_id})
+    if not patient_data:
+        raise HTTPException(
+            status_code=404,
+            detail="Patient not found"
+        )
+    
+    # Prepare update data
+    update_data = {}
+    if request.name is not None:
+        update_data["name"] = request.name
+    if request.phone is not None:
+        update_data["phone"] = request.phone
+    if request.caregiver_note is not None:
+        update_data["caregiver_note"] = request.caregiver_note
+    
+    # Only update if there are changes
+    if update_data:
+        update_data["updated_at"] = datetime.utcnow()
+        
+        # Update the patient data
+        result = await patient_data_collection.update_one(
+            {"user_id": request.patient_id},
+            {"$set": update_data}
+        )
+        
+        if result.modified_count == 0:
+            # If no document was modified, it could be because the data is the same
+            # or because the document wasn't found
+            if not patient_data:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Patient not found"
+                )
+    
+    # Return updated patient data
+    updated_patient = await patient_data_collection.find_one({"user_id": request.patient_id})
+    if not updated_patient:
+        raise HTTPException(
+            status_code=404,
+            detail="Failed to retrieve updated patient data"
+        )
+    
+    # Format the response
+    return {
+        "patient_id": request.patient_id,
+        "patient_name": updated_patient.get("name"),
+        "patient_phone": updated_patient.get("phone"),
+        "caregiver_note": updated_patient.get("caregiver_note"),
+        "updated_at": updated_patient.get("updated_at")
+    }
+
+# Keep your existing endpoints below...
 @caregiver_router.get("/generate-upload-url")
 def generate_upload_url(
     filename: str = Query(...),
@@ -78,28 +146,6 @@ def generate_view_url(
     return {
         "view_url": view_url
     }
-
-# TODO: THIS IS NOT WORKING, add an endpoint to delete the diary entry when it is cleared from frontend if time is enough
-# @caregiver_router.delete("/diary-entry-delete/{entry_id}")
-# async def delete_diary_entry(
-#     entry_id: str, 
-#     current_user_id: str = Depends(get_current_user)
-# ):
-#     # Convert the entry id to an ObjectId if you're using Mongo's _id field.
-#     try:
-#         object_id = ObjectId(entry_id)
-#     except Exception as e:
-#         raise HTTPException(status_code=400, detail="Invalid diary entry ID format")
-    
-#     result = await patient_diary_collection.delete_one({
-#         "_id": object_id,
-#         "caregiver_id": str(current_user_id)  # ensure that the user owns this diary entry
-#     })
-    
-#     if result.deleted_count == 0:
-#         raise HTTPException(status_code=404, detail="Diary entry not found or not authorized")
-    
-#     return {"message": "Diary entry deleted successfully"}
 
 @caregiver_router.post("/patient-data", response_model=PatientData)
 async def get_patient_data(

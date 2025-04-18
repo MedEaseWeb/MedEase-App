@@ -12,6 +12,8 @@ import LandingPage from "./pages/LandingPage";
 import Medication from "./pages/medication/MedicationPage";
 import ReportSimplification from "./pages/reportsimplification/reportSimplificationPage";
 import NotFound from "./pages/utility/NotFound";
+import PrivacyPolicy from "./pages/utility/PrivacyPolicy";
+import TermsOfService from "./pages/utility/TermsOfService";
 import TopBarComponent from "./pages/utility/TopBar";
 import ProtectedRoute from "./context/ProtectedRoutes";
 
@@ -57,7 +59,8 @@ function Layout() {
               </ProtectedRoute>
             }
           />
-
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>
