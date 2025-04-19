@@ -21,34 +21,68 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ShareIcon from "@mui/icons-material/Share";
 import DragDropTextField from "./DragDropTextField";
 import { motion } from "framer-motion";
+import Disclaimer from "./Disclaimer";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
-
-const Disclaimer = () => (
-  <Paper elevation={0} sx={{ p: 2, backgroundColor: "#FFF3CD" }}>
-    <Typography
-      sx={{
-        fontFamily: "ECA, sans-serif",
-        fontSize: 20,
-        fontWeight: "bold",
-        color: "#D39E00",
-      }}
-    >
-      ⚠ Disclaimer
-    </Typography>
-    <Typography sx={{ fontFamily: "ECA, sans-serif", fontSize: 16 }}>
-      The generated reports are for informational purposes only and{" "}
-      <strong>do not</strong> guarantee accuracy or completeness. Always consult
-      a qualified healthcare professional for medical advice.
-    </Typography>
-  </Paper>
-);
 
 const reportSimplificationPage = () => {
   const [originalReport, setOriginalReport] = useState("");
   const [simplifiedReport, setSimplifiedReport] = useState("");
   const [loading, setLoading] = useState(false);
   const [fullScreenOpen, setFullScreenOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const response = await fetch(`${backendBaseUrl}/general/email`, {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUserEmail(data.email);
+        } else {
+          console.error("Failed to fetch email");
+        }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+      }
+    };
+
+    fetchEmail();
+  }, []);
+
+  useEffect(() => {
+    const fetchId = async () => {
+      try {
+        const response = await fetch(
+          `${backendBaseUrl}/general/resolve-user-id`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: userEmail,
+              password: "ignored",
+            }),
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setUserId(data.user_id);
+        } else {
+          console.error("Failed to fetch id");
+        }
+      } catch (error) {
+        console.error("Error fetching email:", error);
+      }
+    };
+    if (userEmail) {
+      fetchId();
+    }
+  }, [userEmail]);
 
   // useEffect(() => {
   //   console.log(originalReport);

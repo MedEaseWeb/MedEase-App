@@ -51,8 +51,7 @@ async def login(user: UserCreate, response: Response):
         key="access_token",
         value=token,
         httponly=True,
-        secure=False,  # ✅ Change to True in production
-        # samesite="none",
+        secure=True,  # ✅ Change to True in production
         samesite="Lax",
         max_age=1800,  # ✅ 30 minutes
         expires=1800

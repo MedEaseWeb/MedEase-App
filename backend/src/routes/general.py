@@ -1,12 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from src.database import patient_key_collection, user_collection
-from src.models.userModel import UserKey, KeyRequest
+from src.models.userModel import UserKey, KeyRequest, UserCreate
 from bson import ObjectId
 from datetime import datetime
 import bcrypt
 from src.utils.jwtUtils import get_current_user
 
 general_router = APIRouter()
+
 
 @general_router.get("/email")
 async def get_user_profile(user_id: str = Depends(get_current_user)):
@@ -41,3 +42,12 @@ async def generate_user_key(key_req: KeyRequest, user_id: str = Depends(get_curr
         "generated_key": key_req.generated_key,
         "expires_in_seconds": 3600
     }
+
+@general_router.post("/resolve-user-id")
+async def get_user_id_from_email(user: UserCreate):
+    "Given user email, return user id"
+    user_doc = await user_collection.find_one({"email": user.email})
+    if not user_doc:
+        raise HTTPException(status_code=404, detail="User with this email not found.")
+    return {"user_id": user_doc["user_id"]}
+    

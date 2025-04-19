@@ -3,9 +3,9 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function login(email, password) {
-  console.log(
-    `sending login request to: ${BASE_URL}/auth/login with load: ${password}, ${email}`
-  );
+  // console.log(
+  //   `sending login request to: ${BASE_URL}/auth/login with load: ${password}, ${email}`
+  // );
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     credentials: "include", // Send cookies
