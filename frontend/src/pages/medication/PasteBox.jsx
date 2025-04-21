@@ -52,97 +52,112 @@ const PasteBox = ({ onNewSubmission = () => {} }) => {
     }
   };
   return (
-    <Paper
-      elevation={6}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        p: 5,
-        borderRadius: 3,
-        background: "linear-gradient(to right, #f9f9f9, #eef2f3)",
-        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-        border: "1px solid #ccc",
-        width: "100%",
-        maxWidth: 800, // Adjusted width for better readability
-      }}
-    >
-      {/* Title */}
-      <Typography variant="h5" sx={{ fontWeight: "bold", color: "#004D40" }}>
-        Paste Your Medication Note or Prescription
-      </Typography>
-      <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-        Safely and securely receive tailored advice
-      </Typography>
-
-      {/* Text Field */}
-      <TextField
-        multiline
-        rows={12}
-        variant="outlined"
-        placeholder="Paste your text here..."
-        fullWidth
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+    <Box>
+      <Paper
+        elevation={6}
         sx={{
-          mt: 2,
-          p: 2,
-          borderRadius: 2,
-          backgroundColor: "#fff",
-          transition: "0.3s",
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "#ccc",
-              transition: "border-color 0.3s ease",
-            },
-            "&:hover fieldset": {
-              borderColor: "#00897B",
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "#004D40", // Darker green on focus
-            },
-          },
-        }}
-      />
-
-      {/* Submit Button */}
-      <Button
-        variant="contained"
-        onClick={handleSubmit}
-        sx={{
-          mt: 3,
-          px: 4,
-          py: 1.5,
-          fontSize: "1rem",
-          fontWeight: "bold",
-          textTransform: "none",
-          backgroundColor: "#00897B",
-          color: "#fff",
-          borderRadius: "25px",
-          transition: "0.3s",
-          "&:hover": {
-            backgroundColor: "#00695C",
-            transform: "translateY(-2px)", // Slight elevation on hover
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-          },
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          p: 5,
+          borderRadius: 3,
+          background: "linear-gradient(to right, #f9f9f9, #eef2f3)",
+          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+          border: "1px solid #ccc",
+          // width: "100%",
+          // maxWidth: 800, // Adjusted width for better readability
         }}
       >
-        Submit
-      </Button>
-      {/* Loading Indicator */}
-      {loading && (
-        <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 2 }}>
-          <CircularProgress size={24} />
-          <Typography variant="body2" color="textSecondary">
-            AI is generating help for you...
-          </Typography>
-        </Box>
-      )}
+        {/* Title */}
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            color: "#004D40",
+            fontFamily: "ECA, sans-serif",
+          }}
+        >
+          Paste Your Medication Note or Prescription
+        </Typography>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{ mb: 2, fontFamily: "ECA, sans-serif" }}
+        >
+          Safely and securely receive tailored advice
+        </Typography>
 
-      {/* Transformed Result Display */}
-      {result && <AIResult note={result} />}
-    </Paper>
+        {/* Text Field */}
+        <TextField
+          multiline
+          rows={12}
+          variant="outlined"
+          placeholder="Paste your text here..."
+          fullWidth
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          sx={{
+            mt: 2,
+            p: 2,
+            borderRadius: 2,
+            backgroundColor: "#fff",
+            transition: "0.3s",
+            "& .MuiOutlinedInput-root": {
+              fontFamily: "ECA, sans-serif",
+              "& fieldset": {
+                borderColor: "#ccc",
+                transition: "border-color 0.3s ease",
+              },
+              "&:hover fieldset": {
+                borderColor: "#00897B",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#004D40", // Darker green on focus
+              },
+            },
+          }}
+        />
+
+        {/* Submit Button */}
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{
+            mt: 3,
+            px: 4,
+            py: 1.5,
+            fontSize: "1rem",
+            fontWeight: "bold",
+            textTransform: "none",
+            backgroundColor: "#00897B",
+            color: "#fff",
+            borderRadius: "25px",
+            transition: "0.3s",
+            fontFamily: "ECA, sans-serif",
+            "&:hover": {
+              backgroundColor: "#00695C",
+              transform: "translateY(-2px)", // Slight elevation on hover
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+            },
+          }}
+        >
+          Submit
+        </Button>
+        {/* Loading Indicator */}
+        {loading && (
+          <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 2 }}>
+            <CircularProgress size={24} />
+            <Typography variant="body2" color="textSecondary">
+              AI is generating help for you...
+            </Typography>
+          </Box>
+        )}
+
+        {/* Transformed Result Display */}
+        {result && <AIResult note={result} />}
+      </Paper>
+    </Box>
   );
 };
 

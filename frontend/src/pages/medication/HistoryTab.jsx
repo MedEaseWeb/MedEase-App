@@ -6,11 +6,10 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import HistoryIcon from "@mui/icons-material/History";
 import CloseIcon from "@mui/icons-material/Close";
-
 
 const HistoryTab = ({ history }) => {
   const [open, setOpen] = useState(false);
@@ -39,12 +38,17 @@ const HistoryTab = ({ history }) => {
         overflowY: "auto",
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
+      <Typography
+        variant="h6"
+        sx={{ fontWeight: "bold", mb: 2, fontFamily: "ECA, sans-serif" }}
+      >
         <HistoryIcon sx={{ mr: 1 }} /> History
       </Typography>
 
       {history.length === 0 ? (
-        <Typography variant="body2">No history available.</Typography>
+        <Typography variant="body2" sx={{ fontFamily: "ECA, sans-serif" }}>
+          No history available.
+        </Typography>
       ) : (
         history.map((note, index) => (
           <Paper
@@ -61,10 +65,15 @@ const HistoryTab = ({ history }) => {
             }}
             onClick={() => handleOpen(note)}
           >
-            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", fontFamily: "ECA, sans-serif" }}
+            >
               {note.medication_name}
             </Typography>
-            <Typography variant="body2">{note.purpose}</Typography>
+            <Typography variant="body2" sx={{ fontFamily: "ECA, sans-serif" }}>
+              {note.purpose}
+            </Typography>
           </Paper>
         ))
       )}
@@ -76,8 +85,16 @@ const HistoryTab = ({ history }) => {
         fullWidth
         maxWidth="md" // Adjust if you want a smaller or larger dialog
       >
-        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="h6">Medication Note Details</Typography>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h6" sx={{ fontFamily: "ECA, sans-serif" }}>
+            Medication Note Details
+          </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
@@ -91,17 +108,33 @@ const HistoryTab = ({ history }) => {
                  Otherwise, display the note fields inline as below.
               */}
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", fontFamily: "ECA, sans-serif" }}
+                >
                   Medication Name
                 </Typography>
-                <Typography variant="body2">{selectedNote.medication_name}</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
+                  {selectedNote.medication_name}
+                </Typography>
               </Box>
 
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", fontFamily: "ECA, sans-serif" }}
+                >
                   Purpose
                 </Typography>
-                <Typography variant="body2">{selectedNote.purpose}</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
+                  {selectedNote.purpose}
+                </Typography>
               </Box>
 
               {/* Add more fields as needed (common_name, schedule, pharmacy, etc.) */}

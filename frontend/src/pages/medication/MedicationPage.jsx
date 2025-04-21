@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Button, Typography, Box, Paper, Grid } from "@mui/material";
-import {
-  Medication as MedicationIcon,
-  Event,
-  LocalPharmacy,
-} from "@mui/icons-material";
-import PasteBox from "./PasteBox";
+import { Event, LocalPharmacy } from "@mui/icons-material";
+import { Box, Button, Paper, Typography, Grid } from "@mui/material";
+
+import React, { useEffect, useState } from "react";
 import HistoryTab from "./HistoryTab";
-import axios from "axios";
+import PasteBox from "./PasteBox";
+import Disclaimer from "../reportsimplification/Disclaimer";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -75,19 +72,6 @@ const FeatureButtons = () => {
   );
 };
 
-const Disclaimer = () => (
-  <Paper sx={{ p: 2, mt: 3, backgroundColor: "#FFF3CD", borderRadius: 2 }}>
-    <Typography variant="body2" sx={{ fontWeight: "bold", color: "#D39E00" }}>
-      ⚠ Disclaimer
-    </Typography>
-    <Typography variant="body2">
-      The generated reports are for informational purposes only and{" "}
-      <strong>do not</strong> guarantee accuracy or completeness. Always consult
-      a qualified healthcare professional for medical advice.
-    </Typography>
-  </Paper>
-);
-
 const MedicationPage = () => {
   const [history, setHistory] = useState(() => {
     return JSON.parse(localStorage.getItem("medicationHistory")) || [];
@@ -100,18 +84,53 @@ const MedicationPage = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <Box sx={{ width: "100%", maxWidth: "100%" }}>
       {/* Main Content */}
-      <Box sx={{ flexGrow: 1, p: 3 }}>
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid item xs={12} md={8}>
+      <Grid
+        container
+        xs={12}
+        // columnSpacing={3}
+        // rowSpacing={2}
+        sx={{ width: "100%", mt: 2 }}
+      >
+        <Grid xs={12} md={0.2}></Grid>
+        {/* Left Section */}
+
+        <Grid xs={12} md={7.4}>
+          <Box
+            sx={{
+              width: "100%", // ✅ fill the grid cell
+              height: "100%", // optional if height matters
+              p: 2,
+              backgroundColor: "#f9f9f9",
+              borderRadius: 2,
+              border: "1px solid #ccc", // ✅ move border here
+              boxSizing: "border-box",
+            }}
+          >
             <PasteBox onNewSubmission={handleNewSubmission} />
-          </Grid>
-          <Grid item xs={12} md={4}>
+          </Box>
+        </Grid>
+        <Grid xs={12} md={0.2}></Grid>
+        {/* Right Section */}
+        <Grid xs={12} md={4}>
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              p: 2,
+              backgroundColor: "#f9f9f9",
+              borderRadius: 2,
+              border: "1px solid #ccc",
+              boxSizing: "border-box",
+            }}
+          >
             <FeatureButtons />
             <HistoryTab history={history} />
-          </Grid>
+          </Box>
         </Grid>
+      </Grid>
+      <Box p={3}>
         <Disclaimer />
       </Box>
     </Box>
