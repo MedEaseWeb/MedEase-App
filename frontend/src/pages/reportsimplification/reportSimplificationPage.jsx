@@ -107,14 +107,17 @@ const reportSimplificationPage = () => {
 
     try {
       const response = await fetch(
-        // `${backendBaseUrl}/simplify/dummy-stream`,
-        `${backendBaseUrl}/simplify/stream`,
+        `${backendBaseUrl}/simplify/stream-and-save`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ text: originalReport }),
+          body: JSON.stringify({
+            text: originalReport,
+            user_id: userId,
+            user_email: userEmail,
+          }),
         }
       );
 
@@ -126,7 +129,6 @@ const reportSimplificationPage = () => {
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
 
-      // We're going to do a streaming loop outside React batching
       const streamLoop = async () => {
         while (true) {
           const { done, value } = await reader.read();
@@ -142,13 +144,12 @@ const reportSimplificationPage = () => {
 
           let spaceIndex;
           while ((spaceIndex = buffer.indexOf(" ")) !== -1) {
-            const word = buffer.slice(0, spaceIndex + 1); // include the space
+            const word = buffer.slice(0, spaceIndex + 1);
             buffer = buffer.slice(spaceIndex + 1);
 
-            // use a microtask to force render
             await new Promise((resolve) => {
               setSimplifiedReport((prev) => {
-                resolve(null); // wait before next iteration
+                resolve(null);
                 return prev + word;
               });
             });
