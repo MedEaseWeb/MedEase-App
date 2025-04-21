@@ -38,6 +38,38 @@ const FeatureButtons = () => {
     window.location.href = `${backendBaseUrl}/google/view-google-calendar`;
   };
 
+  const handleTrackPharmacyLocation = async () => {
+    try {
+      // 1) Read your medication history array from localStorage
+      const history = JSON.parse(
+        localStorage.getItem("medicationHistory") || "[]"
+      );
+      if (!history.length) {
+        throw new Error("No medication record found in localStorage.");
+      }
+
+      // 2) Take the most recent entry’s medication_id
+      const medId = history[0].medication_id;
+      if (!medId) {
+        throw new Error("Latest medication entry missing its ID.");
+      }
+
+      // 3) Call your new pharmacy-location endpoint
+      const res = await fetch(
+        `${backendBaseUrl}/medication/pharmacy-location/${medId}`,
+        { credentials: "include" }
+      );
+      if (!res.ok) throw new Error("Failed to fetch pharmacy location");
+      const { maps_url } = await res.json();
+
+      // 4) Redirect to Google Maps
+      window.open(maps_url, "_blank");
+    } catch (err) {
+      console.error("Track pharmacy error:", err);
+      alert(err.message || "Could not load pharmacy location.");
+    }
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
       <Button
@@ -58,11 +90,12 @@ const FeatureButtons = () => {
       <Button
         variant="contained"
         startIcon={<LocalPharmacy />}
+        onClick={handleTrackPharmacyLocation}
         sx={{
           borderRadius: "20px",
           backgroundColor: "#00684A",
           color: "white",
-          "&:hover": { backgroundColor: "#00684A" },
+          "&:hover": { backgroundColor: "#005C3A" },
         }}
         fullWidth
       >

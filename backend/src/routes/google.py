@@ -166,6 +166,12 @@ async def add_google_calendar_event(
         }
     }
 
+    if event.recurrence_days:
+    # DAILY recurrence, count = recurrence_days
+        rrule = f"RRULE:FREQ=DAILY;COUNT={event.recurrence_days}"
+        event_payload["recurrence"] = [rrule]
+
+
     async with httpx.AsyncClient() as client:
         res = await client.post(
             "https://www.googleapis.com/calendar/v3/calendars/primary/events",

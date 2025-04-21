@@ -19,3 +19,4 @@ class CalendarEventRequest(BaseModel):
     location: Optional[str] = None
     start_time: datetime  # ISO format
     end_time: datetime    # ISO format
+    recurrence_days: Optional[int]

@@ -6,6 +6,8 @@ from datetime import datetime
 import bcrypt
 from src.LLMmodel.ChatGPT import extract_medication_info
 from src.utils.jwtUtils import get_current_user
+from urllib.parse import quote_plus
+
 
 medication_router = APIRouter()
 
@@ -77,3 +79,40 @@ async def get_latest_medication_note(user_id: str = Depends(get_current_user)):
         raise HTTPException(status_code=404, detail="No medication notes found")
     
     return note
+
+
+# track pharmacy location 
+@medication_router.get(
+    "/pharmacy-location/{medication_id}",
+    summary="Get Google Maps URL for a medication’s pharmacy",
+)
+async def get_pharmacy_location(
+    medication_id: str,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Fetch the pharmacy name + location for the given medication_id
+    (must belong to current user), and return a `maps_url` that will
+    open Google Maps at that address.
+    """
+    note = await medication_collection.find_one({
+        "user_id": user_id,
+        "medication_id": medication_id
+    })
+    if not note:
+        raise HTTPException(404, "Medication not found")
+
+    pharm = note.get("pharmacy") or {}
+    name     = pharm.get("name", "").strip()
+    location = pharm.get("location", "").strip()
+    if not name and not location:
+        raise HTTPException(400, "No pharmacy info available")
+
+    # build the Maps query
+    query = f"{name} {location}"
+    maps_url = (
+        "https://www.google.com/maps/search/?api=1&query="
+        + quote_plus(query)
+    )
+
+    return {"maps_url": maps_url}

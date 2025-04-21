@@ -48,6 +48,7 @@ const Chatbox = () => {
     phone: "",
     notes: "",
   });
+  const [reminderMode, setReminderMode] = useState(false);
 
   // On mount, add a welcome message after a 500ms delay.
   useEffect(() => {
@@ -100,6 +101,23 @@ const Chatbox = () => {
   // Send message handler.
   const sendMessage = () => {
     if (input.trim() === "") return;
+
+    // reminder mode
+    if (reminderMode) {
+      // echo user’s text
+      setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
+
+      // emit as a structured object
+      socket.emit("user_message", {
+        mode: "reminder",
+        content: input.trim(),
+      });
+
+      // reset mode & input
+      setReminderMode(false);
+      setInput("");
+      return;
+    }
 
     // If we're in a patient info flow, process the sequential prompts.
     if (patientFlowActive) {
@@ -166,12 +184,20 @@ const Chatbox = () => {
         ...prev,
         { text: patientFlowSteps[0].prompt, sender: "bot" },
       ]);
+    } else if (option === "reminders") {
+      // flip into reminder mode
+      setReminderMode(true);
+      setMessages((m) => [
+        ...m,
+        {
+          text: `Sure! What would you like to be reminded about, 
+and when? (e.g. “Take meds at 9 AM for 5 days”)`,
+          sender: "bot",
+        },
+      ]);
     } else {
       let message = "";
       switch (option) {
-        case "reminders":
-          message = "Navigate to: Reminders & Tasks";
-          break;
         case "diary":
           message = "Navigate to: Picture Diary Upload";
           break;
@@ -311,6 +337,11 @@ const Chatbox = () => {
                 <Button
                   className="chatbox-non-drag"
                   onClick={sendMessage}
+                  placeholder={
+                    reminderMode
+                      ? "e.g. Take meds at 9 AM for 5 days"
+                      : "Type a message…"
+                  }
                   sx={{
                     ml: 1,
                     backgroundColor: "#027555",

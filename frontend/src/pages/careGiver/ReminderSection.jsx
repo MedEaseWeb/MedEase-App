@@ -28,6 +28,7 @@ const ReminderSection = () => {
     location: "",
     start_time: dayjs().format("YYYY-MM-DDTHH:mm"),
     end_time: dayjs().add(1, "hour").format("YYYY-MM-DDTHH:mm"),
+    recurrence_days: "",
   });
 
   // Snackbar state
@@ -65,7 +66,15 @@ const ReminderSection = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]:
+        name === "recurrence_days"
+          ? value === ""
+            ? ""
+            : parseInt(value, 10)
+          : value,
+    }));
   };
 
   const handleSubmitEvent = async () => {
@@ -316,6 +325,26 @@ const ReminderSection = () => {
                 "&.Mui-focused fieldset": {
                   borderColor: "#004D40",
                 },
+              },
+            }}
+          />
+          <TextField
+            label="Recurrence (days)"
+            name="recurrence_days"
+            type="number"
+            inputProps={{ min: 1 }}
+            helperText="Leave empty for a one‑off event"
+            value={formData.recurrence_days}
+            onChange={handleInputChange}
+            InputLabelProps={{
+              sx: {
+                color: "#757575",
+                "&.Mui-focused": { color: "#004D40" },
+              },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": { borderColor: "#004D40" },
               },
             }}
           />
