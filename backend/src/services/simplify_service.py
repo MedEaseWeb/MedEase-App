@@ -8,6 +8,8 @@ from src.database import medical_report_collection
 from typing import AsyncGenerator
 from datetime import datetime
 from src.database import medical_report_collection
+from fastapi import HTTPException
+
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("CHAT_GPT_API_KEY"))
@@ -137,3 +139,32 @@ def stream_simplified_response(prompt: str):
     final_output = formatted_text
     yield "\n--- Final Simplified Output ---\n"
     yield final_output
+
+async def fetch_reports_by_user(user_id: str):
+    """
+    Service layer: Retrieves all reports for a given user ID from the database.
+    """
+    try:
+        # Validate ObjectId format
+        ObjectId(user_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid user ID format")
+
+    # Query reports
+    cursor = medical_report_collection.find({"user_id": user_id})
+    reports = []
+    async for doc in cursor:
+        # Use `date_created` if available, else fall back to ObjectId timestamp
+        if "date_created" in doc:
+            name = doc["date_created"].strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            name = str(ObjectId(doc["_id"]).generation_time.strftime("%Y-%m-%d %H:%M:%S"))
+
+        reports.append({
+            "name": name,
+            "original_report": doc.get("original_report", ""),
+            "simplified_report": doc.get("simplified_report", ""),
+            "formatted_simplified_report": doc.get("formatted_simplified_report", "")
+        })
+
+    return reports

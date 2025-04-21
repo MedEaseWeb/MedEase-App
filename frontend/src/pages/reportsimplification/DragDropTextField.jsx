@@ -105,7 +105,7 @@ export default function DragDropTextField({
           <Typography
             sx={{
               fontFamily: "ECA, sans-serif",
-              fontSize: 16,
+              fontSize: 14,
               color: "#adb5bd",
             }}
           >
@@ -139,7 +139,7 @@ export default function DragDropTextField({
       {/* Textfield */}
       <TextField
         multiline
-        rows={11}
+        rows={12.8}
         variant="outlined"
         placeholder="Paste your report text here..."
         fullWidth
@@ -148,6 +148,9 @@ export default function DragDropTextField({
         sx={{
           backgroundColor: "#fff",
           "& .MuiOutlinedInput-root": {
+            fontSize: 14, // 👈 red text when content exists
+            fontFamily: "ECA, sans-serif",
+
             "& fieldset": {
               borderColor: "#ccc",
             },

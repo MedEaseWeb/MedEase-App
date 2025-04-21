@@ -10,8 +10,11 @@ import {
   Paper,
   Tooltip,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,6 +35,7 @@ const reportSimplificationPage = () => {
   const [fullScreenOpen, setFullScreenOpen] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState("");
+  const [reports, setReports] = useState([]);
 
   useEffect(() => {
     const fetchEmail = async () => {
@@ -166,6 +170,35 @@ const reportSimplificationPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await fetch(
+          `${backendBaseUrl}/simplify/reports/${userId}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch reports");
+        }
+
+        const data = await response.json();
+        setReports(data.reports || []);
+      } catch (err) {
+        console.error(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchReports();
+    }
+  }, [userId]);
+
   const handleDownload = () => {
     const element = document.createElement("a");
     const file = new Blob([simplifiedReport], { type: "text/plain" });
@@ -177,6 +210,42 @@ const reportSimplificationPage = () => {
 
   const handleShare = () => {
     alert("Share feature coming soon!");
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedReportIndex, setSelectedReportIndex] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleReportSelect = (report, index) => {
+    if (index === null) {
+      // Add New selected
+      setOriginalReport("");
+      setSimplifiedReport("");
+      setSelectedReportIndex(null);
+    } else {
+      // Existing report selected
+      const simplifiedText = report.simplified_report || "";
+      const formattedText = report.formatted_simplified_report || "";
+
+      const fullText = `**Detailed Summary**\n
+${simplifiedText}
+
+**Highlight Outlines**
+${formattedText}`;
+
+      setOriginalReport(report.original_report || "");
+      setSimplifiedReport(fullText);
+      setSelectedReportIndex(index);
+    }
+
+    handleMenuClose();
   };
 
   return (
@@ -333,17 +402,79 @@ const reportSimplificationPage = () => {
                   boxSizing: "border-box", // ✅ respect padding in 100% height
                 }}
               >
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    fontFamily: "ECA, sans-serif",
-                    fontWeight: "Bold",
-                    color: "#00684A",
-                    mb: 2,
-                  }}
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  width={"100%"}
                 >
-                  Simplified Report
-                </Typography>
+                  <Box width="50%">
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontFamily: "ECA, sans-serif",
+                        fontWeight: "Bold",
+                        color: "#00684A",
+                        mb: 2,
+                      }}
+                    >
+                      Simplified Report
+                    </Typography>
+                  </Box>
+                  <Box width="50%" textAlign="right">
+                    <Button
+                      variant="outlined"
+                      onClick={handleMenuOpen}
+                      sx={{
+                        textTransform: "none",
+                        fontFamily: "ECA, sans-serif",
+                        fontWeight: "bold",
+                        fontSize: 14,
+                        color: "#00684A",
+                        borderColor: "#00684A",
+                        "&:hover": {
+                          backgroundColor: "#e0f2f1",
+                          borderColor: "#00684A",
+                        },
+                      }}
+                    >
+                      {selectedReportIndex !== null
+                        ? `${reports[selectedReportIndex]?.name}`
+                        : "View Past Reports"}
+                    </Button>
+
+                    <Menu
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                      PaperProps={{ sx: { maxHeight: 300 } }}
+                    >
+                      <MenuItem
+                        onClick={() => handleReportSelect({}, null)}
+                        sx={{
+                          fontFamily: "ECA, sans-serif",
+                          fontSize: 14,
+
+                          color: "#00684A",
+                        }}
+                      >
+                        + Add New
+                      </MenuItem>
+                      {reports.map((report, idx) => (
+                        <MenuItem
+                          key={idx}
+                          onClick={() => handleReportSelect(report, idx)}
+                          sx={{
+                            fontFamily: "ECA, sans-serif",
+                            fontSize: 14,
+                            whiteSpace: "normal",
+                          }}
+                        >
+                          {report.name}
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </Box>
+                </Box>
 
                 <Box
                   ref={simplifiedScrollRef}
@@ -353,20 +484,22 @@ const reportSimplificationPage = () => {
                     border: "1px solid #ccc",
                     p: 2,
                     flexGrow: 1,
-                    minHeight: "252px", // ✅ matches rows={11}
+                    minHeight: "252px",
                     maxHeight: "252px",
                     overflowY: "auto",
                     fontFamily: "ECA, sans-serif",
                     fontSize: 14,
-                    whiteSpace: "pre-wrap",
                     lineHeight: 1.5,
+                    whiteSpace: "normal", // important for markdown rendering
                   }}
                 >
-                  {simplifiedReport || (
+                  {simplifiedReport ? (
+                    <ReactMarkdown>{simplifiedReport}</ReactMarkdown>
+                  ) : (
                     <Typography
                       variant="body2"
                       sx={{
-                        fontSize: 16,
+                        fontSize: 14,
                         fontFamily: "ECA, sans-serif",
                         fontWeight: "regular",
                         color: "#9e9e9e",
@@ -377,9 +510,7 @@ const reportSimplificationPage = () => {
                     </Typography>
                   )}
                 </Box>
-
                 {/* Action Buttons: Download, Share, Help */}
-
                 <Box
                   sx={{
                     display: "flex",
@@ -515,15 +646,17 @@ const reportSimplificationPage = () => {
                 padding: 2,
                 overflowY: "auto",
                 fontFamily: "ECA, sans-serif",
-                fontSize: 16,
-                whiteSpace: "pre-wrap",
+
                 lineHeight: 1.5,
+                whiteSpace: "normal",
               }}
             >
-              {simplifiedReport || (
+              {simplifiedReport ? (
+                <ReactMarkdown>{simplifiedReport}</ReactMarkdown>
+              ) : (
                 <Typography
                   variant="body2"
-                  sx={{ fontStyle: "italic", color: "grey" }}
+                  sx={{ color: "grey", fontSize: 14 }}
                 >
                   Your simplified report will appear here...
                 </Typography>

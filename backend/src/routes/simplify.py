@@ -9,6 +9,7 @@ from src.models.simplificationModel import MedicalReport
 from src.database import medical_report_collection
 from datetime import datetime
 from bson import ObjectId
+from src.services.simplify_service import fetch_reports_by_user
 
 router = APIRouter()
 
@@ -35,7 +36,6 @@ async def stream_and_save(request: SimplifyRequest):
         media_type="text/plain"
     )
 
-
 # TODO: DELETE this endpoint after testing
 @router.post("/submit-report")
 async def submit_medical_report(report: MedicalReport):
@@ -50,6 +50,12 @@ async def submit_medical_report(report: MedicalReport):
     })
 
 
-
+@router.get("/reports/{user_id}")
+async def get_reports_by_user(user_id: str):
+    """
+    API route: Returns all saved reports for a given user ID.
+    """
+    reports = await fetch_reports_by_user(user_id)
+    return {"reports": reports}
 
 
