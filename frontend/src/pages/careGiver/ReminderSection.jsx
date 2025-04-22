@@ -110,6 +110,7 @@ const ReminderSection = () => {
       transform: "translateY(-2px)",
       boxShadow: "0px 4px 12px rgba(0,0,0,0.2)",
     },
+    fontFamily: "ECA, sans-serif",
   };
 
   return (
@@ -122,7 +123,14 @@ const ReminderSection = () => {
           mb: 2,
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: "bold", color: "#004D40" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            color: "#004D40",
+            fontFamily: "ECA, sans-serif",
+          }}
+        >
           Reminders & Tasks
         </Typography>
         <Tooltip title="Reminders">
@@ -144,7 +152,11 @@ const ReminderSection = () => {
 
       <Divider sx={{ mb: 2 }} />
 
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mb: 2, fontFamily: "ECA, sans-serif" }}
+      >
         - Check medication schedules for each patient <br />
         - Schedule upcoming visits or telehealth calls <br />- Log completed
         tasks and reminders
@@ -164,6 +176,7 @@ const ReminderSection = () => {
               fontWeight: "bold",
               border: "2px solid #00897B",
               "&:hover": { backgroundColor: "#E6F4F1" },
+              fontFamily: "ECA, sans-serif",
             }}
           >
             Connect Google Calendar Account

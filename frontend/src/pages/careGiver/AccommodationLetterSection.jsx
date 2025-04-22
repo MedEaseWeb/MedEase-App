@@ -45,8 +45,7 @@ const AccommodationLetterSection = () => {
     das: {
       to: "accessibility@emory.edu",
       subject: "Documentation for Disability Accommodations",
-      content:
-        `Dear Accessibility Services Team,
+      content: `Dear Accessibility Services Team,
 I am writing to provide documentation for [Student’s Full Name], who is under my care for [disability/condition]. I am a [professional title], licensed in the state of [State], with experience in treating/advising adolescent and adult populations.
 Diagnosis & Background
 [Student’s Name] has been diagnosed with [condition], confirmed via [clinical assessments, evaluations, diagnostic criteria used]. This condition substantially limits the student’s ability to [specify major life activities such as learning, concentrating, reading, or attending class].
@@ -211,7 +210,14 @@ Sincerely,
           mb: 2,
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: "bold", color: "#004D40" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            color: "#004D40",
+            fontFamily: "ECA, sans-serif",
+          }}
+        >
           Accommodation Letter
         </Typography>
         <Tooltip title="Open Chat">
@@ -233,7 +239,11 @@ Sincerely,
 
       <Divider sx={{ mb: 2 }} />
 
-      <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body2"
+        color="textSecondary"
+        sx={{ mb: 2, fontFamily: "ECA, sans-serif" }}
+      >
         - We have pre-inserted templates for several institutions <br />-
         Connect to email service
       </Typography>
@@ -255,6 +265,7 @@ Sincerely,
               "&:hover": {
                 backgroundColor: "#E6F4F1",
               },
+              fontFamily: "ECA, sans-serif",
             }}
           >
             Connect Gmail Account
@@ -269,6 +280,7 @@ Sincerely,
             variant="contained"
             onClick={() => handleOpenModal(id)}
             sx={{
+              fontFamily: "ECA, sans-serif",
               textTransform: "none",
               backgroundColor: "#00897B",
               color: "#fff",
@@ -309,7 +321,10 @@ Sincerely,
                   mb: 2,
                 }}
               >
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", fontFamily: "ECA, sans-serif" }}
+                >
                   {emailTemplates.find((t) => t.id === currentTemplate)?.label}
                 </Typography>
                 <IconButton onClick={() => setOpenModal(false)}>

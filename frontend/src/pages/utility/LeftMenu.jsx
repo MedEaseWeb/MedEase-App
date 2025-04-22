@@ -237,7 +237,16 @@ const LeftMenu = () => {
           {drawerItems.map((item) => (
             <ListItemButton
               key={item.key}
-              onClick={() => navigate(item.path)}
+              onClick={() => {
+                if (item.key === "documentation") {
+                  window.open(
+                    "https://github.com/MedEaseWeb/MedEase-App",
+                    "_blank"
+                  );
+                } else {
+                  navigate(item.path);
+                }
+              }}
               sx={{
                 "&:hover": {
                   bgcolor: "#E6F4F1",

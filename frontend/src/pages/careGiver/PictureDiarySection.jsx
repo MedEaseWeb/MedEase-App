@@ -283,7 +283,14 @@ const PictureDiarySection = () => {
           mb: 2,
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: "bold", color: "#004D40" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            color: "#004D40",
+            fontFamily: "ECA, sans-serif",
+          }}
+        >
           Picture Diary
         </Typography>
         <Tooltip title="Add New Diary Entry">
@@ -306,7 +313,11 @@ const PictureDiarySection = () => {
 
       <Divider sx={{ mb: 2 }} />
 
-      <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body2"
+        color="textSecondary"
+        sx={{ mb: 2, fontFamily: "ECA, sans-serif" }}
+      >
         - Able to upload pictures recording patients' health condition <br />
         - Shareable <br />- Caregiver can upload pictures and add text in a
         formatted way
@@ -340,13 +351,24 @@ const PictureDiarySection = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", fontFamily: "ECA, sans-serif" }}
+                >
                   {entry.patientName}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
                   {entry.dateDetail}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
                   {entry.photoCount} photos
                 </Typography>
 
@@ -392,11 +414,21 @@ const PictureDiarySection = () => {
         <DialogContent>
           {selectedDiary && (
             <Box sx={{ mt: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  mb: 2,
+                  fontFamily: "ECA, sans-serif",
+                }}
+              >
                 {selectedDiary.patientName}'s Picture Diary
               </Typography>
 
-              <Typography variant="body2" sx={{ mb: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{ mb: 1, fontFamily: "ECA, sans-serif" }}
+              >
                 Date: {selectedDiary.dateDetail}{" "}
                 <Box component="span" sx={{ ml: 1, color: "text.secondary" }}>
                   ({selectedDiary.recordedTime})
@@ -422,12 +454,19 @@ const PictureDiarySection = () => {
               </ImageList>
 
               {/* 2. Diary Notes subtitle */}
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: 600, mb: 1, fontFamily: "ECA, sans-serif" }}
+              >
                 Diary Notes From Caregiver
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ whiteSpace: "pre-line", color: "text.primary" }}
+                sx={{
+                  whiteSpace: "pre-line",
+                  color: "text.primary",
+                  fontFamily: "ECA, sans-serif",
+                }}
               >
                 {selectedDiary.note}
               </Typography>
@@ -451,7 +490,12 @@ const PictureDiarySection = () => {
         <DialogContent>
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: "#004D40", fontSize: "1.3rem" }}
+            sx={{
+              fontWeight: "bold",
+              color: "#004D40",
+              fontSize: "1.3rem",
+              fontFamily: "ECA, sans-serif",
+            }}
           >
             Add New Diary Entry
           </Typography>

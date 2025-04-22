@@ -59,7 +59,6 @@ const Sidebar = () => {
     }
   };
 
-
   return (
     <Drawer
       variant="permanent"
@@ -283,7 +282,7 @@ export default function Login() {
             >
               <Typography
                 sx={{
-                  fontSize: 20,
+                  fontSize: 16,
                   fontFamily: "ECA, sans-serif",
                   fontWeight: "Regular",
                   color: "#F5F5F5",
@@ -295,7 +294,7 @@ export default function Login() {
               </Typography>
               <Typography
                 sx={{
-                  fontSize: 20,
+                  fontSize: 18,
                   fontFamily: "ECA, sans-serif",
                   fontWeight: "Regular",
                   color: "#F5F5F5",
@@ -312,11 +311,12 @@ export default function Login() {
         )}
         {width > 1024 ? (
           <Box
+            mt={-4}
             sx={{
-              width: "60%",
+              width: "70%",
               height: "60%",
               backgroundImage: `url(${medicalBackground})`,
-              backgroundSize: "</Logo>cover",
+              backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
