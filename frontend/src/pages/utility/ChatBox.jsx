@@ -34,6 +34,9 @@ const Chatbox = () => {
   const [input, setInput] = useState("");
   const [expanded, setExpanded] = useState(true);
   const nodeRef = useRef(null);
+  useEffect(() => {
+    console.log(nodeRef);
+  }, [nodeRef]);
 
   // Patient info flow state.
   const [patientFlowActive, setPatientFlowActive] = useState(false);
@@ -192,9 +195,9 @@ const Chatbox = () => {
         elevation={6}
         style={{
           zIndex: 9999,
-          position: "absolute",
-          top: "150px", // Adjust as needed
-          left: "1100px", // Adjust as needed
+          position: "fixed",
+          top: "100px", // Adjust as needed
+          right: "10px", // Adjust as neededm
           width: expanded ? "500px" : "280px",
           height: expanded ? "600px" : "60px",
           overflow: "hidden",
@@ -298,6 +301,7 @@ const Chatbox = () => {
                     backgroundColor: "#fff",
                     borderRadius: "10px",
                     "& .MuiOutlinedInput-root": {
+                      fontFamily: "ECA, sans-serif",
                       "& fieldset": { borderColor: "#ced4da" },
                       "&:hover fieldset": { borderColor: "#198754" },
                       "&.Mui-focused fieldset": { borderColor: "#198754" },
@@ -316,6 +320,7 @@ const Chatbox = () => {
                     textTransform: "none",
                     fontWeight: 500,
                     "&:hover": { backgroundColor: "#00684A" },
+                    fontFamily: "ECA, sans-serif",
                   }}
                 >
                   Send
@@ -342,6 +347,7 @@ const Chatbox = () => {
                         borderRadius: 2,
                         fontWeight: "bold",
                         textTransform: "none",
+                        fontFamily: "ECA, sans-serif",
                       }}
                       onClick={() => handleSelection("patients")}
                     >
@@ -358,6 +364,7 @@ const Chatbox = () => {
                         borderRadius: 2,
                         fontWeight: "bold",
                         textTransform: "none",
+                        fontFamily: "ECA, sans-serif",
                       }}
                       onClick={() => handleSelection("reminders")}
                     >
@@ -374,6 +381,7 @@ const Chatbox = () => {
                         borderRadius: 2,
                         fontWeight: "bold",
                         textTransform: "none",
+                        fontFamily: "ECA, sans-serif",
                       }}
                       onClick={() => handleSelection("diary")}
                     >
@@ -390,6 +398,7 @@ const Chatbox = () => {
                         borderRadius: 2,
                         fontWeight: "bold",
                         textTransform: "none",
+                        fontFamily: "ECA, sans-serif",
                       }}
                       onClick={() => handleSelection("accommodation")}
                     >

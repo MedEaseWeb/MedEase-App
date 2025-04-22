@@ -16,16 +16,23 @@ const CaregiverMainPage = () => {
         sx={{
           p: 4,
           background: "linear-gradient(to right, #f0fdf4, #e8f5e9)",
-          borderBottom: "1px solid #ccc",
         }}
       >
         <Typography
           variant="h4"
-          sx={{ fontWeight: "bold", color: "#004D40", mb: 1 }}
+          sx={{
+            fontWeight: "bold",
+            color: "#004D40",
+            mb: 1,
+            fontFamily: "ECA, sans-serif",
+          }}
         >
           Caregiver Dashboard
         </Typography>
-        <Typography variant="body1" sx={{ color: "#555" }}>
+        <Typography
+          variant="body1"
+          sx={{ color: "#555", fontFamily: "ECA, sans-serif" }}
+        >
           Manage patients, track tasks, and stay on top of reminders.
         </Typography>
       </Box>
@@ -71,12 +78,15 @@ const CaregiverMainPage = () => {
             </Paper>
           </Grid>
           {/* Picture Diary Section */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mb={3}>
             <Paper
-              elevation={6}
+              elevation={0}
               sx={{
                 p: 3,
-                borderRadius: 3,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 12, // or whatever `3` resolves to in spacing
+                borderBottomRightRadius: 12,
                 background: "linear-gradient(to right, #f9f9f9, #eef2f3)",
                 boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
                 border: "1px solid #ccc",
@@ -90,12 +100,15 @@ const CaregiverMainPage = () => {
           </Grid>
 
           {/* Accommodation Letter Section */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} mb={3}>
             <Paper
-              elevation={6}
+              elevation={0}
               sx={{
                 p: 3,
-                borderRadius: 3,
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomLeftRadius: 12, // or whatever `3` resolves to in spacing
+                borderBottomRightRadius: 12,
                 background: "linear-gradient(to right, #f9f9f9, #eef2f3)",
                 boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
                 border: "1px solid #ccc",

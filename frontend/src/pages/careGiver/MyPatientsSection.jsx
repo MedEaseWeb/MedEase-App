@@ -26,9 +26,7 @@ import {
 import AIResult from "../medication/AIResult";
 import MedicalReports from "./MedicalReports";
 
-
 const backendBaseUrl = import.meta.env.VITE_API_URL;
-
 
 const MyPatientsSection = () => {
   const [patients, setPatients] = useState([]);
@@ -246,7 +244,14 @@ const MyPatientsSection = () => {
           mb: 2,
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: "bold", color: "#004D40" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            color: "#004D40",
+            fontFamily: "ECA, sans-serif",
+          }}
+        >
           My Patients
         </Typography>
         <Tooltip title="Add Patient">
@@ -398,6 +403,7 @@ const MyPatientsSection = () => {
               helperText={errors.key}
               sx={{
                 "& .MuiOutlinedInput-root": {
+                  fontFamily: "ECA, sans-serif",
                   "&.Mui-focused fieldset": {
                     borderColor: "#004D40",
                   },
@@ -499,10 +505,13 @@ const MyPatientsSection = () => {
                   value={patientEdits.name}
                   onChange={(e) => handleEditChange("name", e.target.value)}
                   size="small"
-                  sx={{ mr: 1 }}
+                  sx={{ mr: 1, fontFamily: "ECA, sans-serif" }}
                 />
               ) : (
-                <Typography variant="body1">
+                <Typography
+                  variant="body1"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
                   <strong>Name:</strong> {patientEdits.name || "Not provided"}
                 </Typography>
               )}
@@ -526,7 +535,10 @@ const MyPatientsSection = () => {
                 border: "1px solid #e0e0e0",
               }}
             >
-              <Typography variant="body1">
+              <Typography
+                variant="body1"
+                sx={{ fontFamily: "ECA, sans-serif" }}
+              >
                 <strong>Email:</strong> {selectedPatient?.email || ""}
               </Typography>
             </Box>
@@ -552,7 +564,7 @@ const MyPatientsSection = () => {
                   value={patientEdits.phone}
                   onChange={(e) => handleEditChange("phone", e.target.value)}
                   size="small"
-                  sx={{ mr: 1 }}
+                  sx={{ mr: 1, fontFamily: "ECA, sans-serif" }}
                 />
               ) : (
                 <Typography variant="body1">
@@ -569,7 +581,10 @@ const MyPatientsSection = () => {
           </Box>
 
           {/* Patient Files */}
-          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 600, mb: 1, fontFamily: "ECA, sans-serif" }}
+          >
             Patient Files
           </Typography>
 
@@ -585,7 +600,10 @@ const MyPatientsSection = () => {
                 backgroundColor: "#f0f0f0",
               }}
             >
-              <Typography fontWeight={600} sx={{ mb: 1 }}>
+              <Typography
+                fontWeight={600}
+                sx={{ mb: 1, fontFamily: "ECA, sans-serif" }}
+              >
                 Report Simplifier
               </Typography>
 
@@ -609,7 +627,10 @@ const MyPatientsSection = () => {
                 backgroundColor: "#f0f0f0",
               }}
             >
-              <Typography fontWeight={600} sx={{ mb: 1 }}>
+              <Typography
+                fontWeight={600}
+                sx={{ mb: 1, fontFamily: "ECA, sans-serif" }}
+              >
                 Medication Help
               </Typography>
               {selectedPatient?.medication_notes?.length ? (
@@ -619,7 +640,11 @@ const MyPatientsSection = () => {
                   </Typography>
                 ))
               ) : (
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
                   No medication notes found.
                 </Typography>
               )}
@@ -636,7 +661,10 @@ const MyPatientsSection = () => {
                 mb: 1,
               }}
             >
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 600, fontFamily: "ECA, sans-serif" }}
+              >
                 Caregiver's Notes
               </Typography>
               <IconButton
@@ -666,9 +694,13 @@ const MyPatientsSection = () => {
                   variant="outlined"
                   value={patientEdits.notes}
                   onChange={(e) => handleEditChange("notes", e.target.value)}
+                  sx={{ fontFamily: "ECA, sans-serif" }}
                 />
               ) : (
-                <Typography variant="body2">
+                <Typography
+                  variant="body2"
+                  sx={{ fontFamily: "ECA, sans-serif" }}
+                >
                   {patientEdits.notes || "No notes available."}
                 </Typography>
               )}
@@ -687,6 +719,7 @@ const MyPatientsSection = () => {
                 borderRadius: "20px",
                 px: 4,
                 "&:hover": { backgroundColor: "#004D40" },
+                fontFamily: "ECA, sans-serif",
               }}
             >
               Update
@@ -701,6 +734,7 @@ const MyPatientsSection = () => {
                 borderRadius: "20px",
                 px: 4,
                 "&:hover": { backgroundColor: "#004D40" },
+                fontFamily: "ECA, sans-serif",
               }}
             >
               Close
