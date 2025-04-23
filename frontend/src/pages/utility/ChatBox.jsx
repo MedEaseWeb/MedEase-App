@@ -12,22 +12,6 @@ import { KeyboardArrowUp, KeyboardArrowDown } from "@mui/icons-material";
 import Draggable from "react-draggable";
 import socket from "../../pages/utility/SocketConnection";
 
-const patientFlowSteps = [
-  { field: "firstName", prompt: "Please enter patient's first name here:" },
-  { field: "lastName", prompt: "Please enter patient's last name here:" },
-  { field: "email", prompt: "Please enter patient's email here:" },
-  {
-    field: "phone",
-    prompt:
-      "If you would love to, please enter patient's phone number here (optional):",
-  },
-  {
-    field: "notes",
-    prompt:
-      "Do you have any summary or notes about the patient to share? (optional):",
-  },
-];
-
 const Chatbox = () => {
   // Main chat state.
   const [messages, setMessages] = useState([]);
@@ -38,17 +22,9 @@ const Chatbox = () => {
     console.log(nodeRef);
   }, [nodeRef]);
 
-  // Patient info flow state.
-  const [patientFlowActive, setPatientFlowActive] = useState(false);
-  const [patientFlowStep, setPatientFlowStep] = useState(0);
-  const [patientInfo, setPatientInfo] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    notes: "",
-  });
+  // Mode flags.
   const [reminderMode, setReminderMode] = useState(false);
+  const [patientDataMode, setPatientDataMode] = useState(false);
 
   // On mount, add a welcome message after a 500ms delay.
   useEffect(() => {
@@ -62,15 +38,14 @@ const Chatbox = () => {
       ]);
     }, 500);
 
-    socket.on("connect", () => {
-      console.log("Connected to backend via Socket.IO");
-    });
-    socket.on("disconnect", () => {
-      console.log("Disconnected from backend");
-    });
+    socket.on("connect", () =>
+      console.log("Connected to backend via Socket.IO")
+    );
+    socket.on("disconnect", () => console.log("Disconnected from backend"));
     socket.on("bot-message", (message) => {
       setMessages((prev) => [...prev, { text: message, sender: "bot" }]);
     });
+
     return () => {
       clearTimeout(timeoutId);
       socket.off("connect");
@@ -79,119 +54,56 @@ const Chatbox = () => {
     };
   }, []);
 
-  // Submit patient info to backend.
-  // const handleSubmitPatientInfo = async (patientData) => {
-  //   try {
-  //     // POST to /api/patients using the fields from patientData.
-  //     const res = await axios.post(`${backendBaseUrl}/api/patients`, patientData);
-  //     console.log("Patient record created:", res.data);
-  //     setMessages((prev) => [
-  //       ...prev,
-  //       { text: "Thank you. Your patient info has been recorded.", sender: "bot" }
-  //     ]);
-  //   } catch (error) {
-  //     console.error("Error submitting patient info:", error);
-  //     setMessages((prev) => [
-  //       ...prev,
-  //       { text: "There was an error recording your patient info. Please try again.", sender: "bot" }
-  //     ]);
-  //   }
-  // };
-
   // Send message handler.
   const sendMessage = () => {
-    if (input.trim() === "") return;
+    if (!input.trim()) return;
 
-    // reminder mode
+    // Reminder flow
     if (reminderMode) {
-      // echo user’s text
       setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
-
-      // emit as a structured object
-      socket.emit("user_message", {
-        mode: "reminder",
-        content: input.trim(),
-      });
-
-      // reset mode & input
+      socket.emit("user_message", { mode: "reminder", content: input.trim() });
       setReminderMode(false);
       setInput("");
       return;
     }
 
-    // If we're in a patient info flow, process the sequential prompts.
-    if (patientFlowActive) {
-      const currentStep = patientFlowSteps[patientFlowStep];
-      // Save the user's response for the current field.
-      setPatientInfo((prev) => ({
-        ...prev,
-        [currentStep.field]: input.trim(),
-      }));
-      setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
+    // Patient data flow
+    if (patientDataMode) {
+      setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
+      socket.emit("user_message", {
+        mode: "patient_data",
+        content: input.trim(),
+      });
+      setPatientDataMode(false);
       setInput("");
-
-      if (patientFlowStep < patientFlowSteps.length - 1) {
-        const nextStep = patientFlowStep + 1;
-        setPatientFlowStep(nextStep);
-        setTimeout(() => {
-          setMessages((prev) => [
-            ...prev,
-            { text: patientFlowSteps[nextStep].prompt, sender: "bot" },
-          ]);
-        }, 300);
-      } else {
-        // All prompts completed; finalize the flow.
-        setPatientFlowActive(false);
-        setPatientFlowStep(0);
-        // Optionally, combine firstName and lastName to form patient_name.
-        const patientData = {
-          user_id: "current_user_id", // Replace with actual user id from context if needed.
-          firstName: patientInfo.firstName,
-          lastName: patientInfo.lastName,
-          email: patientInfo.email,
-          phone: patientInfo.phone,
-          notes: patientInfo.notes,
-        };
-        setMessages((prev) => [
-          ...prev,
-          { text: "Submitting your patient info...", sender: "bot" },
-        ]);
-        handleSubmitPatientInfo(patientData);
-      }
-    } else {
-      // Normal chat flow.
-      setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
-      socket.emit("user_message", input.trim());
-      setInput("");
+      return;
     }
+
+    // Normal chat flow
+    setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
+    socket.emit("user_message", input.trim());
+    setInput("");
   };
 
   // Handle selection button clicks.
   const handleSelection = (option) => {
     if (option === "patients") {
-      // Start the patient info flow.
-      setPatientFlowActive(true);
-      setPatientFlowStep(0);
-      setPatientInfo({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        notes: "",
-      });
-      // Push the first prompt into the messages.
+      // Enter patient data mode
+      setPatientDataMode(true);
       setMessages((prev) => [
         ...prev,
-        { text: patientFlowSteps[0].prompt, sender: "bot" },
+        {
+          text: "Sure! To retrieve a patient's data, please provide the patient's email and generated key in one message. For example: 'jane.doe@example.com KEY12345'",
+          sender: "bot",
+        },
       ]);
     } else if (option === "reminders") {
-      // flip into reminder mode
+      // Enter reminder mode
       setReminderMode(true);
-      setMessages((m) => [
-        ...m,
+      setMessages((prev) => [
+        ...prev,
         {
-          text: `Sure! What would you like to be reminded about, 
-and when? (e.g. “Take meds at 9 AM for 5 days”)`,
+          text: `Sure! What would you like to be reminded about,\nand when? (e.g. “Take meds at 9 AM for 5 days”)`,
           sender: "bot",
         },
       ]);
@@ -213,7 +125,6 @@ and when? (e.g. “Take meds at 9 AM for 5 days”)`,
   };
 
   const toggleExpanded = () => setExpanded(!expanded);
-
   return (
     <Draggable nodeRef={nodeRef} handle=".chatbox-drag-handle" bounds="parent">
       <Paper

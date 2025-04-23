@@ -35,5 +35,23 @@ tools = [
             },
             "required": ["summary", "start_time", "end_time"]
         }
+    },
+        {
+     "name": "get_patient_data",
+        "description": "Fetch a patient's full record (medical_reports, medication_note, notes, etc.) from MedEase by patient_email and generated_key",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "patient_email": {
+                    "type": "string",
+                    "description": "The patient's email address"
+                },
+                "generated_key": {
+                    "type": "string",
+                    "description": "The one‑time key the patient generated"
+                }
+            },
+            "required": ["patient_email", "generated_key"]
+        }
     }
 ]

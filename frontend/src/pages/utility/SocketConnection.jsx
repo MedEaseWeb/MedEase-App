@@ -3,8 +3,9 @@
 import { io } from "socket.io-client";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem("aceess_token");
+const token = localStorage.getItem("access_token");
 // (or whatever key you actually store your JWT under)
+console.log("JWT from localStorage:", token);
 
 const socket = io(backendBaseUrl, {
   path: "/ws/socket.io",

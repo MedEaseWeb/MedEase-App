@@ -286,6 +286,7 @@ async def send_gmail_email(
     req: SendGmailRequest,
     user_id: str = Depends(get_current_user)
 ):
+    print("→ send-gmail payload:", req.json())
     to = req.to
     subject = req.subject
     message = req.message
@@ -331,6 +332,9 @@ Content-Type: text/plain; charset="UTF-8"
 
     async with httpx.AsyncClient() as client:
         response = await client.post(gmail_url, headers=headers, json=json_data)
+
+    print("→ Gmail API status:", response.status_code)
+    print("→ Gmail API body:", response.text)
 
     if response.status_code == 200:
         return {"message": "Email sent successfully"}

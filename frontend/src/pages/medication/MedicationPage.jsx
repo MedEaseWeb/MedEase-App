@@ -72,7 +72,7 @@ const FeatureButtons = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
-      <Button
+      {/* <Button
         variant="contained"
         startIcon={<Event />}
         onClick={handleConnectGoogleCalendar}
@@ -85,7 +85,7 @@ const FeatureButtons = () => {
         fullWidth
       >
         Add reminder to Google Calendar
-      </Button>
+      </Button> */}
 
       <Button
         variant="contained"
