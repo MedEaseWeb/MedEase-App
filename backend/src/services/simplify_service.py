@@ -59,6 +59,7 @@ def extract_sections(full_text: str) -> tuple[str, str]:
     return simplified_report, formatted_simplified_report
 
 async def stream_and_capture(prompt: str, user_id: str, report_id: str, user_email: str):
+    yield "Starting simplification pipeline...\n"
     buffer = ""
 
     # Step 1: run the guardian (before streaming anything)
@@ -99,6 +100,7 @@ async def stream_and_capture(prompt: str, user_id: str, report_id: str, user_ema
 
 
 def stream_simplified_response(prompt: str):
+    yield "Starting simplification pipeline...\n"
     """
     Full simplification pipeline (streaming only).
     Does NOT save output to the database.
@@ -106,9 +108,9 @@ def stream_simplified_response(prompt: str):
     final_output = ""
     yield from stream_classification_result(prompt)
 
-    if not classifier.is_medical(prompt):
-        yield "\nPlease provide a medical report. Simplification terminated.\n"
-        return
+    # if not classifier.is_medical(prompt):
+    #     yield "\nPlease provide a medical report. Simplification terminated.\n"
+    #     return
 
     yield "\n\nStep 1: Lexical Simplification...\n"
     lexical_text = ""
