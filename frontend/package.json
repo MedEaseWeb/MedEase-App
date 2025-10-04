@@ -17,6 +17,7 @@
     "axios": "^1.8.1",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.7",
+    "lucide-react": "^0.544.0",
     "pdfjs-dist": "^5.1.91",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
