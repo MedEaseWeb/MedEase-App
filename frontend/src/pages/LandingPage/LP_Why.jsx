@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Grid, Paper, Button } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb, Heart, School, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const MotionPaper = motion(Paper);
 
@@ -104,6 +105,8 @@ export default function LP_Why() {
 
         <Button
           variant="contained"
+          component={Link}
+          to="/signup"
           sx={{
             mt: 4,
             px: 3.5,

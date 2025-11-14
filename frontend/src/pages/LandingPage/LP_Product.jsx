@@ -7,6 +7,8 @@ const sections = [
     id: "recovery",
     title: "Recovery Assistant (AI-Powered)",
     subtitle: "Simplify, plan, and recover with personalized guidance.",
+    image:
+      "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/1ba759e3-8f0e-4870-6df8-ea8403edb800/public",
     features: [
       "Medical Jargon Simplification",
       "Dietary & Recovery Journey Planning",
@@ -20,6 +22,8 @@ const sections = [
     id: "accessibility",
     title: "Campus Accessibility Toolkit",
     subtitle: "Navigate campus with confidence and inclusivity.",
+    image:
+      "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/3005e40c-c7de-4a5a-8f7f-3b86dc663b00/public",
     features: [
       "Interactive Campus Map (Emory start)",
       "Wheelchair-friendly Routes",
@@ -33,6 +37,8 @@ const sections = [
     id: "community",
     title: "MedEase Community Hub",
     subtitle: "Connect, share, and support your recovery journey.",
+    image:
+      "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/4b73980a-cd2b-4fc1-e290-d676666df500/public",
     features: [
       "Injury Journey Sharing",
       "Social Support & Peer Matching",
@@ -138,15 +144,21 @@ export default function LP_Product() {
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.6 }}
           >
-            <Skeleton
-              variant="rectangular"
-              animation="wave"
-              sx={{
-                width: { xs: "100%", md: 520 },
-                height: { xs: 240, md: 340 },
+            <motion.img
+              key={current.id}
+              src={current.image}
+              alt={current.title}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.6 }}
+              style={{
+                width: "520px", // mandatory width
+                height: "340px", // mandatory height
+                objectFit: "cover", // ensures consistent look
                 borderRadius: "16px",
-                bgcolor: "#e8f5f0", // subtle light green tint
                 boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+                backgroundColor: "#e8f5f0",
               }}
             />
           </motion.div>
