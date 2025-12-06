@@ -118,7 +118,7 @@ export default function LP_Why() {
             borderRadius: "10px",
           }}
         >
-          Learn More
+          Get Started
         </Button>
       </Box>
 

@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigationType } from "react-router-dom";
 import medicalBackground from "../../assets/pics/medical.webp";
 import useWindowSize from "../../hooks/useWindowSize";
 import Logo from "../utility/Logo";
@@ -369,7 +369,7 @@ const Sidebar = () => {
 
 export default function SignUp() {
   const { width, height } = useWindowSize();
-
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -430,8 +430,10 @@ export default function SignUp() {
                   fontFamily: "ECA, sans-serif",
                   fontWeight: "Regular",
                   color: "#F5F5F5",
+                  cursor: "pointer",
                   textDecoration: "underline",
                 }}
+                onClick={() => navigate("/")}
               >
                 <br />
                 Learn more about us

@@ -236,7 +236,7 @@ const Sidebar = () => {
 
 export default function Login() {
   const { width, height } = useWindowSize();
-
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -299,6 +299,10 @@ export default function Login() {
                   fontWeight: "Regular",
                   color: "#F5F5F5",
                   textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate("/");
                 }}
               >
                 <br />

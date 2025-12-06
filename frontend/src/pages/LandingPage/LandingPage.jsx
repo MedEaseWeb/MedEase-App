@@ -1,5 +1,13 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  CssBaseline,
+  GlobalStyles, // <--- Import GlobalStyles
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { motion, useScroll, useSpring } from "framer-motion";
 import Logo from "../utility/Logo";
@@ -29,11 +37,22 @@ export default function LandingPage() {
 
   const handleScrollTo = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (el) {
+      // Offset the scroll calculation by ~70px so the header doesn't cover the title
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   };
 
   return (
     <Box sx={{ position: "relative", width: "100%", minHeight: "100vh" }}>
+      <CssBaseline />
+
+      {/* 1. GlobalStyles: This stops the "elastic" rubber-banding on the whole page 
+            (works on most modern browsers).
+      */}
+      <GlobalStyles styles={{ body: { overscrollBehavior: "none" } }} />
+
       {/* === BACKGROUND LAYER === */}
       <Box
         sx={{
@@ -50,7 +69,6 @@ export default function LandingPage() {
         }}
       />
 
-      {/* Optional translucent overlay for readability */}
       <Box
         sx={{
           position: "fixed",
@@ -62,27 +80,30 @@ export default function LandingPage() {
       />
 
       {/* === TOP BAR === */}
-
       <AppBar
-        position="sticky"
-        elevation={1}
+        // 2. Changed to 'fixed'. This pins it to the viewport glass, not the page flow.
+        position="fixed"
+        elevation={0}
         sx={{
           zIndex: 1200,
           background: "rgba(255,255,255,0.8)",
           backdropFilter: "blur(10px)",
           WebkitBackdropFilter: "blur(10px)",
           borderBottom: "1px solid rgba(0,0,0,0.05)",
+          width: "100%",
+          top: 0,
+          left: 0,
         }}
       >
         <Toolbar
+          disableGutters
           sx={{
-            maxWidth: "1400px",
-            mx: "auto",
             width: "100%",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             py: 1,
+            px: 3,
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -129,6 +150,11 @@ export default function LandingPage() {
           overflowX: "hidden",
         }}
       >
+        {/* 3. The Spacer: Because AppBar is now 'fixed', it floats *over* the content.
+              This empty Toolbar pushes the content down exactly by the header's height. 
+        */}
+        <Toolbar sx={{ py: 1 }} />
+
         <Box id="why-medease">
           <LP_Why />
         </Box>

@@ -1,24 +1,56 @@
-import React from "react";
-import { Box, Typography, Grid, Skeleton } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+
+const why1 =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/15dfb7e2-9fd0-4d13-6f71-e5fb1b474b00/public";
+
+const why2 =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/dfac53ed-5b83-4ea1-4a8e-ab5cc1e5c500/public";
+const annieImg =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/956740c2-9996-4dba-cf5c-891d746bdb00/public";
+
+const peterImg =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/c7292c14-03fb-465d-ad98-67f2b1ae6900/public";
+
+const philImg =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/8c69b30d-5084-4a42-e880-aa7d272c8700/public";
+
+const sixingImg =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/611620df-7b75-40d4-2f2d-a0c1c5575b00/public";
+
+const veraImg =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/516996c2-d34f-4706-73d4-114402bf5000/public";
+
+const yuxuanImg =
+  "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/713b3229-8a9a-4faf-2c9c-85bb81303600/public";
 
 const MotionBox = motion(Box);
 
 export default function LP_About() {
   const members = [
-    { name: "Annie He", role: "/" },
-    { name: "Peter Chen", role: "/" },
-    { name: "Sixing Wu", role: "/" },
-    { name: "Vera Wen", role: "/" },
-    { name: "Yuxuan Shi", role: "/" },
+    { name: "Annie He", role: "Team Member", img: annieImg },
+    { name: "Peter Chen", role: "Team Member", img: peterImg },
+    { name: "Sixing Wu", role: "Team Member", img: sixingImg },
+    { name: "Vera Wen", role: "Team Member", img: veraImg },
+    { name: "Yuxuan Shi", role: "Team Member", img: yuxuanImg },
+    { name: "Phil Wolff", role: "Technical Mentor", img: philImg },
   ];
+
+  const imageStyles = {
+    width: "60%",
+    display: "block",
+    mx: "auto",
+    height: { xs: "auto", md: 300 },
+    objectFit: "cover",
+    borderRadius: 4,
+  };
 
   return (
     <Box
       sx={{
         width: "100%",
         overflowX: "hidden",
-        background: "transparent", // transparent main wrapper
+        background: "transparent",
         fontFamily: "ECA, sans-serif",
       }}
     >
@@ -29,7 +61,7 @@ export default function LP_About() {
           px: { xs: 3, md: 8 },
           maxWidth: "1200px",
           mx: "auto",
-          background: "transparent", // transparent content block
+          background: "transparent",
         }}
       >
         {/* Header */}
@@ -70,14 +102,11 @@ export default function LP_About() {
           sx={{ background: "transparent" }}
         >
           <Grid item xs={12} md={6}>
-            <Skeleton
-              variant="rectangular"
-              sx={{
-                width: "100%",
-                height: 300,
-                borderRadius: 4,
-                bgcolor: "rgba(231, 241, 236, 0.6)", // translucent skeleton tint
-              }}
+            <Box
+              component="img"
+              src={why1}
+              alt="Student struggling with injury"
+              sx={imageStyles}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -137,22 +166,21 @@ export default function LP_About() {
               }}
             >
               That experience made something clear: recovery shouldn’t be this
-              hard. So we built MedEase — a digital care companion that
-              simplifies medical language, connects students to campus and
-              healthcare resources, and provides emotional support during
-              recovery. We want every student to heal confidently, with clarity
-              and compassion.
+              hard. So we built MedEase — a digital care companion that supports
+              you through every step: from the moment you’re injured, to
+              navigating the American medical system, to post-injury recovery.
+              MedEase helps students access care confidently, affordably, and
+              with the least pain, stress, and disruption to their daily lives.
+              Our mission is simple: help every student heal with clarity,
+              dignity, and compassion.
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Skeleton
-              variant="rectangular"
-              sx={{
-                width: "100%",
-                height: 300,
-                borderRadius: 4,
-                bgcolor: "rgba(234, 243, 239, 0.6)", // translucent tint
-              }}
+            <Box
+              component="img"
+              src={why2}
+              alt="Student struggling with injury"
+              sx={imageStyles}
             />
           </Grid>
         </Grid>
@@ -163,7 +191,7 @@ export default function LP_About() {
         sx={{
           py: { xs: 10, md: 14 },
           px: { xs: 3, md: 8 },
-          background: "transparent", // no white background
+          background: "transparent",
           borderTop: "1px solid rgba(0,0,0,0.05)",
         }}
       >
@@ -202,7 +230,8 @@ export default function LP_About() {
           sx={{ background: "transparent" }}
         >
           {members.map((m, i) => (
-            <Grid item xs={12} sm={6} md={4} lg={2.4} key={i}>
+            // Changed lg={2.4} to lg={2} so 6 items fit in one row (12/2=6)
+            <Grid item xs={12} sm={6} md={4} lg={2} key={i}>
               <MotionBox
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -210,14 +239,18 @@ export default function LP_About() {
                 viewport={{ once: true, amount: 0.3 }}
                 sx={{ textAlign: "center", background: "transparent" }}
               >
-                <Skeleton
-                  variant="circular"
-                  width={140}
-                  height={140}
+                <Box
+                  component="img"
+                  src={m.img}
+                  alt={m.name}
                   sx={{
+                    width: 140,
+                    height: 140,
+                    borderRadius: "50%",
+                    objectFit: "cover",
                     mx: "auto",
-                    bgcolor: "rgba(232, 245, 240, 0.6)", // slightly transparent
                     mb: 2,
+                    boxShadow: "0 8px 24px rgba(15, 64, 56, 0.15)",
                   }}
                 />
                 <Typography
