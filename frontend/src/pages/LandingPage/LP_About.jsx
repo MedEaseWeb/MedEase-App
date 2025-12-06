@@ -33,7 +33,6 @@ export default function LP_About() {
     { name: "Sixing Wu", role: "Team Member", img: sixingImg },
     { name: "Vera Wen", role: "Team Member", img: veraImg },
     { name: "Yuxuan Shi", role: "Team Member", img: yuxuanImg },
-    { name: "Phil Wolff", role: "Technical Mentor", img: philImg },
   ];
 
   const imageStyles = {
