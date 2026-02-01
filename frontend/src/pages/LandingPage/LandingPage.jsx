@@ -6,25 +6,37 @@ import {
   Box,
   Button,
   CssBaseline,
-  GlobalStyles, // <--- Import GlobalStyles
+  GlobalStyles,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { motion, useScroll, useSpring } from "framer-motion";
-import Logo from "../utility/Logo";
-import LP_Why from "./LP_Why";
+import LP_Hero from "./LP_Hero";
+import LP_Mission from "./LP_Mission";
 import LP_Product from "./LP_Product";
 import LP_About from "./LP_About";
-import LP_Contact from "./LP_Contact";
+import LP_Footer from "./LP_Footer";
+import InteractiveBackground from "./utils/InteractiveBackground";
+
+const colors = {
+  textMain: "#2C2420",
+  primary: "#2C2420",
+};
+
+const fontMain = "'Plus Jakarta Sans', sans-serif";
 
 const NavButton = styled(Button)(() => ({
-  borderRadius: "10px",
-  padding: "6px 18px",
-  fontSize: "1.1rem",
-  fontWeight: "bold",
+  borderRadius: "8px",
+  padding: "8px 16px",
+  fontSize: "0.9rem",
+  fontWeight: 600,
   textTransform: "none",
-  color: "#333",
+  fontFamily: fontMain,
+  color: colors.textMain,
   backgroundColor: "transparent",
-  "&:hover": { color: "#00684A" },
+  transition: "all 0.2s ease",
+  "&:hover": {
+    backgroundColor: "rgba(44, 36, 32, 0.05)",
+  },
 }));
 
 export default function LandingPage() {
@@ -38,137 +50,118 @@ export default function LandingPage() {
   const handleScrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      // Offset the scroll calculation by ~70px so the header doesn't cover the title
       const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
   return (
-    <Box sx={{ position: "relative", width: "100%", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
+        minHeight: "100vh",
+      }}
+    >
       <CssBaseline />
-
-      {/* 1. GlobalStyles: This stops the "elastic" rubber-banding on the whole page 
-            (works on most modern browsers).
+      {/* FIX 1: Force body and html to be transparent so the 
+         fixed background behind them is actually visible.
       */}
-      <GlobalStyles styles={{ body: { overscrollBehavior: "none" } }} />
-
-      {/* === BACKGROUND LAYER === */}
-      <Box
-        sx={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-          overflow: "hidden",
-          pointerEvents: "none",
-          background: `
-            radial-gradient(80% 100% at 30% 10%, #d9f3ea 0%, transparent 55%),
-            radial-gradient(70% 100% at 70% 90%, #e0f5ee 0%, transparent 65%),
-            radial-gradient(100% 120% at 50% 50%, #ffffff 0%, #f9fbf9 100%)
-          `,
+      <GlobalStyles
+        styles={{
+          html: { backgroundColor: "transparent" },
+          body: { backgroundColor: "transparent", overscrollBehavior: "none" },
+          "#root": { backgroundColor: "transparent" },
         }}
       />
 
-      <Box
-        sx={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0.5,
-          background: "rgba(255,255,255,0.15)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* === BACKGROUND COMPONENT === */}
+      <InteractiveBackground />
 
-      {/* === TOP BAR === */}
+      {/* === NAVBAR === */}
       <AppBar
-        // 2. Changed to 'fixed'. This pins it to the viewport glass, not the page flow.
         position="fixed"
         elevation={0}
         sx={{
           zIndex: 1200,
-          background: "rgba(255,255,255,0.8)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-          borderBottom: "1px solid rgba(0,0,0,0.05)",
-          width: "100%",
-          top: 0,
-          left: 0,
+          background: "rgba(247, 242, 237, 0.7)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(44, 36, 32, 0.05)",
         }}
       >
         <Toolbar
-          disableGutters
           sx={{
-            width: "100%",
-            display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
-            py: 1,
-            px: 3,
+            py: 1.5,
+            maxWidth: "1400px",
+            width: "100%",
+            mx: "auto",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Logo imgSize={40} fontSize={28} />
-          </Box>
+          <Typography
+            variant="h5"
+            sx={{
+              fontFamily: fontMain,
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              color: colors.textMain,
+              cursor: "pointer",
+            }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            MedEase
+          </Typography>
 
-          <Box sx={{ display: "flex", gap: 2 }}>
-            {["why-medease", "product", "about", "contact"].map((id, idx) => (
-              <motion.div key={idx} whileHover={{ scale: 1.1 }}>
-                <NavButton onClick={() => handleScrollTo(id)}>
-                  <Typography
-                    sx={{
-                      fontSize: 18,
-                      fontFamily: "ECA, sans-serif",
-                      color: "#222222",
-                    }}
-                  >
-                    {id
-                      .replace("-", " ")
-                      .replace(/\b\w/g, (l) => l.toUpperCase())}
-                  </Typography>
-                </NavButton>
-              </motion.div>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
+            {["mission", "product", "about", "docs"].map((id) => (
+              <NavButton key={id} onClick={() => handleScrollTo(id)}>
+                {id.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+              </NavButton>
             ))}
           </Box>
-        </Toolbar>
 
+          <Button
+            variant="contained"
+            onClick={() => handleScrollTo("contact")}
+            sx={{
+              bgcolor: colors.primary,
+              color: "#FFF",
+              borderRadius: "12px",
+              px: 3,
+              fontFamily: fontMain,
+              textTransform: "none",
+              fontWeight: 600,
+              "&:hover": { bgcolor: "#1a1614" },
+            }}
+          >
+            Join Waitlist
+          </Button>
+        </Toolbar>
         <motion.div
           style={{
             scaleX,
             transformOrigin: "0%",
-            height: "4px",
-            background: "#00684A",
+            height: "2px",
+            background: colors.primary,
           }}
         />
       </AppBar>
 
       {/* === CONTENT === */}
-      <Box
-        sx={{
-          position: "relative",
-          zIndex: 1,
-          width: "100%",
-          overflowX: "hidden",
-        }}
-      >
-        {/* 3. The Spacer: Because AppBar is now 'fixed', it floats *over* the content.
-              This empty Toolbar pushes the content down exactly by the header's height. 
-        */}
-        <Toolbar sx={{ py: 1 }} />
-
-        <Box id="why-medease">
-          <LP_Why />
+      {/* FIX 2: Explicit Z-Index 1 to ensure it floats ABOVE the p5 canvas */}
+      <Box sx={{ position: "relative", zIndex: 1, pt: 12 }}>
+        <LP_Hero />
+        <Box id="mission">
+          <LP_Mission />
         </Box>
-
         <Box id="product">
           <LP_Product />
         </Box>
-
         <Box id="about">
           <LP_About />
         </Box>
-
         <Box id="contact">
-          <LP_Contact />
+          <LP_Footer />
         </Box>
       </Box>
     </Box>
