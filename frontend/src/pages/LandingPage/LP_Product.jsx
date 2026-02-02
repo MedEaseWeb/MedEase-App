@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, Grid, Paper } from "@mui/material";
+import { Box, Typography, Button, Paper } from "@mui/material"; // Removed Grid, unused now
 import { motion, AnimatePresence } from "framer-motion";
 
 // --- DARK CONSOLE PALETTE ---
@@ -31,7 +31,6 @@ const sections = [
       "University Knowledge Base",
       "Zero-Hallucination Guardrails",
     ],
-    // "type" determines which skeleton UI to show
     type: "dashboard",
   },
   {
@@ -75,7 +74,6 @@ const WireframeChat = () => (
       p: 4,
     }}
   >
-    {/* Fake Message Bubbles */}
     <Box sx={{ alignSelf: "flex-start", width: "60%" }}>
       <SkeletonBlock
         height={60}
@@ -100,7 +98,6 @@ const WireframeChat = () => (
         sx={{ borderRadius: "16px 16px 16px 4px" }}
       />
     </Box>
-    {/* Fake Input Bar */}
     <Box sx={{ mt: "auto", pt: 4 }}>
       <SkeletonBlock height={50} delay={0} sx={{ borderRadius: "25px" }} />
     </Box>
@@ -117,7 +114,6 @@ const WireframeDashboard = () => (
       p: 4,
     }}
   >
-    {/* Header Bars */}
     <Box sx={{ display: "flex", gap: 2 }}>
       <SkeletonBlock
         width="30%"
@@ -132,11 +128,9 @@ const WireframeDashboard = () => (
         sx={{ borderRadius: "12px" }}
       />
     </Box>
-    {/* List Items */}
     <SkeletonBlock height={40} delay={0.4} />
     <SkeletonBlock height={40} delay={0.5} />
     <SkeletonBlock height={40} delay={0.6} />
-    {/* Graph Area */}
     <SkeletonBlock
       height={120}
       delay={0.8}
@@ -173,20 +167,6 @@ export default function LP_Product() {
           }}
         >
           Intelligent Health Management
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            fontFamily: fontMain,
-            color: "#594D46",
-            fontWeight: 500,
-            maxWidth: "600px",
-            mx: "auto",
-            lineHeight: 1.6,
-          }}
-        >
-          Agentic infrastructure designed to navigate the chaos of fragmented
-          campus systems.
         </Typography>
       </Box>
 
@@ -253,18 +233,21 @@ export default function LP_Product() {
         layout
         sx={{
           borderRadius: "32px",
-          bgcolor: colors.cardBg, // THE DARK ENGINE
+          bgcolor: colors.cardBg,
           overflow: "hidden",
+          // Flex layout ensures equal height by default (alignItems: stretch)
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           position: "relative",
           boxShadow: "0 20px 50px rgba(44, 36, 32, 0.15)",
+          // Ensures children stretch to fill height
+          alignItems: "stretch",
         }}
       >
         {/* LEFT: TEXT CONTENT */}
         <Box
           sx={{
-            flex: 1,
+            flex: 1, // Balanced 50/50 split
             p: { xs: 4, md: 6, lg: 8 },
             display: "flex",
             flexDirection: "column",
@@ -306,8 +289,17 @@ export default function LP_Product() {
                 {current.subtitle}
               </Typography>
 
-              {/* Feature Pills */}
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+              {/* FIX: Vertical Stack for Features 
+                  flexDirection: "column" ensures 1 item per line.
+              */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column", // Stacks items vertically
+                  alignItems: "flex-start", // Aligns pills to the left
+                  gap: 2, // Spacing between rows
+                }}
+              >
                 {current.features.map((item) => (
                   <Box
                     key={item}
@@ -338,7 +330,7 @@ export default function LP_Product() {
                         fontFamily: fontMain,
                         fontWeight: 500,
                         color: colors.textMain,
-                        fontSize: "0.9rem",
+                        fontSize: "0.95rem",
                       }}
                     >
                       {item}
@@ -353,19 +345,20 @@ export default function LP_Product() {
         {/* RIGHT: THE WIREFRAME SKELETON */}
         <Box
           sx={{
-            flex: 1.2,
+            flex: 1, // Balanced 50/50 split
             position: "relative",
-            minHeight: { xs: "350px", md: "auto" },
-            bgcolor: "#1E1815", // Darker background for the "Screen"
+            bgcolor: "#1E1815",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             p: 4,
+            // Remove fixed heights to let flexbox stretch it
+            minHeight: { xs: "400px", md: "auto" },
           }}
         >
           <AnimatePresence mode="wait">
             <motion.div
-              key={current.id} // Re-renders skeleton on switch
+              key={current.id}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
@@ -373,7 +366,8 @@ export default function LP_Product() {
               style={{
                 width: "100%",
                 height: "100%",
-                maxHeight: "450px",
+                // Ensures it doesn't get ridiculously tall if text is short
+                maxHeight: "500px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -388,18 +382,17 @@ export default function LP_Product() {
                   overflow: "hidden",
                   border: "1px solid rgba(255,255,255,0.1)",
                   boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-                  bgcolor: "rgba(255,255,255,0.02)", // Very subtle fill
+                  bgcolor: "rgba(255,255,255,0.02)",
                   position: "relative",
                 }}
               >
-                {/* Render the specific wireframe based on type */}
                 {current.type === "chat" ? (
                   <WireframeChat />
                 ) : (
                   <WireframeDashboard />
                 )}
 
-                {/* Overlay Gradient for depth */}
+                {/* Overlay Gradient */}
                 <Box
                   sx={{
                     position: "absolute",

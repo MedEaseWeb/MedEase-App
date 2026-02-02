@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const CYCLES_PER_LETTER = 2;
 const SHUFFLE_TIME = 20;
-const CHARS = "!@#$%^&*():{};|,.<>/?";
+const CHARS = "++++++++++";
 
 const ScrambleText = ({ children, className }) => {
   const intervalRef = useRef(null);

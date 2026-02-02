@@ -169,7 +169,7 @@ export default function LP_Why() {
           large
           title="Closing the Information Gap"
           text="The American medical system is a void for international students. MedEase acts as the bridge. We eliminate the critical asymmetry between injury and care, providing the infrastructure to navigate complex protocols with the safety and certainty of a local."
-          icon={<Compass size={24} />}
+          // icon={<Compass size={24} />}
           delay={0}
         />
 
@@ -177,7 +177,7 @@ export default function LP_Why() {
         <BentoCard
           title="Instant Clarity"
           text="Stabilizing the student mindset by instantly shifting them from **Panic** to **Precision**."
-          icon={<Zap size={22} />}
+          // icon={<Zap size={22} />}
           delay={0.1}
         />
 
@@ -185,7 +185,7 @@ export default function LP_Why() {
         <BentoCard
           title="Preventing Harm"
           text="Removing the fear of cost to shift students from **Hesitation** to immediate medical **Action**."
-          icon={<AlertTriangle size={22} />}
+          // icon={<AlertTriangle size={22} />}
           delay={0.2}
         />
 
@@ -193,7 +193,7 @@ export default function LP_Why() {
         <BentoCard
           title="Institutional Safety"
           text="Shielding the university by shifting the risk profile from **Liability** to proactive **Compliance**."
-          icon={<ShieldCheck size={22} />}
+          // icon={<ShieldCheck size={22} />}
           delay={0.3}
         />
       </Grid>

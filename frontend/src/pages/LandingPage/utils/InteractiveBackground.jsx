@@ -54,10 +54,10 @@ export default function InteractiveBackground() {
         fric: 0.94,
       }),
       // Blob 3: Soft Green (Center/accent)
-      //   new OrganicBlob(p5, w * 0.5, h * 0.5, PALETTE.orb3, 300, {
-      //     repel: 14.0, // Responsive
-      //     fric: 0.95, // Slightly lighter/floatier
-      //   }),
+      // new OrganicBlob(p5, w * 0.5, h * 0.5, PALETTE.orb3, 300, {
+      //   repel: 14.0, // Responsive
+      //   fric: 0.95, // Slightly lighter/floatier
+      // }),
     ];
   };
 

@@ -12,7 +12,7 @@ const colors = {
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
 // --- SCRAMBLE COMPONENT ---
-const CHARS = "-_~`+=!@#$";
+const CHARS = "+++";
 
 const ScrambleText = ({ text, sx }) => {
   const [display, setDisplay] = useState(text);
