@@ -64,9 +64,6 @@ export default function LandingPage() {
       }}
     >
       <CssBaseline />
-      {/* FIX 1: Force body and html to be transparent so the 
-         fixed background behind them is actually visible.
-      */}
       <GlobalStyles
         styles={{
           html: { backgroundColor: "transparent" },
