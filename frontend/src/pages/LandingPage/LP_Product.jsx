@@ -1,223 +1,412 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, Skeleton } from "@mui/material";
+import { Box, Typography, Button, Paper } from "@mui/material"; // Removed Grid, unused now
 import { motion, AnimatePresence } from "framer-motion";
 
+// --- DARK CONSOLE PALETTE ---
+const colors = {
+  pageBg: "#EBE5DE",
+  cardBg: "#2C2420",
+  textMain: "#FFFFFF",
+  textSec: "rgba(255, 255, 255, 0.7)",
+  accent: "#A65D37",
+  pillBg: "rgba(255, 255, 255, 0.08)",
+  pillBorder: "rgba(255, 255, 255, 0.1)",
+  switcherBg: "#E3DCCA",
+  switcherActiveText: "#2C2420",
+  switcherInactiveText: "#6B5E55",
+};
+
+const fontMain = "'Plus Jakarta Sans', sans-serif";
+
+// --- DATA ---
 const sections = [
   {
-    id: "recovery",
-    title: "Recovery Assistant (AI-Powered)",
-    subtitle: "Simplify, plan, and recover with personalized guidance.",
-    image:
-      "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/1ba759e3-8f0e-4870-6df8-ea8403edb800/public",
+    id: "rag",
+    title: "Agentic Triage Engine",
+    subtitle:
+      "RAG-powered routing that instantly connects students to the exact right campus resource based on live university data.",
     features: [
-      "Medical Jargon Simplification",
-      "Dietary & Recovery Journey Planning",
-      "Caregiver Coordination Tools",
-      "Accommodation Letter Generator",
-      "AI Agent Chatbot",
-      "Emotional & Peer Support",
+      "Context-Aware Retrieval",
+      "Automatic Dept. Routing",
+      "University Knowledge Base",
+      "Zero-Hallucination Guardrails",
     ],
+    type: "dashboard",
   },
   {
-    id: "accessibility",
-    title: "Campus Accessibility Toolkit",
-    subtitle: "Navigate campus with confidence and inclusivity.",
-    image:
-      "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/3005e40c-c7de-4a5a-8f7f-3b86dc663b00/public",
+    id: "chat",
+    title: "Adaptive Chat Protocol",
+    subtitle:
+      "A living chat interface that adapts recovery timelines in real-time based on student feedback and natural language updates.",
     features: [
-      "Interactive Campus Map (Emory start)",
-      "Wheelchair-friendly Routes",
-      "Elevators & Ramps",
-      "Disability Parking",
-      "Paratransit Integration",
-      "Real-time Facility Updates",
+      "Natural Language Updates",
+      "Dynamic Timeline Adjustment",
+      "Clinician-in-the-Loop",
+      "24/7 Crisis Detection",
     ],
-  },
-  {
-    id: "community",
-    title: "MedEase Community Hub",
-    subtitle: "Connect, share, and support your recovery journey.",
-    image:
-      "https://imagedelivery.net/luUTa6EFyOmipDilm9a3Jw/4b73980a-cd2b-4fc1-e290-d676666df500/public",
-    features: [
-      "Injury Journey Sharing",
-      "Social Support & Peer Matching",
-      "Medical Equipment Donation/Reuse",
-      "Volunteer and Check-In Network",
-    ],
+    type: "chat",
   },
 ];
 
+// --- SKELETON UI COMPONENTS ---
+const SkeletonBlock = ({ width, height, sx, delay }) => (
+  <motion.div
+    initial={{ opacity: 0.3 }}
+    animate={{ opacity: [0.3, 0.5, 0.3] }}
+    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay }}
+    style={{
+      width: width || "100%",
+      height: height || 20,
+      backgroundColor: "rgba(255, 255, 255, 0.1)",
+      borderRadius: "8px",
+      ...sx,
+    }}
+  />
+);
+
+const WireframeChat = () => (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      gap: 2,
+      width: "100%",
+      p: 4,
+    }}
+  >
+    <Box sx={{ alignSelf: "flex-start", width: "60%" }}>
+      <SkeletonBlock
+        height={60}
+        delay={0}
+        sx={{ borderRadius: "16px 16px 16px 4px" }}
+      />
+    </Box>
+    <Box sx={{ alignSelf: "flex-end", width: "50%", mt: 1 }}>
+      <SkeletonBlock
+        height={40}
+        delay={0.5}
+        sx={{
+          bgcolor: "rgba(166, 93, 55, 0.3)",
+          borderRadius: "16px 16px 4px 16px",
+        }}
+      />
+    </Box>
+    <Box sx={{ alignSelf: "flex-start", width: "70%", mt: 1 }}>
+      <SkeletonBlock
+        height={80}
+        delay={1.0}
+        sx={{ borderRadius: "16px 16px 16px 4px" }}
+      />
+    </Box>
+    <Box sx={{ mt: "auto", pt: 4 }}>
+      <SkeletonBlock height={50} delay={0} sx={{ borderRadius: "25px" }} />
+    </Box>
+  </Box>
+);
+
+const WireframeDashboard = () => (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      gap: 3,
+      width: "100%",
+      p: 4,
+    }}
+  >
+    <Box sx={{ display: "flex", gap: 2 }}>
+      <SkeletonBlock
+        width="30%"
+        height={80}
+        delay={0}
+        sx={{ borderRadius: "12px" }}
+      />
+      <SkeletonBlock
+        width="70%"
+        height={80}
+        delay={0.2}
+        sx={{ borderRadius: "12px" }}
+      />
+    </Box>
+    <SkeletonBlock height={40} delay={0.4} />
+    <SkeletonBlock height={40} delay={0.5} />
+    <SkeletonBlock height={40} delay={0.6} />
+    <SkeletonBlock
+      height={120}
+      delay={0.8}
+      sx={{ borderRadius: "12px", mt: 1 }}
+    />
+  </Box>
+);
+
 export default function LP_Product() {
-  const [active, setActive] = useState("recovery");
+  const [active, setActive] = useState("rag");
   const current = sections.find((s) => s.id === active);
 
   return (
     <Box
       sx={{
-        py: { xs: 8, md: 12 },
+        py: { xs: 10, md: 16 },
         px: { xs: 3, md: 8 },
-        background: "transparent", // let LandingPage background show through
-        minHeight: "90vh",
+        maxWidth: "1280px",
+        mx: "auto",
+        fontFamily: fontMain,
       }}
     >
-      {/* Header */}
-      <Box textAlign="center" mb={6}>
+      {/* --- HEADER --- */}
+      <Box textAlign="center" mb={8}>
         <Typography
-          variant="h3"
+          variant="h2"
           sx={{
-            fontFamily: "ECA, sans-serif",
-            fontWeight: "bold",
-            color: "#0f4038",
+            fontFamily: fontMain,
+            fontWeight: 800,
+            color: "#2C2420",
+            letterSpacing: "-0.04em",
             mb: 2,
+            fontSize: { xs: "2rem", md: "3rem" },
           }}
         >
-          What MedEase Offers
+          Intelligent Health Management
         </Typography>
-        <Typography
-          variant="h6"
+      </Box>
+
+      {/* --- TAB SWITCHER --- */}
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+        <Box
           sx={{
-            fontFamily: "ECA, sans-serif",
-            color: "#4f665f",
-            maxWidth: "700px",
-            mx: "auto",
+            p: 0.5,
+            bgcolor: colors.switcherBg,
+            borderRadius: "99px",
+            display: "inline-flex",
+            position: "relative",
           }}
         >
-          Explore how MedEase supports your health, accessibility, and recovery
-          community.
-        </Typography>
+          {sections.map((s) => {
+            const isActive = active === s.id;
+            return (
+              <Button
+                key={s.id}
+                onClick={() => setActive(s.id)}
+                disableRipple
+                sx={{
+                  position: "relative",
+                  px: 4,
+                  py: 1,
+                  borderRadius: "99px",
+                  fontSize: "0.95rem",
+                  fontFamily: fontMain,
+                  fontWeight: 600,
+                  textTransform: "none",
+                  color: isActive
+                    ? colors.switcherActiveText
+                    : colors.switcherInactiveText,
+                  zIndex: 1,
+                  transition: "color 0.2s ease",
+                  "&:hover": { color: colors.switcherActiveText },
+                }}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeProductTab"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundColor: "#FFF",
+                      borderRadius: "99px",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+                      zIndex: -1,
+                    }}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                {s.title}
+              </Button>
+            );
+          })}
+        </Box>
       </Box>
 
-      {/* Tabs */}
-      <Box
+      {/* --- THE DARK CONSOLE --- */}
+      <Paper
+        elevation={0}
+        component={motion.div}
+        layout
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 2,
-          flexWrap: "wrap",
-          mb: 6,
-        }}
-      >
-        {sections.map((s) => (
-          <Button
-            key={s.id}
-            onClick={() => setActive(s.id)}
-            sx={{
-              textTransform: "none",
-              px: 3,
-              py: 1.2,
-              borderRadius: "999px",
-              fontFamily: "ECA, sans-serif",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              color: active === s.id ? "#fff" : "#00684A",
-              backgroundColor:
-                active === s.id ? "#00684A" : "rgba(0,104,74,0.08)",
-              "&:hover": {
-                backgroundColor:
-                  active === s.id ? "#009262" : "rgba(0,104,74,0.15)",
-              },
-              transition: "all 0.25s ease",
-            }}
-          >
-            {s.title.split("(")[0].trim()}
-          </Button>
-        ))}
-      </Box>
-
-      {/* Display */}
-      <Box
-        sx={{
+          borderRadius: "32px",
+          bgcolor: colors.cardBg,
+          overflow: "hidden",
+          // Flex layout ensures equal height by default (alignItems: stretch)
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "center",
-          gap: { xs: 5, md: 8 },
+          position: "relative",
+          boxShadow: "0 20px 50px rgba(44, 36, 32, 0.15)",
+          // Ensures children stretch to fill height
+          alignItems: "stretch",
         }}
       >
-        {/* Placeholder image / visual */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.img
-              key={current.id}
-              src={current.image}
-              alt={current.title}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.6 }}
-              style={{
-                width: "520px", // mandatory width
-                height: "340px", // mandatory height
-                objectFit: "cover", // ensures consistent look
-                borderRadius: "16px",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
-                backgroundColor: "#e8f5f0",
-              }}
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Text */}
-        <Box sx={{ flex: 1, maxWidth: 520 }}>
+        {/* LEFT: TEXT CONTENT */}
+        <Box
+          sx={{
+            flex: 1, // Balanced 50/50 split
+            p: { xs: 4, md: 6, lg: 8 },
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            zIndex: 2,
+          }}
+        >
           <AnimatePresence mode="wait">
             <motion.div
-              key={current.id + "-text"}
-              initial={{ opacity: 0, y: 20 }}
+              key={current.id}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
             >
               <Typography
-                variant="h5"
+                variant="h3"
                 sx={{
-                  fontFamily: "ECA, sans-serif",
-                  fontWeight: "bold",
-                  color: "#00684A",
-                  mb: 1,
+                  fontFamily: fontMain,
+                  fontWeight: 700,
+                  color: colors.textMain,
+                  letterSpacing: "-0.02em",
+                  mb: 2,
+                  fontSize: { xs: "1.8rem", md: "2.5rem" },
                 }}
               >
                 {current.title}
               </Typography>
               <Typography
                 sx={{
-                  fontFamily: "ECA, sans-serif",
-                  color: "#333",
-                  mb: 3,
+                  fontFamily: fontMain,
+                  color: colors.textSec,
+                  fontSize: "1.1rem",
+                  mb: 5,
+                  lineHeight: 1.6,
+                  maxWidth: "450px",
                 }}
               >
                 {current.subtitle}
               </Typography>
 
-              <Box component="ul" sx={{ pl: 2, m: 0 }}>
-                {current.features.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    style={{
-                      listStyle: "none",
-                      marginBottom: "10px",
-                      fontFamily: "ECA, sans-serif",
-                      fontSize: "0.95rem",
-                      color: "#222",
+              {/* FIX: Vertical Stack for Features 
+                  flexDirection: "column" ensures 1 item per line.
+              */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column", // Stacks items vertically
+                  alignItems: "flex-start", // Aligns pills to the left
+                  gap: 2, // Spacing between rows
+                }}
+              >
+                {current.features.map((item) => (
+                  <Box
+                    key={item}
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      borderRadius: "12px",
+                      bgcolor: colors.pillBg,
+                      border: `1px solid ${colors.pillBorder}`,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      transition: "all 0.2s",
+                      "&:hover": { bgcolor: "rgba(255,255,255,0.12)" },
                     }}
                   >
-                    • {item}
-                  </motion.li>
+                    <Box
+                      sx={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        bgcolor: colors.accent,
+                        boxShadow: `0 0 10px ${colors.accent}`,
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        fontFamily: fontMain,
+                        fontWeight: 500,
+                        color: colors.textMain,
+                        fontSize: "0.95rem",
+                      }}
+                    >
+                      {item}
+                    </Typography>
+                  </Box>
                 ))}
               </Box>
             </motion.div>
           </AnimatePresence>
         </Box>
-      </Box>
+
+        {/* RIGHT: THE WIREFRAME SKELETON */}
+        <Box
+          sx={{
+            flex: 1, // Balanced 50/50 split
+            position: "relative",
+            bgcolor: "#1E1815",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            p: 4,
+            // Remove fixed heights to let flexbox stretch it
+            minHeight: { xs: "400px", md: "auto" },
+          }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                // Ensures it doesn't get ridiculously tall if text is short
+                maxHeight: "500px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* GLASS DEVICE CONTAINER */}
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "20px",
+                  overflow: "hidden",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+                  bgcolor: "rgba(255,255,255,0.02)",
+                  position: "relative",
+                }}
+              >
+                {current.type === "chat" ? (
+                  <WireframeChat />
+                ) : (
+                  <WireframeDashboard />
+                )}
+
+                {/* Overlay Gradient */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(180deg, rgba(44,36,32,0) 0%, rgba(44,36,32,0.2) 100%)",
+                    pointerEvents: "none",
+                  }}
+                />
+              </Box>
+            </motion.div>
+          </AnimatePresence>
+        </Box>
+      </Paper>
     </Box>
   );
 }
