@@ -123,6 +123,7 @@ const parseLoginError = (error) => {
   switch (error.response.status) {
     case 401: return "Incorrect email or password. Please try again.";
     case 403: return "This account has been disabled. Please contact support.";
+    case 429: return "Too many attempts. Please wait a moment and try again.";
     default:  return "Something went wrong. Please try again.";
   }
 };

@@ -169,8 +169,9 @@ const ValidationHint = ({ valid, dirty, label }) => (
 const parseSignupError = (error) => {
   if (!error.response) return { title: "Connection error", message: "Unable to reach the server. Check your connection and try again." };
   switch (error.response.status) {
-    case 400: return { title: "Account already exists", message: "An account with this email address already exists. Try logging in instead." };
+    case 409: return { title: "Account already exists", message: "An account with this email address already exists. Try logging in instead." };
     case 422: return { title: "Invalid details", message: "Please double-check your email and password format." };
+    case 429: return { title: "Too many attempts", message: "Please wait a moment before trying again." };
     default:  return { title: "Sign up failed", message: "Something went wrong. Please try again." };
   }
 };
