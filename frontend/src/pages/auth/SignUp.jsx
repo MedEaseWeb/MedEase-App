@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Dialog,
   IconButton,
   InputAdornment,
   TextField,
@@ -18,6 +19,69 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import InteractiveBackground from "../LandingPage/utils/InteractiveBackground";
+
+const ErrorModal = ({ open, title, message, onClose }) => (
+  <Dialog
+    open={open}
+    onClose={onClose}
+    PaperProps={{
+      sx: {
+        borderRadius: "16px",
+        overflow: "hidden",
+        maxWidth: 380,
+        width: "100%",
+        m: 2,
+        boxShadow: "0 24px 60px rgba(44, 36, 32, 0.18)",
+      },
+    }}
+  >
+    {/* Dark header */}
+    <Box sx={{ bgcolor: "#2C2420", px: 3, pt: 3, pb: 2.5 }}>
+      <Typography
+        sx={{
+          fontFamily: fontMain,
+          fontWeight: 700,
+          fontSize: "1.05rem",
+          color: "#FFF",
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {title}
+      </Typography>
+    </Box>
+    {/* Light body */}
+    <Box sx={{ bgcolor: "#F5F0EB", px: 3, pt: 2.5, pb: 3 }}>
+      <Typography
+        sx={{
+          fontFamily: fontMain,
+          color: "#594D46",
+          fontSize: "0.92rem",
+          lineHeight: 1.6,
+          mb: 3,
+        }}
+      >
+        {message}
+      </Typography>
+      <Button
+        fullWidth
+        onClick={onClose}
+        sx={{
+          bgcolor: "#2C2420",
+          color: "#FFF",
+          borderRadius: "10px",
+          fontFamily: fontMain,
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          textTransform: "none",
+          py: 1.2,
+          "&:hover": { bgcolor: "#1a1614" },
+        }}
+      >
+        Got it
+      </Button>
+    </Box>
+  </Dialog>
+);
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -102,12 +166,23 @@ const ValidationHint = ({ valid, dirty, label }) => (
   </Box>
 );
 
+const parseSignupError = (error) => {
+  if (!error.response) return { title: "Connection error", message: "Unable to reach the server. Check your connection and try again." };
+  switch (error.response.status) {
+    case 409: return { title: "Account already exists", message: "An account with this email address already exists. Try logging in instead." };
+    case 422: return { title: "Invalid details", message: "Please double-check your email and password format." };
+    case 429: return { title: "Too many attempts", message: "Please wait a moment before trying again." };
+    default:  return { title: "Sign up failed", message: "Something went wrong. Please try again." };
+  }
+};
+
 export default function SignUp() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [checkTerms, setCheckTerms] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorModal, setErrorModal] = useState(null);
 
   const validateEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   const validatePassword = (v) => ({
@@ -126,16 +201,19 @@ export default function SignUp() {
       await axios.post(`${backendBaseUrl}/auth/register`, { email, password });
       navigate("/login");
     } catch (error) {
-      console.error(
-        "Signup error:",
-        error.response ? error.response.data : error
-      );
+      setErrorModal(parseSignupError(error));
     }
   };
 
   return (
     <Box sx={{ position: "fixed", inset: 0, display: "flex" }}>
       <InteractiveBackground />
+      <ErrorModal
+        open={!!errorModal}
+        title={errorModal?.title ?? ""}
+        message={errorModal?.message ?? ""}
+        onClose={() => setErrorModal(null)}
+      />
 
       {/* LEFT: Dark Brand Panel */}
       <Box

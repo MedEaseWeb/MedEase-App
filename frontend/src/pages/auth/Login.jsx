@@ -2,6 +2,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
+  Dialog,
   IconButton,
   InputAdornment,
   TextField,
@@ -12,6 +13,69 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 import InteractiveBackground from "../LandingPage/utils/InteractiveBackground";
+
+const ErrorModal = ({ open, message, onClose }) => (
+  <Dialog
+    open={open}
+    onClose={onClose}
+    PaperProps={{
+      sx: {
+        borderRadius: "16px",
+        overflow: "hidden",
+        maxWidth: 380,
+        width: "100%",
+        m: 2,
+        boxShadow: "0 24px 60px rgba(44, 36, 32, 0.18)",
+      },
+    }}
+  >
+    {/* Dark header */}
+    <Box sx={{ bgcolor: "#2C2420", px: 3, pt: 3, pb: 2.5 }}>
+      <Typography
+        sx={{
+          fontFamily: fontMain,
+          fontWeight: 700,
+          fontSize: "1.05rem",
+          color: "#FFF",
+          letterSpacing: "-0.01em",
+        }}
+      >
+        Login failed
+      </Typography>
+    </Box>
+    {/* Light body */}
+    <Box sx={{ bgcolor: "#F5F0EB", px: 3, pt: 2.5, pb: 3 }}>
+      <Typography
+        sx={{
+          fontFamily: fontMain,
+          color: "#594D46",
+          fontSize: "0.92rem",
+          lineHeight: 1.6,
+          mb: 3,
+        }}
+      >
+        {message}
+      </Typography>
+      <Button
+        fullWidth
+        onClick={onClose}
+        sx={{
+          bgcolor: "#2C2420",
+          color: "#FFF",
+          borderRadius: "10px",
+          fontFamily: fontMain,
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          textTransform: "none",
+          py: 1.2,
+          "&:hover": { bgcolor: "#1a1614" },
+        }}
+      >
+        Got it
+      </Button>
+    </Box>
+  </Dialog>
+);
 
 const colors = {
   darkPanel: "#2C2420",
@@ -54,11 +118,22 @@ const fieldSx = {
   },
 };
 
+const parseLoginError = (error) => {
+  if (!error.response) return "Unable to reach the server. Check your connection and try again.";
+  switch (error.response.status) {
+    case 401: return "Incorrect email or password. Please try again.";
+    case 404: return "No account found with that email address.";
+    case 429: return "Too many attempts. Please wait a moment and try again.";
+    default:  return "Something went wrong. Please try again.";
+  }
+};
+
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const { login } = useAuth();
 
   const isValid = email.trim().length > 0 && password.trim().length > 0;
@@ -69,7 +144,7 @@ export default function Login() {
       await login(email, password);
       navigate("/reportsimplifier");
     } catch (error) {
-      console.error("Login error:", error);
+      setErrorMsg(parseLoginError(error));
     }
   };
 
@@ -80,6 +155,11 @@ export default function Login() {
   return (
     <Box sx={{ position: "fixed", inset: 0, display: "flex" }}>
       <InteractiveBackground />
+      <ErrorModal
+        open={!!errorMsg}
+        message={errorMsg}
+        onClose={() => setErrorMsg("")}
+      />
 
       {/* LEFT: Dark Brand Panel */}
       <Box
