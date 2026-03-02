@@ -122,8 +122,7 @@ const parseLoginError = (error) => {
   if (!error.response) return "Unable to reach the server. Check your connection and try again.";
   switch (error.response.status) {
     case 401: return "Incorrect email or password. Please try again.";
-    case 404: return "No account found with that email address.";
-    case 429: return "Too many attempts. Please wait a moment and try again.";
+    case 403: return "This account has been disabled. Please contact support.";
     default:  return "Something went wrong. Please try again.";
   }
 };
