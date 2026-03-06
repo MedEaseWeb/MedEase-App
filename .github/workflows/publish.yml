@@ -3,6 +3,11 @@ on: [push]
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    environment:
+      name: Production
+      url: medease.pages.dev
+
     permissions:
       contents: read
       deployments: write

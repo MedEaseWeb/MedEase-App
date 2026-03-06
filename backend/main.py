@@ -8,11 +8,20 @@ from src.routes.google import google_oauth_router
 from src.routes.caregiver import caregiver_router
 from src.routes.simplify import router as simplify_router
 from fastapi.middleware.cors import CORSMiddleware
-import socketio  
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+import socketio
 
 import src.socket_server as socket_server
+
+# Rate limiter (keyed by client IP)
+limiter = Limiter(key_func=get_remote_address)
+
 # Create FastAPI app
 api_app = FastAPI()
+api_app.state.limiter = limiter
+api_app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 api_app.add_middleware(
     CORSMiddleware,

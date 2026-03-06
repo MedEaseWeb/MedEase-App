@@ -1,8 +1,9 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from src.config import MONGO_URI, DB_NAME, USERINFO_COLLECTION, MEDICAL_COLLECTION, GOOGLE_CALENDAR_COLLECTION, PATIENT_KEY_COLLECTION, GMAIL_COLLECTION, PATIENT_DATA_COLLECTION, PATIENT_DIARY_COLLECTION, MEDICAL_REPORT_COLLECTION
+import certifi
 
 # Initialize MongoDB client
-client = AsyncIOMotorClient(MONGO_URI)
+client = AsyncIOMotorClient(MONGO_URI, tlsCAFile=certifi.where())
 database = client[DB_NAME]
 
 # Define collections
