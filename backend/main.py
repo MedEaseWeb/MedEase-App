@@ -1,6 +1,7 @@
 # main.py
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from src.database import database
+from src.database import database, create_indexes, ping_database, close_db_connection
 from src.routes.auth import auth_router
 from src.routes.medication import medication_router
 from src.routes.general import general_router
@@ -15,11 +16,22 @@ import socketio
 
 import src.socket_server as socket_server
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await ping_database()
+    await create_indexes()
+    yield
+    # Shutdown
+    close_db_connection()
+
+
 # Rate limiter (keyed by client IP)
 limiter = Limiter(key_func=get_remote_address)
 
 # Create FastAPI app
-api_app = FastAPI()
+api_app = FastAPI(lifespan=lifespan)
 api_app.state.limiter = limiter
 api_app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -42,9 +54,17 @@ api_app.include_router(google_oauth_router, prefix="/google")
 api_app.include_router(caregiver_router,    prefix="/caregiver")
 api_app.include_router(simplify_router,     prefix="/simplify")
 
+
 @api_app.get("/")
 def hello_world():
-    return {"message":"Hello World"}
+    return {"message": "Hello World"}
+
+
+@api_app.get("/health")
+async def health_check():
+    await ping_database()
+    return {"status": "ok", "database": "connected"}
+
 
 # Now inject api_app into socket_server
 socket_server.api_app = api_app
@@ -52,7 +72,7 @@ socket_server.api_app = api_app
 # Wrap with Socket.IO
 sio = socket_server.sio
 app = socketio.ASGIApp(
-    socketio_server = sio,
-    other_asgi_app  = api_app,
-    socketio_path   = "/ws/socket.io"
+    socketio_server=sio,
+    other_asgi_app=api_app,
+    socketio_path="/ws/socket.io"
 )
