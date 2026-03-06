@@ -1,4 +1,5 @@
 import {
+  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -11,6 +12,12 @@ import CareGiver from "./pages/careGiver/CaregiverMainPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Medication from "./pages/medication/MedicationPage";
 import ReportSimplification from "./pages/reportsimplification/reportSimplificationPage";
+import { SurveyProvider } from "./pages/UserSurvey/SurveyContext";
+import SurveyLayout from "./pages/UserSurvey/SurveyLayout";
+import Step1Injury from "./pages/UserSurvey/Step1Injury";
+import Step2About from "./pages/UserSurvey/Step2About";
+import Step3SymptomPain from "./pages/UserSurvey/Step3SymptomPain";
+import Step4RecoveryGoals from "./pages/UserSurvey/Step4RecoveryGoals";
 import NotFound from "./pages/utility/NotFound";
 import PrivacyPolicy from "./pages/utility/PrivacyPolicy";
 import TermsOfService from "./pages/utility/TermsOfService";
@@ -59,6 +66,21 @@ function Layout() {
               </ProtectedRoute>
             }
           />
+          {/* Survey: one route per step; /survey redirects to step1 */}
+          <Route
+            path="/survey"
+            element={
+              <SurveyProvider>
+                <SurveyLayout />
+              </SurveyProvider>
+            }
+          >
+            <Route index element={<Navigate to="step1" replace />} />
+            <Route path="step1" element={<Step1Injury />} />
+            <Route path="step2" element={<Step2About />} />
+            <Route path="step3" element={<Step3SymptomPain />} />
+            <Route path="step4" element={<Step4RecoveryGoals />} />
+          </Route>
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />} />

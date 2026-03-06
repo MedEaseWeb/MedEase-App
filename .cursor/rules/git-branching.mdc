@@ -1,0 +1,11 @@
+---
+description: Git branching workflow — get latest from dev, feature branches, PR to dev only
+alwaysApply: true
+---
+
+# Git workflow
+
+- **Get latest code:** Use `dev` as base. Run `git checkout dev` then `git pull origin dev` before starting work.
+- **New feature:** Create a branch from `dev` named `feat:${feature-name}` (e.g. `feat:survey-routing`, `feat:login-validation`). Do all development on that branch.
+- **Merge path:** Open Pull Requests into `dev` only. Do not open PRs into `main`.
+- **DO NOT PUSH TO MAIN.** Never commit or push directly to `main`. All changes flow via feature branch → PR → `dev`.
