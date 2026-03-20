@@ -37,8 +37,8 @@ api_app.include_router(simplify_router,     prefix="/simplify")
 def hello_world():
     return {"message":"Hello World"}
 
-# Now inject api_app into socket_server
-socket_server.api_app = api_app
+# Now inject api_app into socket_server (also propagates to all agents)
+socket_server.set_api_app(api_app)
 
 # Wrap with Socket.IO
 sio = socket_server.sio
