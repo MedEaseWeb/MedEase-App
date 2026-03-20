@@ -1,30 +1,35 @@
-import React, { createContext, useContext, useState } from "react";
-
-const initialFormData = {
-  injuryExperience: "",
-  seeingDoctor: "",
-  age: "",
-  gender: "",
-  injuryType: "",
-  painToday: 5,
-  mobility: "",
-  additionalSymptoms: "",
-  recoveryGoals: [],
-  motivationLevel: 5,
-};
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 const SurveyContext = createContext(null);
 
+const initialSurveyState = {
+  acceptedDisclaimer: false,
+
+  // Q1
+  whatHappened: "",
+  whatHappenedOther: "",
+
+  // Q2
+  whenHappened: "",
+  whenHappenedDetail: "",
+
+  // Q3
+  hasInsurance: "",
+  insuranceProvider: "",
+};
+
 export function SurveyProvider({ children }) {
-  const [formData, setFormData] = useState(initialFormData);
-  const updateFormData = (updates) => {
-    setFormData((prev) => ({ ...prev, ...updates }));
-  };
-  return (
-    <SurveyContext.Provider value={{ formData, updateFormData }}>
-      {children}
-    </SurveyContext.Provider>
-  );
+  const [data, setData] = useState(initialSurveyState);
+
+  const api = useMemo(() => {
+    return {
+      data,
+      set: (patch) => setData((prev) => ({ ...prev, ...patch })),
+      reset: () => setData(initialSurveyState),
+    };
+  }, [data]);
+
+  return <SurveyContext.Provider value={api}>{children}</SurveyContext.Provider>;
 }
 
 export function useSurvey() {
@@ -32,3 +37,4 @@ export function useSurvey() {
   if (!ctx) throw new Error("useSurvey must be used within SurveyProvider");
   return ctx;
 }
+

@@ -587,7 +587,7 @@ export default function SignUp() {
               Create account
             </Button>
 
-            {/* Back to home */}
+            {/* Go to Home (Questions in the Loop) */}
             <Typography
               sx={{
                 fontFamily: fontMain,
@@ -599,9 +599,9 @@ export default function SignUp() {
                 transition: "color 0.2s",
                 "&:hover": { color: colors.textMain },
               }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/home")}
             >
-              ← Back to home
+              Click here to go to Home Page
             </Typography>
           </Box>
         </motion.div>
