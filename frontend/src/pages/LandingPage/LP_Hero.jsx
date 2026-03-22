@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 
 const colors = {
   textMain: "#2C2420",
@@ -60,8 +59,7 @@ const ScrambleText = ({ text, sx }) => {
   );
 };
 
-export default function LP_Hero() {
-  const navigate = useNavigate();
+export default function LP_Hero({ onOpenWaitlist }) {
 
   return (
     <Box
@@ -139,7 +137,7 @@ export default function LP_Hero() {
         transition={{ delay: 0.5, duration: 0.5 }}
       >
         <Button
-          onClick={() => navigate("/signup")}
+          onClick={onOpenWaitlist}
           sx={{
             px: 5,
             py: 1.8,
