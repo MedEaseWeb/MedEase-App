@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from src.database import user_collection
 from src.models.userModel import UserCreate, UserResponse, UserInDB
+from src.limiter import limiter
 from bson import ObjectId
 from datetime import datetime
 import bcrypt

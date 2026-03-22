@@ -63,7 +63,7 @@ function Layout() {
     </>
   );
 
-  return isPublic ? content : <AuthProvider>{content}</AuthProvider>;
+  return <AuthProvider>{content}</AuthProvider>;
 }
 
 export default function App() {
