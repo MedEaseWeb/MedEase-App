@@ -13,9 +13,6 @@ from http.cookies import SimpleCookie
 import jwt
 
 from src.agents import Orchestrator, AgentContext
-from src.config import SECRET_KEY
-
-ALGORITHM = "HS256"
 
 # ───── Socket.IO server setup ──────────────────
 sio = socketio.AsyncServer(
@@ -46,33 +43,20 @@ _INITIAL_SYSTEM_PROMPT = (
 
 
 @sio.event
-async def connect(sid, environ, auth=None):
+async def connect(sid, environ, auth):
     raw     = environ.get("HTTP_COOKIE", "")
     cookies = SimpleCookie(raw)
     morsel  = cookies.get("access_token")
     token   = morsel.value if morsel else None
 
-    if not token:
-        raise ConnectionRefusedError("Authentication required")
-
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id = payload.get("user_id")
-        if not user_id:
-            raise ConnectionRefusedError("Invalid token payload")
-    except jwt.ExpiredSignatureError:
-        raise ConnectionRefusedError("Token expired")
-    except jwt.PyJWTError:
-        raise ConnectionRefusedError("Invalid token")
-
     sid_to_token[sid] = token
     contexts[sid] = AgentContext(
         session_id=sid,
-        user_id=user_id,
+        user_id=None,
         token=token,
         history=[{"role": "system", "content": _INITIAL_SYSTEM_PROMPT}],
     )
-    print(f"Client connected: {sid} (user: {user_id})")
+    print(f"Client connected: {sid}")
 
 
 @sio.event
@@ -128,12 +112,3 @@ def set_api_app(app) -> None:
     global api_app
     api_app = app
     orchestrator.set_api_app(app)
-
-
-def update_user_token(user_id: str, new_token: str) -> None:
-    """Called by /auth/refresh to keep live socket contexts in sync.
-    Avoids forcing a reconnect (which would wipe server-side conversation history)."""
-    for sid, ctx in contexts.items():
-        if ctx.user_id == user_id:
-            sid_to_token[sid] = new_token
-            ctx.token = new_token

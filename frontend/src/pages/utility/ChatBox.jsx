@@ -78,7 +78,6 @@ const Chatbox = () => {
       socket.off("bot-message");
       socket.off("bot-token");
       socket.off("bot-done");
-      socket.disconnect();
     };
   }, []);
 
