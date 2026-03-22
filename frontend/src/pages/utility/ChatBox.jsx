@@ -28,6 +28,8 @@ const Chatbox = () => {
 
   // On mount, add a welcome message after a 500ms delay.
   useEffect(() => {
+    socket.connect();
+
     const timeoutId = setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -165,6 +167,7 @@ const Chatbox = () => {
           overflow: "hidden",
           borderRadius: "20px",
           border: "2px solid #027555",
+          backgroundColor: "#027555",
         }}
       >
         <Box

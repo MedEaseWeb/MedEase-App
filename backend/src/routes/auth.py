@@ -11,11 +11,12 @@ auth_router = APIRouter()
 
 # User Registration
 @auth_router.post("/register", response_model=UserResponse)
-async def register(user: UserCreate):
+@limiter.limit("5/minute")
+async def register(request: Request, user: UserCreate):
     """Register a new user"""
     existing_user = await user_collection.find_one({"email": user.email})
     if existing_user:
-        raise HTTPException(status_code=400, detail="User already exists")
+        raise HTTPException(status_code=409, detail="User already exists")
 
     hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt()).decode()
 
@@ -33,7 +34,8 @@ async def register(user: UserCreate):
 
 # User Login (JWT Issuance)
 @auth_router.post("/login")
-async def login(user: UserCreate, response: Response):
+@limiter.limit("10/minute")
+async def login(request: Request, user: UserCreate, response: Response):
     existing_user = await user_collection.find_one({"email": user.email})
 
     if not existing_user or not bcrypt.checkpw(user.password.encode(), existing_user["hashed_password"].encode()):
