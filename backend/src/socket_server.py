@@ -10,6 +10,7 @@
 
 import socketio
 from http.cookies import SimpleCookie
+import jwt
 
 from src.agents import Orchestrator, AgentContext
 

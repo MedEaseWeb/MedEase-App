@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import Sketch from "react-p5";
 import { Box } from "@mui/material";
 
@@ -10,11 +10,10 @@ const PALETTE = {
   orb3: [236, 242, 214], // Soft Sage (The "Touch of Green")
 };
 
-export default function InteractiveBackground() {
-  // Store position AND speed
+function InteractiveBackground() {
   const mouseRef = useRef({ x: -1000, y: -1000, speed: 0 });
   const prevMouseRef = useRef({ x: -1000, y: -1000 });
-  let blobs = [];
+  const blobsRef = useRef([]);
 
   // GLOBAL MOUSE TRACKING WITH SPEED CALCULATION
   useEffect(() => {
@@ -35,52 +34,31 @@ export default function InteractiveBackground() {
     return () => window.removeEventListener("mousemove", handleMove);
   }, []);
 
-  const setup = (p5, canvasParentRef) => {
+  const setup = useCallback((p5, canvasParentRef) => {
     const w = window.innerWidth || 1000;
     const h = window.innerHeight || 800;
 
     p5.createCanvas(w, h).parent(canvasParentRef);
     p5.noStroke();
 
-    blobs = [
-      // Blob 1: Warm Clay (Top Left-ish)
-      new OrganicBlob(p5, w * 0.3, h * 0.4, PALETTE.orb1, 350, {
-        repel: 15.0,
-        fric: 0.94,
-      }),
-      // Blob 2: Muted Beige (Bottom Right-ish)
-      new OrganicBlob(p5, w * 0.7, h * 0.6, PALETTE.orb2, 450, {
-        repel: 12.0,
-        fric: 0.94,
-      }),
-      // Blob 3: Soft Green (Center/accent)
-      // new OrganicBlob(p5, w * 0.5, h * 0.5, PALETTE.orb3, 300, {
-      //   repel: 14.0, // Responsive
-      //   fric: 0.95, // Slightly lighter/floatier
-      // }),
+    blobsRef.current = [
+      new OrganicBlob(p5, w * 0.3, h * 0.4, PALETTE.orb1, 350, { repel: 15.0, fric: 0.94 }),
+      new OrganicBlob(p5, w * 0.7, h * 0.6, PALETTE.orb2, 450, { repel: 12.0, fric: 0.94 }),
     ];
-  };
+  }, []);
 
-  const draw = (p5) => {
+  const draw = useCallback((p5) => {
     p5.background(...PALETTE.bg);
-
-    // Decay mouse speed manually
     mouseRef.current.speed *= 0.8;
-
-    blobs.forEach((blob) => {
-      blob.update(
-        p5,
-        mouseRef.current.x,
-        mouseRef.current.y,
-        mouseRef.current.speed,
-      );
+    blobsRef.current.forEach((blob) => {
+      blob.update(p5, mouseRef.current.x, mouseRef.current.y, mouseRef.current.speed);
       blob.display(p5);
     });
-  };
+  }, []);
 
-  const windowResized = (p5) => {
+  const windowResized = useCallback((p5) => {
     p5.resizeCanvas(window.innerWidth, window.innerHeight);
-  };
+  }, []);
 
   return (
     <Box
@@ -94,6 +72,7 @@ export default function InteractiveBackground() {
         pointerEvents: "none",
       }}
     >
+
       <Box
         sx={{
           filter: "blur(70px)",
@@ -117,6 +96,8 @@ export default function InteractiveBackground() {
     </Box>
   );
 }
+
+export default React.memo(InteractiveBackground);
 
 // --- PHYSICS & NOISE LOGIC ---
 class OrganicBlob {

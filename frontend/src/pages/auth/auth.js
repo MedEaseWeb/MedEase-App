@@ -41,3 +41,14 @@ export async function logout() {
 
   return res.json();
 }
+
+export async function refreshToken() {
+  const res = await fetch(`${BASE_URL}/auth/refresh`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!res.ok) throw new Error("Refresh failed");
+
+  return res.json();
+}

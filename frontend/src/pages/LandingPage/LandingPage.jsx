@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -16,6 +16,7 @@ import LP_Product from "./LP_Product";
 import LP_About from "./LP_About";
 import LP_Footer from "./LP_Footer";
 import InteractiveBackground from "./utils/InteractiveBackground";
+import WaitlistModal from "./WaitlistModal";
 
 const colors = {
   textMain: "#2C2420",
@@ -40,6 +41,8 @@ const NavButton = styled(Button)(() => ({
 }));
 
 export default function LandingPage() {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -119,7 +122,7 @@ export default function LandingPage() {
 
           <Button
             variant="contained"
-            onClick={() => handleScrollTo("contact")}
+            onClick={() => setWaitlistOpen(true)}
             sx={{
               bgcolor: colors.primary,
               color: "#FFF",
@@ -146,8 +149,10 @@ export default function LandingPage() {
 
       {/* === CONTENT === */}
       {/* FIX 2: Explicit Z-Index 1 to ensure it floats ABOVE the p5 canvas */}
+      <WaitlistModal open={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
+
       <Box sx={{ position: "relative", zIndex: 1, pt: 12 }}>
-        <LP_Hero />
+        <LP_Hero onOpenWaitlist={() => setWaitlistOpen(true)} />
         <Box id="mission">
           <LP_Mission />
         </Box>

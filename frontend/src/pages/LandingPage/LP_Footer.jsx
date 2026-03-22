@@ -96,6 +96,7 @@ export default function LP_Footer() {
             </Typography>
             <Typography
               sx={{
+                fontFamily: fontMain,
                 color: colors.textSec,
                 lineHeight: 1.6,
                 mb: 4,

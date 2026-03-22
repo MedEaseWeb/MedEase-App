@@ -5,16 +5,18 @@ from bson import ObjectId
 from datetime import datetime
 import bcrypt
 from src.utils.jwtUtils import create_jwt, get_current_user_auth
+import src.socket_server as _socket_server
 
 auth_router = APIRouter()
 
 # User Registration
 @auth_router.post("/register", response_model=UserResponse)
-async def register(user: UserCreate):
+@limiter.limit("5/minute")
+async def register(request: Request, user: UserCreate):
     """Register a new user"""
     existing_user = await user_collection.find_one({"email": user.email})
     if existing_user:
-        raise HTTPException(status_code=400, detail="User already exists")
+        raise HTTPException(status_code=409, detail="User already exists")
 
     hashed_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt()).decode()
 
@@ -32,7 +34,8 @@ async def register(user: UserCreate):
 
 # User Login (JWT Issuance)
 @auth_router.post("/login")
-async def login(user: UserCreate, response: Response):
+@limiter.limit("10/minute")
+async def login(request: Request, user: UserCreate, response: Response):
     existing_user = await user_collection.find_one({"email": user.email})
 
     if not existing_user or not bcrypt.checkpw(user.password.encode(), existing_user["hashed_password"].encode()):
@@ -46,15 +49,14 @@ async def login(user: UserCreate, response: Response):
         "email": existing_user["email"]
     })
 
-    # ✅ Set cookie with Max-Age and expiry
     response.set_cookie(
         key="access_token",
         value=token,
         httponly=True,
-        secure=True,  # ✅ Change to True in production
-        samesite="Lax",
-        max_age=1800,  # ✅ 30 minutes
-        expires=1800
+        secure=True,
+        samesite="lax",
+        max_age=1800,  # 30 minutes
+        path="/"
     )
 
     return {"message": "Login successful"}
@@ -64,8 +66,35 @@ async def login(user: UserCreate, response: Response):
 @auth_router.post("/logout")
 async def logout(response: Response):
     """Clear the authentication token"""
-    response.delete_cookie(key="access_token")  
+    response.delete_cookie(
+        key="access_token",
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        path="/"
+    )
     return {"message": "Logged out successfully"}
+
+# Token Refresh
+@auth_router.post("/refresh")
+async def refresh(response: Response, payload: dict = Depends(get_current_user_auth)):
+    new_token = create_jwt({
+        "user_id": payload["user_id"],
+        "email": payload["email"]
+    })
+    response.set_cookie(
+        key="access_token",
+        value=new_token,
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        max_age=1800,
+        path="/"
+    )
+    # Keep any live socket sessions in sync so agents don't use an expired token
+    _socket_server.update_user_token(payload["user_id"], new_token)
+    return {"message": "Token refreshed"}
+
 
 # Get current user
 @auth_router.get("/user", response_model=UserResponse)

@@ -1,33 +1,27 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import logo from "../../assets/pics/logo-green.svg";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+const fontMain = "'Plus Jakarta Sans', sans-serif";
 
 export default function Logo({ imgSize = 60, fontSize = 48 }) {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: 1.5, // Space between icon & text
-      }}
-    >
-      {/* Image with dynamic size */}
-      <Box
-        component="img"
-        src={logo}
-        alt="Project Logo"
-        sx={{ width: imgSize, height: imgSize }}
-      />
-      {/* Text with dynamic font size */}
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <FavoriteBorderIcon sx={{ fontSize: imgSize, color: "#2C2420" }} />
       <Typography
         sx={{
-          fontFamily: "ECA, sans-serif",
-          fontWeight: "bold",
-          color: "#00684A",
+          fontFamily: fontMain,
+          fontWeight: 800,
           fontSize: fontSize,
+          letterSpacing: "-0.03em",
+          color: "#2C2420",
+          lineHeight: 1,
         }}
       >
-        MedEase
+        Med
+        <Box component="span" sx={{ color: "#A65D37" }}>
+          Ease
+        </Box>
       </Typography>
     </Box>
   );
