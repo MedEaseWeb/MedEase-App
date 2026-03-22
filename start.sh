@@ -32,14 +32,17 @@ FRONTEND_PID=$!
 
 # ── Backend ────────────────────────────────────────────────────────────────
 echo -e "${GREEN}[backend]${NC}  Activating conda env '${CONDA_ENV}' and starting uvicorn..."
+
+# Free port 8081 if a stale process is holding it
+STALE=$(lsof -ti:8081 2>/dev/null) || true
+if [ -n "$STALE" ]; then
+    echo -e "${YELLOW}[backend]${NC}  Killing stale process on :8081 (PID $STALE)"
+    kill "$STALE" 2>/dev/null
+    sleep 0.5
+fi
+
 cd "$BACKEND_DIR"
-
-# Source conda so 'conda activate' works in a non-interactive shell
-CONDA_BASE="$(conda info --base 2>/dev/null)"
-source "$CONDA_BASE/etc/profile.d/conda.sh"
-conda activate "$CONDA_ENV"
-
-python -m uvicorn main:app --reload --port 8081 &
+conda run -n "$CONDA_ENV" --no-capture-output python -m uvicorn main:app --reload --port 8081 &
 BACKEND_PID=$!
 
 # ── Status ─────────────────────────────────────────────────────────────────

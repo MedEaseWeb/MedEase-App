@@ -9,15 +9,12 @@ from src.routes.caregiver import caregiver_router
 from src.routes.simplify import router as simplify_router
 from src.routes.waitlist import waitlist_router
 from fastapi.middleware.cors import CORSMiddleware
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+from src.limiter import limiter
 import socketio
 
 import src.socket_server as socket_server
-
-# Rate limiter (keyed by client IP)
-limiter = Limiter(key_func=get_remote_address)
 
 # Create FastAPI app
 api_app = FastAPI()
