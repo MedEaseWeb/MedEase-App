@@ -82,7 +82,10 @@ async def user_message(sid, data):
     # Always keep the token fresh (may have changed since connect)
     context.token = sid_to_token.get(sid)
 
-    response = await orchestrator.handle(user_text, context)
+    async def emit_step(step_id: str, label: str, state: str, **meta):
+        await sio.emit("bot-pipeline", {"id": step_id, "label": label, "state": state, **meta}, room=sid)
+
+    response = await orchestrator.handle(user_text, context, emit_step=emit_step)
 
     if response.stream and response.stream_gen is not None:
         # ── Streaming response ─────────────────────────────────────────────
@@ -91,6 +94,7 @@ async def user_message(sid, data):
             full_reply += token
             await sio.emit("bot-token", token, room=sid)
         await sio.emit("bot-done", "", room=sid)
+        await emit_step("generate", "Response complete", "done")
 
         # Append the completed turn to history
         contexts[sid].history.append({"role": "user",      "content": user_text})

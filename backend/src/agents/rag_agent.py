@@ -88,9 +88,22 @@ class RAGAgent(BaseAgent):
             if token:
                 yield token
 
-    async def process(self, user_input: str, context: AgentContext) -> AgentResponse:
+    async def process(self, user_input: str, context: AgentContext, emit_step=None) -> AgentResponse:
+        async def _step(step_id: str, label: str, state: str, **meta):
+            if emit_step:
+                await emit_step(step_id, label, state, **meta)
+
+        await _step("rag", "Retrieving documents", "running")
         retriever = self._get_retriever()
         chunks = retriever.query(user_input, top_k=4) if retriever else []
+
+        titles = [c["title"] for c in chunks if c.get("title")][:4]
+        if chunks:
+            await _step("rag", "Documents retrieved", "done", docs=titles)
+        else:
+            await _step("rag", "No indexed docs — using general knowledge", "done", docs=[])
+
+        await _step("generate", "Generating response", "running")
         messages = self._build_messages(user_input, context, chunks)
 
         return AgentResponse(

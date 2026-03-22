@@ -12,57 +12,74 @@ from src.agents.accommodation_agent import AccommodationAgent
 from src.agents.medication_agent import MedicationAgent
 from src.agents.caregiver_agent import CaregiverAgent
 
+_AGENT_LABELS = {
+    "das_faq":               "DAS FAQ",
+    "accommodation_request": "Accommodation",
+    "medication_query":      "Medication",
+    "caregiver_query":       "Caregiver",
+    "reminder_request":      "Reminder",
+    "appointment_scheduling":"Scheduling",
+    "general_chat":          "General",
+}
+
 
 class Orchestrator:
-    """
-    Wires all agents together. One instance per application lifetime.
-
-    Args:
-        api_app: The FastAPI app instance, forwarded to agents that need
-                 in-process HTTP calls (caregiver, accommodation).
-    """
-
     def __init__(self, api_app=None):
         self.guardrail = GuardrailAgent()
         self.intent    = IntentAgent()
         self.triage    = TriageAgent()
 
-        # Specialist agents keyed by intent label
         self._agents = {
             "das_faq":                RAGAgent(),
             "accommodation_request":  AccommodationAgent(),
             "medication_query":       MedicationAgent(),
             "caregiver_query":        CaregiverAgent(api_app),
             "reminder_request":       CaregiverAgent(api_app),
-            "appointment_scheduling": TriageAgent(),   # hand off until scheduling agent exists
-            "general_chat":           CaregiverAgent(api_app),  # existing fallback behaviour
-            "out_of_scope":           None,            # handled inline below
+            "appointment_scheduling": TriageAgent(),
+            "general_chat":           CaregiverAgent(api_app),
+            "out_of_scope":           None,
         }
 
     def set_api_app(self, api_app) -> None:
-        """Called by socket_server after the FastAPI app is available."""
         for agent in self._agents.values():
             if isinstance(agent, CaregiverAgent):
                 agent.api_app = api_app
 
-    async def handle(self, user_input: str, context: AgentContext) -> AgentResponse:
-        # ── 1. Guardrail ──────────────────────────────────────────────────────
+    async def handle(self, user_input: str, context: AgentContext, emit_step=None) -> AgentResponse:
+        async def _step(step_id: str, label: str, state: str, **meta):
+            if emit_step:
+                await emit_step(step_id, label, state, **meta)
+
+        # ── 1. Guardrail (always runs) ────────────────────────────────────────
+        await _step("guardrail", "Safety check", "running")
         guard = await self.guardrail.check(user_input, context)
         if not guard.allowed:
+            await _step("guardrail", "Safety check", "blocked")
             return AgentResponse(
                 content=f"I'm not able to help with that. {guard.block_reason or ''}".strip(),
                 done=True,
             )
+        await _step("guardrail", "Safety check", "done")
         sanitized = guard.sanitized_input
 
-        # ── 2. Intent classification ──────────────────────────────────────────
-        # If the previous turn was a triage clarification, still classify but
-        # the triage context is already in history so confidence should be higher.
-        intent_result = await self.intent.classify(sanitized, context)
+        # ── 2. Active multi-turn flow bypass ──────────────────────────────────
+        # If an accommodation flow is already collecting fields, skip intent
+        # re-classification — mid-flow answers like "CS 253" would otherwise
+        # be misclassified as out_of_scope.
+        if context.metadata.get("accommodation_fields") is not None:
+            await _step("agent", "Accommodation", "running")
+            result = await self._agents["accommodation_request"].process(sanitized, context)
+            await _step("agent", "Accommodation", "done")
+            return result
 
-        # ── 3. Route ──────────────────────────────────────────────────────────
+        # ── 3. Intent classification ──────────────────────────────────────────
+        await _step("intent", "Identifying intent", "running")
+        intent_result = await self.intent.classify(sanitized, context)
+        intent_display = intent_result.intent.replace("_", " ").title()
+        await _step("intent", f"{intent_display} ({int(intent_result.confidence * 100)}%)", "done")
+
+        # ── 4. Route ──────────────────────────────────────────────────────────
         if intent_result.confidence < CONFIDENCE_THRESHOLD:
-            # Not confident enough — ask a clarifying question
             return await self.triage.process(sanitized, context)
 
         if intent_result.intent == "out_of_scope":
@@ -77,7 +94,6 @@ class Orchestrator:
 
         agent = self._agents.get(intent_result.intent, self.triage)
 
-        # Store detected intent/entities in metadata for the agent to use if needed
         enriched_context = AgentContext(
             session_id=context.session_id,
             user_id=context.user_id,
@@ -92,4 +108,13 @@ class Orchestrator:
             },
         )
 
-        return await agent.process(sanitized, enriched_context)
+        # RAG agent handles its own step emissions (rag retrieval + generate)
+        if isinstance(agent, RAGAgent):
+            return await agent.process(sanitized, enriched_context, emit_step=emit_step)
+
+        # All other agents: emit running/done around process()
+        agent_label = _AGENT_LABELS.get(intent_result.intent, "Processing")
+        await _step("agent", agent_label, "running")
+        result = await agent.process(sanitized, enriched_context)
+        await _step("agent", agent_label, "done")
+        return result
