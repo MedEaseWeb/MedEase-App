@@ -9,6 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import { Twitter, Instagram, Linkedin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // --- TRANSPARENT PALETTE ---
 const colors = {
@@ -64,6 +65,12 @@ const FooterHeader = ({ children }) => (
 );
 
 export default function LP_Footer() {
+  const { t } = useTranslation();
+  const productLinks = t("lp.footer.product.links", { returnObjects: true });
+  const companyLinks = t("lp.footer.company.links", { returnObjects: true });
+  const legalLinks = t("lp.footer.legal.links", { returnObjects: true });
+  const getAppLinks = t("lp.footer.getApp.links", { returnObjects: true });
+
   return (
     <Box
       component="footer"
@@ -103,8 +110,7 @@ export default function LP_Footer() {
                 maxWidth: "300px",
               }}
             >
-              The missing infrastructure for student health. Simplifying
-              recovery, connecting caregivers, and reducing risk.
+              {t("lp.footer.tagline")}
             </Typography>
 
             {/* Social Icons */}
@@ -127,36 +133,34 @@ export default function LP_Footer() {
 
           {/* --- COLUMN 2: PRODUCT --- */}
           <Grid item xs={6} md={2}>
-            <FooterHeader>Product</FooterHeader>
-            <FooterLink>Features</FooterLink>
-            <FooterLink>For Universities</FooterLink>
-            <FooterLink>For Students</FooterLink>
-            <FooterLink>Security</FooterLink>
+            <FooterHeader>{t("lp.footer.product.heading")}</FooterHeader>
+            {productLinks.map((link) => (
+              <FooterLink key={link}>{link}</FooterLink>
+            ))}
           </Grid>
 
           {/* --- COLUMN 3: COMPANY --- */}
           <Grid item xs={6} md={2}>
-            <FooterHeader>Company</FooterHeader>
-            <FooterLink>About Us</FooterLink>
-            <FooterLink>Careers</FooterLink>
-            <FooterLink>Blog</FooterLink>
-            <FooterLink>Contact Support</FooterLink>
+            <FooterHeader>{t("lp.footer.company.heading")}</FooterHeader>
+            {companyLinks.map((link) => (
+              <FooterLink key={link}>{link}</FooterLink>
+            ))}
           </Grid>
 
           {/* --- COLUMN 4: LEGAL --- */}
           <Grid item xs={6} md={2}>
-            <FooterHeader>Legal</FooterHeader>
-            <FooterLink>Privacy Policy</FooterLink>
-            <FooterLink>Terms of Service</FooterLink>
-            <FooterLink>Cookie Policy</FooterLink>
-            <FooterLink>Accessibility</FooterLink>
+            <FooterHeader>{t("lp.footer.legal.heading")}</FooterHeader>
+            {legalLinks.map((link) => (
+              <FooterLink key={link}>{link}</FooterLink>
+            ))}
           </Grid>
 
           {/* --- COLUMN 5: DOWNLOAD (Optional) --- */}
           <Grid item xs={6} md={2}>
-            <FooterHeader>Get the App</FooterHeader>
-            <FooterLink>iOS App Store</FooterLink>
-            <FooterLink>Google Play</FooterLink>
+            <FooterHeader>{t("lp.footer.getApp.heading")}</FooterHeader>
+            {getAppLinks.map((link) => (
+              <FooterLink key={link}>{link}</FooterLink>
+            ))}
           </Grid>
         </Grid>
 
@@ -179,7 +183,7 @@ export default function LP_Footer() {
               fontFamily: fontMain,
             }}
           >
-            © {new Date().getFullYear()} MedEase Inc. All rights reserved.
+            {t("lp.footer.copyright", { year: new Date().getFullYear() })}
           </Typography>
 
           <Box sx={{ display: "flex", gap: 3 }}>
@@ -191,7 +195,7 @@ export default function LP_Footer() {
                 fontFamily: fontMain,
               }}
             >
-              Designed at Emory
+              {t("lp.footer.designedAt")}
             </Typography>
           </Box>
         </Box>
