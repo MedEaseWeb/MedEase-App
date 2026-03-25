@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Paper, Typography, Tooltip } from "@mui/material";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { useTranslation } from "react-i18next";
 import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 
 const { colors, fontMain, radii } = SURVEY_TOKENS;
@@ -11,8 +12,6 @@ const HOUR_START = 7;
 const HOUR_END = 22;
 const HOURS = Array.from({ length: HOUR_END - HOUR_START }, (_, i) => HOUR_START + i);
 const ROW_H = 36; // px per hour slot
-
-const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 function formatHour(h) {
   if (h === 0) return "12 AM";
@@ -29,6 +28,9 @@ export default function NotesWeekView({
   onEventClick,
   isToday,
 }) {
+  const { t } = useTranslation();
+  const DAY_LABELS = t("notes.monthView.dayLabels", { returnObjects: true });
+
   return (
     // Fixed-height scroll container — calendar stays within the page
     <Box sx={{ overflowY: "auto", maxHeight: 420, borderRadius: 2, border: `1px solid ${colors.border}` }}>

@@ -46,7 +46,7 @@ function isToday(date) {
 }
 
 export default function NotesCalendar({ cardSx }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const eventTypeLabels = t("notes.calendar.eventTypes", { returnObjects: true });
   const EVENT_TYPES = [
     { value: "medical", label: eventTypeLabels[0], icon: MedicalServicesIcon, color: "rgba(166, 93, 55, 0.2)", border: colors.accent },
@@ -137,9 +137,10 @@ export default function NotesCalendar({ cardSx }) {
     return byDay;
   }, [events, weekDates]);
 
+  const locale = i18n.language;
   const weekRangeLabel =
     weekDates.length === 7
-      ? `${weekDates[0].toLocaleDateString("en-US", { month: "short" })} ${weekDates[0].getDate()} – ${weekDates[6].toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`
+      ? `${weekDates[0].toLocaleDateString(locale, { month: "short" })} ${weekDates[0].getDate()} – ${weekDates[6].toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })}`
       : "";
 
   return (
