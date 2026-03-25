@@ -59,7 +59,8 @@
       "mission": "미션",
       "product": "제품",
       "about": "소개",
-      "docs": "문서",
+      "team": "팀",
+      "user-stories": "사용자 이야기",
       "joinWaitlist": "대기자 명단 등록"
     },
     "hero": {

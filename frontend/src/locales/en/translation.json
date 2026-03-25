@@ -59,7 +59,8 @@
       "mission": "Mission",
       "product": "Product",
       "about": "About",
-      "docs": "Docs",
+      "team": "Team",
+      "user-stories": "User Stories",
       "joinWaitlist": "Join Waitlist"
     },
     "hero": {
