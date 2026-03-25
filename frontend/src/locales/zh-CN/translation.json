@@ -53,5 +53,329 @@
       "tooManyAttempts": "尝试次数过多，请稍候再试。",
       "generic": "出现错误，请重试。"
     }
+  },
+  "lp": {
+    "nav": {
+      "mission": "使命",
+      "product": "产品",
+      "about": "关于",
+      "docs": "文档",
+      "joinWaitlist": "加入候补名单"
+    },
+    "hero": {
+      "headline": "智能 AI，陪伴您的",
+      "scrambleWord": "伤后",
+      "journeySuffix": " 康复之旅",
+      "subtitle": "MedEase 以精准取代伤后的慌乱，根据您大学的具体数据，智能为您匹配正确的医疗资源和校园服务。",
+      "joinWaitlist": "加入候补名单"
+    },
+    "mission": {
+      "heading": "我们的使命",
+      "subtitle": "将复杂的医疗状况转化为可导航路径的基础设施。",
+      "cards": [
+        {
+          "title": "消除信息鸿沟",
+          "text": "美国医疗体系对国际学生而言犹如一片迷雾。MedEase 架起沟通的桥梁，消除伤病与救治之间的严重信息不对称，提供像本地人一样安全、确定地导航复杂流程的基础设施。"
+        },
+        {
+          "title": "即时清晰",
+          "text": "通过将学生心态从**恐慌**即时转变为**精准**，稳定其思维状态。"
+        },
+        {
+          "title": "防止伤害",
+          "text": "消除费用顾虑，将学生从**犹豫**转变为立即采取医疗**行动**。"
+        },
+        {
+          "title": "机构安全",
+          "text": "通过将风险从**法律责任**转变为主动**合规**，保护大学机构。"
+        }
+      ]
+    },
+    "product": {
+      "heading": "智能健康管理",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "智能分诊引擎",
+          "subtitle": "基于 RAG 的智能路由，根据大学实时数据，即时为学生匹配最合适的校园资源。",
+          "features": [
+            "上下文感知检索",
+            "自动科室路由",
+            "大学知识库",
+            "零幻觉防护"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "自适应对话协议",
+          "subtitle": "智能对话界面，根据学生反馈和自然语言更新，实时调整康复时间线。",
+          "features": [
+            "自然语言更新",
+            "动态时间线调整",
+            "临床医生协作",
+            "24/7 危机检测"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "源于亲身经历",
+      "subtitle": "我们不只是发现了市场空白，我们亲历过它。",
+      "cards": [
+        {
+          "label": "01 — 起点",
+          "title": "一切崩塌的那一刻",
+          "body": "在大学最繁忙的时期——同时兼顾实习和课业——我在泰拳训练中受伤，无法行走。像许多学生一样，我没有请病假，而是带伤爬楼梯、走长路、赶截止日期，独自康复。",
+          "highlight": "我在连路都走不了的情况下，独自应对了世界上最复杂的医疗体系之一。"
+        },
+        {
+          "label": "02 — 愿景",
+          "title": "从混乱到基础设施",
+          "body": "康复不应是孤独的旅程。我们打造 MedEase，用基础设施取代孤立无援。我们的使命很简单：帮助每一位学生以清晰、尊严和关怀治愈——将碎片化的体系变成无缝的旅程。",
+          "highlight": "我们正在构建我曾经渴望拥有的数字安全网。"
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "学生健康缺失的基础设施。简化康复，连接护理，降低风险。",
+      "product": {
+        "heading": "产品",
+        "links": ["功能特性", "面向大学", "面向学生", "安全保障"]
+      },
+      "company": {
+        "heading": "公司",
+        "links": ["关于我们", "招聘", "博客", "联系支持"]
+      },
+      "legal": {
+        "heading": "法律",
+        "links": ["隐私政策", "服务条款", "Cookie 政策", "无障碍访问"]
+      },
+      "getApp": {
+        "heading": "下载应用",
+        "links": ["iOS App Store", "Google Play"]
+      },
+      "copyright": "© {{year}} MedEase Inc. 保留所有权利。",
+      "designedAt": "设计于埃默里大学"
+    }
+  },
+  "survey": {
+    "nav": {
+      "userSurvey": "用户调查",
+      "home": "主页",
+      "community": "社区",
+      "notes": "笔记"
+    },
+    "welcome": {
+      "title": "欢迎！",
+      "description": "我们在这里陪伴您，帮助您顺利走过康复旅程。",
+      "disclaimers": [
+        "本内容不构成专业医疗建议。",
+        "如有紧急或严重问题，请务必咨询合格的医疗专业人员。",
+        "我们不对基于本调查所做的任何决定承担责任。"
+      ],
+      "accept": "接受"
+    },
+    "intro": {
+      "title": "欢迎开启您的个性化康复旅程！",
+      "description": "我们将提出几个可选问题，以便为您个性化推荐、追踪进度并匹配校园资源。",
+      "note": "所有问题均为可选——如有不适，可随时跳过。我们始终支持您。",
+      "start": "开始调查",
+      "skip": "跳过"
+    },
+    "questions": {
+      "sectionTitle": "几个简短问题",
+      "sectionDescription": "根据您的意愿回答——这只是帮助我们了解您的起点。",
+      "skip": "跳过",
+      "next": "下一步",
+      "finish": "完成调查",
+      "whatHappened": {
+        "title": "发生了什么？",
+        "description": "简要描述您的受伤或状况，概括即可——这有助于我们锚定您的旅程。",
+        "options": ["运动或训练伤", "意外摔倒或碰撞", "医疗手术/状况", "其他"],
+        "placeholder": "可选：分享您希望我们了解的内容。"
+      },
+      "whenHappened": {
+        "title": "何时发生的？",
+        "description": "这有助于我们了解您在康复时间线上所处的阶段。",
+        "options": ["今天", "最近一周内", "一周以前"],
+        "detailLabel": "如需进一步说明，请选择。",
+        "detailOptions": ["1–4 周前", "1–3 个月前", "3 个月以前"]
+      },
+      "insurance": {
+        "title": "您有保险吗？",
+        "description": "这有助于我们为您推荐经济实惠的选项和最合适的资源。可跳过。",
+        "yes": "有",
+        "no": "没有",
+        "selectPlan": "选择您的保险计划（常见埃默里选项）。",
+        "preferNotToSay": "不愿透露",
+        "skipButton": "跳过保险，直接进入问题循环",
+        "plans": ["Aetna 学生健康险", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "其他 / 国际保险"]
+      }
+    },
+    "end": {
+      "title": "您已准备好了。",
+      "description": "您的数据由我们妥善保管，请放心——我们在此支持您的康复旅程。",
+      "button": "进入问题循环"
+    },
+    "questionsLoop": {
+      "title": "问题循环",
+      "description": "本部分独立于初始调查。把它视为您的持续检查空间——随时提问、追踪症状、获取指导。",
+      "note": "下一步：我们将在此接入结构化问答循环，同时保持一致的视觉风格。",
+      "backButton": "返回调查"
+    }
+  },
+  "home": {
+    "careJourney": {
+      "title": "您的就医旅程",
+      "stages": ["识别", "评估", "选择医疗", "获得医疗", "康复"]
+    },
+    "recommendation": {
+      "label": "推荐步骤",
+      "suggestion": "建议前往急诊护理中心",
+      "whyLabel": "原因：",
+      "whyReasons": ["症状需要评估", "比急诊室更快", "费用更低"]
+    },
+    "qitl": {
+      "title": "循环问答",
+      "description": "就您当前的就医步骤提问。",
+      "placeholder": "就您的就医旅程提问…",
+      "send": "发送",
+      "commonQuestions": "常见问题",
+      "questions": [
+        "什么是急诊护理？",
+        "急诊护理费用是多少？",
+        "我需要保险吗？",
+        "我需要带什么？",
+        "需要多长时间？",
+        "我应该何时服药？",
+        "康复期间我会经历什么？",
+        "我何时需要随访？",
+        "我应该何时再次就诊？"
+      ]
+    }
+  },
+  "community": {
+    "title": "社区",
+    "description": "连接、回馈、寻求支持——尽在一处。",
+    "backToCommunity": "返回社区",
+    "explore": "探索",
+    "hubs": [
+      { "title": "寻找同路人", "description": "与有相似伤病经历的人建立联系。" },
+      { "title": "帮助同路人", "description": "捐赠设备或支持其他康复中的学生。" },
+      { "title": "本地支持", "description": "发现埃默里和亚特兰大本地可以帮助您的资源。" },
+      { "title": "AI 健康应用", "description": "获取 AI 帮助撰写邮件、申请，并导航医疗系统。" }
+    ],
+    "findPeople": {
+      "title": "寻找同路人",
+      "subtitle": "与有相似伤病经历的人建立联系。",
+      "searchPlaceholder": "搜索人员、伤病或话题",
+      "suggestedGroups": "推荐小组",
+      "groups": [
+        { "name": "脑震荡 101", "description": "脑震荡康复的支持与技巧。" },
+        { "name": "游泳运动员康复", "description": "适合肩部或过度使用伤病的运动员。" },
+        { "name": "跑步伤病", "description": "膝盖、髂胫束及跑步相关支持。" },
+        { "name": "如何支付医疗费", "description": "费用导航与财务选项。" },
+        { "name": "与保险公司谈判", "description": "保险经验与建议分享。" },
+        { "name": "住宿调整申请信", "description": "获取并使用学术住宿调整。" }
+      ],
+      "tabs": ["讨论", "资源", "成员"],
+      "sharePlaceholder": "与小组分享内容…",
+      "post": "发布",
+      "close": "关闭",
+      "resourcesPlaceholder": "资源和链接将在此显示。",
+      "membersPlaceholder": "成员列表将在此显示。",
+      "mockDiscussions": [
+        "有人用物理治疗成功治愈跑步膝吗？寻找埃默里附近的推荐。",
+        "有的！我去了学生健康中心的物理治疗，效果很好。大约三周就感觉好多了。",
+        "同意学生健康中心——如果需要减少活动量，他们也可以帮助申请住宿调整信。"
+      ]
+    },
+    "helpPeople": {
+      "title": "帮助同路人",
+      "subtitle": "传递温暖，帮助他人。",
+      "introTitle": "您不再需要的资源，也许正是他人雨中所需的那把伞。",
+      "introDescription": "捐赠护膝、拐杖、冰敷袋或其他康复用品，让其他同学专注康复。",
+      "emptyMessage": "成为第一个回馈的人。",
+      "emptySubMessage": "发布您不再需要的物品，帮助另一位同学康复。",
+      "emptyButton": "发布捐赠",
+      "modalTitle": "发布捐赠",
+      "thankYou": "谢谢您 ❤️",
+      "thankYouMessage": "YOYO 刚刚帮助了另一位同学——感谢您！",
+      "uploadButton": "拖放或点击上传照片",
+      "itemName": "物品名称",
+      "conditionLabel": "状态",
+      "conditions": ["全新", "几乎全新", "良好", "轻微使用", "已使用"],
+      "locationLabel": "地点（例如：亚特兰大、埃默里周边）",
+      "notesLabel": "备注",
+      "cancel": "取消",
+      "postDonation": "发布捐赠",
+      "donateThis": "我可以捐赠此物",
+      "sampleItems": ["护膝", "拐杖", "冰敷袋", "踝部支撑"]
+    },
+    "localSupport": {
+      "title": "本地支持",
+      "subtitle": "发现埃默里和亚特兰大本地可以帮助您的资源。",
+      "filters": ["全部", "免费", "埃默里", "亚特兰大", "付费"],
+      "contact": "联系",
+      "visitSite": "访问网站",
+      "resources": [
+        { "name": "埃默里学生政府", "description": "学生权益倡导与资源。", "location": "埃默里大学", "contact": "通过校园门户联系" },
+        { "name": "学生健康中心", "description": "面向学生的医疗和心理健康服务。", "location": "埃默里大学", "contact": "404-727-7551" },
+        { "name": "残障支持办公室", "description": "学术住宿调整与支持。", "location": "埃默里大学", "contact": "disability@emory.edu" },
+        { "name": "亚特兰大社区食物银行", "description": "食物援助与营养计划。", "location": "亚特兰大，佐治亚州", "contact": "访问网站" },
+        { "name": "格雷迪医疗系统", "description": "公立医院系统；提供财务援助。", "location": "亚特兰大，佐治亚州", "contact": "访问网站" },
+        { "name": "危机热线", "description": "24/7 心理健康与危机支持。", "location": "全国", "contact": "988" }
+      ]
+    },
+    "aiHealth": {
+      "title": "AI 健康助手",
+      "subtitle": "获取帮助撰写邮件、申请，并导航医疗系统。",
+      "welcomeMessage": "您好！我可以帮助您处理住宿调整申请信、保险邮件或医疗系统导航。今天需要什么帮助？",
+      "placeholder": "寻求住宿支持、保险帮助或资源…",
+      "generateEmail": "生成邮件",
+      "copy": "复制",
+      "copied": "已复制！",
+      "edit": "编辑",
+      "send": "发送",
+      "emailSubject": "学术住宿调整申请",
+      "emailBody": "尊敬的[残障服务/学生无障碍办公室]，\n\n我写信是为了申请本学期的学术住宿调整。附上我的医疗提供者的相关文件。\n\n希望能有机会与您会面，讨论住宿调整方案。请告知我下一步需要采取的步骤。\n\n谢谢，\n[您的姓名]"
+    }
+  },
+  "notes": {
+    "title": "笔记与日历",
+    "description": "在一处规划医疗日程，查看就医摘要。",
+    "tabs": ["日程", "聊天记录"],
+    "calendar": {
+      "previous": "上一个",
+      "today": "今天",
+      "next": "下一个",
+      "eventTypesLabel": "事件类型：",
+      "eventTypes": ["医疗预约", "用药提醒", "康复训练", "医疗检查", "康复护理"],
+      "addEvent": "添加事件",
+      "editEvent": "编辑事件",
+      "titleLabel": "标题",
+      "typeLabel": "类型",
+      "startHour": "开始（小时）",
+      "endHour": "结束（小时）",
+      "delete": "删除",
+      "cancel": "取消",
+      "add": "添加",
+      "save": "保存"
+    },
+    "monthView": {
+      "thisMonth": "本月",
+      "noteExplanation": "有圆点的日期已保存就诊摘要，点击日期查看当天笔记。",
+      "dayLabels": ["日", "一", "二", "三", "四", "五", "六"]
+    },
+    "dayNote": {
+      "close": "关闭",
+      "consultationSummary": "就诊摘要",
+      "symptomsDiscussed": "讨论的症状",
+      "suggestedNextSteps": "建议的后续步骤",
+      "yourNotes": "您的笔记",
+      "notesPlaceholder": "添加关于您感受或后续计划的个人笔记…",
+      "noSummary": "当天没有保存的就诊摘要。",
+      "noSummaryNote": "当您从主页助手保存聊天记录时，摘要将显示在此处。"
+    }
   }
 }

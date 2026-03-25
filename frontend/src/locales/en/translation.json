@@ -53,5 +53,329 @@
       "tooManyAttempts": "Too many attempts. Please wait a moment and try again.",
       "generic": "Something went wrong. Please try again."
     }
+  },
+  "lp": {
+    "nav": {
+      "mission": "Mission",
+      "product": "Product",
+      "about": "About",
+      "docs": "Docs",
+      "joinWaitlist": "Join Waitlist"
+    },
+    "hero": {
+      "headline": "Agentic AI for your",
+      "scrambleWord": "post-injury",
+      "journeySuffix": " journey",
+      "subtitle": "MedEase replaces post-injury panic with precision by intelligently triaging you to the correct care and campus services based on your university's specific data.",
+      "joinWaitlist": "Join Waitlist"
+    },
+    "mission": {
+      "heading": "Our Mission",
+      "subtitle": "Infrastructure that transforms complex medical conditions into a navigable path.",
+      "cards": [
+        {
+          "title": "Closing the Information Gap",
+          "text": "The American medical system is a void for international students. MedEase acts as the bridge. We eliminate the critical asymmetry between injury and care, providing the infrastructure to navigate complex protocols with the safety and certainty of a local."
+        },
+        {
+          "title": "Instant Clarity",
+          "text": "Stabilizing the student mindset by instantly shifting them from **Panic** to **Precision**."
+        },
+        {
+          "title": "Preventing Harm",
+          "text": "Removing the fear of cost to shift students from **Hesitation** to immediate medical **Action**."
+        },
+        {
+          "title": "Institutional Safety",
+          "text": "Shielding the university by shifting the risk profile from **Liability** to proactive **Compliance**."
+        }
+      ]
+    },
+    "product": {
+      "heading": "Intelligent Health Management",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "Agentic Triage Engine",
+          "subtitle": "RAG-powered routing that instantly connects students to the exact right campus resource based on live university data.",
+          "features": [
+            "Context-Aware Retrieval",
+            "Automatic Dept. Routing",
+            "University Knowledge Base",
+            "Zero-Hallucination Guardrails"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "Adaptive Chat Protocol",
+          "subtitle": "A living chat interface that adapts recovery timelines in real-time based on student feedback and natural language updates.",
+          "features": [
+            "Natural Language Updates",
+            "Dynamic Timeline Adjustment",
+            "Clinician-in-the-Loop",
+            "24/7 Crisis Detection"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "Built from Experience",
+      "subtitle": "We didn't just find a market gap. We lived it.",
+      "cards": [
+        {
+          "label": "01 — The Spark",
+          "title": "The Moment Everything Broke",
+          "body": "During one of the most demanding seasons of college—juggling internships and classes—I suffered a Muay Thai injury that left me unable to walk. Like many students, I didn't take medical leave. I navigated stairs, long walks, and deadlines, all while recovering alone.",
+          "highlight": "I navigated one of the most complex systems in the world while I couldn't even walk."
+        },
+        {
+          "label": "02 — The Vision",
+          "title": "From Chaos to Infrastructure",
+          "body": "Recovery shouldn't be a solo mission. We built MedEase to replace that isolation with infrastructure. Our mission is simple: help every student heal with clarity, dignity, and compassion—turning a fragmented system into a seamless journey.",
+          "highlight": "We are building the digital safety net that I wish I had."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "The missing infrastructure for student health. Simplifying recovery, connecting caregivers, and reducing risk.",
+      "product": {
+        "heading": "Product",
+        "links": ["Features", "For Universities", "For Students", "Security"]
+      },
+      "company": {
+        "heading": "Company",
+        "links": ["About Us", "Careers", "Blog", "Contact Support"]
+      },
+      "legal": {
+        "heading": "Legal",
+        "links": ["Privacy Policy", "Terms of Service", "Cookie Policy", "Accessibility"]
+      },
+      "getApp": {
+        "heading": "Get the App",
+        "links": ["iOS App Store", "Google Play"]
+      },
+      "copyright": "© {{year}} MedEase Inc. All rights reserved.",
+      "designedAt": "Designed at Emory"
+    }
+  },
+  "survey": {
+    "nav": {
+      "userSurvey": "User Survey",
+      "home": "Home",
+      "community": "Community",
+      "notes": "Notes"
+    },
+    "welcome": {
+      "title": "Welcome!",
+      "description": "We're here as your companion to help you navigate your recovery journey.",
+      "disclaimers": [
+        "This is not professional medical advice.",
+        "Always seek a qualified healthcare provider for urgent or serious concerns.",
+        "We cannot assume liability for decisions made based on this survey."
+      ],
+      "accept": "Accept"
+    },
+    "intro": {
+      "title": "Welcome to your personalized recovery journey!",
+      "description": "We'll ask a few optional questions so we can personalize recommendations, help you track your progress, and surface relevant campus resources.",
+      "note": "Everything is optional — you can skip anything that doesn't feel comfortable right now. We'll still support you.",
+      "start": "Start Survey",
+      "skip": "Skip"
+    },
+    "questions": {
+      "sectionTitle": "A few quick questions",
+      "sectionDescription": "Answer as much or as little as you'd like — this simply helps us understand where you're starting from.",
+      "skip": "Skip",
+      "next": "Next",
+      "finish": "Finish Survey",
+      "whatHappened": {
+        "title": "What happened?",
+        "description": "Briefly describe your injury or situation. You can keep it high level — this helps us anchor your journey.",
+        "options": ["Sports or training injury", "Accidental fall or impact", "Medical procedure / condition", "Other"],
+        "placeholder": "Optional: share anything you'd like us to know."
+      },
+      "whenHappened": {
+        "title": "When did it happen?",
+        "description": "This helps us understand where you might be in your recovery timeline.",
+        "options": ["Today", "Within the last week", "More than a week ago"],
+        "detailLabel": "If you want, choose a little more detail.",
+        "detailOptions": ["1–4 weeks ago", "1–3 months ago", "More than 3 months ago"]
+      },
+      "insurance": {
+        "title": "Do you have insurance?",
+        "description": "This helps us think about budget-friendly options and which resources might fit best. You can skip this.",
+        "yes": "Yes",
+        "no": "No",
+        "selectPlan": "Select your plan (common Emory options).",
+        "preferNotToSay": "Prefer not to say",
+        "skipButton": "Skip insurance and go to Questions Loop",
+        "plans": ["Aetna Student Health", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "Other / International"]
+      }
+    },
+    "end": {
+      "title": "You're all set.",
+      "description": "Your data is safe with us. No worries — we're here to support your recovery journey.",
+      "button": "Go to Questions Loop"
+    },
+    "questionsLoop": {
+      "title": "Questions Loop",
+      "description": "This section is separate from the initial survey. Think of it as your ongoing check-in space — ask follow-up questions, track symptoms, and get guidance whenever you need it.",
+      "note": "Next step: we can plug in a structured Q&A loop here while keeping the same landing-page visual language.",
+      "backButton": "Back to Survey"
+    }
+  },
+  "home": {
+    "careJourney": {
+      "title": "Your Care Journey",
+      "stages": ["Identify", "Assess", "Choose Care", "Get Care", "Recover"]
+    },
+    "recommendation": {
+      "label": "Recommended Step",
+      "suggestion": "We suggest visiting Urgent Care",
+      "whyLabel": "Why:",
+      "whyReasons": ["symptoms require evaluation", "faster than ER", "lower cost"]
+    },
+    "qitl": {
+      "title": "Questions in the Loop",
+      "description": "Ask questions about your current care step.",
+      "placeholder": "Ask a question about your care journey…",
+      "send": "Send",
+      "commonQuestions": "Common Questions",
+      "questions": [
+        "What is urgent care?",
+        "How much does urgent care cost?",
+        "Do I need insurance?",
+        "What should I bring?",
+        "How long will it take?",
+        "When should I take my medication?",
+        "What can I expect during recovery?",
+        "When do I need follow-up care?",
+        "When should I see a doctor again?"
+      ]
+    }
+  },
+  "community": {
+    "title": "Community",
+    "description": "Connect, give back, and find support — all in one place.",
+    "backToCommunity": "Back to Community",
+    "explore": "Explore",
+    "hubs": [
+      { "title": "Find People Like Me", "description": "Connect with others experiencing similar injuries or challenges." },
+      { "title": "Help People Like Me", "description": "Donate devices or support others recovering from injuries." },
+      { "title": "Local Support", "description": "Discover Emory and local Atlanta resources that can help you." },
+      { "title": "AI Health Application", "description": "Get AI help writing emails, applications, and navigating health systems." }
+    ],
+    "findPeople": {
+      "title": "Find People Like Me",
+      "subtitle": "Connect with others experiencing similar injuries or challenges.",
+      "searchPlaceholder": "Search people, injuries, or topics",
+      "suggestedGroups": "Suggested Groups",
+      "groups": [
+        { "name": "Concussion 101", "description": "Support and tips for concussion recovery." },
+        { "name": "Swimmers Recovery", "description": "For athletes managing shoulder or overuse injuries." },
+        { "name": "Runners Injuries", "description": "Knee, IT band, and running-related support." },
+        { "name": "How to Pay Medical Bills", "description": "Navigating costs and financial options." },
+        { "name": "Negotiating Insurance", "description": "Tips and shared experiences with insurance." },
+        { "name": "Accommodation Letters", "description": "Getting and using academic accommodations." }
+      ],
+      "tabs": ["Discussions", "Resources", "Members"],
+      "sharePlaceholder": "Share something with the group…",
+      "post": "Post",
+      "close": "Close",
+      "resourcesPlaceholder": "Resources and links will appear here.",
+      "membersPlaceholder": "Member list will appear here.",
+      "mockDiscussions": [
+        "Has anyone had success with PT for runner's knee? Looking for Emory-area recommendations.",
+        "Yes! I went to the student health PT and they were great. Took about 3 weeks to feel better.",
+        "Seconding student health — and they can help with accommodation letters if you need reduced activity."
+      ]
+    },
+    "helpPeople": {
+      "title": "Help People Like Me",
+      "subtitle": "Pass the umbrella forward.",
+      "introTitle": "The resources you no longer need could help someone going through the rain.",
+      "introDescription": "Donate braces, crutches, ice packs, or other recovery items so another student can focus on healing.",
+      "emptyMessage": "Be the first to give back.",
+      "emptySubMessage": "Post an item you no longer need and help another student recover.",
+      "emptyButton": "Post a donation",
+      "modalTitle": "Post a donation",
+      "thankYou": "Thank you ❤️",
+      "thankYouMessage": "YOYO just helped another student — thank you!",
+      "uploadButton": "Drag & drop or click to upload photo",
+      "itemName": "Item name",
+      "conditionLabel": "Condition",
+      "conditions": ["New", "Like new", "Good", "Gently used", "Used"],
+      "locationLabel": "Location (e.g. Atlanta, Emory area)",
+      "notesLabel": "Notes",
+      "cancel": "Cancel",
+      "postDonation": "Post donation",
+      "donateThis": "I can donate this",
+      "sampleItems": ["Knee brace", "Crutches", "Ice pack wrap", "Ankle support"]
+    },
+    "localSupport": {
+      "title": "Local Support",
+      "subtitle": "Discover Emory and local Atlanta resources that can help you.",
+      "filters": ["All", "Free", "Emory", "Atlanta", "Paid"],
+      "contact": "Contact",
+      "visitSite": "Visit site",
+      "resources": [
+        { "name": "Emory Student Government", "description": "Student advocacy and resources.", "location": "Emory University", "contact": "Contact via campus portal" },
+        { "name": "Student Health Center", "description": "Medical and mental health services for students.", "location": "Emory University", "contact": "404-727-7551" },
+        { "name": "Disability Support Office", "description": "Academic accommodations and support.", "location": "Emory University", "contact": "disability@emory.edu" },
+        { "name": "Atlanta Community Food Bank", "description": "Food assistance and nutrition programs.", "location": "Atlanta, GA", "contact": "Visit site" },
+        { "name": "Grady Health System", "description": "Public hospital system; financial assistance available.", "location": "Atlanta, GA", "contact": "Visit site" },
+        { "name": "Crisis Line", "description": "24/7 mental health and crisis support.", "location": "National", "contact": "988" }
+      ]
+    },
+    "aiHealth": {
+      "title": "AI Health Assistant",
+      "subtitle": "Get help writing emails, applications, and navigating health systems.",
+      "welcomeMessage": "Hi! I can help you with accommodation letters, insurance emails, or navigating health systems. What do you need today?",
+      "placeholder": "Ask for accommodation support, insurance help, or resources…",
+      "generateEmail": "Generate email",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "edit": "Edit",
+      "send": "Send",
+      "emailSubject": "Request for Academic Accommodations",
+      "emailBody": "Dear [Disability Services / Student Access Office],\n\nI am writing to request academic accommodations for the current semester. I have attached documentation from my healthcare provider.\n\nI would appreciate the opportunity to meet and discuss an accommodation plan. Please let me know what steps I need to take next.\n\nThank you,\n[Your name]"
+    }
+  },
+  "notes": {
+    "title": "Notes & Calendar",
+    "description": "Plan medical routines and review your care summaries in one place.",
+    "tabs": ["Schedule", "Chat Records"],
+    "calendar": {
+      "previous": "Previous",
+      "today": "Today",
+      "next": "Next",
+      "eventTypesLabel": "Event types:",
+      "eventTypes": ["Medical appointment", "Medication reminder", "Rehabilitation exercise", "Medical test", "Recovery care procedure"],
+      "addEvent": "Add event",
+      "editEvent": "Edit event",
+      "titleLabel": "Title",
+      "typeLabel": "Type",
+      "startHour": "Start (hour)",
+      "endHour": "End (hour)",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "add": "Add",
+      "save": "Save"
+    },
+    "monthView": {
+      "thisMonth": "This month",
+      "noteExplanation": "Days with a dot have a saved consultation summary. Click a date to open that day's note.",
+      "dayLabels": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    },
+    "dayNote": {
+      "close": "Close",
+      "consultationSummary": "Consultation summary",
+      "symptomsDiscussed": "Symptoms discussed",
+      "suggestedNextSteps": "Suggested next steps",
+      "yourNotes": "Your notes",
+      "notesPlaceholder": "Add personal notes about how you're feeling or follow-up plans…",
+      "noSummary": "No saved consultation summary for this day.",
+      "noSummaryNote": "Summaries appear here when you save a chat from the Home assistant."
+    }
   }
 }

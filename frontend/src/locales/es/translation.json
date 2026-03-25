@@ -53,5 +53,329 @@
       "tooManyAttempts": "Demasiados intentos. Por favor, espera un momento e inténtalo de nuevo.",
       "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
     }
+  },
+  "lp": {
+    "nav": {
+      "mission": "Misión",
+      "product": "Producto",
+      "about": "Nosotros",
+      "docs": "Docs",
+      "joinWaitlist": "Únete a la lista de espera"
+    },
+    "hero": {
+      "headline": "IA agéntica para tu",
+      "scrambleWord": "recuperación",
+      "journeySuffix": " post-lesión",
+      "subtitle": "MedEase reemplaza el pánico post-lesión con precisión, conectándote inteligentemente con la atención correcta y los servicios del campus basándose en los datos específicos de tu universidad.",
+      "joinWaitlist": "Únete a la lista de espera"
+    },
+    "mission": {
+      "heading": "Nuestra Misión",
+      "subtitle": "Infraestructura que transforma condiciones médicas complejas en un camino navegable.",
+      "cards": [
+        {
+          "title": "Cerrando la Brecha de Información",
+          "text": "El sistema médico estadounidense es un vacío para los estudiantes internacionales. MedEase actúa como el puente. Eliminamos la asimetría crítica entre lesión y atención, proporcionando la infraestructura para navegar protocolos complejos con la seguridad y certeza de un local."
+        },
+        {
+          "title": "Claridad Instantánea",
+          "text": "Estabilizando la mentalidad del estudiante al trasladarlo instantáneamente del **Pánico** a la **Precisión**."
+        },
+        {
+          "title": "Previniendo Daños",
+          "text": "Eliminando el miedo al costo para mover a los estudiantes de la **Hesitación** a la **Acción** médica inmediata."
+        },
+        {
+          "title": "Seguridad Institucional",
+          "text": "Protegiendo a la universidad al cambiar el perfil de riesgo de **Responsabilidad** a **Cumplimiento** proactivo."
+        }
+      ]
+    },
+    "product": {
+      "heading": "Gestión Inteligente de la Salud",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "Motor de Triaje Agéntico",
+          "subtitle": "Enrutamiento impulsado por RAG que conecta instantáneamente a los estudiantes con el recurso exacto del campus basándose en datos universitarios en vivo.",
+          "features": [
+            "Recuperación consciente del contexto",
+            "Enrutamiento automático de departamentos",
+            "Base de conocimiento universitaria",
+            "Barreras anti-alucinación"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "Protocolo de Chat Adaptativo",
+          "subtitle": "Una interfaz de chat viva que adapta los plazos de recuperación en tiempo real basándose en los comentarios de los estudiantes y actualizaciones en lenguaje natural.",
+          "features": [
+            "Actualizaciones en lenguaje natural",
+            "Ajuste dinámico de plazos",
+            "Clínico en el bucle",
+            "Detección de crisis 24/7"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "Construido desde la Experiencia",
+      "subtitle": "No solo encontramos una brecha en el mercado. La vivimos.",
+      "cards": [
+        {
+          "label": "01 — La Chispa",
+          "title": "El Momento en que Todo Se Rompió",
+          "body": "Durante una de las temporadas más exigentes de la universidad—equilibrando prácticas y clases—sufrí una lesión de Muay Thai que me dejó sin poder caminar. Como muchos estudiantes, no tomé licencia médica. Navegué escaleras, largas caminatas y plazos, todo mientras me recuperaba solo.",
+          "highlight": "Navegué uno de los sistemas más complejos del mundo mientras ni siquiera podía caminar."
+        },
+        {
+          "label": "02 — La Visión",
+          "title": "Del Caos a la Infraestructura",
+          "body": "La recuperación no debería ser una misión en solitario. Construimos MedEase para reemplazar ese aislamiento con infraestructura. Nuestra misión es simple: ayudar a cada estudiante a sanar con claridad, dignidad y compasión—convirtiendo un sistema fragmentado en un viaje sin interrupciones.",
+          "highlight": "Estamos construyendo la red de seguridad digital que ojalá hubiera tenido."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "La infraestructura faltante para la salud estudiantil. Simplificando la recuperación, conectando cuidadores y reduciendo riesgos.",
+      "product": {
+        "heading": "Producto",
+        "links": ["Características", "Para Universidades", "Para Estudiantes", "Seguridad"]
+      },
+      "company": {
+        "heading": "Empresa",
+        "links": ["Sobre Nosotros", "Empleos", "Blog", "Soporte de contacto"]
+      },
+      "legal": {
+        "heading": "Legal",
+        "links": ["Política de Privacidad", "Términos de Servicio", "Política de Cookies", "Accesibilidad"]
+      },
+      "getApp": {
+        "heading": "Descargar App",
+        "links": ["iOS App Store", "Google Play"]
+      },
+      "copyright": "© {{year}} MedEase Inc. Todos los derechos reservados.",
+      "designedAt": "Diseñado en Emory"
+    }
+  },
+  "survey": {
+    "nav": {
+      "userSurvey": "Encuesta de usuario",
+      "home": "Inicio",
+      "community": "Comunidad",
+      "notes": "Notas"
+    },
+    "welcome": {
+      "title": "¡Bienvenido!",
+      "description": "Estamos aquí como tu compañero para ayudarte a navegar tu proceso de recuperación.",
+      "disclaimers": [
+        "Esto no es asesoramiento médico profesional.",
+        "Siempre consulta a un proveedor de salud calificado para problemas urgentes o graves.",
+        "No podemos asumir responsabilidad por decisiones tomadas basadas en esta encuesta."
+      ],
+      "accept": "Aceptar"
+    },
+    "intro": {
+      "title": "¡Bienvenido a tu viaje de recuperación personalizado!",
+      "description": "Te haremos algunas preguntas opcionales para personalizar recomendaciones, ayudarte a seguir tu progreso y mostrarte recursos relevantes del campus.",
+      "note": "Todo es opcional — puedes omitir lo que no te resulte cómodo ahora mismo. Seguiremos apoyándote.",
+      "start": "Iniciar encuesta",
+      "skip": "Omitir"
+    },
+    "questions": {
+      "sectionTitle": "Unas preguntas rápidas",
+      "sectionDescription": "Responde lo que quieras — esto simplemente nos ayuda a entender desde dónde empiezas.",
+      "skip": "Omitir",
+      "next": "Siguiente",
+      "finish": "Finalizar encuesta",
+      "whatHappened": {
+        "title": "¿Qué pasó?",
+        "description": "Describe brevemente tu lesión o situación. Puedes ser general — esto nos ayuda a anclar tu viaje.",
+        "options": ["Lesión deportiva o de entrenamiento", "Caída o impacto accidental", "Procedimiento médico / condición", "Otro"],
+        "placeholder": "Opcional: comparte lo que quieras que sepamos."
+      },
+      "whenHappened": {
+        "title": "¿Cuándo ocurrió?",
+        "description": "Esto nos ayuda a entender en qué punto de tu recuperación podrías estar.",
+        "options": ["Hoy", "En la última semana", "Hace más de una semana"],
+        "detailLabel": "Si quieres, elige un poco más de detalle.",
+        "detailOptions": ["Hace 1–4 semanas", "Hace 1–3 meses", "Hace más de 3 meses"]
+      },
+      "insurance": {
+        "title": "¿Tienes seguro médico?",
+        "description": "Esto nos ayuda a pensar en opciones económicas y qué recursos podrían encajar mejor. Puedes omitirlo.",
+        "yes": "Sí",
+        "no": "No",
+        "selectPlan": "Selecciona tu plan (opciones comunes de Emory).",
+        "preferNotToSay": "Prefiero no decirlo",
+        "skipButton": "Omitir seguro e ir al Bucle de Preguntas",
+        "plans": ["Aetna Student Health", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "Otro / Internacional"]
+      }
+    },
+    "end": {
+      "title": "Ya estás listo.",
+      "description": "Tus datos están seguros con nosotros. No te preocupes — estamos aquí para apoyar tu proceso de recuperación.",
+      "button": "Ir al Bucle de Preguntas"
+    },
+    "questionsLoop": {
+      "title": "Bucle de Preguntas",
+      "description": "Esta sección es independiente de la encuesta inicial. Piénsala como tu espacio de seguimiento continuo — haz preguntas de seguimiento, registra síntomas y recibe orientación cuando la necesites.",
+      "note": "Próximo paso: podemos conectar aquí un bucle de preguntas estructurado manteniendo el mismo lenguaje visual.",
+      "backButton": "Volver a la encuesta"
+    }
+  },
+  "home": {
+    "careJourney": {
+      "title": "Tu Proceso de Atención",
+      "stages": ["Identificar", "Evaluar", "Elegir atención", "Recibir atención", "Recuperarse"]
+    },
+    "recommendation": {
+      "label": "Paso recomendado",
+      "suggestion": "Te sugerimos visitar una Clínica de Urgencias",
+      "whyLabel": "Por qué:",
+      "whyReasons": ["los síntomas requieren evaluación", "más rápido que urgencias", "menor costo"]
+    },
+    "qitl": {
+      "title": "Preguntas en el Bucle",
+      "description": "Haz preguntas sobre tu paso de atención actual.",
+      "placeholder": "Haz una pregunta sobre tu proceso de atención…",
+      "send": "Enviar",
+      "commonQuestions": "Preguntas frecuentes",
+      "questions": [
+        "¿Qué es una clínica de urgencias?",
+        "¿Cuánto cuesta una clínica de urgencias?",
+        "¿Necesito seguro?",
+        "¿Qué debo llevar?",
+        "¿Cuánto tiempo tardará?",
+        "¿Cuándo debo tomar mi medicación?",
+        "¿Qué puedo esperar durante la recuperación?",
+        "¿Cuándo necesito atención de seguimiento?",
+        "¿Cuándo debo ver a un médico de nuevo?"
+      ]
+    }
+  },
+  "community": {
+    "title": "Comunidad",
+    "description": "Conéctate, contribuye y encuentra apoyo — todo en un lugar.",
+    "backToCommunity": "Volver a Comunidad",
+    "explore": "Explorar",
+    "hubs": [
+      { "title": "Encontrar personas como yo", "description": "Conéctate con otros que experimentan lesiones o desafíos similares." },
+      { "title": "Ayudar a personas como yo", "description": "Dona dispositivos o apoya a otros en recuperación." },
+      { "title": "Apoyo local", "description": "Descubre recursos de Emory y Atlanta que pueden ayudarte." },
+      { "title": "Aplicación de salud con IA", "description": "Obtén ayuda de IA para redactar correos, solicitudes y navegar sistemas de salud." }
+    ],
+    "findPeople": {
+      "title": "Encontrar personas como yo",
+      "subtitle": "Conéctate con otros que experimentan lesiones o desafíos similares.",
+      "searchPlaceholder": "Buscar personas, lesiones o temas",
+      "suggestedGroups": "Grupos sugeridos",
+      "groups": [
+        { "name": "Conmoción 101", "description": "Apoyo y consejos para la recuperación de conmociones." },
+        { "name": "Recuperación de nadadores", "description": "Para atletas con lesiones de hombro o por uso excesivo." },
+        { "name": "Lesiones de corredores", "description": "Apoyo para rodilla, banda IT y problemas relacionados con correr." },
+        { "name": "Cómo pagar facturas médicas", "description": "Navegando costos y opciones financieras." },
+        { "name": "Negociar con el seguro", "description": "Consejos y experiencias compartidas con el seguro." },
+        { "name": "Cartas de adaptación", "description": "Obtener y usar adaptaciones académicas." }
+      ],
+      "tabs": ["Discusiones", "Recursos", "Miembros"],
+      "sharePlaceholder": "Comparte algo con el grupo…",
+      "post": "Publicar",
+      "close": "Cerrar",
+      "resourcesPlaceholder": "Los recursos y enlaces aparecerán aquí.",
+      "membersPlaceholder": "La lista de miembros aparecerá aquí.",
+      "mockDiscussions": [
+        "¿Alguien ha tenido éxito con fisioterapia para la rodilla del corredor? Busco recomendaciones en el área de Emory.",
+        "¡Sí! Fui al fisioterapeuta del centro de salud estudiantil y fue genial. Tardé unas 3 semanas en mejorar.",
+        "Confirmo el centro de salud estudiantil — y pueden ayudar con cartas de adaptación si necesitas reducir actividad."
+      ]
+    },
+    "helpPeople": {
+      "title": "Ayudar a personas como yo",
+      "subtitle": "Pasa el paraguas hacia adelante.",
+      "introTitle": "Los recursos que ya no necesitas podrían ayudar a alguien bajo la lluvia.",
+      "introDescription": "Dona rodilleras, muletas, compresas de hielo u otros artículos de recuperación para que otro estudiante pueda concentrarse en sanar.",
+      "emptyMessage": "Sé el primero en contribuir.",
+      "emptySubMessage": "Publica un artículo que ya no necesites y ayuda a otro estudiante a recuperarse.",
+      "emptyButton": "Publicar donación",
+      "modalTitle": "Publicar donación",
+      "thankYou": "Gracias ❤️",
+      "thankYouMessage": "YOYO acaba de ayudar a otro estudiante — ¡gracias!",
+      "uploadButton": "Arrastra y suelta o haz clic para subir foto",
+      "itemName": "Nombre del artículo",
+      "conditionLabel": "Estado",
+      "conditions": ["Nuevo", "Como nuevo", "Bueno", "Levemente usado", "Usado"],
+      "locationLabel": "Ubicación (ej. Atlanta, área de Emory)",
+      "notesLabel": "Notas",
+      "cancel": "Cancelar",
+      "postDonation": "Publicar donación",
+      "donateThis": "Puedo donar esto",
+      "sampleItems": ["Rodillera", "Muletas", "Compresa de hielo", "Soporte de tobillo"]
+    },
+    "localSupport": {
+      "title": "Apoyo local",
+      "subtitle": "Descubre recursos de Emory y Atlanta que pueden ayudarte.",
+      "filters": ["Todos", "Gratis", "Emory", "Atlanta", "De pago"],
+      "contact": "Contacto",
+      "visitSite": "Visitar sitio",
+      "resources": [
+        { "name": "Gobierno estudiantil de Emory", "description": "Defensa estudiantil y recursos.", "location": "Universidad Emory", "contact": "Contactar por portal del campus" },
+        { "name": "Centro de salud estudiantil", "description": "Servicios médicos y de salud mental para estudiantes.", "location": "Universidad Emory", "contact": "404-727-7551" },
+        { "name": "Oficina de apoyo a la discapacidad", "description": "Adaptaciones académicas y apoyo.", "location": "Universidad Emory", "contact": "disability@emory.edu" },
+        { "name": "Banco de alimentos comunitario de Atlanta", "description": "Asistencia alimentaria y programas nutricionales.", "location": "Atlanta, GA", "contact": "Visitar sitio" },
+        { "name": "Sistema de salud Grady", "description": "Sistema hospitalario público; asistencia financiera disponible.", "location": "Atlanta, GA", "contact": "Visitar sitio" },
+        { "name": "Línea de crisis", "description": "Apoyo de salud mental y crisis 24/7.", "location": "Nacional", "contact": "988" }
+      ]
+    },
+    "aiHealth": {
+      "title": "Asistente de salud con IA",
+      "subtitle": "Obtén ayuda para redactar correos, solicitudes y navegar sistemas de salud.",
+      "welcomeMessage": "¡Hola! Puedo ayudarte con cartas de adaptación, correos de seguro o navegar sistemas de salud. ¿Qué necesitas hoy?",
+      "placeholder": "Solicita apoyo de adaptación, ayuda con el seguro o recursos…",
+      "generateEmail": "Generar correo",
+      "copy": "Copiar",
+      "copied": "¡Copiado!",
+      "edit": "Editar",
+      "send": "Enviar",
+      "emailSubject": "Solicitud de adaptaciones académicas",
+      "emailBody": "Estimado/a [Servicios de discapacidad / Oficina de acceso estudiantil],\n\nLe escribo para solicitar adaptaciones académicas para el semestre actual. He adjuntado documentación de mi proveedor de salud.\n\nAgradecería la oportunidad de reunirme para discutir un plan de adaptación. Por favor, indíqueme cuáles son los próximos pasos.\n\nGracias,\n[Tu nombre]"
+    }
+  },
+  "notes": {
+    "title": "Notas y Calendario",
+    "description": "Planifica rutinas médicas y revisa resúmenes de atención en un solo lugar.",
+    "tabs": ["Agenda", "Registros de chat"],
+    "calendar": {
+      "previous": "Anterior",
+      "today": "Hoy",
+      "next": "Siguiente",
+      "eventTypesLabel": "Tipos de evento:",
+      "eventTypes": ["Cita médica", "Recordatorio de medicación", "Ejercicio de rehabilitación", "Prueba médica", "Procedimiento de cuidado de recuperación"],
+      "addEvent": "Agregar evento",
+      "editEvent": "Editar evento",
+      "titleLabel": "Título",
+      "typeLabel": "Tipo",
+      "startHour": "Inicio (hora)",
+      "endHour": "Fin (hora)",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "add": "Agregar",
+      "save": "Guardar"
+    },
+    "monthView": {
+      "thisMonth": "Este mes",
+      "noteExplanation": "Los días con un punto tienen un resumen de consulta guardado. Haz clic en una fecha para abrir la nota de ese día.",
+      "dayLabels": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
+    },
+    "dayNote": {
+      "close": "Cerrar",
+      "consultationSummary": "Resumen de consulta",
+      "symptomsDiscussed": "Síntomas discutidos",
+      "suggestedNextSteps": "Próximos pasos sugeridos",
+      "yourNotes": "Tus notas",
+      "notesPlaceholder": "Agrega notas personales sobre cómo te sientes o planes de seguimiento…",
+      "noSummary": "No hay resumen de consulta guardado para este día.",
+      "noSummaryNote": "Los resúmenes aparecen aquí cuando guardas un chat del asistente de inicio."
+    }
   }
 }

@@ -1,4 +1,5 @@
 import {
+  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -17,6 +18,27 @@ import TopBarComponent from "./pages/utility/TopBar";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 
+// Demo / Survey
+import SurveyProviderLayout from "./pages/UserSurvey/SurveyProviderLayout";
+import SurveyWelcome from "./pages/UserSurvey/SurveyWelcome";
+import SurveyIntro from "./pages/UserSurvey/SurveyIntro";
+import SurveyQuestions from "./pages/UserSurvey/SurveyQuestions";
+import SurveyEnd from "./pages/UserSurvey/SurveyEnd";
+import QuestionsLoop from "./pages/UserSurvey/QuestionsLoop";
+
+// Demo / Home
+import QuestionsInTheLoopPage from "./pages/QuestionsInTheLoop/QuestionsInTheLoopPage";
+
+// Demo / Community
+import CommunityPage from "./pages/Community/CommunityPage";
+import FindPeoplePage from "./pages/Community/FindPeoplePage";
+import HelpPeoplePage from "./pages/Community/HelpPeoplePage";
+import LocalSupportPage from "./pages/Community/LocalSupportPage";
+import AIHealthPage from "./pages/Community/AIHealthPage";
+
+// Demo / Notes
+import NotesPage from "./pages/Notes/NotesPage";
+
 import "./index.css";
 import "./styles/fonts.css";
 import { Box } from "@mui/material";
@@ -25,13 +47,13 @@ const PUBLIC_ROUTES = ["/", "/dev/login", "/dev/signup", "/privacy", "/terms"];
 
 function Layout() {
   const location = useLocation();
-  const isPublic = PUBLIC_ROUTES.includes(location.pathname);
   const hideTopBarRoutes = ["/dev/login", "/dev/signup", "/"];
+  const showTopBar = !hideTopBarRoutes.includes(location.pathname);
 
   const content = (
     <>
-      {!hideTopBarRoutes.includes(location.pathname) && <TopBarComponent />}
-      <Box sx={{ mt: !hideTopBarRoutes.includes(location.pathname) ? 8 : 0 }}>
+      {showTopBar && <TopBarComponent />}
+      <Box sx={{ mt: showTopBar ? 8 : 0 }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           {/* Dev-only auth routes — not linked publicly */}
@@ -54,6 +76,29 @@ function Layout() {
               </ProtectedRoute>
             }
           />
+
+          {/* Survey / Demo */}
+          <Route path="/survey" element={<SurveyProviderLayout />}>
+            <Route index element={<Navigate to="welcome" replace />} />
+            <Route path="welcome" element={<SurveyWelcome />} />
+            <Route path="intro" element={<SurveyIntro />} />
+            <Route path="questions" element={<SurveyQuestions />} />
+            <Route path="end" element={<SurveyEnd />} />
+          </Route>
+          <Route path="/questions-loop" element={<QuestionsLoop />} />
+
+          {/* Demo / Home */}
+          <Route path="/home" element={<QuestionsInTheLoopPage />} />
+
+          {/* Demo / Community */}
+          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/community/find-people" element={<FindPeoplePage />} />
+          <Route path="/community/help-people" element={<HelpPeoplePage />} />
+          <Route path="/community/local-support" element={<LocalSupportPage />} />
+          <Route path="/community/ai-health" element={<AIHealthPage />} />
+
+          {/* Demo / Notes */}
+          <Route path="/notes" element={<NotesPage />} />
 
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
