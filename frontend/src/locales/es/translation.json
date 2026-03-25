@@ -146,12 +146,48 @@
     },
     "team": {
       "heading": "Construido por Estudiantes, Para Estudiantes",
-      "subtitle": "MedEase está formado por investigadores de salud, desarrolladores y mentores — enfocados en seguridad, claridad y recuperación estudiantil."
+      "subtitle": "MedEase está formado por investigadores de salud, desarrolladores y mentores — enfocados en seguridad, claridad y recuperación estudiantil.",
+      "members": [
+        { "name": "Annie He", "role": "Cofundadora de Producto y Negocios", "detail": "Investigadora en Salud e Ingeniera de Software, Emory '25" },
+        { "name": "Rolf Shi", "role": "Cofundador Técnico", "detail": "Investigador AI4H e Ingeniero de Software, Emory '25 & UPenn '27" }
+      ],
+      "advisors": [
+        { "name": "Dr. Phil Wolff", "role": "Laboratorio de Biomarcadores del Lenguaje", "detail": "Mentor" },
+        { "name": "Dr. JinHo Choi", "role": "Laboratorio NLP de Emory", "detail": "Mentor" },
+        { "name": "Sig Mosley", "role": "Capitalista de Riesgo", "detail": "Mosley Ventures" },
+        { "name": "Dr. Stuart Zola", "role": "Fundador y Científico Clínico", "detail": "Mentor" }
+      ]
     },
     "userStories": {
       "eyebrow": "Estudiantes Reales. Dolor Real.",
       "heading": "Nadie debería enfrentar una emergencia médica solo.",
-      "subtitle": "Estas son las historias que construyeron MedEase — estudiantes confundidos, asustados y sin apoyo cuando más lo necesitaban."
+      "subtitle": "Estas son las historias que construyeron MedEase — estudiantes confundidos, asustados y sin apoyo cuando más lo necesitaban.",
+      "stories": [
+        {
+          "tag": "La Espera que Lo Costó Todo",
+          "quote": "Me caí de mi scooter en el frío intenso. Tenía miedo de ir a urgencias porque pensaba que sería demasiado caro. Así que esperé toda la noche. Para cuando fui, el daño en mi piel se volvió permanente. Me arrepiento de haber esperado cada día.",
+          "author": "Estudiante de Doctorado de Emory",
+          "role": "Camino de recuperación"
+        },
+        {
+          "tag": "Perdido en la Primera Semana",
+          "quote": "Me fracturé en la primera semana del primer año. Ni siquiera sabía dónde estaban mis clases. Hay muchos recursos, pero cada uno requiere algún tipo de solicitud o proceso que simplemente no sabía cómo navegar.",
+          "author": "Estudiante de Primer Año de Emory",
+          "role": "Orientación estudiantil"
+        },
+        {
+          "tag": "Cuando la Vida Se Detiene",
+          "quote": "Tuve que tomar una licencia médica por una lesión grave. De repente tuve que encontrar a alguien para subarrendar mi apartamento mientras lidiaba con una fractura de hueso, el estrés y cero experiencia manejando una emergencia médica solo. ¿El costo del tratamiento? Todavía me parece aterrador.",
+          "author": "Estudiante de Emory, Licencia Médica",
+          "role": "Continuidad del cuidado"
+        },
+        {
+          "tag": "Solo en Urgencias",
+          "quote": "Tuve un dolor de estómago intenso que resultó ser apendicitis. Como estudiante internacional, era mi primera vez en urgencias — incluso fui en mi propio carro. Solo podía pensar: ¿qué pasa con las facturas? Tenía miedo tanto de la cirugía como de la recuperación.",
+          "author": "Estudiante Senior de Emory, Estudiante Internacional",
+          "role": "Apoyo de emergencia"
+        }
+      ]
     }
   },
   "survey": {

@@ -121,31 +121,20 @@ export default function LP_Team() {
       </Box>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TeamCard
-            name="Annie He"
-            role="Product & Business Co-founder"
-            detail="Healthcare Researcher and Software Engineer, Emory '25"
-            delay={0}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TeamCard
-            name="Rolf Shi"
-            role="Technical Co-founder"
-            detail="AI4H Researcher and Software Engineer, Emory '25 & UPenn '27"
-            delay={0.15}
-          />
-        </Grid>
+        {t("lp.team.members", { returnObjects: true }).map((m, idx) => (
+          <Grid item xs={12} md={6} key={m.name}>
+            <TeamCard
+              name={m.name}
+              role={m.role}
+              detail={m.detail}
+              delay={idx * 0.15}
+            />
+          </Grid>
+        ))}
       </Grid>
 
       <Grid container spacing={2} sx={{ mt: 4 }}>
-        {[
-          { name: "Dr. Phil Wolff", role: "Language Biomarker Lab", detail: "Mentor" },
-          { name: "Dr. JinHo Choi", role: "Emory NLP Lab", detail: "Mentor" },
-          { name: "Sig Mosley", role: "Venture Capitalist", detail: "Mosley Ventures" },
-          { name: "Dr. Stuart Zola", role: "Founder & Clinical Scientist", detail: "Mentor" },
-        ].map((m, idx) => (
+        {t("lp.team.advisors", { returnObjects: true }).map((m, idx) => (
           <Grid item xs={6} md={3} key={m.name}>
             <TeamCard
               name={m.name}

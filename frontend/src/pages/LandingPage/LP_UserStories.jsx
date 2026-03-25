@@ -128,36 +128,7 @@ function StoryCard({ tag, quote, author, role, delay }) {
 
 export default function LP_UserStories() {
   const { t } = useTranslation();
-  const stories = [
-    {
-      tag: "The Wait That Cost Everything",
-      quote:
-        "I fell off my scooter in the freezing cold. I was terrified of going to the ER because I thought it would be too expensive. So I waited overnight. By the time I went in, the damage to my skin became permanent. I regret waiting every single day.",
-      author: "Emory PhD Student",
-      role: "Recovery journey",
-    },
-    {
-      tag: "Lost in Week One",
-      quote:
-        "I fractured myself in the first week of freshman year. I didn't even know where my classes were yet. There are a lot of resources, but every single one requires some kind of application or process that I just didn't know how to navigate.",
-      author: "Emory Freshman",
-      role: "Student navigation",
-    },
-    {
-      tag: "When Life Stops",
-      quote:
-        "I had to take medical leave because of a major injury. Suddenly I had to find someone to sublease my apartment while dealing with a bone fracture, stress, and zero experience managing a medical emergency alone. The cost of treatment? It still feels terrifying.",
-      author: "Emory Student, Medical Leave",
-      role: "Care continuity",
-    },
-    {
-      tag: "Alone in the ER",
-      quote:
-        "I had intense stomach pain that turned out to be appendicitis. As an international student, it was my first time ever going to the ER — I even drove myself there. All I could think was: what about the bills? I was terrified of both the surgery and the recovery.",
-      author: "Emory Senior, International Student",
-      role: "Emergency support",
-    },
-  ];
+  const stories = t("lp.userStories.stories", { returnObjects: true });
 
   return (
     <Box sx={{ py: 12, px: { xs: 3, md: 8 }, maxWidth: "1280px", mx: "auto", width: "100%" }}>
