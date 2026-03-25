@@ -197,7 +197,7 @@ export default function LandingPage() {
                 "&:hover": { bgcolor: "#1a1614" },
               }}
             >
-              View Demo
+              {t("lp.nav.viewDemo")}
             </Button>
           </Box>
         </Toolbar>
@@ -226,11 +226,11 @@ export default function LandingPage() {
         <Box id="about">
           <LP_About />
         </Box>
-        <Box id="team">
-          <LP_Team />
-        </Box>
         <Box id="user-stories">
           <LP_UserStories />
+        </Box>
+        <Box id="team">
+          <LP_Team />
         </Box>
         <Box id="contact">
           <LP_Footer />

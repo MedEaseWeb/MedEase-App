@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid, Paper, Typography, Divider } from "@mui/material";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   pageBg: "#EBE5DE",
@@ -126,6 +127,7 @@ function StoryCard({ tag, quote, author, role, delay }) {
 }
 
 export default function LP_UserStories() {
+  const { t } = useTranslation();
   const stories = [
     {
       tag: "The Wait That Cost Everything",
@@ -171,7 +173,7 @@ export default function LP_UserStories() {
             mb: 2,
           }}
         >
-          Real Students. Real Pain.
+          {t("lp.userStories.eyebrow")}
         </Typography>
 
         <Typography
@@ -185,7 +187,7 @@ export default function LP_UserStories() {
             mb: 3,
           }}
         >
-          Nobody should face a medical emergency alone.
+          {t("lp.userStories.heading")}
         </Typography>
 
         <Typography
@@ -196,7 +198,7 @@ export default function LP_UserStories() {
             lineHeight: 1.65,
           }}
         >
-          These are the stories that built MedEase — students left confused, scared, and without support when they needed it most.
+          {t("lp.userStories.subtitle")}
         </Typography>
       </Box>
 

@@ -61,7 +61,8 @@
       "about": "Nosotros",
       "team": "Equipo",
       "user-stories": "Historias",
-      "joinWaitlist": "Únete a la lista de espera"
+      "joinWaitlist": "Únete a la lista de espera",
+      "viewDemo": "Ver Demo"
     },
     "hero": {
       "headline": "IA agéntica para tu",
@@ -138,25 +139,19 @@
       ]
     },
     "footer": {
-      "tagline": "La infraestructura faltante para la salud estudiantil. Simplificando la recuperación, conectando cuidadores y reduciendo riesgos.",
-      "product": {
-        "heading": "Producto",
-        "links": ["Características", "Para Universidades", "Para Estudiantes", "Seguridad"]
-      },
-      "company": {
-        "heading": "Empresa",
-        "links": ["Sobre Nosotros", "Empleos", "Blog", "Soporte de contacto"]
-      },
       "legal": {
-        "heading": "Legal",
-        "links": ["Política de Privacidad", "Términos de Servicio", "Política de Cookies", "Accesibilidad"]
+        "links": ["Política de Privacidad", "Términos de Servicio"]
       },
-      "getApp": {
-        "heading": "Descargar App",
-        "links": ["iOS App Store", "Google Play"]
-      },
-      "copyright": "© {{year}} MedEase Inc. Todos los derechos reservados.",
-      "designedAt": "Diseñado en Emory"
+      "copyright": "© {{year}} MedEase Inc. Todos los derechos reservados."
+    },
+    "team": {
+      "heading": "Construido por Estudiantes, Para Estudiantes",
+      "subtitle": "MedEase está formado por investigadores de salud, desarrolladores y mentores — enfocados en seguridad, claridad y recuperación estudiantil."
+    },
+    "userStories": {
+      "eyebrow": "Estudiantes Reales. Dolor Real.",
+      "heading": "Nadie debería enfrentar una emergencia médica solo.",
+      "subtitle": "Estas son las historias que construyeron MedEase — estudiantes confundidos, asustados y sin apoyo cuando más lo necesitaban."
     }
   },
   "survey": {

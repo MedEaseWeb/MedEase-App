@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 // Reuse the landing page’s established card look (borders, radius, typography).
 const colors = {
@@ -82,6 +83,7 @@ function TeamCard({ name, role, detail, delay, compact = false }) {
 }
 
 export default function LP_Team() {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -104,7 +106,7 @@ export default function LP_Team() {
             mb: 2,
           }}
         >
-          Built by Students, For Students
+          {t("lp.team.heading")}
         </Typography>
         <Typography
           sx={{
@@ -114,7 +116,7 @@ export default function LP_Team() {
             lineHeight: 1.6,
           }}
         >
-          MedEase is shaped by healthcare researchers, builders, and mentors — focused on safety, clarity, and student recovery.
+          {t("lp.team.subtitle")}
         </Typography>
       </Box>
 

@@ -61,7 +61,8 @@
       "about": "About",
       "team": "Team",
       "user-stories": "User Stories",
-      "joinWaitlist": "Join Waitlist"
+      "joinWaitlist": "Join Waitlist",
+      "viewDemo": "View Demo"
     },
     "hero": {
       "headline": "Agentic AI for your",
@@ -138,25 +139,19 @@
       ]
     },
     "footer": {
-      "tagline": "The missing infrastructure for student health. Simplifying recovery, connecting caregivers, and reducing risk.",
-      "product": {
-        "heading": "Product",
-        "links": ["Features", "For Universities", "For Students", "Security"]
-      },
-      "company": {
-        "heading": "Company",
-        "links": ["About Us", "Careers", "Blog", "Contact Support"]
-      },
       "legal": {
-        "heading": "Legal",
-        "links": ["Privacy Policy", "Terms of Service", "Cookie Policy", "Accessibility"]
+        "links": ["Privacy Policy", "Terms of Service"]
       },
-      "getApp": {
-        "heading": "Get the App",
-        "links": ["iOS App Store", "Google Play"]
-      },
-      "copyright": "© {{year}} MedEase Inc. All rights reserved.",
-      "designedAt": "Designed at Emory"
+      "copyright": "© {{year}} MedEase Inc. All rights reserved."
+    },
+    "team": {
+      "heading": "Built by Students, For Students",
+      "subtitle": "MedEase is shaped by healthcare researchers, builders, and mentors — focused on safety, clarity, and student recovery."
+    },
+    "userStories": {
+      "eyebrow": "Real Students. Real Pain.",
+      "heading": "Nobody should face a medical emergency alone.",
+      "subtitle": "These are the stories that built MedEase — students left confused, scared, and without support when they needed it most."
     }
   },
   "survey": {

@@ -61,7 +61,8 @@
       "about": "关于",
       "team": "团队",
       "user-stories": "用户故事",
-      "joinWaitlist": "加入候补名单"
+      "joinWaitlist": "加入候补名单",
+      "viewDemo": "查看演示"
     },
     "hero": {
       "headline": "智能 AI，陪伴您的",
@@ -138,25 +139,19 @@
       ]
     },
     "footer": {
-      "tagline": "学生健康缺失的基础设施。简化康复，连接护理，降低风险。",
-      "product": {
-        "heading": "产品",
-        "links": ["功能特性", "面向大学", "面向学生", "安全保障"]
-      },
-      "company": {
-        "heading": "公司",
-        "links": ["关于我们", "招聘", "博客", "联系支持"]
-      },
       "legal": {
-        "heading": "法律",
-        "links": ["隐私政策", "服务条款", "Cookie 政策", "无障碍访问"]
+        "links": ["隐私政策", "服务条款"]
       },
-      "getApp": {
-        "heading": "下载应用",
-        "links": ["iOS App Store", "Google Play"]
-      },
-      "copyright": "© {{year}} MedEase Inc. 保留所有权利。",
-      "designedAt": "设计于埃默里大学"
+      "copyright": "© {{year}} MedEase Inc. 保留所有权利。"
+    },
+    "team": {
+      "heading": "由学生构建，为学生服务",
+      "subtitle": "MedEase 由医疗研究人员、开发者和导师共同塑造，专注于安全、清晰与学生康复。"
+    },
+    "userStories": {
+      "eyebrow": "真实学生。真实痛苦。",
+      "heading": "没有人应该独自面对医疗紧急情况。",
+      "subtitle": "这些是构建 MedEase 的故事 — 在最需要帮助时却感到困惑、恐惧和无助的学生。"
     }
   },
   "survey": {

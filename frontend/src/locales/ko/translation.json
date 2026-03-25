@@ -61,7 +61,8 @@
       "about": "소개",
       "team": "팀",
       "user-stories": "사용자 이야기",
-      "joinWaitlist": "대기자 명단 등록"
+      "joinWaitlist": "대기자 명단 등록",
+      "viewDemo": "데모 보기"
     },
     "hero": {
       "headline": "AI가 함께하는",
@@ -138,25 +139,19 @@
       ]
     },
     "footer": {
-      "tagline": "학생 건강을 위한 부재했던 인프라. 회복을 단순화하고, 케어기버를 연결하며, 위험을 줄입니다.",
-      "product": {
-        "heading": "제품",
-        "links": ["기능", "대학교용", "학생용", "보안"]
-      },
-      "company": {
-        "heading": "회사",
-        "links": ["소개", "채용", "블로그", "고객 지원"]
-      },
       "legal": {
-        "heading": "법적 고지",
-        "links": ["개인정보 처리방침", "이용약관", "쿠키 정책", "접근성"]
+        "links": ["개인정보 처리방침", "이용약관"]
       },
-      "getApp": {
-        "heading": "앱 다운로드",
-        "links": ["iOS 앱 스토어", "Google Play"]
-      },
-      "copyright": "© {{year}} MedEase Inc. 모든 권리 보유.",
-      "designedAt": "에모리 대학교에서 디자인"
+      "copyright": "© {{year}} MedEase Inc. 모든 권리 보유."
+    },
+    "team": {
+      "heading": "학생이 만든, 학생을 위한",
+      "subtitle": "MedEase는 의료 연구자, 개발자, 멘토들이 함께 만들어갑니다 — 안전, 명확성, 학생 회복에 집중합니다."
+    },
+    "userStories": {
+      "eyebrow": "실제 학생들. 실제 고통.",
+      "heading": "아무도 혼자 의료 응급 상황을 겪어서는 안 됩니다.",
+      "subtitle": "이것이 MedEase를 만든 이야기입니다 — 가장 필요한 순간에 혼란스럽고, 두렵고, 지원 없이 남겨진 학생들의 이야기."
     }
   },
   "survey": {
