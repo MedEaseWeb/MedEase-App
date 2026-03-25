@@ -246,7 +246,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                   mt: 2,
                 }}
               >
-                {t("home.qitl.emptyState") || "Ask a question or pick one from the right →"}
+                Ask a question or pick one from the right →
               </Typography>
             )}
             {messages.map((msg, index) =>
