@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid, Paper } from "@mui/material";
 import { motion } from "framer-motion";
-import { AlertTriangle, Compass, ShieldCheck, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 // --- TWO-TONE PALETTE ---
@@ -12,9 +11,6 @@ const colors = {
   // --- CARD UPPER SECTION (Dark) ---
   cardUpperBg: "#352B25",
   textUpper: "#FFFFFF",
-  iconBg: "rgba(255, 255, 255, 0.1)", // Glassy white on dark
-  iconColor: "#E8B4A2", // Warm Clay
-
   // --- CARD LOWER SECTION (Light) ---
   cardLowerBg: "#F3EFE7",
   textLowerMain: "#2C2420",
@@ -25,7 +21,7 @@ const colors = {
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
-const BentoCard = ({ title, text, icon, delay, large = false }) => (
+const BentoCard = ({ title, text, delay, large = false }) => (
   <Grid item xs={12} md={large ? 8 : 4}>
     <Paper
       component={motion.div}
@@ -59,19 +55,6 @@ const BentoCard = ({ title, text, icon, delay, large = false }) => (
           gap: 2,
         }}
       >
-        <Box
-          sx={{
-            display: "inline-flex",
-            alignSelf: "flex-start",
-            p: 1.2,
-            borderRadius: "10px",
-            bgcolor: colors.iconBg,
-            color: colors.iconColor,
-            backdropFilter: "blur(4px)",
-          }}
-        >
-          {icon}
-        </Box>
         <Typography
           variant="h4"
           sx={{
@@ -122,6 +105,7 @@ const BentoCard = ({ title, text, icon, delay, large = false }) => (
     </Paper>
   </Grid>
 );
+
 
 export default function LP_Why() {
   const { t } = useTranslation();
