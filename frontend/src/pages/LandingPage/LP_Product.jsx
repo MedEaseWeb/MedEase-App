@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, Button, Paper } from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 // ─── PALETTE ────────────────────────────────────────────────────────────────
@@ -280,13 +280,15 @@ const UserBubble = ({ text }) => (
 
 // ─── CHAT DEMO ───────────────────────────────────────────────────────────────
 // Plays through the scenario automatically, replays every ~10 seconds.
-function ChatDemo({ scenarioId }) {
+function ChatDemo({ scenarioId, inView }) {
   const messages = DEMO_SCENARIOS[scenarioId] ?? DEMO_SCENARIOS.rag;
   const [visible, setVisible] = useState([]);
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    if (!inView) return;
+
     let cancelled = false;
     const ts = [];
 
@@ -317,7 +319,7 @@ function ChatDemo({ scenarioId }) {
       cancelled = true;
       ts.forEach(clearTimeout);
     };
-  }, [scenarioId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [scenarioId, inView]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -361,8 +363,12 @@ export default function LP_Product() {
   const [active, setActive] = useState("rag");
   const current = sections.find((s) => s.id === active);
 
+  const sectionRef = useRef(null);
+  const inView = useInView(sectionRef, { once: true, margin: "-120px" });
+
   return (
     <Box
+      ref={sectionRef}
       sx={{
         py: { xs: 10, md: 16 },
         px: { xs: 3, md: 8 },
@@ -587,7 +593,7 @@ export default function LP_Product() {
               transition={{ duration: 0.3 }}
               style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}
             >
-              <ChatDemo scenarioId={active} />
+              <ChatDemo scenarioId={active} inView={inView} />
             </motion.div>
           </AnimatePresence>
 
