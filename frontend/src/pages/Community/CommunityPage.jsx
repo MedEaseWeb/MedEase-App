@@ -8,35 +8,23 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupIcon from "@mui/icons-material/Group";
-import NotesIcon from "@mui/icons-material/Notes";
 import Group from "@mui/icons-material/Group";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import PlaceIcon from "@mui/icons-material/Place";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import InteractiveBackground from "../LandingPage/utils/InteractiveBackground";
+import DemoSectionNav from "../utility/DemoSectionNav";
 import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 
 const { colors, fontMain, radii, shadows } = SURVEY_TOKENS;
 
 export default function CommunityPage() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { t } = useTranslation();
-
-  /** Section nav: User Survey | Home | Community | Notes — matches Home & Notes */
-  const sectionNavItems = [
-    { label: t("survey.nav.userSurvey"), path: "/survey", icon: <AssignmentIcon /> },
-    { label: t("survey.nav.home"), path: "/home", icon: <HomeIcon /> },
-    { label: t("survey.nav.community"), path: "/community", icon: <GroupIcon /> },
-    { label: t("survey.nav.notes"), path: "/notes", icon: <NotesIcon /> },
-  ];
 
   const hubs = t("community.hubs", { returnObjects: true });
   const hubCards = [
@@ -90,48 +78,7 @@ export default function CommunityPage() {
           backdropFilter: "blur(14px)",
         }}
       >
-        {/* Section nav — Community active */}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 1,
-            mb: 3,
-            pb: 2,
-            borderBottom: `1px solid ${colors.border}`,
-          }}
-        >
-          {sectionNavItems.map((item) => {
-            const isActive = item.path === "/home" ? (location.pathname === "/home" || location.pathname === "/questions-in-the-loop") : location.pathname === item.path;
-            return (
-            <Button
-              key={item.label}
-              onClick={() => navigate(item.path)}
-              sx={{
-                fontFamily: fontMain,
-                fontWeight: isActive ? 700 : 500,
-                textTransform: "none",
-                color: isActive ? colors.accent : colors.textSec,
-                borderRadius: radii.button,
-                px: 2,
-                "&:hover": {
-                  color: colors.textMain,
-                  backgroundColor: "rgba(44, 36, 32, 0.05)",
-                },
-              }}
-            >
-              {item.icon && (
-                <Box
-                  component="span"
-                  sx={{ mr: 0.5, display: "flex", alignItems: "center" }}
-                >
-                  {item.icon}
-                </Box>
-              )}
-              {item.label}
-            </Button>
-          );})}
-        </Box>
+        <DemoSectionNav />
 
         {/* Hero */}
         <Typography

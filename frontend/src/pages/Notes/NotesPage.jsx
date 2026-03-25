@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   CssBaseline,
   GlobalStyles,
   Paper,
@@ -9,16 +8,12 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupIcon from "@mui/icons-material/Group";
-import NotesIcon from "@mui/icons-material/Notes";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChatIcon from "@mui/icons-material/Chat";
 import InteractiveBackground from "../LandingPage/utils/InteractiveBackground";
+import DemoSectionNav from "../utility/DemoSectionNav";
 import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 import NotesCalendar from "./NotesCalendar";
 import NotesMonthView from "./NotesMonthView";
@@ -37,17 +32,9 @@ const cardSx = {
 };
 
 export default function NotesPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { t } = useTranslation();
   const [notesTab, setNotesTab] = useState(0);
 
-  const sectionNavItems = [
-    { label: t("survey.nav.userSurvey"), path: "/survey", icon: <AssignmentIcon /> },
-    { label: t("survey.nav.home"), path: "/home", icon: <HomeIcon /> },
-    { label: t("survey.nav.community"), path: "/community", icon: <GroupIcon /> },
-    { label: t("survey.nav.notes"), path: "/notes", icon: <NotesIcon /> },
-  ];
   const notesTabs = t("notes.tabs", { returnObjects: true });
 
   return (
@@ -94,48 +81,7 @@ export default function NotesPage() {
           backdropFilter: "blur(14px)",
         }}
       >
-        {/* Section nav: same as QuestionsInTheLoop — Notes active */}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 1,
-            mb: 3,
-            pb: 2,
-            borderBottom: `1px solid ${colors.border}`,
-          }}
-        >
-          {sectionNavItems.map((item) => {
-            const isActive = item.path === "/home" ? (location.pathname === "/home" || location.pathname === "/questions-in-the-loop") : location.pathname === item.path;
-            return (
-            <Button
-              key={item.label}
-              onClick={() => navigate(item.path)}
-              sx={{
-                fontFamily: fontMain,
-                fontWeight: isActive ? 700 : 500,
-                textTransform: "none",
-                color: isActive ? colors.accent : colors.textSec,
-                borderRadius: radii.button,
-                px: 2,
-                "&:hover": {
-                  color: colors.textMain,
-                  backgroundColor: "rgba(44, 36, 32, 0.05)",
-                },
-              }}
-            >
-              {item.icon && (
-                <Box
-                  component="span"
-                  sx={{ mr: 0.5, display: "flex", alignItems: "center" }}
-                >
-                  {item.icon}
-                </Box>
-              )}
-              {item.label}
-            </Button>
-          );})}
-        </Box>
+        <DemoSectionNav />
 
         <Typography
           sx={{
