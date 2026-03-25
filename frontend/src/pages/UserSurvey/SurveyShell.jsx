@@ -27,13 +27,14 @@ export default function SurveyShell({ children, animate = true }) {
     <Box
       sx={{
         position: "relative",
-        minHeight: "100vh",
+        height: "calc(100vh - 64px)",
+        overflow: "hidden",
         bgcolor: colors.bone,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         px: { xs: 3, md: 6 },
-        py: { xs: 7, md: 10 },
+        py: { xs: 3, md: 4 },
       }}
     >
       <CssBaseline />
@@ -58,6 +59,8 @@ export default function SurveyShell({ children, animate = true }) {
           zIndex: 1,
           width: "100%",
           maxWidth: 980,
+          maxHeight: "calc(100vh - 128px)",
+          overflowY: "auto",
           borderRadius: radii.card,
           p: { xs: 4, md: 7 },
           bgcolor: "rgba(245, 240, 235, 0.78)",

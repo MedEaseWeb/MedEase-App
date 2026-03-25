@@ -1,56 +1,42 @@
 import React, { useState } from "react";
-import { Box, Button, CssBaseline, GlobalStyles, Paper, Typography } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Collapse,
+  CssBaseline,
+  GlobalStyles,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupIcon from "@mui/icons-material/Group";
-import NotesIcon from "@mui/icons-material/Notes";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import InteractiveBackground from "../LandingPage/utils/InteractiveBackground";
 import QuestionsInTheLoopSection from "./QuestionsInTheLoopSection";
+import DemoSectionNav from "../utility/DemoSectionNav";
 import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 
 const { colors, fontMain, radii, shadows } = SURVEY_TOKENS;
 
-// Landing/survey card style: same as SurveyShell + survey cards
-const cardSx = {
-  p: 3,
-  borderRadius: radii.cardInner,
-  border: `1px solid ${colors.border}`,
-  bgcolor: colors.beige,
-  boxShadow: "0 10px 30px rgba(44, 36, 32, 0.08)",
-  display: "flex",
-  flexDirection: "column",
-};
-
 export default function QuestionsInTheLoopPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const [activeStageIndex, setActiveStageIndex] = useState(2);
+  const [recommendationOpen, setRecommendationOpen] = useState(false);
   const { t } = useTranslation();
 
   const CARE_STAGES = t("home.careJourney.stages", { returnObjects: true });
-
   const activeStage = CARE_STAGES[activeStageIndex];
-
-  const sectionNavItems = [
-    { label: t("survey.nav.userSurvey"), path: "/survey", icon: <AssignmentIcon /> },
-    { label: t("survey.nav.home"), path: "/home", icon: <HomeIcon /> },
-    { label: t("survey.nav.community"), path: "/community", icon: <GroupIcon /> },
-    { label: t("survey.nav.notes"), path: "/notes", icon: <NotesIcon /> },
-  ];
 
   return (
     <Box
       sx={{
         position: "relative",
-        minHeight: "100vh",
+        height: "calc(100vh - 64px)",
+        overflow: "hidden",
         bgcolor: colors.bone,
         display: "flex",
         flexDirection: "column",
-        pb: 4,
       }}
     >
       <CssBaseline />
@@ -72,13 +58,18 @@ export default function QuestionsInTheLoopPage() {
         sx={{
           position: "relative",
           zIndex: 1,
+          flex: 1,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
           width: "100%",
           maxWidth: 1000,
           mx: "auto",
-          mt: { xs: 2, md: 4 },
-          mb: 4,
+          mt: { xs: 1.5, md: 2.5 },
+          mb: { xs: 1.5, md: 2.5 },
           px: { xs: 2, md: 4 },
-          py: 4,
+          pt: 3,
+          pb: 2,
           borderRadius: radii.card,
           bgcolor: "rgba(245, 240, 235, 0.82)",
           border: `1px solid ${colors.border}`,
@@ -86,106 +77,128 @@ export default function QuestionsInTheLoopPage() {
           backdropFilter: "blur(14px)",
         }}
       >
-        {/* Section nav: User Survey | Home | Community | Notes — landing/survey style */}
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3, pb: 2, borderBottom: `1px solid ${colors.border}` }}>
-          {sectionNavItems.map((item) => {
-            const isActive = item.path === "/home" ? (location.pathname === "/home" || location.pathname === "/questions-in-the-loop") : location.pathname === item.path;
-            return (
-            <Button
-              key={item.label}
-              onClick={() => navigate(item.path)}
-              sx={{
-                fontFamily: fontMain,
-                fontWeight: isActive ? 700 : 500,
-                textTransform: "none",
-                color: isActive ? colors.accent : colors.textSec,
-                borderRadius: radii.button,
-                px: 2,
-                "&:hover": { color: colors.textMain, backgroundColor: "rgba(44, 36, 32, 0.05)" },
-              }}
-            >
-              {item.icon && <Box component="span" sx={{ mr: 0.5, display: "flex", alignItems: "center" }}>{item.icon}</Box>}
-              {item.label}
-            </Button>
-          );})}
-        </Box>
+        {/* Section nav */}
+        <DemoSectionNav />
 
-        {/* Your Care Journey — big typographic header like survey/landing */}
+        {/* Title row */}
         <Typography
           sx={{
             fontFamily: fontMain,
             fontWeight: 800,
-            fontSize: { xs: "1.75rem", md: "2.25rem" },
-            letterSpacing: "-0.04em",
+            fontSize: { xs: "1.35rem", md: "1.6rem" },
+            letterSpacing: "-0.03em",
             color: colors.textMain,
-            lineHeight: 1.1,
-            mb: 2,
+            lineHeight: 1.15,
+            mb: 1.5,
           }}
         >
           {t("home.careJourney.title")}
         </Typography>
 
-        {/* Horizontal care path — active uses accent */}
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 1, mb: 3 }}>
+        {/* Care stage pill selector */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 0.75,
+            mb: 1.5,
+          }}
+        >
           {CARE_STAGES.map((stage, idx) => {
             const isActive = idx === activeStageIndex;
             return (
-              <Box key={stage} sx={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "1 1 0", minWidth: 80 }}>
-                <Button
-                  onClick={() => setActiveStageIndex(idx)}
-                  sx={{
-                    fontFamily: fontMain,
-                    fontWeight: isActive ? 700 : 500,
-                    textTransform: "none",
-                    color: isActive ? colors.accent : colors.textSec,
-                    fontSize: "0.9rem",
-                    "&:hover": { color: colors.textMain, backgroundColor: "transparent" },
-                  }}
-                >
-                  {stage}
-                </Button>
-                {isActive && (
-                  <Box
-                    sx={{
-                      mt: 0.5,
-                      width: 24,
-                      height: 24,
-                      borderRadius: "50%",
-                      bgcolor: colors.accent,
-                      color: "#fff",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    aria-hidden
-                  >
-                    <FavoriteIcon sx={{ fontSize: 14 }} />
-                  </Box>
-                )}
-              </Box>
+              <Button
+                key={stage}
+                onClick={() => setActiveStageIndex(idx)}
+                size="small"
+                sx={{
+                  fontFamily: fontMain,
+                  fontWeight: isActive ? 700 : 500,
+                  textTransform: "none",
+                  fontSize: "0.82rem",
+                  borderRadius: radii.pill,
+                  px: 1.75,
+                  py: 0.4,
+                  color: isActive ? "#fff" : colors.textSec,
+                  bgcolor: isActive ? colors.accent : "rgba(44,36,32,0.06)",
+                  border: `1px solid ${isActive ? colors.accent : colors.border}`,
+                  "&:hover": {
+                    bgcolor: isActive ? colors.accent : "rgba(44,36,32,0.10)",
+                    color: isActive ? "#fff" : colors.textMain,
+                  },
+                }}
+              >
+                {stage}
+              </Button>
             );
           })}
         </Box>
 
-        {/* Recommendation Card — two-tone / survey card style */}
-        <Paper elevation={0} sx={{ ...cardSx, mb: 3 }}>
-          <Typography sx={{ fontFamily: fontMain, fontWeight: 700, color: colors.accent, fontSize: "1rem", mb: 1 }}>
-            {`${t("home.recommendation.label")}: ${activeStage}`}
-          </Typography>
-          <Typography sx={{ fontFamily: fontMain, color: colors.textMain, fontSize: "1rem", mb: 2 }}>
-            {t("home.recommendation.suggestion")}
-          </Typography>
-          <Typography sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.95rem", mb: 0.5 }}>
-            {t("home.recommendation.whyLabel")}
-          </Typography>
-          <Box component="ul" sx={{ m: 0, pl: 2.5, color: colors.textSec, fontFamily: fontMain, fontSize: "0.95rem" }}>
-            {t("home.recommendation.whyReasons", { returnObjects: true }).map((r, i) => (
-              <li key={i}>{r}</li>
-            ))}
+        {/* Collapsible recommendation */}
+        <Box
+          sx={{
+            mb: 1.5,
+            borderRadius: radii.cardInner,
+            border: `1px solid ${colors.border}`,
+            bgcolor: colors.beige,
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              px: 2.5,
+              py: 1.25,
+              cursor: "pointer",
+              "&:hover": { bgcolor: "rgba(44,36,32,0.03)" },
+            }}
+            onClick={() => setRecommendationOpen((v) => !v)}
+          >
+            <Typography
+              sx={{
+                fontFamily: fontMain,
+                fontWeight: 700,
+                color: colors.accent,
+                fontSize: "0.9rem",
+              }}
+            >
+              {`${t("home.recommendation.label")}: ${activeStage}`}
+            </Typography>
+            <IconButton size="small" sx={{ color: colors.textSec, p: 0.25 }} tabIndex={-1}>
+              {recommendationOpen ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
+            </IconButton>
           </Box>
-        </Paper>
 
-        <QuestionsInTheLoopSection activeStage={activeStage} />
+          <Collapse in={recommendationOpen}>
+            <Box sx={{ px: 2.5, pb: 2 }}>
+              <Typography
+                sx={{ fontFamily: fontMain, color: colors.textMain, fontSize: "0.95rem", mb: 1.5 }}
+              >
+                {t("home.recommendation.suggestion")}
+              </Typography>
+              <Typography
+                sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.88rem", mb: 0.5, fontWeight: 600 }}
+              >
+                {t("home.recommendation.whyLabel")}
+              </Typography>
+              <Box
+                component="ul"
+                sx={{ m: 0, pl: 2.5, color: colors.textSec, fontFamily: fontMain, fontSize: "0.88rem" }}
+              >
+                {t("home.recommendation.whyReasons", { returnObjects: true }).map((r, i) => (
+                  <li key={i}>{r}</li>
+                ))}
+              </Box>
+            </Box>
+          </Collapse>
+        </Box>
+
+        {/* Chat — fills remaining height; height: 100% lets the section inherit a real px value */}
+        <Box sx={{ flex: 1, minHeight: 0, height: "100%", display: "flex", flexDirection: "column" }}>
+          <QuestionsInTheLoopSection activeStage={activeStage} />
+        </Box>
       </Paper>
     </Box>
   );

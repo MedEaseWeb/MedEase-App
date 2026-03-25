@@ -63,157 +63,73 @@ export default function NotesMonthView({ cardSx }) {
 
   return (
     <Box sx={{ ...cardSx }}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: 2,
-          mb: 2,
-        }}
-      >
-        <Typography
-          sx={{
-            fontFamily: fontMain,
-            fontWeight: 700,
-            color: colors.textMain,
-            fontSize: "1.1rem",
-          }}
-        >
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1.5 }}>
+        <Typography sx={{ fontFamily: fontMain, fontWeight: 700, color: colors.textMain, fontSize: "0.95rem" }}>
           {monthLabel}
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-          <IconButton
-            size="small"
-            onClick={prevMonth}
-            aria-label="Previous month"
-            sx={{ color: colors.textSec }}
-          >
-            <ChevronLeftIcon />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.25 }}>
+          <IconButton size="small" onClick={prevMonth} aria-label="Previous month" sx={{ color: colors.textSec, p: 0.5 }}>
+            <ChevronLeftIcon fontSize="small" />
           </IconButton>
-          <Button
-            size="small"
-            onClick={() => setViewDate(new Date())}
-            sx={{
-              fontFamily: fontMain,
-              textTransform: "none",
-              color: colors.accent,
-              fontWeight: 600,
-            }}
-          >
+          <Button size="small" onClick={() => setViewDate(new Date())}
+            sx={{ fontFamily: fontMain, textTransform: "none", fontSize: "0.78rem", color: colors.accent, fontWeight: 700, minWidth: 0, px: 1 }}>
             {t("notes.monthView.thisMonth")}
           </Button>
-          <IconButton
-            size="small"
-            onClick={nextMonth}
-            aria-label="Next month"
-            sx={{ color: colors.textSec }}
-          >
-            <ChevronRightIcon />
+          <IconButton size="small" onClick={nextMonth} aria-label="Next month" sx={{ color: colors.textSec, p: 0.5 }}>
+            <ChevronRightIcon fontSize="small" />
           </IconButton>
         </Box>
       </Box>
 
-      <Typography
-        sx={{
-          fontFamily: fontMain,
-          color: colors.textSec,
-          fontSize: "0.85rem",
-          mb: 2,
-        }}
-      >
-        {t("notes.monthView.noteExplanation")}
-      </Typography>
-
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(7, 1fr)",
-          gap: 0.5,
-          mb: 0.5,
-        }}
-      >
+      {/* Day-of-week header */}
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 0.5, mb: 0.5 }}>
         {DAY_LABELS.map((label) => (
           <Typography
             key={label}
-            sx={{
-              fontFamily: fontMain,
-              fontWeight: 600,
-              fontSize: "0.75rem",
-              color: colors.textSec,
-              textAlign: "center",
-              py: 0.5,
-            }}
+            sx={{ fontFamily: fontMain, fontWeight: 600, fontSize: "0.7rem", color: colors.textSec, textAlign: "center", py: 0.25 }}
           >
             {label}
           </Typography>
         ))}
       </Box>
 
+      {/* Calendar grid — compact cells */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
         {grid.map((row, ri) => (
-          <Box
-            key={ri}
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(7, 1fr)",
-              gap: 0.5,
-            }}
-          >
+          <Box key={ri} sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 0.5 }}>
             {row.map((day, di) => (
               <Box
                 key={di}
                 onClick={() => handleSelectDay(day)}
                 sx={{
                   aspectRatio: "1",
-                  maxHeight: 44,
+                  maxHeight: 36,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: radii.button,
+                  borderRadius: "8px",
                   cursor: day ? "pointer" : "default",
                   bgcolor: day
-                    ? hasNote(day)
-                      ? "rgba(166, 93, 55, 0.14)"
-                      : "transparent"
+                    ? hasNote(day) ? "rgba(166, 93, 55, 0.14)" : "transparent"
                     : "transparent",
                   border: day
                     ? `1px solid ${hasNote(day) ? colors.accent : colors.border}`
                     : "none",
                   "&:hover": day
-                    ? {
-                        bgcolor: hasNote(day)
-                          ? "rgba(166, 93, 55, 0.2)"
-                          : "rgba(44, 36, 32, 0.05)",
-                      }
+                    ? { bgcolor: hasNote(day) ? "rgba(166, 93, 55, 0.22)" : "rgba(44, 36, 32, 0.05)" }
                     : {},
                 }}
               >
                 {day != null && (
                   <>
                     <Typography
-                      sx={{
-                        fontFamily: fontMain,
-                        fontWeight: 500,
-                        fontSize: "0.9rem",
-                        color: colors.textMain,
-                      }}
+                      sx={{ fontFamily: fontMain, fontWeight: hasNote(day) ? 700 : 400, fontSize: "0.82rem", color: hasNote(day) ? colors.accent : colors.textMain }}
                     >
                       {day}
                     </Typography>
                     {hasNote(day) && (
-                      <Box
-                        sx={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: "50%",
-                          bgcolor: colors.accent,
-                          mt: 0.25,
-                        }}
-                        aria-hidden
-                      />
+                      <Box sx={{ width: 4, height: 4, borderRadius: "50%", bgcolor: colors.accent, mt: 0.15 }} aria-hidden />
                     )}
                   </>
                 )}
@@ -222,6 +138,10 @@ export default function NotesMonthView({ cardSx }) {
           </Box>
         ))}
       </Box>
+
+      <Typography sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.75rem", mt: 1.5 }}>
+        {t("notes.monthView.noteExplanation")}
+      </Typography>
 
       {selectedDate && (
         <NotesDayNote

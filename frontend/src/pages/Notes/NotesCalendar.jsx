@@ -144,51 +144,29 @@ export default function NotesCalendar({ cardSx }) {
 
   return (
     <Box sx={{ ...cardSx }}>
+      {/* Compact header: week range + prev/today/next */}
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: 2,
-          mb: 2,
+          mb: 1.5,
         }}
       >
-        <Typography
-          sx={{
-            fontFamily: fontMain,
-            fontWeight: 700,
-            color: colors.textMain,
-            fontSize: "1.1rem",
-          }}
-        >
+        <Typography sx={{ fontFamily: fontMain, fontWeight: 700, color: colors.textMain, fontSize: "0.95rem" }}>
           {weekRangeLabel}
         </Typography>
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <Button
-            size="small"
-            onClick={handlePrevWeek}
-            sx={{ fontFamily: fontMain, textTransform: "none", color: colors.textSec }}
-          >
+        <Box sx={{ display: "flex", gap: 0.5 }}>
+          <Button size="small" onClick={handlePrevWeek}
+            sx={{ fontFamily: fontMain, textTransform: "none", fontSize: "0.78rem", color: colors.textSec, minWidth: 0, px: 1 }}>
             {t("notes.calendar.previous")}
           </Button>
-          <Button
-            size="small"
-            onClick={handleToday}
-            sx={{
-              fontFamily: fontMain,
-              textTransform: "none",
-              color: colors.accent,
-              fontWeight: 600,
-            }}
-          >
+          <Button size="small" onClick={handleToday}
+            sx={{ fontFamily: fontMain, textTransform: "none", fontSize: "0.78rem", color: colors.accent, fontWeight: 700, minWidth: 0, px: 1 }}>
             {t("notes.calendar.today")}
           </Button>
-          <Button
-            size="small"
-            onClick={handleNextWeek}
-            sx={{ fontFamily: fontMain, textTransform: "none", color: colors.textSec }}
-          >
+          <Button size="small" onClick={handleNextWeek}
+            sx={{ fontFamily: fontMain, textTransform: "none", fontSize: "0.78rem", color: colors.textSec, minWidth: 0, px: 1 }}>
             {t("notes.calendar.next")}
           </Button>
         </Box>
@@ -203,30 +181,15 @@ export default function NotesCalendar({ cardSx }) {
         isToday={isToday}
       />
 
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: 2,
-          mt: 2,
-          pt: 2,
-          borderTop: `1px solid ${colors.border}`,
-        }}
-      >
-        <Typography
-          sx={{ fontFamily: fontMain, fontSize: "0.8rem", color: colors.textSec }}
-        >
+      {/* Inline legend — compact, single row */}
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, mt: 1.5, alignItems: "center" }}>
+        <Typography sx={{ fontFamily: fontMain, fontSize: "0.72rem", color: colors.textSec }}>
           {t("notes.calendar.eventTypesLabel")}
         </Typography>
-        {EVENT_TYPES.map((t) => (
-          <Box key={t.value} sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-            <t.icon sx={{ fontSize: 16, color: colors.textSec }} />
-            <Typography
-              sx={{ fontFamily: fontMain, fontSize: "0.75rem", color: colors.textSec }}
-            >
-              {t.label}
-            </Typography>
+        {EVENT_TYPES.map((et) => (
+          <Box key={et.value} sx={{ display: "flex", alignItems: "center", gap: 0.4 }}>
+            <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: et.border, opacity: 0.7 }} />
+            <Typography sx={{ fontFamily: fontMain, fontSize: "0.72rem", color: colors.textSec }}>{et.label}</Typography>
           </Box>
         ))}
       </Box>

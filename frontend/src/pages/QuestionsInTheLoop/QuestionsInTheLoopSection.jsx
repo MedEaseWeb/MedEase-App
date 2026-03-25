@@ -1,14 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Paper,
-  TextField,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 
@@ -195,36 +187,52 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
   };
 
   return (
-    <Grid container spacing={3}>
-      {/* Left ~70%: Chat — landing/survey card + warm bubbles */}
-      <Grid item xs={12} md={8.4}>
+    // Plain flex row — avoids Grid's negative-margin height-inheritance bug
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        gap: 2,
+        height: "100%",
+        minHeight: 0,
+      }}
+    >
+      {/* Left: Chat panel — fills available height */}
+      <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
         <Paper
-          component={motion.div}
-          whileHover={{ y: -2 }}
-          transition={{ duration: 0.2 }}
           elevation={0}
-          sx={{ ...cardSx, minHeight: 420 }}
+          sx={{
+            ...cardSx,
+            flex: 1,
+            minHeight: 0,
+          }}
         >
           <Typography
             sx={{
               fontFamily: fontMain,
-              fontWeight: 800,
-              fontSize: "1.15rem",
-              letterSpacing: "-0.02em",
+              fontWeight: 700,
+              fontSize: "1rem",
+              letterSpacing: "-0.01em",
               color: colors.textMain,
-              mb: 0.5,
+              mb: 0.25,
+              flexShrink: 0,
             }}
           >
             {t("home.qitl.title")}
           </Typography>
-          <Typography sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.95rem", mb: 2 }}>
+          <Typography
+            sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.88rem", mb: 1.5, flexShrink: 0 }}
+          >
             {t("home.qitl.description")}
           </Typography>
 
+          {/* Scrollable message area */}
           <Box
             sx={{
               flex: 1,
-              padding: 2,
+              minHeight: 0,
+              px: 1.5,
+              py: 1.5,
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
@@ -232,22 +240,34 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
               backgroundColor: colors.bone2,
               borderRadius: 2,
               border: `1px solid ${colors.border}`,
-              minHeight: 220,
-              mb: 2,
+              mb: 1.5,
             }}
           >
+            {messages.length === 0 && (
+              <Typography
+                sx={{
+                  fontFamily: fontMain,
+                  color: "rgba(89,77,70,0.45)",
+                  fontSize: "0.88rem",
+                  textAlign: "center",
+                  mt: 2,
+                }}
+              >
+                Ask a question or pick one from the right →
+              </Typography>
+            )}
             {messages.map((msg, index) =>
               msg.sender === "user" ? (
                 <Box
                   key={index}
                   sx={{
-                    padding: "10px 14px",
-                    borderRadius: "18px",
+                    padding: "9px 13px",
+                    borderRadius: "16px",
                     maxWidth: "75%",
                     alignSelf: "flex-end",
                     backgroundColor: "rgba(166, 93, 55, 0.12)",
                     border: `1px solid rgba(166, 93, 55, 0.2)`,
-                    fontSize: "0.95rem",
+                    fontSize: "0.9rem",
                     lineHeight: 1.5,
                     fontFamily: fontMain,
                     color: colors.textMain,
@@ -262,7 +282,8 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
             <div ref={chatEndRef} />
           </Box>
 
-          <Box sx={{ display: "flex", gap: 1.5, pt: 1, borderTop: `1px solid ${colors.border}` }}>
+          {/* Input bar */}
+          <Box sx={{ display: "flex", gap: 1, pt: 1, borderTop: `1px solid ${colors.border}`, flexShrink: 0 }}>
             <TextField
               fullWidth
               variant="outlined"
@@ -276,6 +297,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                   fontFamily: fontMain,
                   borderRadius: radii.button,
                   bgcolor: "rgba(255,255,255,0.6)",
+                  fontSize: "0.9rem",
                   "& fieldset": { borderColor: colors.border },
                   "&:hover fieldset": { borderColor: "#C8B9AF" },
                   "&.Mui-focused fieldset": { borderColor: colors.deepBrown, borderWidth: "1.5px" },
@@ -291,45 +313,51 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                 fontWeight: 600,
                 textTransform: "none",
                 borderRadius: radii.button,
-                px: 3,
-                py: 1.2,
+                px: 2.5,
+                flexShrink: 0,
                 bgcolor: colors.deepBrown,
                 color: "#FFF",
-                boxShadow: shadows.button,
-                "&:hover": {
-                  bgcolor: "#1a1614",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 14px 32px rgba(44, 36, 32, 0.22)",
-                },
+                "&:hover": { bgcolor: "#1a1614" },
               }}
             >
               {t("home.qitl.send")}
             </Button>
           </Box>
         </Paper>
-      </Grid>
+      </Box>
 
-      {/* Right ~30%: Common Questions — same tokens, accent for title */}
-      <Grid item xs={12} md={3.6}>
+      {/* Right: Suggested questions — fixed width, scrolls independently */}
+      <Box
+        sx={{
+          width: { xs: "100%", md: 220 },
+          flexShrink: 0,
+          minHeight: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Paper
-          component={motion.div}
-          whileHover={{ y: -2 }}
-          transition={{ duration: 0.2 }}
           elevation={0}
-          sx={{ ...cardSx, minHeight: 420 }}
+          sx={{
+            ...cardSx,
+            flex: 1,
+            minHeight: 0,
+            overflowY: "auto",
+          }}
         >
           <Typography
             sx={{
               fontFamily: fontMain,
               fontWeight: 700,
               color: colors.accent,
-              fontSize: "1rem",
-              mb: 2,
+              fontSize: "0.88rem",
+              mb: 1.5,
+              flexShrink: 0,
             }}
           >
             {t("home.qitl.commonQuestions")}
           </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             {suggestedQuestions.map((q) => (
               <Button
                 key={q}
@@ -338,9 +366,10 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                 onClick={() => sendMessage(q)}
                 sx={{
                   fontFamily: fontMain,
-                  fontWeight: 600,
+                  fontWeight: 500,
                   textTransform: "none",
-                  py: 1.2,
+                  fontSize: "0.82rem",
+                  py: 0.9,
                   textAlign: "left",
                   justifyContent: "flex-start",
                   color: colors.textMain,
@@ -358,7 +387,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
             ))}
           </Box>
         </Paper>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }
