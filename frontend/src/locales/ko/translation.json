@@ -145,7 +145,7 @@
       "copyright": "© {{year}} MedEase Inc. 모든 권리 보유."
     },
     "team": {
-      "heading": "학생이 만든, 학생을 위한",
+      "heading": "임상 중심. 사명 기반.",
       "subtitle": "MedEase는 의료 연구자, 개발자, 멘토들이 함께 만들어갑니다 — 안전, 명확성, 학생 회복에 집중합니다.",
       "members": [
         { "name": "Annie He", "role": "제품 & 비즈니스 공동창업자", "detail": "의료 연구원 및 소프트웨어 엔지니어, Emory '25" },
@@ -154,7 +154,7 @@
       "advisors": [
         { "name": "Dr. Phil Wolff", "role": "언어 바이오마커 연구실", "detail": "멘토" },
         { "name": "Dr. JinHo Choi", "role": "Emory NLP 연구실", "detail": "멘토" },
-        { "name": "Sig Mosley", "role": "벤처 캐피탈리스트", "detail": "Mosley Ventures" },
+        { "name": "Sig Mosley", "role": "벤처 캐피탈리스트", "detail": "멘토" },
         { "name": "Dr. Stuart Zola", "role": "창립자 & 임상 과학자", "detail": "멘토" }
       ]
     },

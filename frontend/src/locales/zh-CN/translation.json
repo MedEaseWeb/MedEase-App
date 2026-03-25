@@ -145,7 +145,7 @@
       "copyright": "© {{year}} MedEase Inc. 保留所有权利。"
     },
     "team": {
-      "heading": "由学生构建，为学生服务",
+      "heading": "临床驱动。使命导向。",
       "subtitle": "MedEase 由医疗研究人员、开发者和导师共同塑造，专注于安全、清晰与学生康复。",
       "members": [
         { "name": "Annie He", "role": "产品与商业联合创始人", "detail": "医疗健康研究员与软件工程师，Emory '25" },
@@ -154,7 +154,7 @@
       "advisors": [
         { "name": "Dr. Phil Wolff", "role": "语言生物标志物实验室", "detail": "导师" },
         { "name": "Dr. JinHo Choi", "role": "Emory NLP实验室", "detail": "导师" },
-        { "name": "Sig Mosley", "role": "风险投资人", "detail": "Mosley Ventures" },
+        { "name": "Sig Mosley", "role": "风险投资人", "detail": "导师" },
         { "name": "Dr. Stuart Zola", "role": "创始人兼临床科学家", "detail": "导师" }
       ]
     },

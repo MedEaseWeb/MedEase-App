@@ -145,7 +145,7 @@
       "copyright": "© {{year}} MedEase Inc. Todos los derechos reservados."
     },
     "team": {
-      "heading": "Construido por Estudiantes, Para Estudiantes",
+      "heading": "Clínicamente Informado. Con Propósito.",
       "subtitle": "MedEase está formado por investigadores de salud, desarrolladores y mentores — enfocados en seguridad, claridad y recuperación estudiantil.",
       "members": [
         { "name": "Annie He", "role": "Cofundadora de Producto y Negocios", "detail": "Investigadora en Salud e Ingeniera de Software, Emory '25" },
@@ -154,7 +154,7 @@
       "advisors": [
         { "name": "Dr. Phil Wolff", "role": "Laboratorio de Biomarcadores del Lenguaje", "detail": "Mentor" },
         { "name": "Dr. JinHo Choi", "role": "Laboratorio NLP de Emory", "detail": "Mentor" },
-        { "name": "Sig Mosley", "role": "Capitalista de Riesgo", "detail": "Mosley Ventures" },
+        { "name": "Sig Mosley", "role": "Capitalista de Riesgo", "detail": "Mentor" },
         { "name": "Dr. Stuart Zola", "role": "Fundador y Científico Clínico", "detail": "Mentor" }
       ]
     },
