@@ -7,9 +7,15 @@ import {
   Button,
   CssBaseline,
   GlobalStyles,
+  IconButton,
+  Menu,
+  MenuItem,
+  Divider,
 } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 import { styled } from "@mui/material/styles";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import LP_Hero from "./LP_Hero";
 import LP_Mission from "./LP_Mission";
 import LP_Product from "./LP_Product";
@@ -22,6 +28,13 @@ const colors = {
   textMain: "#2C2420",
   primary: "#2C2420",
 };
+
+const LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "zh-CN", label: "中文" },
+  { code: "ko", label: "한국어" },
+  { code: "es", label: "Español" },
+];
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
@@ -41,8 +54,9 @@ const NavButton = styled(Button)(() => ({
 }));
 
 export default function LandingPage() {
+  const { i18n } = useTranslation();
   const [waitlistOpen, setWaitlistOpen] = useState(false);
-
+  const [langAnchor, setLangAnchor] = useState(null);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -120,22 +134,55 @@ export default function LandingPage() {
             ))}
           </Box>
 
-          <Button
-            variant="contained"
-            onClick={() => setWaitlistOpen(true)}
-            sx={{
-              bgcolor: colors.primary,
-              color: "#FFF",
-              borderRadius: "12px",
-              px: 3,
-              fontFamily: fontMain,
-              textTransform: "none",
-              fontWeight: 600,
-              "&:hover": { bgcolor: "#1a1614" },
-            }}
-          >
-            Join Waitlist
-          </Button>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <IconButton
+              onClick={(e) => setLangAnchor(e.currentTarget)}
+              size="small"
+              sx={{
+                color: colors.textMain,
+                "&:hover": { backgroundColor: "rgba(44, 36, 32, 0.05)" },
+              }}
+            >
+              <LanguageIcon sx={{ fontSize: 22 }} />
+            </IconButton>
+            <Menu
+              anchorEl={langAnchor}
+              open={Boolean(langAnchor)}
+              onClose={() => setLangAnchor(null)}
+            >
+              {LANGUAGES.map(({ code, label }) => (
+                <MenuItem
+                  key={code}
+                  selected={i18n.language === code}
+                  onClick={() => {
+                    i18n.changeLanguage(code);
+                    setLangAnchor(null);
+                  }}
+                >
+                  <Typography sx={{ fontFamily: fontMain, fontSize: "0.9rem" }}>
+                    {label}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+
+            <Button
+              variant="contained"
+              onClick={() => setWaitlistOpen(true)}
+              sx={{
+                bgcolor: colors.primary,
+                color: "#FFF",
+                borderRadius: "12px",
+                px: 3,
+                fontFamily: fontMain,
+                textTransform: "none",
+                fontWeight: 600,
+                "&:hover": { bgcolor: "#1a1614" },
+              }}
+            >
+              Join Waitlist
+            </Button>
+          </Box>
         </Toolbar>
         <motion.div
           style={{

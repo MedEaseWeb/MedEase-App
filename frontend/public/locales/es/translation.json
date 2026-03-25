@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "reportSimplifier": "Simplificador de informes",
+    "medicationHelp": "Ayuda con medicamentos",
+    "caregiverMode": "Modo cuidador",
+    "logout": "Cerrar sesión",
+    "language": "Idioma"
+  },
+  "menu": {
+    "title": "Menú de MedEase",
+    "documentation": "Documentación",
+    "termsOfService": "Términos de servicio",
+    "privacyPolicy": "Política de privacidad",
+    "generateKey": "Generar clave",
+    "expired": "Expirado",
+    "copyToClipboard": "Copiar al portapapeles"
+  },
+  "chat": {
+    "title": "Asistente IA para cuidadores",
+    "placeholder": "Escribe un mensaje…",
+    "send": "Enviar",
+    "welcome": "Hola, bienvenido a MedEase, ¿en qué puedo ayudarte?",
+    "patientsButton": "Subir información de pacientes",
+    "remindersButton": "Recordatorios y tareas",
+    "diaryButton": "Subir diario fotográfico",
+    "accommodationButton": "Carta de adaptación",
+    "patientDataPrompt": "¡Claro! Para recuperar los datos de un paciente, proporciona el correo y la clave generada en un solo mensaje. Por ejemplo: 'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "¡Claro! ¿De qué te gustaría que te recordara,\ny cuándo? (p. ej. \"Tomar medicamentos a las 9 AM durante 5 días\")"
+  },
+  "login": {
+    "errorTitle": "Error de inicio de sesión",
+    "gotIt": "Entendido",
+    "welcomeBack": "Bienvenido de vuelta",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUp": "Regístrate",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "logIn": "Iniciar sesión",
+    "goToHome": "Haz clic aquí para ir a la página de inicio",
+    "tagline": "Tu recuperación tras la lesión, simplificada.",
+    "subtitle": "IA que conecta a los estudiantes con la atención médica correcta en el campus, al instante.",
+    "copyright": "© 2025 MedEase. Creado para estudiantes.",
+    "features": [
+      "Simplificación de informes con IA",
+      "Seguimiento inteligente de medicamentos",
+      "Motor de triaje agéntico",
+      "Coordinación de atención 24/7"
+    ],
+    "errors": {
+      "noConnection": "No se puede conectar al servidor. Comprueba tu conexión e inténtalo de nuevo.",
+      "invalidCredentials": "Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.",
+      "accountDisabled": "Esta cuenta ha sido desactivada. Por favor, contacta con soporte.",
+      "tooManyAttempts": "Demasiados intentos. Por favor, espera un momento e inténtalo de nuevo.",
+      "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
+    }
+  }
+}

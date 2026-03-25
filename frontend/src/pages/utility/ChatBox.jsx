@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   TextField,
@@ -13,6 +14,7 @@ import Draggable from "react-draggable";
 import socket from "../../pages/utility/SocketConnection";
 
 const Chatbox = () => {
+  const { t } = useTranslation();
   // Main chat state.
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -34,7 +36,7 @@ const Chatbox = () => {
       setMessages((prev) => [
         ...prev,
         {
-          text: "Hello, welcome to MedEase, how can I help you?",
+          text: t("chat.welcome"),
           sender: "bot",
         },
       ]);
@@ -120,7 +122,7 @@ const Chatbox = () => {
       setMessages((prev) => [
         ...prev,
         {
-          text: "Sure! To retrieve a patient's data, please provide the patient's email and generated key in one message. For example: 'jane.doe@example.com KEY12345'",
+          text: t("chat.patientDataPrompt"),
           sender: "bot",
         },
       ]);
@@ -130,7 +132,7 @@ const Chatbox = () => {
       setMessages((prev) => [
         ...prev,
         {
-          text: `Sure! What would you like to be reminded about,\nand when? (e.g. “Take meds at 9 AM for 5 days”)`,
+          text: t("chat.reminderPrompt"),
           sender: "bot",
         },
       ]);
@@ -193,7 +195,7 @@ const Chatbox = () => {
               fontWeight: "600",
             }}
           >
-            Caregiver AI Assistant
+            {t("chat.title")}
             <IconButton
               className="chatbox-non-drag"
               size="small"
@@ -257,7 +259,7 @@ const Chatbox = () => {
                   variant="outlined"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type a message..."
+                  placeholder={t("chat.placeholder")}
                   size="small"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") sendMessage();
@@ -293,7 +295,7 @@ const Chatbox = () => {
                     fontFamily: "ECA, sans-serif",
                   }}
                 >
-                  Send
+                  {t("chat.send")}
                 </Button>
               </Box>
 
@@ -321,7 +323,7 @@ const Chatbox = () => {
                       }}
                       onClick={() => handleSelection("patients")}
                     >
-                      My Patients Info Upload
+                      {t("chat.patientsButton")}
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
@@ -338,7 +340,7 @@ const Chatbox = () => {
                       }}
                       onClick={() => handleSelection("reminders")}
                     >
-                      Reminders & Tasks
+                      {t("chat.remindersButton")}
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
@@ -355,7 +357,7 @@ const Chatbox = () => {
                       }}
                       onClick={() => handleSelection("diary")}
                     >
-                      Picture Diary Upload
+                      {t("chat.diaryButton")}
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
@@ -372,7 +374,7 @@ const Chatbox = () => {
                       }}
                       onClick={() => handleSelection("accommodation")}
                     >
-                      Accommodation Letter
+                      {t("chat.accommodationButton")}
                     </Button>
                   </Grid>
                 </Grid>

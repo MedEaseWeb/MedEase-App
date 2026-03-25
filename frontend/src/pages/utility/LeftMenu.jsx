@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Drawer,
@@ -38,6 +39,7 @@ const generateRandomKey = () => {
 };
 
 const LeftMenu = () => {
+  const { t } = useTranslation();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [generatedKeys, setGeneratedKeys] = useState([]);
   const navigate = useNavigate();
@@ -106,19 +108,19 @@ const LeftMenu = () => {
 
   const drawerItems = [
     {
-      text: "Documentation",
+      text: t("menu.documentation"),
       icon: <DescriptionIcon />,
       path: "/documentation",
       key: "documentation",
     },
     {
-      text: "Terms of Service",
+      text: t("menu.termsOfService"),
       icon: <GavelIcon />,
       path: "/terms",
       key: "termsofservice",
     },
     {
-      text: "Privacy Policy",
+      text: t("menu.privacyPolicy"),
       icon: <PrivacyTipIcon />,
       path: "/privacy",
       key: "privacy",
@@ -127,19 +129,19 @@ const LeftMenu = () => {
 
   const navDrawerItems = [
     {
-      text: "Report Simplifier",
+      text: t("nav.reportSimplifier"),
       icon: <SummarizeIcon />,
       path: "/reportsimplifier",
       key: "reportsimplifier",
     },
     {
-      text: "Medication Help",
+      text: t("nav.medicationHelp"),
       icon: <MedicalInformationIcon />,
       path: "/medication",
       key: "medication",
     },
     {
-      text: "CareGiver Mode",
+      text: t("nav.caregiverMode"),
       icon: <EscalatorWarningIcon />,
       path: "/caregiver",
       key: "caregiver",
@@ -178,7 +180,7 @@ const LeftMenu = () => {
               color: "#00684A",
             }}
           >
-            MedEase Menu
+            {t("menu.title")}
           </Typography>
           <IconButton
             onClick={toggleDrawer(false)}
@@ -294,7 +296,7 @@ const LeftMenu = () => {
                 fontWeight: "bold",
               }}
             >
-              Generate Key
+              {t("menu.generateKey")}
             </Typography>
           </Button>
 
@@ -332,7 +334,7 @@ const LeftMenu = () => {
 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   {!key.copied && !isExpired && (
-                    <Tooltip title="Copy to clipboard">
+                    <Tooltip title={t("menu.copyToClipboard")}>
                       <IconButton
                         onClick={() => handleCopy(key.value)}
                         size="small"
@@ -343,7 +345,7 @@ const LeftMenu = () => {
                   )}
                   {isExpired && (
                     <Typography variant="caption" color="error">
-                      Expired
+                      {t("menu.expired")}
                     </Typography>
                   )}
                 </Box>
