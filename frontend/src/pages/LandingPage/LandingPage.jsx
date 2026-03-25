@@ -22,6 +22,8 @@ import LP_Hero from "./LP_Hero";
 import LP_Mission from "./LP_Mission";
 import LP_Product from "./LP_Product";
 import LP_About from "./LP_About";
+import LP_Team from "./LP_Team";
+import LP_UserStories from "./LP_UserStories";
 import LP_Footer from "./LP_Footer";
 import InteractiveBackground from "./utils/InteractiveBackground";
 import WaitlistModal from "./WaitlistModal";
@@ -223,6 +225,12 @@ export default function LandingPage() {
         </Box>
         <Box id="about">
           <LP_About />
+        </Box>
+        <Box id="team">
+          <LP_Team />
+        </Box>
+        <Box id="user-stories">
+          <LP_UserStories />
         </Box>
         <Box id="contact">
           <LP_Footer />
