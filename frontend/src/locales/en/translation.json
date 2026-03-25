@@ -300,6 +300,9 @@
       "placeholder": "Ask a question about your care journey…",
       "send": "Send",
       "commonQuestions": "Common Questions",
+      "emptyState": "Ask a question or pick one from the right →",
+      "suggestedFollowUp": "Suggested follow-up:",
+      "fallback": "I'm here to help with your care journey. Try one of the suggested questions or ask something specific about your current step.",
       "questions": [
         "What is urgent care?",
         "How much does urgent care cost?",
@@ -310,6 +313,17 @@
         "What can I expect during recovery?",
         "When do I need follow-up care?",
         "When should I see a doctor again?"
+      ],
+      "mockResponses": [
+        { "main": "Urgent Care is for medical issues that need attention soon but are not life-threatening.", "bullets": [{ "label": "Examples:", "items": ["minor fractures", "infections", "moderate pain", "flu or fever"] }, { "label": "Benefits:", "items": ["shorter wait times than ER", "lower cost", "walk-in availability"] }] },
+        { "main": "Costs vary by location and service. Typically lower than the ER.", "bullets": [{ "label": "Rough range:", "items": ["visit fee often $100–200+ without insurance", "with insurance: copay may apply"] }] },
+        { "main": "You don't need insurance to be seen at urgent care, but it usually lowers what you pay.", "bullets": [{ "label": "With insurance:", "items": ["bring your card", "copay or coinsurance may apply"] }, { "label": "Without insurance:", "items": ["ask for self-pay pricing", "payment is typically due at visit"] }] },
+        { "main": "Bring ID, insurance card (if you have one), and a list of current medications.", "bullets": [{ "label": "Helpful:", "items": ["photo ID", "insurance card", "medication list", "any recent test results"] }] },
+        { "main": "Most urgent care visits are 30 minutes to a few hours, depending on how busy they are.", "bullets": [{ "label": "Typical:", "items": ["check-in and wait", "exam and possibly tests", "discharge with instructions"] }] },
+        { "main": "Follow the instructions on the label or from your provider (e.g. with food, time of day).", "bullets": [{ "label": "Tips:", "items": ["set a daily reminder", "don't skip doses without asking your doctor"] }] },
+        { "main": "Recovery depends on your condition. Your provider should give you a timeline and what's normal.", "bullets": [{ "label": "General:", "items": ["rest as advised", "gradual return to activity", "watch for new or worse symptoms"] }] },
+        { "main": "Your discharge instructions usually say when to follow up. If not, call the clinic to ask.", "bullets": [{ "label": "When to call sooner:", "items": ["worsening symptoms", "fever", "new pain or swelling"] }] },
+        { "main": "Follow the follow-up date your provider gave you. Call sooner if symptoms worsen or you're worried.", "bullets": [{ "label": "Reasons to call earlier:", "items": ["fever", "increased pain", "signs of infection", "medication side effects"] }] }
       ]
     }
   },

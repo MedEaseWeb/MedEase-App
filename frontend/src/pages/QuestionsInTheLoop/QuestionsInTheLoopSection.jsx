@@ -6,7 +6,6 @@ import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 
 const { colors, fontMain, radii, shadows } = SURVEY_TOKENS;
 
-// Landing/survey card style
 const cardSx = {
   p: 3,
   borderRadius: radii.cardInner,
@@ -18,116 +17,30 @@ const cardSx = {
   flexDirection: "column",
 };
 
-const SUGGESTED_BY_STAGE = {
-  "Choose Care": [
-    "What is urgent care?",
-    "How much does urgent care cost?",
-    "Do I need insurance?",
-    "What should I bring?",
-    "How long will it take?",
-  ],
-  "Get Care": [
-    "What is urgent care?",
-    "How much does urgent care cost?",
-    "Do I need insurance?",
-    "What should I bring?",
-    "How long will it take?",
-  ],
-  Recover: [
-    "When should I take my medication?",
-    "What can I expect during recovery?",
-    "When do I need follow-up care?",
-    "When should I see a doctor again?",
-  ],
-  Identify: [
-    "What is urgent care?",
-    "How much does urgent care cost?",
-    "Do I need insurance?",
-    "What should I bring?",
-  ],
-  Assess: [
-    "What is urgent care?",
-    "How much does urgent care cost?",
-    "Do I need insurance?",
-    "What should I bring?",
-  ],
+// stage index → question indices (0-based, matches home.qitl.questions array)
+const SUGGESTED_BY_STAGE_INDICES = {
+  0: [0, 1, 2, 3],       // Identify
+  1: [0, 1, 2, 3],       // Assess
+  2: [0, 1, 2, 3, 4],    // Choose Care
+  3: [0, 1, 2, 3, 4],    // Get Care
+  4: [5, 6, 7, 8],       // Recover
 };
 
-const MOCK_RESPONSES = {
-  "what is urgent care": {
-    main: "Urgent Care is for medical issues that need attention soon but are not life-threatening.",
-    bullets: [
-      { label: "Examples:", items: ["minor fractures", "infections", "moderate pain", "flu or fever"] },
-      { label: "Benefits:", items: ["shorter wait times than ER", "lower cost", "walk-in availability"] },
-    ],
-    followUps: ["How much does urgent care cost?", "Should I go to ER instead?"],
-  },
-  "how much does urgent care cost": {
-    main: "Costs vary by location and service. Typically lower than the ER.",
-    bullets: [
-      { label: "Rough range:", items: ["visit fee often $100–200+ without insurance", "with insurance: copay may apply"] },
-    ],
-    followUps: ["Do I need insurance?", "What should I bring?"],
-  },
-  "do i need insurance": {
-    main: "You don’t need insurance to be seen at urgent care, but it usually lowers what you pay.",
-    bullets: [
-      { label: "With insurance:", items: ["bring your card", "copay or coinsurance may apply"] },
-      { label: "Without insurance:", items: ["ask for self-pay pricing", "payment is typically due at visit"] },
-    ],
-    followUps: ["What should I bring?", "How long will it take?"],
-  },
-  "what should i bring": {
-    main: "Bring ID, insurance card (if you have one), and a list of current medications.",
-    bullets: [
-      { label: "Helpful:", items: ["photo ID", "insurance card", "medication list", "any recent test results"] },
-    ],
-    followUps: ["How long will it take?", "Do I need insurance?"],
-  },
-  "how long will it take": {
-    main: "Most urgent care visits are 30 minutes to a few hours, depending on how busy they are.",
-    bullets: [
-      { label: "Typical:", items: ["check-in and wait", "exam and possibly tests", "discharge with instructions"] },
-    ],
-    followUps: ["What should I bring?", "What is urgent care?"],
-  },
-  "when should i take my medication": {
-    main: "Follow the instructions on the label or from your provider (e.g. with food, time of day).",
-    bullets: [{ label: "Tips:", items: ["set a daily reminder", "don’t skip doses without asking your doctor"] }],
-    followUps: ["What can I expect during recovery?", "When should I see a doctor again?"],
-  },
-  "what can i expect during recovery": {
-    main: "Recovery depends on your condition. Your provider should give you a timeline and what’s normal.",
-    bullets: [{ label: "General:", items: ["rest as advised", "gradual return to activity", "watch for new or worse symptoms"] }],
-    followUps: ["When do I need follow-up care?", "When should I see a doctor again?"],
-  },
-  "when do i need follow-up care": {
-    main: "Your discharge instructions usually say when to follow up. If not, call the clinic to ask.",
-    bullets: [{ label: "When to call sooner:", items: ["worsening symptoms", "fever", "new pain or swelling"] }],
-    followUps: ["When should I see a doctor again?", "What can I expect during recovery?"],
-  },
-  "when should i see a doctor again": {
-    main: "Follow the follow-up date your provider gave you. Call sooner if symptoms worsen or you’re worried.",
-    bullets: [{ label: "Reasons to call earlier:", items: ["fever", "increased pain", "signs of infection", "medication side effects"] }],
-    followUps: ["When do I need follow-up care?", "What can I expect during recovery?"],
-  },
-};
+// follow-up question indices per response (same across all locales)
+const FOLLOW_UP_INDICES = [
+  [1],      // 0: what is urgent care
+  [2, 3],   // 1: how much does it cost
+  [3, 4],   // 2: do i need insurance
+  [4, 2],   // 3: what should i bring
+  [3, 0],   // 4: how long will it take
+  [6, 8],   // 5: when should i take medication
+  [7, 8],   // 6: what can i expect during recovery
+  [8, 6],   // 7: when do i need follow-up care
+  [7, 6],   // 8: when should i see a doctor again
+];
 
-function getResponseForQuestion(question) {
-  const key = question.trim().toLowerCase().replace(/\?$/, "");
-  for (const [responseKey, data] of Object.entries(MOCK_RESPONSES)) {
-    if (key.includes(responseKey) || responseKey.includes(key)) return data;
-  }
-  return {
-    main: "I’m here to help with your care journey. Try one of the suggested questions or ask something specific about your current step.",
-    bullets: [],
-    followUps: [],
-  };
-}
-
-// Assistant bubble — warm neutral (beige2), Plus Jakarta, accent for labels
-function AssistantBubble({ response }) {
-  const { main, bullets, followUps } = response;
+function AssistantBubble({ response, followUpLabels, suggestedFollowUpLabel }) {
+  const { main, bullets } = response;
   return (
     <Box
       sx={{
@@ -153,37 +66,49 @@ function AssistantBubble({ response }) {
           </Box>
         </Box>
       ))}
-      {followUps.length > 0 && (
+      {followUpLabels && followUpLabels.length > 0 && (
         <Typography sx={{ fontFamily: fontMain, fontSize: "0.8rem", color: colors.textSec, mt: 1 }}>
-          Suggested follow-up: {followUps.join(" • ")}
+          {suggestedFollowUpLabel} {followUpLabels.join(" • ")}
         </Typography>
       )}
     </Box>
   );
 }
 
-export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" }) {
+export default function QuestionsInTheLoopSection({ activeStageIndex = 2 }) {
   const { t } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const chatEndRef = useRef(null);
+  const scrollRef = useRef(null);
 
-  const suggestedQuestions = SUGGESTED_BY_STAGE[activeStage] || SUGGESTED_BY_STAGE["Choose Care"];
+  const allQuestions = t("home.qitl.questions", { returnObjects: true });
+  const mockResponses = t("home.qitl.mockResponses", { returnObjects: true });
+  const fallback = { main: t("home.qitl.fallback"), bullets: [] };
+
+  const questionIndices = SUGGESTED_BY_STAGE_INDICES[activeStageIndex] ?? SUGGESTED_BY_STAGE_INDICES[2];
+  const suggestedQuestions = questionIndices.map((i) => ({ index: i, label: allQuestions[i] }));
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages]);
 
-  const sendMessage = (text) => {
-    const question = (text || input).trim();
-    if (!question) return;
-    setInput("");
-    const response = getResponseForQuestion(question);
-    setMessages((prev) => [
-      ...prev,
-      { sender: "user", text: question },
-      { sender: "assistant", payload: response },
-    ]);
+  const sendMessage = (textOrIndex) => {
+    if (typeof textOrIndex === "number") {
+      const label = allQuestions[textOrIndex];
+      const response = mockResponses[textOrIndex] ?? fallback;
+      const followUpLabels = (FOLLOW_UP_INDICES[textOrIndex] ?? []).map((i) => allQuestions[i]);
+      setMessages((prev) => [...prev, { sender: "user", text: label }, { sender: "assistant", payload: response, followUpLabels }]);
+    } else {
+      const text = (textOrIndex || input).trim();
+      if (!text) return;
+      setInput("");
+      const matchIndex = allQuestions.findIndex(
+        (q) => q.toLowerCase().includes(text.toLowerCase()) || text.toLowerCase().includes(q.toLowerCase().replace(/\?/g, ""))
+      );
+      const response = matchIndex >= 0 ? mockResponses[matchIndex] : fallback;
+      const followUpLabels = matchIndex >= 0 ? (FOLLOW_UP_INDICES[matchIndex] ?? []).map((i) => allQuestions[i]) : [];
+      setMessages((prev) => [...prev, { sender: "user", text }, { sender: "assistant", payload: response, followUpLabels }]);
+    }
   };
 
   return (
@@ -228,6 +153,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
 
           {/* Scrollable message area */}
           <Box
+            ref={scrollRef}
             sx={{
               flex: 1,
               minHeight: 0,
@@ -253,7 +179,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                   mt: 2,
                 }}
               >
-                Ask a question or pick one from the right →
+                {t("home.qitl.emptyState")}
               </Typography>
             )}
             {messages.map((msg, index) =>
@@ -276,10 +202,14 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                   {msg.text}
                 </Box>
               ) : (
-                <AssistantBubble key={index} response={msg.payload} />
+                <AssistantBubble
+                  key={index}
+                  response={msg.payload}
+                  followUpLabels={msg.followUpLabels}
+                  suggestedFollowUpLabel={t("home.qitl.suggestedFollowUp")}
+                />
               )
             )}
-            <div ref={chatEndRef} />
           </Box>
 
           {/* Input bar */}
@@ -291,7 +221,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
               onChange={(e) => setInput(e.target.value)}
               placeholder={t("home.qitl.placeholder")}
               size="small"
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   fontFamily: fontMain,
@@ -306,7 +236,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
             />
             <Button
               variant="contained"
-              onClick={() => sendMessage()}
+              onClick={() => sendMessage(input)}
               endIcon={<SendIcon />}
               sx={{
                 fontFamily: fontMain,
@@ -358,12 +288,12 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
             {t("home.qitl.commonQuestions")}
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            {suggestedQuestions.map((q) => (
+            {suggestedQuestions.map(({ index, label }) => (
               <Button
-                key={q}
+                key={index}
                 variant="outlined"
                 fullWidth
-                onClick={() => sendMessage(q)}
+                onClick={() => sendMessage(index)}
                 sx={{
                   fontFamily: fontMain,
                   fontWeight: 500,
@@ -382,7 +312,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                   },
                 }}
               >
-                {q}
+                {label}
               </Button>
             ))}
           </Box>

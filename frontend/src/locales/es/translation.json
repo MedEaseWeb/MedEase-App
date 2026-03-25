@@ -300,6 +300,9 @@
       "placeholder": "Haz una pregunta sobre tu proceso de atención…",
       "send": "Enviar",
       "commonQuestions": "Preguntas frecuentes",
+      "emptyState": "Escribe una pregunta o elige una de la derecha →",
+      "suggestedFollowUp": "Seguimiento sugerido:",
+      "fallback": "Estoy aquí para ayudarte con tu proceso de atención. Prueba una de las preguntas sugeridas o haz una pregunta específica sobre tu paso actual.",
       "questions": [
         "¿Qué es una clínica de urgencias?",
         "¿Cuánto cuesta una clínica de urgencias?",
@@ -310,6 +313,17 @@
         "¿Qué puedo esperar durante la recuperación?",
         "¿Cuándo necesito atención de seguimiento?",
         "¿Cuándo debo ver a un médico de nuevo?"
+      ],
+      "mockResponses": [
+        { "main": "La clínica de urgencias es para problemas médicos que necesitan atención pronto pero no son de riesgo vital.", "bullets": [{ "label": "Ejemplos:", "items": ["fracturas leves", "infecciones", "dolor moderado", "gripe o fiebre"] }, { "label": "Ventajas:", "items": ["menos espera que urgencias", "menor costo", "sin cita previa"] }] },
+        { "main": "Los costos varían según la ubicación y el servicio. Normalmente menores que urgencias.", "bullets": [{ "label": "Rango aproximado:", "items": ["visita sin seguro: suele ser $100–200+", "con seguro: puede aplicarse copago"] }] },
+        { "main": "No necesitas seguro para ser atendido, pero tenerlo generalmente reduce lo que pagas.", "bullets": [{ "label": "Con seguro:", "items": ["lleva tu tarjeta", "puede aplicarse copago o coseguro"] }, { "label": "Sin seguro:", "items": ["pregunta por precio sin seguro", "el pago suele realizarse en la visita"] }] },
+        { "main": "Lleva tu identificación, tarjeta de seguro (si tienes) y una lista de tus medicamentos actuales.", "bullets": [{ "label": "Recomendado:", "items": ["identificación con foto", "tarjeta de seguro", "lista de medicamentos", "resultados de pruebas recientes"] }] },
+        { "main": "La mayoría de las visitas duran entre 30 minutos y varias horas según la demanda.", "bullets": [{ "label": "Proceso típico:", "items": ["registro y espera", "examen y posibles pruebas", "alta con instrucciones"] }] },
+        { "main": "Sigue las instrucciones del envase o de tu médico (p. ej. con comida, hora del día).", "bullets": [{ "label": "Consejos:", "items": ["configura un recordatorio diario", "no omitas dosis sin consultar a tu médico"] }] },
+        { "main": "La recuperación depende de tu condición. Tu médico debería darte un calendario y qué es normal.", "bullets": [{ "label": "General:", "items": ["descansa según indicación", "retorno gradual a la actividad", "vigila síntomas nuevos o que empeoren"] }] },
+        { "main": "Las instrucciones de alta suelen indicar cuándo hacer seguimiento. Si no, llama a la clínica.", "bullets": [{ "label": "Cuándo llamar antes:", "items": ["síntomas que empeoran", "fiebre", "nuevo dolor o hinchazón"] }] },
+        { "main": "Sigue la fecha de seguimiento que te dio tu médico. Llama antes si los síntomas empeoran o te preocupas.", "bullets": [{ "label": "Razones para llamar antes:", "items": ["fiebre", "dolor aumentado", "signos de infección", "efectos secundarios de medicamentos"] }] }
       ]
     }
   },
