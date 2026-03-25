@@ -28,86 +28,6 @@ const colors = {
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 const sectionTypes = { rag: "dashboard", chat: "chat" };
 
-// ─── DEMO SCENARIO DATA ──────────────────────────────────────────────────────
-// Each entry is either a message or a { pause } timing gap.
-// gap = ms to wait before processing the next entry after showing this message.
-const DEMO_SCENARIOS = {
-  rag: [
-    {
-      sender: "user",
-      text: "Twisted my knee at practice. It's been swollen for 3 days and I can't walk without pain.",
-      gap: 600,
-    },
-    { pause: 1100 },
-    {
-      sender: "agent",
-      text: "Running triage against Emory's care network…",
-      status: [
-        { label: "Injury pattern", value: "Soft tissue · moderate severity" },
-        { label: "Nearest care", value: "Student Health · Woodruff Bldg" },
-        { label: "Current wait", value: "~15 min · low volume right now" },
-      ],
-      gap: 1600,
-    },
-    {
-      sender: "user",
-      text: "Book me in at Student Health.",
-      gap: 500,
-    },
-    { pause: 950 },
-    {
-      sender: "agent",
-      action: {
-        title: "Appointment confirmed",
-        items: [
-          "Student Health Services · Today 2:45 PM",
-          "Intake form pre-filled with your injury details",
-          "Walking directions sent to your phone",
-        ],
-        cta: "Add to Calendar →",
-      },
-      gap: 0,
-    },
-  ],
-  chat: [
-    {
-      sender: "user",
-      text: "My DAS accommodation expires Friday. Prof. Chen hasn't responded and my midterm is that afternoon.",
-      gap: 600,
-    },
-    { pause: 1100 },
-    {
-      sender: "agent",
-      text: "Found your active accommodation file. Here's the current situation:",
-      status: [
-        { label: "Deadline", value: "Friday · 2 days remaining" },
-        { label: "Prof. Chen", value: "No response · 4 days pending" },
-        { label: "Required action", value: "Professor acknowledgment overdue" },
-      ],
-      gap: 1600,
-    },
-    {
-      sender: "user",
-      text: "Handle it — send a follow-up and loop in my DAS advisor.",
-      gap: 500,
-    },
-    { pause: 950 },
-    {
-      sender: "agent",
-      action: {
-        title: "3 actions completed",
-        items: [
-          "Follow-up email sent to Prof. Chen",
-          "DAS advisor notified — deadline flagged",
-          "Midterm accommodation marked as pending",
-        ],
-        cta: "View Activity Log →",
-      },
-      gap: 0,
-    },
-  ],
-};
-
 // ─── TYPING INDICATOR ────────────────────────────────────────────────────────
 const TypingBubble = () => (
   <motion.div
@@ -281,7 +201,8 @@ const UserBubble = ({ text }) => (
 // ─── CHAT DEMO ───────────────────────────────────────────────────────────────
 // Plays through the scenario automatically, replays every ~10 seconds.
 function ChatDemo({ scenarioId, inView }) {
-  const messages = DEMO_SCENARIOS[scenarioId] ?? DEMO_SCENARIOS.rag;
+  const { t } = useTranslation();
+  const messages = t(`lp.product.demo.${scenarioId}`, { returnObjects: true }) ?? [];
   const [visible, setVisible] = useState([]);
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef(null);
@@ -579,7 +500,7 @@ export default function LP_Product() {
                 letterSpacing: "0.05em",
               }}
             >
-              MedEase · {current.id === "rag" ? "Triage" : "Accommodations"}
+              MedEase · {t(`lp.product.demo.chrome.${current.id}`)}
             </Typography>
           </Box>
 

@@ -118,7 +118,34 @@
             "Detección de crisis 24/7"
           ]
         }
-      ]
+      ],
+      "demo": {
+        "chrome": { "rag": "Triage", "chat": "Acomodaciones" },
+        "rag": [
+          { "sender": "user", "text": "Me torcí la rodilla en el entrenamiento. Lleva 3 días hinchada y no puedo caminar sin dolor.", "gap": 600 },
+          { "pause": 1100 },
+          { "sender": "agent", "text": "Ejecutando triage en la red de atención de Emory…", "status": [
+            { "label": "Tipo de lesión", "value": "Tejido blando · severidad moderada" },
+            { "label": "Atención más cercana", "value": "Salud Estudiantil · Edif. Woodruff" },
+            { "label": "Espera actual", "value": "~15 min · volumen bajo ahora" }
+          ], "gap": 1600 },
+          { "sender": "user", "text": "Resérvame en Salud Estudiantil.", "gap": 500 },
+          { "pause": 950 },
+          { "sender": "agent", "action": { "title": "Cita confirmada", "items": ["Servicios de Salud Estudiantil · Hoy 2:45 PM", "Formulario de ingreso pre-completado con tu lesión", "Indicaciones para caminar enviadas a tu teléfono"], "cta": "Agregar al Calendario →" }, "gap": 0 }
+        ],
+        "chat": [
+          { "sender": "user", "text": "Mi acomodo de DAS vence el viernes. La Prof. Chen no ha respondido y mi parcial es esa tarde.", "gap": 600 },
+          { "pause": 1100 },
+          { "sender": "agent", "text": "Encontré tu archivo de acomodo activo. Situación actual:", "status": [
+            { "label": "Fecha límite", "value": "Viernes · 2 días restantes" },
+            { "label": "Prof. Chen", "value": "Sin respuesta · 4 días pendiente" },
+            { "label": "Acción requerida", "value": "Confirmación del profesor vencida" }
+          ], "gap": 1600 },
+          { "sender": "user", "text": "Manéjalo — envía un seguimiento e incluye a mi asesor de DAS.", "gap": 500 },
+          { "pause": 950 },
+          { "sender": "agent", "action": { "title": "3 acciones completadas", "items": ["Correo de seguimiento enviado a la Prof. Chen", "Asesor de DAS notificado — fecha límite marcada", "Acomodo del parcial marcado como pendiente"], "cta": "Ver Registro de Actividad →" }, "gap": 0 }
+        ]
+      }
     },
     "about": {
       "heading": "Construido desde la Experiencia",
