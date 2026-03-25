@@ -156,7 +156,7 @@ export default function LP_Hero({ onOpenWaitlist }) {
             },
           }}
         >
-          {t("lp.hero.joinWaitlist")}
+          View Demo
         </Button>
       </motion.div>
     </Box>

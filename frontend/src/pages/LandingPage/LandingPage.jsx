@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -55,6 +56,7 @@ const NavButton = styled(Button)(() => ({
 
 export default function LandingPage() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [langAnchor, setLangAnchor] = useState(null);
   const { scrollYProgress } = useScroll();
@@ -168,7 +170,7 @@ export default function LandingPage() {
 
             <Button
               variant="contained"
-              onClick={() => setWaitlistOpen(true)}
+              onClick={() => navigate("/survey")}
               sx={{
                 bgcolor: colors.primary,
                 color: "#FFF",
@@ -180,7 +182,7 @@ export default function LandingPage() {
                 "&:hover": { bgcolor: "#1a1614" },
               }}
             >
-              {t("lp.nav.joinWaitlist")}
+              View Demo
             </Button>
           </Box>
         </Toolbar>
@@ -199,7 +201,7 @@ export default function LandingPage() {
       <WaitlistModal open={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
 
       <Box sx={{ position: "relative", zIndex: 1, pt: 12 }}>
-        <LP_Hero onOpenWaitlist={() => setWaitlistOpen(true)} />
+        <LP_Hero onOpenWaitlist={() => navigate("/survey")} />
         <Box id="mission">
           <LP_Mission />
         </Box>

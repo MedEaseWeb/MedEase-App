@@ -1,4 +1,5 @@
 import {
+  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -17,6 +18,14 @@ import TopBarComponent from "./pages/utility/TopBar";
 import ProtectedRoute from "./context/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 
+// Demo / Survey
+import SurveyProviderLayout from "./pages/UserSurvey/SurveyProviderLayout";
+import SurveyWelcome from "./pages/UserSurvey/SurveyWelcome";
+import SurveyIntro from "./pages/UserSurvey/SurveyIntro";
+import SurveyQuestions from "./pages/UserSurvey/SurveyQuestions";
+import SurveyEnd from "./pages/UserSurvey/SurveyEnd";
+import QuestionsLoop from "./pages/UserSurvey/QuestionsLoop";
+
 import "./index.css";
 import "./styles/fonts.css";
 import { Box } from "@mui/material";
@@ -25,13 +34,15 @@ const PUBLIC_ROUTES = ["/", "/dev/login", "/dev/signup", "/privacy", "/terms"];
 
 function Layout() {
   const location = useLocation();
-  const isPublic = PUBLIC_ROUTES.includes(location.pathname);
   const hideTopBarRoutes = ["/dev/login", "/dev/signup", "/"];
+  const hideSurvey = location.pathname.startsWith("/survey") || location.pathname.startsWith("/questions-loop");
+
+  const showTopBar = !hideTopBarRoutes.includes(location.pathname) && !hideSurvey;
 
   const content = (
     <>
-      {!hideTopBarRoutes.includes(location.pathname) && <TopBarComponent />}
-      <Box sx={{ mt: !hideTopBarRoutes.includes(location.pathname) ? 8 : 0 }}>
+      {showTopBar && <TopBarComponent />}
+      <Box sx={{ mt: showTopBar ? 8 : 0 }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           {/* Dev-only auth routes — not linked publicly */}
@@ -54,6 +65,16 @@ function Layout() {
               </ProtectedRoute>
             }
           />
+
+          {/* Survey / Demo */}
+          <Route path="/survey" element={<SurveyProviderLayout />}>
+            <Route index element={<Navigate to="welcome" replace />} />
+            <Route path="welcome" element={<SurveyWelcome />} />
+            <Route path="intro" element={<SurveyIntro />} />
+            <Route path="questions" element={<SurveyQuestions />} />
+            <Route path="end" element={<SurveyEnd />} />
+          </Route>
+          <Route path="/questions-loop" element={<QuestionsLoop />} />
 
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
