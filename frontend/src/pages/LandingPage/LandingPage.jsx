@@ -58,7 +58,7 @@ const NavButton = styled(Button)(() => ({
 }));
 
 export default function LandingPage() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [langAnchor, setLangAnchor] = useState(null);
