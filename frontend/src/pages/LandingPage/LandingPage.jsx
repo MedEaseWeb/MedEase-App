@@ -12,10 +12,15 @@ import { styled } from "@mui/material/styles";
 import { motion, useScroll, useSpring } from "framer-motion";
 import LP_Hero from "./LP_Hero";
 import LP_Mission from "./LP_Mission";
+import LP_ProductDemo from "./LP_ProductDemo";
 import LP_Product from "./LP_Product";
 import LP_About from "./LP_About";
+import LP_Team from "./LP_Team";
+import LP_UserStories from "./LP_UserStories";
 import LP_Footer from "./LP_Footer";
 import InteractiveBackground from "./utils/InteractiveBackground";
+import { useNavigate } from "react-router-dom";
+import logoGreen from "../../assets/pics/logo-green.svg";
 
 const colors = {
   textMain: "#2C2420",
@@ -46,6 +51,7 @@ export default function LandingPage() {
     damping: 30,
     restDelta: 0.001,
   });
+  const navigate = useNavigate();
 
   const handleScrollTo = (id) => {
     const el = document.getElementById(id);
@@ -95,31 +101,46 @@ export default function LandingPage() {
             mx: "auto",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{
-              fontFamily: fontMain,
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              color: colors.textMain,
-              cursor: "pointer",
-            }}
+          <Box
+            sx={{ display: "flex", alignItems: "center", gap: 1.25, cursor: "pointer" }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            MedEase
-          </Typography>
+            <Box
+              component="img"
+              src={logoGreen}
+              alt="MedEase logo"
+              sx={{ width: 34, height: 34, display: "block" }}
+            />
+            <Typography
+              variant="h5"
+              sx={{
+                fontFamily: fontMain,
+                fontWeight: 800,
+                letterSpacing: "-0.03em",
+                color: colors.textMain,
+                cursor: "pointer",
+              }}
+            >
+              MedEase
+            </Typography>
+          </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-            {["mission", "product", "about", "docs"].map((id) => (
-              <NavButton key={id} onClick={() => handleScrollTo(id)}>
-                {id.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+            {[
+              { id: "our-mission", label: "Our Mission" },
+              { id: "product-demo", label: "Product Demo" },
+              { id: "team", label: "Team" },
+              { id: "user-stories", label: "User Stories" },
+            ].map((item) => (
+              <NavButton key={item.id} onClick={() => handleScrollTo(item.id)}>
+                {item.label}
               </NavButton>
             ))}
           </Box>
 
           <Button
             variant="contained"
-            onClick={() => handleScrollTo("contact")}
+            onClick={() => navigate("/login")}
             sx={{
               bgcolor: colors.primary,
               color: "#FFF",
@@ -131,7 +152,7 @@ export default function LandingPage() {
               "&:hover": { bgcolor: "#1a1614" },
             }}
           >
-            Join Waitlist
+            Try Demo / Login
           </Button>
         </Toolbar>
         <motion.div
@@ -148,14 +169,23 @@ export default function LandingPage() {
       {/* FIX 2: Explicit Z-Index 1 to ensure it floats ABOVE the p5 canvas */}
       <Box sx={{ position: "relative", zIndex: 1, pt: 12 }}>
         <LP_Hero />
-        <Box id="mission">
+        <Box id="our-mission">
           <LP_Mission />
         </Box>
-        <Box id="product">
-          <LP_Product />
+        <Box id="product-demo">
+          <LP_ProductDemo />
+          <Box sx={{ mt: 6 }}>
+            <LP_Product />
+          </Box>
         </Box>
-        <Box id="about">
-          <LP_About />
+        <Box id="team">
+          <LP_Team />
+          <Box sx={{ mt: 6 }}>
+            <LP_About />
+          </Box>
+        </Box>
+        <Box id="user-stories">
+          <LP_UserStories />
         </Box>
         <Box id="contact">
           <LP_Footer />

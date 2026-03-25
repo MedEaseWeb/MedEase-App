@@ -146,7 +146,7 @@ export default function LP_Why() {
             mb: 1,
           }}
         >
-          Our Mission
+          Smart Healing, Stronger Future
         </Typography>
         <Typography
           sx={{
@@ -157,8 +157,8 @@ export default function LP_Why() {
             lineHeight: 1.5,
           }}
         >
-          Infrastructure that transforms complex medical condition into a
-          navigable path.
+          MedEase is the first AI-powered platform designed to help college
+          students navigate injuries, medical emergencies, and recovery.
         </Typography>
       </Box>
 
