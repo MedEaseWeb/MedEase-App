@@ -1,14 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Paper,
-  TextField,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { SURVEY_TOKENS } from "../UserSurvey/surveyTokens";
 
@@ -195,12 +187,25 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
   };
 
   return (
-    <Grid container spacing={2} sx={{ height: "100%", minHeight: 0 }}>
-      {/* Left ~70%: Chat */}
-      <Grid item xs={12} md={8.4} sx={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+    // Plain flex row — avoids Grid's negative-margin height-inheritance bug
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        gap: 2,
+        height: "100%",
+        minHeight: 0,
+      }}
+    >
+      {/* Left: Chat panel — fills available height */}
+      <Box sx={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
         <Paper
           elevation={0}
-          sx={{ ...cardSx, flex: 1, minHeight: 0, height: "100%" }}
+          sx={{
+            ...cardSx,
+            flex: 1,
+            minHeight: 0,
+          }}
         >
           <Typography
             sx={{
@@ -215,11 +220,13 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
           >
             {t("home.qitl.title")}
           </Typography>
-          <Typography sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.88rem", mb: 1.5, flexShrink: 0 }}>
+          <Typography
+            sx={{ fontFamily: fontMain, color: colors.textSec, fontSize: "0.88rem", mb: 1.5, flexShrink: 0 }}
+          >
             {t("home.qitl.description")}
           </Typography>
 
-          {/* Scrollable message area — fills remaining height */}
+          {/* Scrollable message area */}
           <Box
             sx={{
               flex: 1,
@@ -310,23 +317,33 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
                 flexShrink: 0,
                 bgcolor: colors.deepBrown,
                 color: "#FFF",
-                "&:hover": {
-                  bgcolor: "#1a1614",
-                  transform: "translateY(-1px)",
-                },
+                "&:hover": { bgcolor: "#1a1614" },
               }}
             >
               {t("home.qitl.send")}
             </Button>
           </Box>
         </Paper>
-      </Grid>
+      </Box>
 
-      {/* Right ~30%: Suggested questions */}
-      <Grid item xs={12} md={3.6} sx={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+      {/* Right: Suggested questions — fixed width, scrolls independently */}
+      <Box
+        sx={{
+          width: { xs: "100%", md: 220 },
+          flexShrink: 0,
+          minHeight: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Paper
           elevation={0}
-          sx={{ ...cardSx, flex: 1, minHeight: 0, height: "100%", overflowY: "auto" }}
+          sx={{
+            ...cardSx,
+            flex: 1,
+            minHeight: 0,
+            overflowY: "auto",
+          }}
         >
           <Typography
             sx={{
@@ -370,7 +387,7 @@ export default function QuestionsInTheLoopSection({ activeStage = "Choose Care" 
             ))}
           </Box>
         </Paper>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }

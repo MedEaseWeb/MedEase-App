@@ -195,8 +195,8 @@ export default function QuestionsInTheLoopPage() {
           </Collapse>
         </Box>
 
-        {/* Chat — fills remaining height */}
-        <Box sx={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+        {/* Chat — fills remaining height; height: 100% lets the section inherit a real px value */}
+        <Box sx={{ flex: 1, minHeight: 0, height: "100%", display: "flex", flexDirection: "column" }}>
           <QuestionsInTheLoopSection activeStage={activeStage} />
         </Box>
       </Paper>
