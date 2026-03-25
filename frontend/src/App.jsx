@@ -26,6 +26,19 @@ import SurveyQuestions from "./pages/UserSurvey/SurveyQuestions";
 import SurveyEnd from "./pages/UserSurvey/SurveyEnd";
 import QuestionsLoop from "./pages/UserSurvey/QuestionsLoop";
 
+// Demo / Home
+import QuestionsInTheLoopPage from "./pages/QuestionsInTheLoop/QuestionsInTheLoopPage";
+
+// Demo / Community
+import CommunityPage from "./pages/Community/CommunityPage";
+import FindPeoplePage from "./pages/Community/FindPeoplePage";
+import HelpPeoplePage from "./pages/Community/HelpPeoplePage";
+import LocalSupportPage from "./pages/Community/LocalSupportPage";
+import AIHealthPage from "./pages/Community/AIHealthPage";
+
+// Demo / Notes
+import NotesPage from "./pages/Notes/NotesPage";
+
 import "./index.css";
 import "./styles/fonts.css";
 import { Box } from "@mui/material";
@@ -35,7 +48,12 @@ const PUBLIC_ROUTES = ["/", "/dev/login", "/dev/signup", "/privacy", "/terms"];
 function Layout() {
   const location = useLocation();
   const hideTopBarRoutes = ["/dev/login", "/dev/signup", "/"];
-  const hideSurvey = location.pathname.startsWith("/survey") || location.pathname.startsWith("/questions-loop");
+  const hideSurvey =
+    location.pathname.startsWith("/survey") ||
+    location.pathname.startsWith("/questions-loop") ||
+    location.pathname.startsWith("/home") ||
+    location.pathname.startsWith("/community") ||
+    location.pathname.startsWith("/notes");
 
   const showTopBar = !hideTopBarRoutes.includes(location.pathname) && !hideSurvey;
 
@@ -75,6 +93,19 @@ function Layout() {
             <Route path="end" element={<SurveyEnd />} />
           </Route>
           <Route path="/questions-loop" element={<QuestionsLoop />} />
+
+          {/* Demo / Home */}
+          <Route path="/home" element={<QuestionsInTheLoopPage />} />
+
+          {/* Demo / Community */}
+          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/community/find-people" element={<FindPeoplePage />} />
+          <Route path="/community/help-people" element={<HelpPeoplePage />} />
+          <Route path="/community/local-support" element={<LocalSupportPage />} />
+          <Route path="/community/ai-health" element={<AIHealthPage />} />
+
+          {/* Demo / Notes */}
+          <Route path="/notes" element={<NotesPage />} />
 
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
