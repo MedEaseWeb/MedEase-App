@@ -145,7 +145,7 @@ export default function LP_About() {
     <Box
       sx={{
         width: "100%",
-        py: { xs: 6, md: 10 },
+        py: { xs: 4, md: 7 },
         px: { xs: 3, md: 8 },
         maxWidth: "1280px",
         mx: "auto",
