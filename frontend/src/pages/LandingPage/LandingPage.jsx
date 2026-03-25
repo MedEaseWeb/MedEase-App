@@ -54,7 +54,7 @@ const NavButton = styled(Button)(() => ({
 }));
 
 export default function LandingPage() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [langAnchor, setLangAnchor] = useState(null);
   const { scrollYProgress } = useScroll();
@@ -129,7 +129,7 @@ export default function LandingPage() {
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
             {["mission", "product", "about", "docs"].map((id) => (
               <NavButton key={id} onClick={() => handleScrollTo(id)}>
-                {id.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+                {t(`lp.nav.${id}`)}
               </NavButton>
             ))}
           </Box>
@@ -180,7 +180,7 @@ export default function LandingPage() {
                 "&:hover": { bgcolor: "#1a1614" },
               }}
             >
-              Join Waitlist
+              {t("lp.nav.joinWaitlist")}
             </Button>
           </Box>
         </Toolbar>

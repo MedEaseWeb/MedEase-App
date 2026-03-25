@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid, Typography, Paper, Divider } from "@mui/material";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // --- DUAL NARRATIVE PALETTE ---
 const colors = {
@@ -137,6 +138,9 @@ const NarrativeCard = ({
 };
 
 export default function LP_About() {
+  const { t } = useTranslation();
+  const cards = t("lp.about.cards", { returnObjects: true });
+
   return (
     <Box
       sx={{
@@ -161,7 +165,7 @@ export default function LP_About() {
             mb: 2,
           }}
         >
-          Built from Experience
+          {t("lp.about.heading")}
         </Typography>
         <Typography
           sx={{
@@ -170,7 +174,7 @@ export default function LP_About() {
             fontSize: "1.1rem",
           }}
         >
-          We didn't just find a market gap. We lived it.
+          {t("lp.about.subtitle")}
         </Typography>
       </Box>
 
@@ -178,23 +182,21 @@ export default function LP_About() {
       <Grid container spacing={3}>
         {" "}
         {/* Tight spacing (3 = 24px) */}
-        {/* CARD 1: THE SPARK (Dark) */}
         <NarrativeCard
           theme="dark"
           delay={0}
-          label="01 — The Spark"
-          title="The Moment Everything Broke"
-          body="During one of the most demanding seasons of college—juggling internships and classes—I suffered a Muay Thai injury that left me unable to walk. Like many students, I didn’t take medical leave. I navigated stairs, long walks, and deadlines, all while recovering alone."
-          highlight="I navigated one of the most complex systems in the world while I couldn't even walk."
+          label={cards[0].label}
+          title={cards[0].title}
+          body={cards[0].body}
+          highlight={cards[0].highlight}
         />
-        {/* CARD 2: THE VISION (Light) */}
         <NarrativeCard
           theme="light"
           delay={0.2}
-          label="02 — The Vision"
-          title="From Chaos to Infrastructure"
-          body="Recovery shouldn’t be a solo mission. We built MedEase to replace that isolation with infrastructure. Our mission is simple: help every student heal with clarity, dignity, and compassion—turning a fragmented system into a seamless journey."
-          highlight="We are building the digital safety net that I wish I had."
+          label={cards[1].label}
+          title={cards[1].title}
+          body={cards[1].body}
+          highlight={cards[1].highlight}
         />
       </Grid>
     </Box>

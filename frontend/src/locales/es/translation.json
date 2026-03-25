@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "reportSimplifier": "Simplificador de informes",
+    "medicationHelp": "Ayuda con medicamentos",
+    "caregiverMode": "Modo cuidador",
+    "logout": "Cerrar sesión",
+    "language": "Idioma"
+  },
+  "menu": {
+    "title": "Menú de MedEase",
+    "documentation": "Documentación",
+    "termsOfService": "Términos de servicio",
+    "privacyPolicy": "Política de privacidad",
+    "generateKey": "Generar clave",
+    "expired": "Expirado",
+    "copyToClipboard": "Copiar al portapapeles"
+  },
+  "chat": {
+    "title": "Asistente IA para cuidadores",
+    "placeholder": "Escribe un mensaje…",
+    "send": "Enviar",
+    "welcome": "Hola, bienvenido a MedEase, ¿en qué puedo ayudarte?",
+    "patientsButton": "Subir información de pacientes",
+    "remindersButton": "Recordatorios y tareas",
+    "diaryButton": "Subir diario fotográfico",
+    "accommodationButton": "Carta de adaptación",
+    "patientDataPrompt": "¡Claro! Para recuperar los datos de un paciente, proporciona el correo y la clave generada en un solo mensaje. Por ejemplo: 'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "¡Claro! ¿De qué te gustaría que te recordara,\ny cuándo? (p. ej. \"Tomar medicamentos a las 9 AM durante 5 días\")"
+  },
+  "login": {
+    "errorTitle": "Error de inicio de sesión",
+    "gotIt": "Entendido",
+    "welcomeBack": "Bienvenido de vuelta",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUp": "Regístrate",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "logIn": "Iniciar sesión",
+    "goToHome": "Haz clic aquí para ir a la página de inicio",
+    "tagline": "Tu recuperación tras la lesión, simplificada.",
+    "subtitle": "IA que conecta a los estudiantes con la atención médica correcta en el campus, al instante.",
+    "copyright": "© 2025 MedEase. Creado para estudiantes.",
+    "features": [
+      "Simplificación de informes con IA",
+      "Seguimiento inteligente de medicamentos",
+      "Motor de triaje agéntico",
+      "Coordinación de atención 24/7"
+    ],
+    "errors": {
+      "noConnection": "No se puede conectar al servidor. Comprueba tu conexión e inténtalo de nuevo.",
+      "invalidCredentials": "Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.",
+      "accountDisabled": "Esta cuenta ha sido desactivada. Por favor, contacta con soporte.",
+      "tooManyAttempts": "Demasiados intentos. Por favor, espera un momento e inténtalo de nuevo.",
+      "generic": "Algo salió mal. Por favor, inténtalo de nuevo."
+    }
+  },
+  "lp": {
+    "nav": {
+      "mission": "Misión",
+      "product": "Producto",
+      "about": "Nosotros",
+      "docs": "Docs",
+      "joinWaitlist": "Únete a la lista de espera"
+    },
+    "hero": {
+      "headline": "IA agéntica para tu",
+      "scrambleWord": "recuperación",
+      "journeySuffix": " post-lesión",
+      "subtitle": "MedEase reemplaza el pánico post-lesión con precisión, conectándote inteligentemente con la atención correcta y los servicios del campus basándose en los datos específicos de tu universidad.",
+      "joinWaitlist": "Únete a la lista de espera"
+    },
+    "mission": {
+      "heading": "Nuestra Misión",
+      "subtitle": "Infraestructura que transforma condiciones médicas complejas en un camino navegable.",
+      "cards": [
+        {
+          "title": "Cerrando la Brecha de Información",
+          "text": "El sistema médico estadounidense es un vacío para los estudiantes internacionales. MedEase actúa como el puente. Eliminamos la asimetría crítica entre lesión y atención, proporcionando la infraestructura para navegar protocolos complejos con la seguridad y certeza de un local."
+        },
+        {
+          "title": "Claridad Instantánea",
+          "text": "Estabilizando la mentalidad del estudiante al trasladarlo instantáneamente del **Pánico** a la **Precisión**."
+        },
+        {
+          "title": "Previniendo Daños",
+          "text": "Eliminando el miedo al costo para mover a los estudiantes de la **Hesitación** a la **Acción** médica inmediata."
+        },
+        {
+          "title": "Seguridad Institucional",
+          "text": "Protegiendo a la universidad al cambiar el perfil de riesgo de **Responsabilidad** a **Cumplimiento** proactivo."
+        }
+      ]
+    },
+    "product": {
+      "heading": "Gestión Inteligente de la Salud",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "Motor de Triaje Agéntico",
+          "subtitle": "Enrutamiento impulsado por RAG que conecta instantáneamente a los estudiantes con el recurso exacto del campus basándose en datos universitarios en vivo.",
+          "features": [
+            "Recuperación consciente del contexto",
+            "Enrutamiento automático de departamentos",
+            "Base de conocimiento universitaria",
+            "Barreras anti-alucinación"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "Protocolo de Chat Adaptativo",
+          "subtitle": "Una interfaz de chat viva que adapta los plazos de recuperación en tiempo real basándose en los comentarios de los estudiantes y actualizaciones en lenguaje natural.",
+          "features": [
+            "Actualizaciones en lenguaje natural",
+            "Ajuste dinámico de plazos",
+            "Clínico en el bucle",
+            "Detección de crisis 24/7"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "Construido desde la Experiencia",
+      "subtitle": "No solo encontramos una brecha en el mercado. La vivimos.",
+      "cards": [
+        {
+          "label": "01 — La Chispa",
+          "title": "El Momento en que Todo Se Rompió",
+          "body": "Durante una de las temporadas más exigentes de la universidad—equilibrando prácticas y clases—sufrí una lesión de Muay Thai que me dejó sin poder caminar. Como muchos estudiantes, no tomé licencia médica. Navegué escaleras, largas caminatas y plazos, todo mientras me recuperaba solo.",
+          "highlight": "Navegué uno de los sistemas más complejos del mundo mientras ni siquiera podía caminar."
+        },
+        {
+          "label": "02 — La Visión",
+          "title": "Del Caos a la Infraestructura",
+          "body": "La recuperación no debería ser una misión en solitario. Construimos MedEase para reemplazar ese aislamiento con infraestructura. Nuestra misión es simple: ayudar a cada estudiante a sanar con claridad, dignidad y compasión—convirtiendo un sistema fragmentado en un viaje sin interrupciones.",
+          "highlight": "Estamos construyendo la red de seguridad digital que ojalá hubiera tenido."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "La infraestructura faltante para la salud estudiantil. Simplificando la recuperación, conectando cuidadores y reduciendo riesgos.",
+      "product": {
+        "heading": "Producto",
+        "links": ["Características", "Para Universidades", "Para Estudiantes", "Seguridad"]
+      },
+      "company": {
+        "heading": "Empresa",
+        "links": ["Sobre Nosotros", "Empleos", "Blog", "Soporte de contacto"]
+      },
+      "legal": {
+        "heading": "Legal",
+        "links": ["Política de Privacidad", "Términos de Servicio", "Política de Cookies", "Accesibilidad"]
+      },
+      "getApp": {
+        "heading": "Descargar App",
+        "links": ["iOS App Store", "Google Play"]
+      },
+      "copyright": "© {{year}} MedEase Inc. Todos los derechos reservados.",
+      "designedAt": "Diseñado en Emory"
+    }
+  }
+}

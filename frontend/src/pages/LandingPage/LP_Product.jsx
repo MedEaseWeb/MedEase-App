@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, Paper } from "@mui/material"; // Removed Grid, unused now
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 // --- DARK CONSOLE PALETTE ---
 const colors = {
@@ -18,35 +19,8 @@ const colors = {
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
-// --- DATA ---
-const sections = [
-  {
-    id: "rag",
-    title: "Agentic Triage Engine",
-    subtitle:
-      "RAG-powered routing that instantly connects students to the exact right campus resource based on live university data.",
-    features: [
-      "Context-Aware Retrieval",
-      "Automatic Dept. Routing",
-      "University Knowledge Base",
-      "Zero-Hallucination Guardrails",
-    ],
-    type: "dashboard",
-  },
-  {
-    id: "chat",
-    title: "Adaptive Chat Protocol",
-    subtitle:
-      "A living chat interface that adapts recovery timelines in real-time based on student feedback and natural language updates.",
-    features: [
-      "Natural Language Updates",
-      "Dynamic Timeline Adjustment",
-      "Clinician-in-the-Loop",
-      "24/7 Crisis Detection",
-    ],
-    type: "chat",
-  },
-];
+// --- STATIC TYPE MAPPING (not user-visible) ---
+const SECTION_TYPES = { rag: "dashboard", chat: "chat" };
 
 // --- SKELETON UI COMPONENTS ---
 const SkeletonBlock = ({ width, height, sx, delay }) => (
@@ -140,6 +114,11 @@ const WireframeDashboard = () => (
 );
 
 export default function LP_Product() {
+  const { t } = useTranslation();
+  const sections = t("lp.product.sections", { returnObjects: true }).map((s) => ({
+    ...s,
+    type: SECTION_TYPES[s.id],
+  }));
   const [active, setActive] = useState("rag");
   const current = sections.find((s) => s.id === active);
 
@@ -166,7 +145,7 @@ export default function LP_Product() {
             fontSize: { xs: "2rem", md: "3rem" },
           }}
         >
-          Intelligent Health Management
+          {t("lp.product.heading")}
         </Typography>
       </Box>
 

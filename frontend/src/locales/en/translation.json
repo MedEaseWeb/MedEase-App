@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "reportSimplifier": "Report Simplifier",
+    "medicationHelp": "Medication Help",
+    "caregiverMode": "CareGiver Mode",
+    "logout": "Sign out",
+    "language": "Language"
+  },
+  "menu": {
+    "title": "MedEase Menu",
+    "documentation": "Documentation",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "generateKey": "Generate Key",
+    "expired": "Expired",
+    "copyToClipboard": "Copy to clipboard"
+  },
+  "chat": {
+    "title": "Caregiver AI Assistant",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "welcome": "Hello, welcome to MedEase, how can I help you?",
+    "patientsButton": "My Patients Info Upload",
+    "remindersButton": "Reminders & Tasks",
+    "diaryButton": "Picture Diary Upload",
+    "accommodationButton": "Accommodation Letter",
+    "patientDataPrompt": "Sure! To retrieve a patient's data, please provide the patient's email and generated key in one message. For example: 'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "Sure! What would you like to be reminded about,\nand when? (e.g. \"Take meds at 9 AM for 5 days\")"
+  },
+  "login": {
+    "errorTitle": "Login failed",
+    "gotIt": "Got it",
+    "welcomeBack": "Welcome back",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "logIn": "Log in",
+    "goToHome": "← Back to home",
+    "tagline": "Your post-injury journey, simplified.",
+    "subtitle": "Agentic AI that triages students to the right campus care — instantly.",
+    "copyright": "© 2025 MedEase. Built for students.",
+    "features": [
+      "AI-Powered Report Simplification",
+      "Smart Medication Tracking",
+      "Agentic Triage Engine",
+      "24/7 Care Coordination"
+    ],
+    "errors": {
+      "noConnection": "Unable to reach the server. Check your connection and try again.",
+      "invalidCredentials": "Incorrect email or password. Please try again.",
+      "accountDisabled": "This account has been disabled. Please contact support.",
+      "tooManyAttempts": "Too many attempts. Please wait a moment and try again.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "lp": {
+    "nav": {
+      "mission": "Mission",
+      "product": "Product",
+      "about": "About",
+      "docs": "Docs",
+      "joinWaitlist": "Join Waitlist"
+    },
+    "hero": {
+      "headline": "Agentic AI for your",
+      "scrambleWord": "post-injury",
+      "journeySuffix": " journey",
+      "subtitle": "MedEase replaces post-injury panic with precision by intelligently triaging you to the correct care and campus services based on your university's specific data.",
+      "joinWaitlist": "Join Waitlist"
+    },
+    "mission": {
+      "heading": "Our Mission",
+      "subtitle": "Infrastructure that transforms complex medical conditions into a navigable path.",
+      "cards": [
+        {
+          "title": "Closing the Information Gap",
+          "text": "The American medical system is a void for international students. MedEase acts as the bridge. We eliminate the critical asymmetry between injury and care, providing the infrastructure to navigate complex protocols with the safety and certainty of a local."
+        },
+        {
+          "title": "Instant Clarity",
+          "text": "Stabilizing the student mindset by instantly shifting them from **Panic** to **Precision**."
+        },
+        {
+          "title": "Preventing Harm",
+          "text": "Removing the fear of cost to shift students from **Hesitation** to immediate medical **Action**."
+        },
+        {
+          "title": "Institutional Safety",
+          "text": "Shielding the university by shifting the risk profile from **Liability** to proactive **Compliance**."
+        }
+      ]
+    },
+    "product": {
+      "heading": "Intelligent Health Management",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "Agentic Triage Engine",
+          "subtitle": "RAG-powered routing that instantly connects students to the exact right campus resource based on live university data.",
+          "features": [
+            "Context-Aware Retrieval",
+            "Automatic Dept. Routing",
+            "University Knowledge Base",
+            "Zero-Hallucination Guardrails"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "Adaptive Chat Protocol",
+          "subtitle": "A living chat interface that adapts recovery timelines in real-time based on student feedback and natural language updates.",
+          "features": [
+            "Natural Language Updates",
+            "Dynamic Timeline Adjustment",
+            "Clinician-in-the-Loop",
+            "24/7 Crisis Detection"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "Built from Experience",
+      "subtitle": "We didn't just find a market gap. We lived it.",
+      "cards": [
+        {
+          "label": "01 — The Spark",
+          "title": "The Moment Everything Broke",
+          "body": "During one of the most demanding seasons of college—juggling internships and classes—I suffered a Muay Thai injury that left me unable to walk. Like many students, I didn't take medical leave. I navigated stairs, long walks, and deadlines, all while recovering alone.",
+          "highlight": "I navigated one of the most complex systems in the world while I couldn't even walk."
+        },
+        {
+          "label": "02 — The Vision",
+          "title": "From Chaos to Infrastructure",
+          "body": "Recovery shouldn't be a solo mission. We built MedEase to replace that isolation with infrastructure. Our mission is simple: help every student heal with clarity, dignity, and compassion—turning a fragmented system into a seamless journey.",
+          "highlight": "We are building the digital safety net that I wish I had."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "The missing infrastructure for student health. Simplifying recovery, connecting caregivers, and reducing risk.",
+      "product": {
+        "heading": "Product",
+        "links": ["Features", "For Universities", "For Students", "Security"]
+      },
+      "company": {
+        "heading": "Company",
+        "links": ["About Us", "Careers", "Blog", "Contact Support"]
+      },
+      "legal": {
+        "heading": "Legal",
+        "links": ["Privacy Policy", "Terms of Service", "Cookie Policy", "Accessibility"]
+      },
+      "getApp": {
+        "heading": "Get the App",
+        "links": ["iOS App Store", "Google Play"]
+      },
+      "copyright": "© {{year}} MedEase Inc. All rights reserved.",
+      "designedAt": "Designed at Emory"
+    }
+  }
+}

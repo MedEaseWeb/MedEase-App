@@ -1,0 +1,161 @@
+{
+  "nav": {
+    "reportSimplifier": "报告简化",
+    "medicationHelp": "用药帮助",
+    "caregiverMode": "看护者模式",
+    "logout": "退出登录",
+    "language": "语言"
+  },
+  "menu": {
+    "title": "MedEase 菜单",
+    "documentation": "文档",
+    "termsOfService": "服务条款",
+    "privacyPolicy": "隐私政策",
+    "generateKey": "生成密钥",
+    "expired": "已过期",
+    "copyToClipboard": "复制到剪贴板"
+  },
+  "chat": {
+    "title": "看护者 AI 助手",
+    "placeholder": "输入消息…",
+    "send": "发送",
+    "welcome": "您好，欢迎使用 MedEase，请问有什么可以帮助您的？",
+    "patientsButton": "上传患者信息",
+    "remindersButton": "提醒与任务",
+    "diaryButton": "图片日记上传",
+    "accommodationButton": "无障碍申请信",
+    "patientDataPrompt": "好的！要查询患者数据，请在一条消息中提供患者邮箱和生成的密钥。例如：'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "好的！您想被提醒什么，\n什么时候提醒？（例如：「早上9点服药，持续5天」）"
+  },
+  "login": {
+    "errorTitle": "登录失败",
+    "gotIt": "知道了",
+    "welcomeBack": "欢迎回来",
+    "noAccount": "还没有账号？",
+    "signUp": "立即注册",
+    "email": "邮箱",
+    "password": "密码",
+    "logIn": "登录",
+    "goToHome": "点击此处前往主页",
+    "tagline": "您的康复之路，从此轻松简单。",
+    "subtitle": "AI 智能分诊，为学生快速匹配校园医疗资源。",
+    "copyright": "© 2025 MedEase。为学生而建。",
+    "features": [
+      "AI 驱动的报告简化",
+      "智能用药追踪",
+      "智能分诊引擎",
+      "全天候护理协调"
+    ],
+    "errors": {
+      "noConnection": "无法连接到服务器，请检查网络连接后重试。",
+      "invalidCredentials": "邮箱或密码不正确，请重试。",
+      "accountDisabled": "此账号已被禁用，请联系客服。",
+      "tooManyAttempts": "尝试次数过多，请稍候再试。",
+      "generic": "出现错误，请重试。"
+    }
+  },
+  "lp": {
+    "nav": {
+      "mission": "使命",
+      "product": "产品",
+      "about": "关于",
+      "docs": "文档",
+      "joinWaitlist": "加入候补名单"
+    },
+    "hero": {
+      "headline": "智能 AI，陪伴您的",
+      "scrambleWord": "伤后",
+      "journeySuffix": " 康复之旅",
+      "subtitle": "MedEase 以精准取代伤后的慌乱，根据您大学的具体数据，智能为您匹配正确的医疗资源和校园服务。",
+      "joinWaitlist": "加入候补名单"
+    },
+    "mission": {
+      "heading": "我们的使命",
+      "subtitle": "将复杂的医疗状况转化为可导航路径的基础设施。",
+      "cards": [
+        {
+          "title": "消除信息鸿沟",
+          "text": "美国医疗体系对国际学生而言犹如一片迷雾。MedEase 架起沟通的桥梁，消除伤病与救治之间的严重信息不对称，提供像本地人一样安全、确定地导航复杂流程的基础设施。"
+        },
+        {
+          "title": "即时清晰",
+          "text": "通过将学生心态从**恐慌**即时转变为**精准**，稳定其思维状态。"
+        },
+        {
+          "title": "防止伤害",
+          "text": "消除费用顾虑，将学生从**犹豫**转变为立即采取医疗**行动**。"
+        },
+        {
+          "title": "机构安全",
+          "text": "通过将风险从**法律责任**转变为主动**合规**，保护大学机构。"
+        }
+      ]
+    },
+    "product": {
+      "heading": "智能健康管理",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "智能分诊引擎",
+          "subtitle": "基于 RAG 的智能路由，根据大学实时数据，即时为学生匹配最合适的校园资源。",
+          "features": [
+            "上下文感知检索",
+            "自动科室路由",
+            "大学知识库",
+            "零幻觉防护"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "自适应对话协议",
+          "subtitle": "智能对话界面，根据学生反馈和自然语言更新，实时调整康复时间线。",
+          "features": [
+            "自然语言更新",
+            "动态时间线调整",
+            "临床医生协作",
+            "24/7 危机检测"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "源于亲身经历",
+      "subtitle": "我们不只是发现了市场空白，我们亲历过它。",
+      "cards": [
+        {
+          "label": "01 — 起点",
+          "title": "一切崩塌的那一刻",
+          "body": "在大学最繁忙的时期——同时兼顾实习和课业——我在泰拳训练中受伤，无法行走。像许多学生一样，我没有请病假，而是带伤爬楼梯、走长路、赶截止日期，独自康复。",
+          "highlight": "我在连路都走不了的情况下，独自应对了世界上最复杂的医疗体系之一。"
+        },
+        {
+          "label": "02 — 愿景",
+          "title": "从混乱到基础设施",
+          "body": "康复不应是孤独的旅程。我们打造 MedEase，用基础设施取代孤立无援。我们的使命很简单：帮助每一位学生以清晰、尊严和关怀治愈——将碎片化的体系变成无缝的旅程。",
+          "highlight": "我们正在构建我曾经渴望拥有的数字安全网。"
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "学生健康缺失的基础设施。简化康复，连接护理，降低风险。",
+      "product": {
+        "heading": "产品",
+        "links": ["功能特性", "面向大学", "面向学生", "安全保障"]
+      },
+      "company": {
+        "heading": "公司",
+        "links": ["关于我们", "招聘", "博客", "联系支持"]
+      },
+      "legal": {
+        "heading": "法律",
+        "links": ["隐私政策", "服务条款", "Cookie 政策", "无障碍访问"]
+      },
+      "getApp": {
+        "heading": "下载应用",
+        "links": ["iOS App Store", "Google Play"]
+      },
+      "copyright": "© {{year}} MedEase Inc. 保留所有权利。",
+      "designedAt": "设计于埃默里大学"
+    }
+  }
+}
