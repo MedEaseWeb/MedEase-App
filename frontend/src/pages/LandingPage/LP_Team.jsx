@@ -131,7 +131,7 @@ export default function LP_Team() {
           <TeamCard
             name="Rolf Shi"
             role="Technical Co-founder"
-            detail="AI and Machine Learning Software Engineer in Healthcare, Emory '25 & UPenn '27"
+            detail="AI4H Researcher and Software Engineer, Emory '25 & UPenn '27"
             delay={0.15}
           />
         </Grid>

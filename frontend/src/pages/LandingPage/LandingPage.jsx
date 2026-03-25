@@ -125,7 +125,7 @@ export default function LandingPage() {
           </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-            {["mission", "product", "about", "team", "user-stories"].map((id) => (
+            {["mission", "product", "about", "user-stories", "team"].map((id) => (
               <NavButton key={id} onClick={() => handleScrollTo(id)}>
                 {id.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
               </NavButton>
