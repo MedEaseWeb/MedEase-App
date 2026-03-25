@@ -8,7 +8,7 @@ export default function Logo({ imgSize = 36, fontSize = 48 }) {
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
       <Box
         component="img"
-        src="/M.svg"
+        src="/medease-logo.svg"
         alt="MedEase"
         sx={{ width: imgSize, height: imgSize }}
       />
