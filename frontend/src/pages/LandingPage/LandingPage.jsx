@@ -16,6 +16,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { styled } from "@mui/material/styles";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import Logo from "../utility/Logo";
 import LP_Hero from "./LP_Hero";
 import LP_Mission from "./LP_Mission";
 import LP_Product from "./LP_Product";
@@ -105,26 +106,19 @@ export default function LandingPage() {
       >
         <Toolbar
           sx={{
+            display: "flex",
             justifyContent: "space-between",
-            py: 1.5,
-            maxWidth: "1400px",
-            width: "100%",
-            mx: "auto",
+            alignItems: "center",
+            px: { xs: 2, md: 4 },
+            py: 1,
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{
-              fontFamily: fontMain,
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              color: colors.textMain,
-              cursor: "pointer",
-            }}
+          <Box
+            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            MedEase
-          </Typography>
+            <Logo imgSize={36} fontSize={26} />
+          </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
             {["mission", "product", "about", "docs"].map((id) => (
@@ -135,20 +129,31 @@ export default function LandingPage() {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <IconButton
+            <Button
               onClick={(e) => setLangAnchor(e.currentTarget)}
-              size="small"
-              sx={{
-                color: colors.textMain,
-                "&:hover": { backgroundColor: "rgba(44, 36, 32, 0.05)" },
-              }}
+              sx={{ minWidth: 0, p: 0.5, color: colors.textMain }}
             >
-              <LanguageIcon sx={{ fontSize: 22 }} />
-            </IconButton>
+              <LanguageIcon sx={{ fontSize: 26 }} />
+            </Button>
             <Menu
               anchorEl={langAnchor}
               open={Boolean(langAnchor)}
               onClose={() => setLangAnchor(null)}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  mt: 1,
+                  minWidth: 160,
+                  bgcolor: "rgba(245,240,235,0.97)",
+                  backdropFilter: "blur(16px)",
+                  border: "1px solid #E6DCCA",
+                  borderRadius: "14px",
+                  boxShadow: "0 8px 32px rgba(44,36,32,0.12)",
+                  overflow: "hidden",
+                },
+              }}
             >
               {LANGUAGES.map(({ code, label }) => (
                 <MenuItem
@@ -158,10 +163,17 @@ export default function LandingPage() {
                     i18n.changeLanguage(code);
                     setLangAnchor(null);
                   }}
+                  sx={{
+                    fontFamily: fontMain,
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                    color: "#2C2420",
+                    px: 2.5,
+                    py: 1,
+                    "&:hover": { bgcolor: "rgba(44,36,32,0.05)" },
+                  }}
                 >
-                  <Typography sx={{ fontFamily: fontMain, fontSize: "0.9rem" }}>
-                    {label}
-                  </Typography>
+                  {label}
                 </MenuItem>
               ))}
             </Menu>
@@ -172,11 +184,12 @@ export default function LandingPage() {
               sx={{
                 bgcolor: colors.primary,
                 color: "#FFF",
-                borderRadius: "12px",
-                px: 3,
+                borderRadius: "10px",
+                px: 2,
                 fontFamily: fontMain,
-                textTransform: "none",
+                fontSize: "0.85rem",
                 fontWeight: 600,
+                textTransform: "none",
                 "&:hover": { bgcolor: "#1a1614" },
               }}
             >
