@@ -28,6 +28,8 @@ const Chatbox = () => {
 
   // On mount, add a welcome message after a 500ms delay.
   useEffect(() => {
+    socket.connect();
+
     const timeoutId = setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -42,8 +44,31 @@ const Chatbox = () => {
       console.log("Connected to backend via Socket.IO")
     );
     socket.on("disconnect", () => console.log("Disconnected from backend"));
+
+    // Non-streaming agents (caregiver, accommodation, etc.)
     socket.on("bot-message", (message) => {
-      setMessages((prev) => [...prev, { text: message, sender: "bot" }]);
+      setMessages((prev) => [...prev, { text: message, sender: "bot", streaming: false }]);
+    });
+
+    // Streaming agents (RAG) — token-by-token
+    socket.on("bot-token", (token) => {
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last && last.streaming) {
+          return [...prev.slice(0, -1), { ...last, text: last.text + token }];
+        }
+        return [...prev, { text: token, sender: "bot", streaming: true }];
+      });
+    });
+
+    socket.on("bot-done", () => {
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last && last.streaming) {
+          return [...prev.slice(0, -1), { ...last, streaming: false }];
+        }
+        return prev;
+      });
     });
 
     return () => {
@@ -51,6 +76,8 @@ const Chatbox = () => {
       socket.off("connect");
       socket.off("disconnect");
       socket.off("bot-message");
+      socket.off("bot-token");
+      socket.off("bot-done");
     };
   }, []);
 
@@ -140,6 +167,7 @@ const Chatbox = () => {
           overflow: "hidden",
           borderRadius: "20px",
           border: "2px solid #027555",
+          backgroundColor: "#027555",
         }}
       >
         <Box

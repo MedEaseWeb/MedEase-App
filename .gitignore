@@ -1,5 +1,12 @@
+# RAG corpus and vector store (large data files — synced via sync_corpus.sh)
+backend/src/rag/corpus/
+backend/src/rag/chroma_store/
+
 # Ignore virtual environment
 venv-fastapi/
+
+# Claude Code local memory (not project files)
+.claude/
 .DS_Store
 Thumbs.db
 

@@ -142,7 +142,7 @@ export default function Login() {
     if (!isValid) return;
     try {
       await login(email, password);
-      navigate("/reportsimplifier");
+      navigate("/dashboard");
     } catch (error) {
       setErrorMsg(parseLoginError(error));
     }

@@ -7,58 +7,54 @@ import {
 
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
-import CareGiver from "./pages/careGiver/CaregiverMainPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import Medication from "./pages/medication/MedicationPage";
-import ReportSimplification from "./pages/reportsimplification/reportSimplificationPage";
+import ChatPage from "./pages/chat/ChatPage";
+import SettingsPage from "./pages/settings/SettingsPage";
 import NotFound from "./pages/utility/NotFound";
 import PrivacyPolicy from "./pages/utility/PrivacyPolicy";
 import TermsOfService from "./pages/utility/TermsOfService";
 import TopBarComponent from "./pages/utility/TopBar";
 import ProtectedRoute from "./context/ProtectedRoutes";
+import { AuthProvider } from "./context/AuthContext";
 
 import "./index.css";
 import "./styles/fonts.css";
 import { Box } from "@mui/material";
 
+const PUBLIC_ROUTES = ["/", "/dev/login", "/dev/signup", "/privacy", "/terms"];
+
 function Layout() {
   const location = useLocation();
-  const hideTopBarRoutes = ["/login", "/signup", "/"];
+  const isPublic = PUBLIC_ROUTES.includes(location.pathname);
+  const hideTopBarRoutes = ["/dev/login", "/dev/signup", "/"];
 
-  return (
+  const content = (
     <>
       {!hideTopBarRoutes.includes(location.pathname) && <TopBarComponent />}
-      <Box sx={{ mt: !hideTopBarRoutes.includes(location.pathname) ? 12 : 0 }}>
+      <Box sx={{ mt: !hideTopBarRoutes.includes(location.pathname) ? 8 : 0 }}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          {/* Dev-only auth routes — not linked publicly */}
+          <Route path="/dev/login" element={<Login />} />
+          <Route path="/dev/signup" element={<SignUp />} />
 
-          {/* Wrap protected routes here */}
           <Route
-            path="/reportsimplifier"
+            path="/dashboard"
             element={
               <ProtectedRoute>
-                <ReportSimplification />
+                <ChatPage />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/medication"
+            path="/settings"
             element={
               <ProtectedRoute>
-                <Medication />
+                <SettingsPage />
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/caregiver"
-            element={
-              <ProtectedRoute>
-                <CareGiver />
-              </ProtectedRoute>
-            }
-          />
+
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />} />
@@ -66,6 +62,8 @@ function Layout() {
       </Box>
     </>
   );
+
+  return <AuthProvider>{content}</AuthProvider>;
 }
 
 export default function App() {

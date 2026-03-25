@@ -1,11 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
 from src.database import user_collection
 from src.models.userModel import UserCreate, UserResponse, UserInDB
+from src.limiter import limiter
 from bson import ObjectId
 from datetime import datetime
 import bcrypt
 from src.utils.jwtUtils import create_jwt, get_current_user_auth
-from main import limiter
+import src.socket_server as _socket_server
 
 auth_router = APIRouter()
 
@@ -49,15 +50,14 @@ async def login(request: Request, user: UserCreate, response: Response):
         "email": existing_user["email"]
     })
 
-    # Set cookie with Max-Age and expiry
     response.set_cookie(
         key="access_token",
         value=token,
         httponly=True,
         secure=True,
-        samesite="Lax",
+        samesite="lax",
         max_age=1800,  # 30 minutes
-        expires=1800
+        path="/"
     )
 
     return {"message": "Login successful"}
@@ -67,8 +67,35 @@ async def login(request: Request, user: UserCreate, response: Response):
 @auth_router.post("/logout")
 async def logout(response: Response):
     """Clear the authentication token"""
-    response.delete_cookie(key="access_token")
+    response.delete_cookie(
+        key="access_token",
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        path="/"
+    )
     return {"message": "Logged out successfully"}
+
+# Token Refresh
+@auth_router.post("/refresh")
+async def refresh(response: Response, payload: dict = Depends(get_current_user_auth)):
+    new_token = create_jwt({
+        "user_id": payload["user_id"],
+        "email": payload["email"]
+    })
+    response.set_cookie(
+        key="access_token",
+        value=new_token,
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        max_age=1800,
+        path="/"
+    )
+    # Keep any live socket sessions in sync so agents don't use an expired token
+    _socket_server.update_user_token(payload["user_id"], new_token)
+    return {"message": "Token refreshed"}
+
 
 # Get current user
 @auth_router.get("/user", response_model=UserResponse)
