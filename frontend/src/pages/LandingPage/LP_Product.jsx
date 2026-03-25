@@ -291,7 +291,7 @@ export default function LP_Product() {
     <Box
       ref={sectionRef}
       sx={{
-        py: { xs: 10, md: 16 },
+        py: { xs: 6, md: 10 },
         px: { xs: 3, md: 8 },
         maxWidth: "1280px",
         mx: "auto",
@@ -299,7 +299,7 @@ export default function LP_Product() {
       }}
     >
       {/* Header */}
-      <Box textAlign="center" mb={8}>
+      <Box textAlign="center" mb={4}>
         <Typography
           variant="h2"
           sx={{
@@ -316,7 +316,7 @@ export default function LP_Product() {
       </Box>
 
       {/* Tab switcher */}
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
         <Box
           sx={{
             p: 0.5,

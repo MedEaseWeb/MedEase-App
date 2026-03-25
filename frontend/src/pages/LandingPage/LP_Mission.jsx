@@ -130,7 +130,7 @@ export default function LP_Why() {
   return (
     <Box
       sx={{
-        py: 12,
+        py: { xs: 6, md: 10 },
         px: { xs: 3, md: 8 },
         maxWidth: "1280px",
         mx: "auto",
@@ -138,7 +138,7 @@ export default function LP_Why() {
       }}
     >
       {/* HEADER: Clean Dark Text on Page BG */}
-      <Box sx={{ mb: 8, textAlign: "left" }}>
+      <Box sx={{ mb: 5, textAlign: "left" }}>
         <Typography
           variant="h2"
           sx={{

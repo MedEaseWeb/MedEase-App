@@ -87,14 +87,14 @@ export default function LP_Team() {
   return (
     <Box
       sx={{
-        py: 12,
+        py: { xs: 6, md: 10 },
         px: { xs: 3, md: 8 },
         maxWidth: "1280px",
         mx: "auto",
         width: "100%",
       }}
     >
-      <Box sx={{ mb: 8, maxWidth: "800px" }}>
+      <Box sx={{ mb: 5, maxWidth: "800px" }}>
         <Typography
           variant="h2"
           sx={{

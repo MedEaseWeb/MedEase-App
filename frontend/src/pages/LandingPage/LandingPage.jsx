@@ -72,7 +72,7 @@ export default function LandingPage() {
   const handleScrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 72;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };

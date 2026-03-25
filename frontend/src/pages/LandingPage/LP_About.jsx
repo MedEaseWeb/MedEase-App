@@ -145,7 +145,7 @@ export default function LP_About() {
     <Box
       sx={{
         width: "100%",
-        py: { xs: 10, md: 16 }, // Tighter padding
+        py: { xs: 6, md: 10 },
         px: { xs: 3, md: 8 },
         maxWidth: "1280px",
         mx: "auto",
@@ -153,7 +153,7 @@ export default function LP_About() {
       }}
     >
       {/* HEADER: Minimal and Clean */}
-      <Box sx={{ mb: 8, maxWidth: "600px" }}>
+      <Box sx={{ mb: 5, maxWidth: "600px" }}>
         <Typography
           variant="h2"
           sx={{

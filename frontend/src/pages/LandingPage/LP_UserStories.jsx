@@ -131,8 +131,8 @@ export default function LP_UserStories() {
   const stories = t("lp.userStories.stories", { returnObjects: true });
 
   return (
-    <Box sx={{ py: 12, px: { xs: 3, md: 8 }, maxWidth: "1280px", mx: "auto", width: "100%" }}>
-      <Box sx={{ mb: 8, textAlign: "left", maxWidth: "850px" }}>
+    <Box sx={{ py: { xs: 6, md: 10 }, px: { xs: 3, md: 8 }, maxWidth: "1280px", mx: "auto", width: "100%" }}>
+      <Box sx={{ mb: 5, textAlign: "left", maxWidth: "850px" }}>
         <Typography
           sx={{
             fontFamily: fontMain,
