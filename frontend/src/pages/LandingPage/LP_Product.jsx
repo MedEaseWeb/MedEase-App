@@ -285,7 +285,7 @@ function ChatDemo({ scenarioId }) {
   const [visible, setVisible] = useState([]);
   const [typing, setTyping] = useState(false);
   const [playKey, setPlayKey] = useState(0);
-  const chatEndRef = useRef(null);
+  const scrollRef = useRef(null);
 
   // Reset playKey when scenario switches
   useEffect(() => { setPlayKey(0); }, [scenarioId]);
@@ -327,11 +327,14 @@ function ChatDemo({ scenarioId }) {
   }, [scenarioId, playKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [visible, typing]);
 
   return (
     <Box
+      ref={scrollRef}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -351,7 +354,6 @@ function ChatDemo({ scenarioId }) {
         )}
         {typing && <TypingBubble key="typing" />}
       </AnimatePresence>
-      <div ref={chatEndRef} />
     </Box>
   );
 }
