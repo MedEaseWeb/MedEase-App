@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -56,6 +57,7 @@ const NavButton = styled(Button)(() => ({
 
 export default function LandingPage() {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [langAnchor, setLangAnchor] = useState(null);
   const { scrollYProgress } = useScroll();
