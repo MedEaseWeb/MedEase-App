@@ -180,7 +180,7 @@ export default function LandingPage() {
 
             <Button
               variant="contained"
-              onClick={() => setWaitlistOpen(true)}
+              onClick={() => navigate("/survey")}
               sx={{
                 bgcolor: colors.primary,
                 color: "#FFF",
@@ -193,7 +193,7 @@ export default function LandingPage() {
                 "&:hover": { bgcolor: "#1a1614" },
               }}
             >
-              Join Waitlist
+              View Demo
             </Button>
           </Box>
         </Toolbar>
