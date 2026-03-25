@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "reportSimplifier": "Report Simplifier",
+    "medicationHelp": "Medication Help",
+    "caregiverMode": "CareGiver Mode",
+    "logout": "Sign out",
+    "language": "Language"
+  },
+  "menu": {
+    "title": "MedEase Menu",
+    "documentation": "Documentation",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "generateKey": "Generate Key",
+    "expired": "Expired",
+    "copyToClipboard": "Copy to clipboard"
+  },
+  "chat": {
+    "title": "Caregiver AI Assistant",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "welcome": "Hello, welcome to MedEase, how can I help you?",
+    "patientsButton": "My Patients Info Upload",
+    "remindersButton": "Reminders & Tasks",
+    "diaryButton": "Picture Diary Upload",
+    "accommodationButton": "Accommodation Letter",
+    "patientDataPrompt": "Sure! To retrieve a patient's data, please provide the patient's email and generated key in one message. For example: 'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "Sure! What would you like to be reminded about,\nand when? (e.g. \"Take meds at 9 AM for 5 days\")"
+  },
+  "login": {
+    "errorTitle": "Login failed",
+    "gotIt": "Got it",
+    "welcomeBack": "Welcome back",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "logIn": "Log in",
+    "goToHome": "← Back to home",
+    "tagline": "Your post-injury journey, simplified.",
+    "subtitle": "Agentic AI that triages students to the right campus care — instantly.",
+    "copyright": "© 2025 MedEase. Built for students.",
+    "features": [
+      "AI-Powered Report Simplification",
+      "Smart Medication Tracking",
+      "Agentic Triage Engine",
+      "24/7 Care Coordination"
+    ],
+    "errors": {
+      "noConnection": "Unable to reach the server. Check your connection and try again.",
+      "invalidCredentials": "Incorrect email or password. Please try again.",
+      "accountDisabled": "This account has been disabled. Please contact support.",
+      "tooManyAttempts": "Too many attempts. Please wait a moment and try again.",
+      "generic": "Something went wrong. Please try again."
+    }
+  }
+}

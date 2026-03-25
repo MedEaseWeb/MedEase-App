@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "reportSimplifier": "报告简化",
+    "medicationHelp": "用药帮助",
+    "caregiverMode": "看护者模式",
+    "logout": "退出登录",
+    "language": "语言"
+  },
+  "menu": {
+    "title": "MedEase 菜单",
+    "documentation": "文档",
+    "termsOfService": "服务条款",
+    "privacyPolicy": "隐私政策",
+    "generateKey": "生成密钥",
+    "expired": "已过期",
+    "copyToClipboard": "复制到剪贴板"
+  },
+  "chat": {
+    "title": "看护者 AI 助手",
+    "placeholder": "输入消息…",
+    "send": "发送",
+    "welcome": "您好，欢迎使用 MedEase，请问有什么可以帮助您的？",
+    "patientsButton": "上传患者信息",
+    "remindersButton": "提醒与任务",
+    "diaryButton": "图片日记上传",
+    "accommodationButton": "无障碍申请信",
+    "patientDataPrompt": "好的！要查询患者数据，请在一条消息中提供患者邮箱和生成的密钥。例如：'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "好的！您想被提醒什么，\n什么时候提醒？（例如："早上9点服药，持续5天"）"
+  },
+  "login": {
+    "errorTitle": "登录失败",
+    "gotIt": "知道了",
+    "welcomeBack": "欢迎回来",
+    "noAccount": "还没有账号？",
+    "signUp": "立即注册",
+    "email": "邮箱",
+    "password": "密码",
+    "logIn": "登录",
+    "goToHome": "点击此处前往主页",
+    "tagline": "您的康复之路，从此轻松简单。",
+    "subtitle": "AI 智能分诊，为学生快速匹配校园医疗资源。",
+    "copyright": "© 2025 MedEase。为学生而建。",
+    "features": [
+      "AI 驱动的报告简化",
+      "智能用药追踪",
+      "智能分诊引擎",
+      "全天候护理协调"
+    ],
+    "errors": {
+      "noConnection": "无法连接到服务器，请检查网络连接后重试。",
+      "invalidCredentials": "邮箱或密码不正确，请重试。",
+      "accountDisabled": "此账号已被禁用，请联系客服。",
+      "tooManyAttempts": "尝试次数过多，请稍候再试。",
+      "generic": "出现错误，请重试。"
+    }
+  }
+}

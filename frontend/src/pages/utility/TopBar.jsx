@@ -13,9 +13,17 @@ import {
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Logo from "./Logo";
+import { useTranslation } from "react-i18next";
 
 const backendBaseUrl = import.meta.env.VITE_API_URL;
 const fontMain = "'Plus Jakarta Sans', sans-serif";
+
+const LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "zh-CN", label: "中文" },
+  { code: "ko", label: "한국어" },
+  { code: "es", label: "Español" },
+];
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -91,6 +99,7 @@ const TopBar = () => {
 export default TopBar;
 
 function ProfileMenu({ userEmail, onSettings, onLogout }) {
+  const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -191,8 +200,41 @@ function ProfileMenu({ userEmail, onSettings, onLogout }) {
             "&:hover": { bgcolor: "rgba(166,93,55,0.06)" },
           }}
         >
-          Sign out
+          {t("nav.logout")}
         </MenuItem>
+
+        <Divider sx={{ borderColor: "#E6DCCA" }} />
+
+        <MenuItem disabled sx={{ px: 2.5, py: 0.75 }}>
+          <Typography
+            sx={{ fontFamily: fontMain, fontSize: "0.72rem", fontWeight: 600,
+              letterSpacing: "0.06em", textTransform: "uppercase", color: "#8B7B72" }}
+          >
+            {t("nav.language")}
+          </Typography>
+        </MenuItem>
+
+        {LANGUAGES.map(({ code, label }) => (
+          <MenuItem
+            key={code}
+            selected={i18n.language === code}
+            onClick={() => {
+              i18n.changeLanguage(code);
+              setAnchorEl(null);
+            }}
+            sx={{
+              fontFamily: fontMain,
+              fontSize: "0.9rem",
+              fontWeight: 500,
+              color: "#2C2420",
+              px: 2.5,
+              py: 1,
+              "&:hover": { bgcolor: "rgba(44,36,32,0.05)" },
+            }}
+          >
+            {label}
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );
