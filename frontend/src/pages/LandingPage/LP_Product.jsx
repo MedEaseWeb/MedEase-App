@@ -284,11 +284,7 @@ function ChatDemo({ scenarioId }) {
   const messages = DEMO_SCENARIOS[scenarioId] ?? DEMO_SCENARIOS.rag;
   const [visible, setVisible] = useState([]);
   const [typing, setTyping] = useState(false);
-  const [playKey, setPlayKey] = useState(0);
   const scrollRef = useRef(null);
-
-  // Reset playKey when scenario switches
-  useEffect(() => { setPlayKey(0); }, [scenarioId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -302,7 +298,7 @@ function ChatDemo({ scenarioId }) {
     setVisible([]);
     setTyping(false);
 
-    let d = 300; // initial pause before first message
+    let d = 300;
 
     for (const entry of messages) {
       if (entry.pause) {
@@ -317,14 +313,11 @@ function ChatDemo({ scenarioId }) {
       }
     }
 
-    // Auto-replay after a comfortable pause
-    schedule(() => setPlayKey((k) => k + 1), d + 3200);
-
     return () => {
       cancelled = true;
       ts.forEach(clearTimeout);
     };
-  }, [scenarioId, playKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [scenarioId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -452,8 +445,6 @@ export default function LP_Product() {
       {/* Dark console */}
       <Paper
         elevation={0}
-        component={motion.div}
-        layout
         sx={{
           borderRadius: "32px",
           bgcolor: colors.cardBg,
@@ -555,7 +546,7 @@ export default function LP_Product() {
             bgcolor: colors.chatBg,
             display: "flex",
             flexDirection: "column",
-            minHeight: { xs: "420px", md: "480px" },
+            height: { xs: "420px", md: "480px" },
           }}
         >
           {/* Top bar — simulated app chrome */}
