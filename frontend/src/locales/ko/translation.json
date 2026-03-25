@@ -1,0 +1,413 @@
+{
+  "nav": {
+    "reportSimplifier": "리포트 간소화",
+    "medicationHelp": "복약 도움",
+    "caregiverMode": "보호자 모드",
+    "logout": "로그아웃",
+    "language": "언어"
+  },
+  "menu": {
+    "title": "MedEase 메뉴",
+    "documentation": "문서",
+    "termsOfService": "이용약관",
+    "privacyPolicy": "개인정보 처리방침",
+    "generateKey": "키 생성",
+    "expired": "만료됨",
+    "copyToClipboard": "클립보드에 복사"
+  },
+  "chat": {
+    "title": "보호자 AI 어시스턴트",
+    "placeholder": "메시지를 입력하세요…",
+    "send": "전송",
+    "welcome": "안녕하세요, MedEase에 오신 것을 환영합니다. 무엇을 도와드릴까요?",
+    "patientsButton": "환자 정보 업로드",
+    "remindersButton": "알림 및 작업",
+    "diaryButton": "사진 일기 업로드",
+    "accommodationButton": "편의 지원 신청서",
+    "patientDataPrompt": "물론입니다! 환자 데이터를 조회하려면 환자 이메일과 생성된 키를 한 메시지에 입력해 주세요. 예: 'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "물론입니다! 무엇을 알려드릴까요,\n언제 알려드릴까요? (예: \"오전 9시에 5일간 약 복용\")"
+  },
+  "login": {
+    "errorTitle": "로그인 실패",
+    "gotIt": "확인",
+    "welcomeBack": "다시 오신 것을 환영합니다",
+    "noAccount": "계정이 없으신가요?",
+    "signUp": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "logIn": "로그인",
+    "goToHome": "홈 페이지로 이동하려면 여기를 클릭하세요",
+    "tagline": "부상 후 회복 여정, 이제 쉽게.",
+    "subtitle": "AI가 학생에게 맞는 캠퍼스 의료 서비스를 즉시 연결합니다.",
+    "copyright": "© 2025 MedEase. 학생을 위해 만들어졌습니다.",
+    "features": [
+      "AI 기반 리포트 간소화",
+      "스마트 복약 추적",
+      "AI 분류 엔진",
+      "24/7 치료 조정"
+    ],
+    "errors": {
+      "noConnection": "서버에 연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요.",
+      "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다. 다시 시도하세요.",
+      "accountDisabled": "이 계정은 비활성화되었습니다. 지원팀에 문의하세요.",
+      "tooManyAttempts": "시도 횟수가 너무 많습니다. 잠시 후 다시 시도하세요.",
+      "generic": "문제가 발생했습니다. 다시 시도하세요."
+    }
+  },
+  "lp": {
+    "nav": {
+      "mission": "미션",
+      "product": "제품",
+      "about": "소개",
+      "team": "팀",
+      "user-stories": "사용자 이야기",
+      "joinWaitlist": "대기자 명단 등록",
+      "viewDemo": "데모 보기"
+    },
+    "hero": {
+      "headline": "AI가 함께하는",
+      "scrambleWord": "부상 후",
+      "journeySuffix": " 회복 여정",
+      "subtitle": "MedEase는 부상 후 혼란을 정밀함으로 대체합니다. 대학교 고유 데이터를 기반으로 정확한 의료 서비스와 캠퍼스 자원을 지능적으로 연결합니다.",
+      "joinWaitlist": "대기자 명단 등록"
+    },
+    "mission": {
+      "heading": "우리의 미션",
+      "subtitle": "복잡한 의료 상황을 탐색 가능한 경로로 전환하는 인프라.",
+      "cards": [
+        {
+          "title": "정보 격차 해소",
+          "text": "미국 의료 시스템은 유학생에게 거대한 공백입니다. MedEase는 그 다리를 놓습니다. 부상과 치료 사이의 심각한 비대칭을 해소하고, 현지인처럼 안전하고 확실하게 복잡한 절차를 탐색할 수 있는 인프라를 제공합니다."
+        },
+        {
+          "title": "즉각적인 명확성",
+          "text": "학생의 마음을 **공황** 상태에서 **정밀함**으로 즉시 전환해 안정시킵니다."
+        },
+        {
+          "title": "피해 예방",
+          "text": "비용에 대한 두려움을 제거해 학생이 **망설임**에서 즉각적인 의료 **행동**으로 나아가도록 합니다."
+        },
+        {
+          "title": "기관 안전",
+          "text": "위험 프로필을 **법적 책임**에서 선제적 **컴플라이언스**로 전환해 대학교를 보호합니다."
+        }
+      ]
+    },
+    "product": {
+      "heading": "지능형 건강 관리",
+      "sections": [
+        {
+          "id": "rag",
+          "title": "에이전틱 트리아지 엔진",
+          "subtitle": "RAG 기반 라우팅으로 대학교 실시간 데이터를 바탕으로 학생에게 정확한 캠퍼스 자원을 즉시 연결합니다.",
+          "features": [
+            "문맥 인식 검색",
+            "자동 부서 라우팅",
+            "대학 지식 베이스",
+            "환각 방지 가드레일"
+          ]
+        },
+        {
+          "id": "chat",
+          "title": "적응형 채팅 프로토콜",
+          "subtitle": "학생 피드백과 자연어 업데이트를 기반으로 회복 타임라인을 실시간으로 조정하는 채팅 인터페이스.",
+          "features": [
+            "자연어 업데이트",
+            "동적 타임라인 조정",
+            "임상의 협업",
+            "24/7 위기 감지"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "heading": "경험에서 탄생했습니다",
+      "subtitle": "우리는 단순히 시장 공백을 발견한 것이 아닙니다. 직접 겪었습니다.",
+      "cards": [
+        {
+          "label": "01 — 시작",
+          "title": "모든 것이 무너진 그 순간",
+          "body": "대학 생활에서 가장 바쁜 시기—인턴십과 수업을 병행하던 중—저는 무에타이 훈련 중 부상을 입어 걷지 못하게 되었습니다. 많은 학생처럼 저는 병가를 내지 않았습니다. 혼자 회복하면서 계단을 오르고, 긴 거리를 걷고, 마감을 맞췄습니다.",
+          "highlight": "걷지도 못하면서 세상에서 가장 복잡한 시스템 중 하나를 헤쳐나갔습니다."
+        },
+        {
+          "label": "02 — 비전",
+          "title": "혼돈에서 인프라로",
+          "body": "회복은 혼자만의 임무가 되어서는 안 됩니다. 우리는 그 고립을 인프라로 대체하기 위해 MedEase를 만들었습니다. 우리의 사명은 간단합니다: 모든 학생이 명확함, 존엄성, 연민으로 회복할 수 있도록 돕고—단편화된 시스템을 원활한 여정으로 전환하는 것입니다.",
+          "highlight": "우리는 내가 있었으면 했던 디지털 안전망을 구축하고 있습니다."
+        }
+      ]
+    },
+    "footer": {
+      "legal": {
+        "links": ["개인정보 처리방침", "이용약관"]
+      },
+      "copyright": "© {{year}} MedEase Inc. 모든 권리 보유."
+    },
+    "team": {
+      "heading": "학생이 만든, 학생을 위한",
+      "subtitle": "MedEase는 의료 연구자, 개발자, 멘토들이 함께 만들어갑니다 — 안전, 명확성, 학생 회복에 집중합니다.",
+      "members": [
+        { "name": "Annie He", "role": "제품 & 비즈니스 공동창업자", "detail": "의료 연구원 및 소프트웨어 엔지니어, Emory '25" },
+        { "name": "Rolf Shi", "role": "기술 공동창업자", "detail": "AI4H 연구원 및 소프트웨어 엔지니어, Emory '25 & UPenn '27" }
+      ],
+      "advisors": [
+        { "name": "Dr. Phil Wolff", "role": "언어 바이오마커 연구실", "detail": "멘토" },
+        { "name": "Dr. JinHo Choi", "role": "Emory NLP 연구실", "detail": "멘토" },
+        { "name": "Sig Mosley", "role": "벤처 캐피탈리스트", "detail": "Mosley Ventures" },
+        { "name": "Dr. Stuart Zola", "role": "창립자 & 임상 과학자", "detail": "멘토" }
+      ]
+    },
+    "userStories": {
+      "eyebrow": "실제 학생들. 실제 고통.",
+      "heading": "아무도 혼자 의료 응급 상황을 겪어서는 안 됩니다.",
+      "subtitle": "이것이 MedEase를 만든 이야기입니다 — 가장 필요한 순간에 혼란스럽고, 두렵고, 지원 없이 남겨진 학생들의 이야기.",
+      "stories": [
+        {
+          "tag": "기다림의 대가",
+          "quote": "저는 한겨울에 스쿠터에서 떨어졌어요. 응급실에 가면 너무 비쌀 것 같아서 너무 무서웠어요. 그래서 하룻밤을 기다렸죠. 결국 갔을 때는 피부 손상이 영구적이 되어버렸어요. 매일 그 기다림을 후회합니다.",
+          "author": "Emory 박사과정 학생",
+          "role": "회복 여정"
+        },
+        {
+          "tag": "첫 주에 길을 잃다",
+          "quote": "신입생 첫 주에 골절이 됐어요. 수업이 어디 있는지도 몰랐는데요. 자원은 많았지만, 모든 자원마다 어떤 신청서나 절차가 필요했고, 저는 그 방법을 몰랐어요.",
+          "author": "Emory 신입생",
+          "role": "학생 안내"
+        },
+        {
+          "tag": "삶이 멈추다",
+          "quote": "심각한 부상으로 의료 휴학을 해야 했어요. 갑자기 골절, 스트레스, 혼자서 의료 응급 상황을 처리한 경험도 없는 상태에서 아파트를 전대해줄 사람도 찾아야 했어요. 치료비? 아직도 너무 무섭게 느껴져요.",
+          "author": "Emory 학생, 의료 휴학",
+          "role": "의료 연속성"
+        },
+        {
+          "tag": "혼자 응급실에서",
+          "quote": "심한 복통이 있었는데 맹장염으로 밝혀졌어요. 유학생으로서 응급실은 처음이었는데 — 직접 운전해서 갔어요. 머릿속엔 '청구서는 어떻게 하지?'라는 생각뿐이었어요. 수술도 회복도 너무 두려웠어요.",
+          "author": "Emory 4학년, 국제 학생",
+          "role": "응급 지원"
+        }
+      ]
+    }
+  },
+  "survey": {
+    "nav": {
+      "userSurvey": "사용자 설문",
+      "home": "홈",
+      "community": "커뮤니티",
+      "notes": "노트"
+    },
+    "welcome": {
+      "title": "환영합니다!",
+      "description": "저희는 여러분의 회복 여정을 함께 안내할 동반자입니다.",
+      "disclaimers": [
+        "이것은 전문적인 의료 조언이 아닙니다.",
+        "긴급하거나 심각한 문제에 대해서는 반드시 자격을 갖춘 의료 전문가에게 상담하세요.",
+        "이 설문을 기반으로 한 결정에 대해 저희는 책임을 지지 않습니다."
+      ],
+      "accept": "동의"
+    },
+    "intro": {
+      "title": "맞춤형 회복 여정에 오신 것을 환영합니다!",
+      "description": "몇 가지 선택적 질문을 통해 맞춤 추천을 제공하고, 진행 상황을 추적하며, 관련 캠퍼스 자원을 안내해 드립니다.",
+      "note": "모든 항목은 선택 사항입니다 — 불편하면 언제든지 건너뛰어도 됩니다. 저희는 항상 여러분을 지원합니다.",
+      "start": "설문 시작",
+      "skip": "건너뛰기"
+    },
+    "questions": {
+      "sectionTitle": "간단한 질문 몇 가지",
+      "sectionDescription": "원하는 만큼만 답해 주세요 — 여러분의 시작점을 이해하는 데 도움이 됩니다.",
+      "skip": "건너뛰기",
+      "next": "다음",
+      "finish": "설문 완료",
+      "whatHappened": {
+        "title": "무슨 일이 있었나요?",
+        "description": "부상이나 상황을 간략히 설명해 주세요. 개괄적인 내용도 괜찮습니다 — 여정의 기준점을 잡는 데 도움이 됩니다.",
+        "options": ["스포츠 또는 훈련 부상", "우발적 낙상 또는 충격", "의료 시술 / 상태", "기타"],
+        "placeholder": "선택 사항: 알려주고 싶은 내용을 공유해 주세요."
+      },
+      "whenHappened": {
+        "title": "언제 발생했나요?",
+        "description": "회복 일정에서 현재 위치를 파악하는 데 도움이 됩니다.",
+        "options": ["오늘", "지난 1주일 이내", "1주일 이상 전"],
+        "detailLabel": "더 자세히 선택해 주세요.",
+        "detailOptions": ["1–4주 전", "1–3개월 전", "3개월 이상 전"]
+      },
+      "insurance": {
+        "title": "보험이 있으신가요?",
+        "description": "예산에 맞는 옵션과 가장 적합한 자원을 추천하는 데 도움이 됩니다. 건너뛰어도 됩니다.",
+        "yes": "예",
+        "no": "아니오",
+        "selectPlan": "보험 플랜을 선택하세요 (에모리 일반 옵션).",
+        "preferNotToSay": "답변하고 싶지 않음",
+        "skipButton": "보험 건너뛰고 질문 루프로 이동",
+        "plans": ["Aetna 학생 건강보험", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "기타 / 국제보험"]
+      }
+    },
+    "end": {
+      "title": "준비가 되었습니다.",
+      "description": "데이터는 안전하게 보관됩니다. 걱정 마세요 — 저희는 여러분의 회복 여정을 지원합니다.",
+      "button": "질문 루프로 이동"
+    },
+    "questionsLoop": {
+      "title": "질문 루프",
+      "description": "이 섹션은 초기 설문과는 별개입니다. 지속적인 체크인 공간으로 생각하세요 — 언제든지 후속 질문, 증상 추적, 안내를 받을 수 있습니다.",
+      "note": "다음 단계: 동일한 시각적 언어를 유지하면서 구조화된 Q&A 루프를 연결할 예정입니다.",
+      "backButton": "설문으로 돌아가기"
+    }
+  },
+  "home": {
+    "careJourney": {
+      "title": "나의 케어 여정",
+      "stages": ["식별", "평가", "케어 선택", "케어 받기", "회복"]
+    },
+    "recommendation": {
+      "label": "권장 단계",
+      "suggestion": "응급 클리닉 방문을 권장합니다",
+      "whyLabel": "이유:",
+      "whyReasons": ["증상 평가 필요", "응급실보다 빠름", "비용 절감"]
+    },
+    "qitl": {
+      "title": "루프 질문",
+      "description": "현재 케어 단계에 대한 질문을 해 주세요.",
+      "placeholder": "케어 여정에 대한 질문을 입력하세요…",
+      "send": "전송",
+      "commonQuestions": "자주 묻는 질문",
+      "questions": [
+        "응급 클리닉이란 무엇인가요?",
+        "응급 클리닉 비용은 얼마인가요?",
+        "보험이 필요한가요?",
+        "무엇을 가져가야 하나요?",
+        "얼마나 걸리나요?",
+        "약은 언제 복용해야 하나요?",
+        "회복 기간에 무엇을 경험하게 되나요?",
+        "언제 후속 진료가 필요한가요?",
+        "언제 다시 병원에 가야 하나요?"
+      ]
+    }
+  },
+  "community": {
+    "title": "커뮤니티",
+    "description": "연결하고, 나누고, 지원을 찾으세요 — 한 곳에서.",
+    "backToCommunity": "커뮤니티로 돌아가기",
+    "explore": "탐색",
+    "hubs": [
+      { "title": "나와 같은 사람 찾기", "description": "비슷한 부상이나 어려움을 겪는 사람들과 연결하세요." },
+      { "title": "나와 같은 사람 돕기", "description": "기기를 기부하거나 회복 중인 다른 학생을 지원하세요." },
+      { "title": "지역 지원", "description": "에모리와 애틀랜타 지역의 도움이 되는 자원을 찾아보세요." },
+      { "title": "AI 건강 지원", "description": "이메일, 신청서 작성 및 의료 시스템 탐색을 AI가 도와드립니다." }
+    ],
+    "findPeople": {
+      "title": "나와 같은 사람 찾기",
+      "subtitle": "비슷한 부상이나 어려움을 겪는 사람들과 연결하세요.",
+      "searchPlaceholder": "사람, 부상, 또는 주제 검색",
+      "suggestedGroups": "추천 그룹",
+      "groups": [
+        { "name": "뇌진탕 101", "description": "뇌진탕 회복을 위한 지원과 팁." },
+        { "name": "수영선수 회복", "description": "어깨나 과사용 부상을 관리하는 운동선수를 위해." },
+        { "name": "러너 부상", "description": "무릎, IT 밴드, 달리기 관련 지원." },
+        { "name": "의료비 납부 방법", "description": "비용 탐색 및 재정 옵션." },
+        { "name": "보험 협상", "description": "보험 관련 팁과 공유 경험." },
+        { "name": "배려 편의 신청서", "description": "학업 배려 편의 취득 및 활용." }
+      ],
+      "tabs": ["토론", "자료", "멤버"],
+      "sharePlaceholder": "그룹과 공유할 내용을 입력하세요…",
+      "post": "게시",
+      "close": "닫기",
+      "resourcesPlaceholder": "자료와 링크가 여기에 표시됩니다.",
+      "membersPlaceholder": "멤버 목록이 여기에 표시됩니다.",
+      "mockDiscussions": [
+        "러너 무릎에 PT가 효과적이었던 분 계신가요? 에모리 지역 추천 부탁드립니다.",
+        "네! 학생 건강 센터 PT에 갔는데 정말 좋았어요. 약 3주 후에 나아졌어요.",
+        "학생 건강 센터 강추 — 활동 감소가 필요한 경우 배려 편의 신청서도 도와줍니다."
+      ]
+    },
+    "helpPeople": {
+      "title": "나와 같은 사람 돕기",
+      "subtitle": "우산을 앞으로 전달하세요.",
+      "introTitle": "더 이상 필요하지 않은 자원이 비를 맞고 있는 누군가에게 도움이 될 수 있습니다.",
+      "introDescription": "다른 학생이 회복에 집중할 수 있도록 보조기, 목발, 아이스팩 또는 기타 회복 용품을 기부하세요.",
+      "emptyMessage": "처음으로 나눔을 실천하세요.",
+      "emptySubMessage": "더 이상 필요하지 않은 물건을 게시하여 다른 학생의 회복을 도와주세요.",
+      "emptyButton": "기부 게시",
+      "modalTitle": "기부 게시",
+      "thankYou": "감사합니다 ❤️",
+      "thankYouMessage": "YOYO가 방금 다른 학생을 도왔습니다 — 감사합니다!",
+      "uploadButton": "사진을 드래그하거나 클릭하여 업로드",
+      "itemName": "물품명",
+      "conditionLabel": "상태",
+      "conditions": ["새것", "거의 새것", "양호", "살짝 사용", "사용됨"],
+      "locationLabel": "위치 (예: 애틀랜타, 에모리 인근)",
+      "notesLabel": "메모",
+      "cancel": "취소",
+      "postDonation": "기부 게시",
+      "donateThis": "이것을 기부할 수 있습니다",
+      "sampleItems": ["무릎 보호대", "목발", "아이스팩", "발목 지지대"]
+    },
+    "localSupport": {
+      "title": "지역 지원",
+      "subtitle": "에모리와 애틀랜타 지역의 도움이 되는 자원을 찾아보세요.",
+      "filters": ["전체", "무료", "에모리", "애틀랜타", "유료"],
+      "contact": "연락",
+      "visitSite": "사이트 방문",
+      "resources": [
+        { "name": "에모리 학생 정부", "description": "학생 권익 옹호 및 자원.", "location": "에모리 대학교", "contact": "캠퍼스 포털로 연락" },
+        { "name": "학생 건강 센터", "description": "학생을 위한 의료 및 정신 건강 서비스.", "location": "에모리 대학교", "contact": "404-727-7551" },
+        { "name": "장애 지원 사무소", "description": "학업 배려 편의 및 지원.", "location": "에모리 대학교", "contact": "disability@emory.edu" },
+        { "name": "애틀랜타 커뮤니티 푸드뱅크", "description": "식품 지원 및 영양 프로그램.", "location": "애틀랜타, GA", "contact": "사이트 방문" },
+        { "name": "그레이디 헬스 시스템", "description": "공립 병원 시스템; 재정 지원 가능.", "location": "애틀랜타, GA", "contact": "사이트 방문" },
+        { "name": "위기 상담 전화", "description": "24/7 정신 건강 및 위기 지원.", "location": "전국", "contact": "988" }
+      ]
+    },
+    "aiHealth": {
+      "title": "AI 건강 도우미",
+      "subtitle": "이메일, 신청서 작성 및 의료 시스템 탐색을 도와드립니다.",
+      "welcomeMessage": "안녕하세요! 배려 편의 신청서, 보험 이메일, 의료 시스템 탐색을 도와드릴 수 있습니다. 오늘 무엇이 필요하신가요?",
+      "placeholder": "배려 지원, 보험 도움, 또는 자원을 요청하세요…",
+      "generateEmail": "이메일 생성",
+      "copy": "복사",
+      "copied": "복사됨!",
+      "edit": "편집",
+      "send": "전송",
+      "emailSubject": "학업 배려 편의 요청",
+      "emailBody": "안녕하세요 [장애 서비스 / 학생 접근성 사무소] 담당자님,\n\n이번 학기 학업 배려 편의를 요청하고자 합니다. 의료 제공자의 서류를 첨부하였습니다.\n\n배려 편의 계획에 대해 논의할 기회를 주시면 감사하겠습니다. 다음 단계를 알려주세요.\n\n감사합니다,\n[이름]"
+    }
+  },
+  "notes": {
+    "title": "노트 및 캘린더",
+    "description": "한 곳에서 의료 일정을 계획하고 진료 요약을 검토하세요.",
+    "tabs": ["일정", "채팅 기록"],
+    "calendar": {
+      "previous": "이전",
+      "today": "오늘",
+      "next": "다음",
+      "eventTypesLabel": "이벤트 유형:",
+      "eventTypes": ["의료 예약", "복약 알림", "재활 운동", "의료 검사", "회복 케어 시술"],
+      "addEvent": "이벤트 추가",
+      "editEvent": "이벤트 편집",
+      "titleLabel": "제목",
+      "typeLabel": "유형",
+      "startHour": "시작 (시간)",
+      "endHour": "종료 (시간)",
+      "delete": "삭제",
+      "cancel": "취소",
+      "add": "추가",
+      "save": "저장"
+    },
+    "monthView": {
+      "thisMonth": "이번 달",
+      "noteExplanation": "점이 있는 날짜에는 저장된 진료 요약이 있습니다. 날짜를 클릭하여 해당 날의 노트를 여세요.",
+      "dayLabels": ["일", "월", "화", "수", "목", "금", "토"]
+    },
+    "dayNote": {
+      "close": "닫기",
+      "consultationSummary": "진료 요약",
+      "symptomsDiscussed": "논의된 증상",
+      "suggestedNextSteps": "제안된 다음 단계",
+      "yourNotes": "내 노트",
+      "notesPlaceholder": "현재 상태나 후속 계획에 대한 개인 메모를 추가하세요…",
+      "noSummary": "이 날에 저장된 진료 요약이 없습니다.",
+      "noSummaryNote": "홈 어시스턴트의 채팅을 저장하면 요약이 여기에 표시됩니다."
+    }
+  }
+}

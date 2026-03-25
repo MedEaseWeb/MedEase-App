@@ -1,4 +1,5 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Button,
@@ -14,68 +15,71 @@ import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 import InteractiveBackground from "../LandingPage/utils/InteractiveBackground";
 
-const ErrorModal = ({ open, message, onClose }) => (
-  <Dialog
-    open={open}
-    onClose={onClose}
-    PaperProps={{
-      sx: {
-        borderRadius: "16px",
-        overflow: "hidden",
-        maxWidth: 380,
-        width: "100%",
-        m: 2,
-        boxShadow: "0 24px 60px rgba(44, 36, 32, 0.18)",
-      },
-    }}
-  >
-    {/* Dark header */}
-    <Box sx={{ bgcolor: "#2C2420", px: 3, pt: 3, pb: 2.5 }}>
-      <Typography
-        sx={{
-          fontFamily: fontMain,
-          fontWeight: 700,
-          fontSize: "1.05rem",
-          color: "#FFF",
-          letterSpacing: "-0.01em",
-        }}
-      >
-        Login failed
-      </Typography>
-    </Box>
-    {/* Light body */}
-    <Box sx={{ bgcolor: "#F5F0EB", px: 3, pt: 2.5, pb: 3 }}>
-      <Typography
-        sx={{
-          fontFamily: fontMain,
-          color: "#594D46",
-          fontSize: "0.92rem",
-          lineHeight: 1.6,
-          mb: 3,
-        }}
-      >
-        {message}
-      </Typography>
-      <Button
-        fullWidth
-        onClick={onClose}
-        sx={{
-          bgcolor: "#2C2420",
-          color: "#FFF",
-          borderRadius: "10px",
-          fontFamily: fontMain,
-          fontWeight: 600,
-          fontSize: "0.9rem",
-          textTransform: "none",
-          py: 1.2,
-          "&:hover": { bgcolor: "#1a1614" },
-        }}
-      >
-        Got it
-      </Button>
-    </Box>
-  </Dialog>
-);
+const ErrorModal = ({ open, message, onClose }) => {
+  const { t } = useTranslation();
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      PaperProps={{
+        sx: {
+          borderRadius: "16px",
+          overflow: "hidden",
+          maxWidth: 380,
+          width: "100%",
+          m: 2,
+          boxShadow: "0 24px 60px rgba(44, 36, 32, 0.18)",
+        },
+      }}
+    >
+      {/* Dark header */}
+      <Box sx={{ bgcolor: "#2C2420", px: 3, pt: 3, pb: 2.5 }}>
+        <Typography
+          sx={{
+            fontFamily: fontMain,
+            fontWeight: 700,
+            fontSize: "1.05rem",
+            color: "#FFF",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {t("login.errorTitle")}
+        </Typography>
+      </Box>
+      {/* Light body */}
+      <Box sx={{ bgcolor: "#F5F0EB", px: 3, pt: 2.5, pb: 3 }}>
+        <Typography
+          sx={{
+            fontFamily: fontMain,
+            color: "#594D46",
+            fontSize: "0.92rem",
+            lineHeight: 1.6,
+            mb: 3,
+          }}
+        >
+          {message}
+        </Typography>
+        <Button
+          fullWidth
+          onClick={onClose}
+          sx={{
+            bgcolor: "#2C2420",
+            color: "#FFF",
+            borderRadius: "10px",
+            fontFamily: fontMain,
+            fontWeight: 600,
+            fontSize: "0.9rem",
+            textTransform: "none",
+            py: 1.2,
+            "&:hover": { bgcolor: "#1a1614" },
+          }}
+        >
+          {t("login.gotIt")}
+        </Button>
+      </Box>
+    </Dialog>
+  );
+};
 
 const colors = {
   darkPanel: "#2C2420",
@@ -90,12 +94,6 @@ const colors = {
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
-const features = [
-  "AI-Powered Report Simplification",
-  "Smart Medication Tracking",
-  "Agentic Triage Engine",
-  "24/7 Care Coordination",
-];
 
 const fieldSx = {
   "& .MuiOutlinedInput-root": {
@@ -118,17 +116,18 @@ const fieldSx = {
   },
 };
 
-const parseLoginError = (error) => {
-  if (!error.response) return "Unable to reach the server. Check your connection and try again.";
+const parseLoginError = (error, t) => {
+  if (!error.response) return t("login.errors.noConnection");
   switch (error.response.status) {
-    case 401: return "Incorrect email or password. Please try again.";
-    case 403: return "This account has been disabled. Please contact support.";
-    case 429: return "Too many attempts. Please wait a moment and try again.";
-    default:  return "Something went wrong. Please try again.";
+    case 401: return t("login.errors.invalidCredentials");
+    case 403: return t("login.errors.accountDisabled");
+    case 429: return t("login.errors.tooManyAttempts");
+    default:  return t("login.errors.generic");
   }
 };
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -136,6 +135,7 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
   const { login } = useAuth();
 
+  const features = t("login.features", { returnObjects: true });
   const isValid = email.trim().length > 0 && password.trim().length > 0;
 
   const handleLogin = async () => {
@@ -144,7 +144,7 @@ export default function Login() {
       await login(email, password);
       navigate("/dashboard");
     } catch (error) {
-      setErrorMsg(parseLoginError(error));
+      setErrorMsg(parseLoginError(error, t));
     }
   };
 
@@ -203,15 +203,7 @@ export default function Login() {
               mb: 2,
             }}
           >
-            Your post-injury
-            <br />
-            <Box
-              component="span"
-              sx={{ color: colors.accent, fontStyle: "italic" }}
-            >
-              journey,
-            </Box>{" "}
-            simplified.
+            {t("login.tagline")}
           </Typography>
           <Typography
             sx={{
@@ -223,8 +215,7 @@ export default function Login() {
               maxWidth: "340px",
             }}
           >
-            Agentic AI that triages students to the right campus care —
-            instantly.
+            {t("login.subtitle")}
           </Typography>
 
           {/* Feature pills */}
@@ -282,7 +273,7 @@ export default function Login() {
             fontSize: "0.8rem",
           }}
         >
-          © 2025 MedEase. Built for students.
+          {t("login.copyright")}
         </Typography>
 
         {/* Decorative concentric rings */}
@@ -367,7 +358,7 @@ export default function Login() {
                 mb: 0.5,
               }}
             >
-              Welcome back
+              {t("login.welcomeBack")}
             </Typography>
             <Typography
               sx={{
@@ -377,7 +368,7 @@ export default function Login() {
                 mb: 4,
               }}
             >
-              Don't have an account?{" "}
+              {t("login.noAccount")}{" "}
               <Box
                 component="span"
                 onClick={() => navigate("/signup")}
@@ -388,14 +379,14 @@ export default function Login() {
                   "&:hover": { textDecoration: "underline" },
                 }}
               >
-                Sign up
+                {t("login.signUp")}
               </Box>
             </Typography>
 
             {/* Email */}
             <TextField
               fullWidth
-              label="Email"
+              label={t("login.email")}
               variant="outlined"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -406,7 +397,7 @@ export default function Login() {
             {/* Password */}
             <TextField
               fullWidth
-              label="Password"
+              label={t("login.password")}
               variant="outlined"
               type={showPassword ? "text" : "password"}
               value={password}
@@ -461,7 +452,7 @@ export default function Login() {
                 },
               }}
             >
-              Log in
+              {t("login.logIn")}
             </Button>
 
             {/* Back to home */}
@@ -478,7 +469,7 @@ export default function Login() {
               }}
               onClick={() => navigate("/")}
             >
-              ← Back to home
+              {t("login.goToHome")}
             </Typography>
           </Box>
         </motion.div>

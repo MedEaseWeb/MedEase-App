@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "reportSimplifier": "리포트 간소화",
+    "medicationHelp": "복약 도움",
+    "caregiverMode": "보호자 모드",
+    "logout": "로그아웃",
+    "language": "언어"
+  },
+  "menu": {
+    "title": "MedEase 메뉴",
+    "documentation": "문서",
+    "termsOfService": "이용약관",
+    "privacyPolicy": "개인정보 처리방침",
+    "generateKey": "키 생성",
+    "expired": "만료됨",
+    "copyToClipboard": "클립보드에 복사"
+  },
+  "chat": {
+    "title": "보호자 AI 어시스턴트",
+    "placeholder": "메시지를 입력하세요…",
+    "send": "전송",
+    "welcome": "안녕하세요, MedEase에 오신 것을 환영합니다. 무엇을 도와드릴까요?",
+    "patientsButton": "환자 정보 업로드",
+    "remindersButton": "알림 및 작업",
+    "diaryButton": "사진 일기 업로드",
+    "accommodationButton": "편의 지원 신청서",
+    "patientDataPrompt": "물론입니다! 환자 데이터를 조회하려면 환자 이메일과 생성된 키를 한 메시지에 입력해 주세요. 예: 'jane.doe@example.com KEY12345'",
+    "reminderPrompt": "물론입니다! 무엇을 알려드릴까요,\n언제 알려드릴까요? (예: \"오전 9시에 5일간 약 복용\")"
+  },
+  "login": {
+    "errorTitle": "로그인 실패",
+    "gotIt": "확인",
+    "welcomeBack": "다시 오신 것을 환영합니다",
+    "noAccount": "계정이 없으신가요?",
+    "signUp": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "logIn": "로그인",
+    "goToHome": "홈 페이지로 이동하려면 여기를 클릭하세요",
+    "tagline": "부상 후 회복 여정, 이제 쉽게.",
+    "subtitle": "AI가 학생에게 맞는 캠퍼스 의료 서비스를 즉시 연결합니다.",
+    "copyright": "© 2025 MedEase. 학생을 위해 만들어졌습니다.",
+    "features": [
+      "AI 기반 리포트 간소화",
+      "스마트 복약 추적",
+      "AI 분류 엔진",
+      "24/7 치료 조정"
+    ],
+    "errors": {
+      "noConnection": "서버에 연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요.",
+      "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다. 다시 시도하세요.",
+      "accountDisabled": "이 계정은 비활성화되었습니다. 지원팀에 문의하세요.",
+      "tooManyAttempts": "시도 횟수가 너무 많습니다. 잠시 후 다시 시도하세요.",
+      "generic": "문제가 발생했습니다. 다시 시도하세요."
+    }
+  }
+}

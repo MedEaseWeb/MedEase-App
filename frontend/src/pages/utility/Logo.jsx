@@ -1,13 +1,17 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
 export default function Logo({ imgSize = 60, fontSize = 48 }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <FavoriteBorderIcon sx={{ fontSize: imgSize, color: "#2C2420" }} />
+    <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
+      <Box
+        component="img"
+        src="/medease-logo.svg"
+        alt="MedEase"
+        sx={{ width: imgSize, height: imgSize }}
+      />
       <Typography
         sx={{
           fontFamily: fontMain,
@@ -18,7 +22,7 @@ export default function Logo({ imgSize = 60, fontSize = 48 }) {
           lineHeight: 1,
         }}
       >
-        Med
+        ed
         <Box component="span" sx={{ color: "#A65D37" }}>
           Ease
         </Box>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const colors = {
   textMain: "#2C2420",
@@ -60,6 +61,7 @@ const ScrambleText = ({ text, sx }) => {
 };
 
 export default function LP_Hero({ onOpenWaitlist }) {
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -93,19 +95,18 @@ export default function LP_Hero({ onOpenWaitlist }) {
             maxWidth: "1100px",
           }}
         >
-          Agentic AI for your <br />
-          {/* PART 1: SCRAMBLED "post-injury" */}
+          {t("lp.hero.headline")} <br />
+          {/* PART 1: SCRAMBLED word */}
           <ScrambleText
-            text="post-injury"
+            text={t("lp.hero.scrambleWord")}
             sx={{
               opacity: 0.8,
               fontStyle: "italic",
             }}
           />
-          {/* PART 2: STATIC " journey" */}
+          {/* PART 2: STATIC journey suffix */}
           <Box component="span" sx={{ opacity: 0.8, fontStyle: "italic" }}>
-            {" "}
-            journey
+            {t("lp.hero.journeySuffix")}
           </Box>
         </Typography>
       </motion.div>
@@ -125,9 +126,7 @@ export default function LP_Hero({ onOpenWaitlist }) {
             mb: 5,
           }}
         >
-          MedEase replaces post-injury panic with precision by intelligently
-          triaging you to the correct care and campus services based on your
-          university’s specific data.
+          {t("lp.hero.subtitle")}
         </Typography>
       </motion.div>
 
@@ -157,7 +156,7 @@ export default function LP_Hero({ onOpenWaitlist }) {
             },
           }}
         >
-          Join Waitlist
+          {t("lp.hero.joinWaitlist")}
         </Button>
       </motion.div>
     </Box>
