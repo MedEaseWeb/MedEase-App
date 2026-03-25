@@ -1,118 +1,362 @@
-import React, { useState } from "react";
-import { Box, Typography, Button, Paper } from "@mui/material"; // Removed Grid, unused now
+import React, { useState, useEffect, useRef } from "react";
+import { Box, Typography, Button, Paper } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
-// --- DARK CONSOLE PALETTE ---
+// ─── PALETTE ────────────────────────────────────────────────────────────────
 const colors = {
   pageBg: "#EBE5DE",
   cardBg: "#2C2420",
   textMain: "#FFFFFF",
-  textSec: "rgba(255, 255, 255, 0.7)",
+  textSec: "rgba(255, 255, 255, 0.65)",
   accent: "#A65D37",
   pillBg: "rgba(255, 255, 255, 0.08)",
   pillBorder: "rgba(255, 255, 255, 0.1)",
   switcherBg: "#E3DCCA",
   switcherActiveText: "#2C2420",
   switcherInactiveText: "#6B5E55",
+  chatBg: "#1A1410",
+  agentBubble: "rgba(255, 255, 255, 0.06)",
+  agentBorder: "rgba(255, 255, 255, 0.10)",
+  userBubble: "rgba(166, 93, 55, 0.20)",
+  userBorder: "rgba(166, 93, 55, 0.35)",
+  statusRow: "rgba(255, 255, 255, 0.05)",
+  actionBg: "rgba(166, 93, 55, 0.14)",
+  actionBorder: "rgba(166, 93, 55, 0.30)",
 };
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
-
-// --- DATA (types map not in locale — kept here) ---
 const sectionTypes = { rag: "dashboard", chat: "chat" };
 
-// --- SKELETON UI COMPONENTS ---
-const SkeletonBlock = ({ width, height, sx, delay }) => (
+// ─── DEMO SCENARIO DATA ──────────────────────────────────────────────────────
+// Each entry is either a message or a { pause } timing gap.
+// gap = ms to wait before processing the next entry after showing this message.
+const DEMO_SCENARIOS = {
+  rag: [
+    {
+      sender: "user",
+      text: "Twisted my knee at practice. It's been swollen for 3 days and I can't walk without pain.",
+      gap: 600,
+    },
+    { pause: 1100 },
+    {
+      sender: "agent",
+      text: "Running triage against Emory's care network…",
+      status: [
+        { label: "Injury pattern", value: "Soft tissue · moderate severity" },
+        { label: "Nearest care", value: "Student Health · Woodruff Bldg" },
+        { label: "Current wait", value: "~15 min · low volume right now" },
+      ],
+      gap: 1600,
+    },
+    {
+      sender: "user",
+      text: "Book me in at Student Health.",
+      gap: 500,
+    },
+    { pause: 950 },
+    {
+      sender: "agent",
+      action: {
+        title: "Appointment confirmed",
+        items: [
+          "Student Health Services · Today 2:45 PM",
+          "Intake form pre-filled with your injury details",
+          "Walking directions sent to your phone",
+        ],
+        cta: "Add to Calendar →",
+      },
+      gap: 0,
+    },
+  ],
+  chat: [
+    {
+      sender: "user",
+      text: "My DAS accommodation expires Friday. Prof. Chen hasn't responded and my midterm is that afternoon.",
+      gap: 600,
+    },
+    { pause: 1100 },
+    {
+      sender: "agent",
+      text: "Found your active accommodation file. Here's the current situation:",
+      status: [
+        { label: "Deadline", value: "Friday · 2 days remaining" },
+        { label: "Prof. Chen", value: "No response · 4 days pending" },
+        { label: "Required action", value: "Professor acknowledgment overdue" },
+      ],
+      gap: 1600,
+    },
+    {
+      sender: "user",
+      text: "Handle it — send a follow-up and loop in my DAS advisor.",
+      gap: 500,
+    },
+    { pause: 950 },
+    {
+      sender: "agent",
+      action: {
+        title: "3 actions completed",
+        items: [
+          "Follow-up email sent to Prof. Chen",
+          "DAS advisor notified — deadline flagged",
+          "Midterm accommodation marked as pending",
+        ],
+        cta: "View Activity Log →",
+      },
+      gap: 0,
+    },
+  ],
+};
+
+// ─── TYPING INDICATOR ────────────────────────────────────────────────────────
+const TypingBubble = () => (
   <motion.div
-    initial={{ opacity: 0.3 }}
-    animate={{ opacity: [0.3, 0.5, 0.3] }}
-    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay }}
-    style={{
-      width: width || "100%",
-      height: height || 20,
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-      borderRadius: "8px",
-      ...sx,
-    }}
-  />
+    initial={{ opacity: 0, y: 6 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.25 }}
+    style={{ display: "flex", alignSelf: "flex-start" }}
+  >
+    <Box
+      sx={{
+        px: 2,
+        py: 1.25,
+        borderRadius: "14px 14px 14px 3px",
+        bgcolor: colors.agentBubble,
+        border: `1px solid ${colors.agentBorder}`,
+        display: "flex",
+        gap: "5px",
+        alignItems: "center",
+      }}
+    >
+      {[0, 0.18, 0.36].map((delay, i) => (
+        <motion.div
+          key={i}
+          animate={{ opacity: [0.35, 1, 0.35] }}
+          transition={{ duration: 0.9, repeat: Infinity, delay, ease: "easeInOut" }}
+          style={{
+            width: 6,
+            height: 6,
+            borderRadius: "50%",
+            backgroundColor: "rgba(255,255,255,0.5)",
+          }}
+        />
+      ))}
+    </Box>
+  </motion.div>
 );
 
-const WireframeChat = () => (
-  <Box
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      gap: 2,
-      width: "100%",
-      p: 4,
-    }}
+// ─── AGENT BUBBLE ────────────────────────────────────────────────────────────
+const AgentBubble = ({ text, status, action }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.35, ease: "easeOut" }}
+    style={{ alignSelf: "flex-start", maxWidth: "88%" }}
   >
-    <Box sx={{ alignSelf: "flex-start", width: "60%" }}>
-      <SkeletonBlock
-        height={60}
-        delay={0}
-        sx={{ borderRadius: "16px 16px 16px 4px" }}
-      />
-    </Box>
-    <Box sx={{ alignSelf: "flex-end", width: "50%", mt: 1 }}>
-      <SkeletonBlock
-        height={40}
-        delay={0.5}
+    {/* Text line */}
+    {text && (
+      <Box
         sx={{
-          bgcolor: "rgba(166, 93, 55, 0.3)",
-          borderRadius: "16px 16px 4px 16px",
+          px: 2,
+          py: 1.25,
+          mb: status ? 1 : 0,
+          borderRadius: "14px 14px 14px 3px",
+          bgcolor: colors.agentBubble,
+          border: `1px solid ${colors.agentBorder}`,
         }}
-      />
-    </Box>
-    <Box sx={{ alignSelf: "flex-start", width: "70%", mt: 1 }}>
-      <SkeletonBlock
-        height={80}
-        delay={1.0}
-        sx={{ borderRadius: "16px 16px 16px 4px" }}
-      />
-    </Box>
-    <Box sx={{ mt: "auto", pt: 4 }}>
-      <SkeletonBlock height={50} delay={0} sx={{ borderRadius: "25px" }} />
-    </Box>
-  </Box>
+      >
+        <Typography sx={{ fontFamily: fontMain, fontSize: "0.85rem", color: colors.textMain, lineHeight: 1.5 }}>
+          {text}
+        </Typography>
+      </Box>
+    )}
+
+    {/* Status rows */}
+    {status && (
+      <Box
+        sx={{
+          borderRadius: "14px",
+          border: `1px solid ${colors.agentBorder}`,
+          bgcolor: colors.agentBubble,
+          overflow: "hidden",
+        }}
+      >
+        {status.map(({ label, value }, i) => (
+          <Box
+            key={i}
+            sx={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+              gap: 2,
+              px: 2,
+              py: 0.9,
+              bgcolor: i % 2 === 0 ? "transparent" : colors.statusRow,
+              borderTop: i > 0 ? `1px solid rgba(255,255,255,0.05)` : "none",
+            }}
+          >
+            <Typography sx={{ fontFamily: fontMain, fontSize: "0.72rem", color: colors.textSec, flexShrink: 0 }}>
+              {label}
+            </Typography>
+            <Typography sx={{ fontFamily: fontMain, fontSize: "0.78rem", color: colors.textMain, fontWeight: 600, textAlign: "right" }}>
+              {value}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    )}
+
+    {/* Action confirmation card */}
+    {action && (
+      <Box
+        sx={{
+          borderRadius: "14px",
+          border: `1px solid ${colors.actionBorder}`,
+          bgcolor: colors.actionBg,
+          px: 2,
+          py: 1.5,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+          <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: colors.accent, boxShadow: `0 0 8px ${colors.accent}` }} />
+          <Typography sx={{ fontFamily: fontMain, fontWeight: 700, fontSize: "0.82rem", color: colors.accent }}>
+            {action.title}
+          </Typography>
+        </Box>
+        {action.items.map((item, i) => (
+          <Typography
+            key={i}
+            sx={{ fontFamily: fontMain, fontSize: "0.77rem", color: colors.textSec, lineHeight: 1.6, pl: 0.5 }}
+          >
+            · {item}
+          </Typography>
+        ))}
+        <Button
+          size="small"
+          disableRipple
+          sx={{
+            mt: 1.25,
+            p: 0,
+            fontFamily: fontMain,
+            fontSize: "0.77rem",
+            fontWeight: 700,
+            color: colors.accent,
+            textTransform: "none",
+            minWidth: 0,
+            "&:hover": { bgcolor: "transparent", opacity: 0.8 },
+          }}
+        >
+          {action.cta}
+        </Button>
+      </Box>
+    )}
+  </motion.div>
 );
 
-const WireframeDashboard = () => (
-  <Box
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      gap: 3,
-      width: "100%",
-      p: 4,
-    }}
+// ─── USER BUBBLE ─────────────────────────────────────────────────────────────
+const UserBubble = ({ text }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3, ease: "easeOut" }}
+    style={{ alignSelf: "flex-end", maxWidth: "80%" }}
   >
-    <Box sx={{ display: "flex", gap: 2 }}>
-      <SkeletonBlock
-        width="30%"
-        height={80}
-        delay={0}
-        sx={{ borderRadius: "12px" }}
-      />
-      <SkeletonBlock
-        width="70%"
-        height={80}
-        delay={0.2}
-        sx={{ borderRadius: "12px" }}
-      />
+    <Box
+      sx={{
+        px: 2,
+        py: 1.25,
+        borderRadius: "14px 14px 3px 14px",
+        bgcolor: colors.userBubble,
+        border: `1px solid ${colors.userBorder}`,
+      }}
+    >
+      <Typography sx={{ fontFamily: fontMain, fontSize: "0.85rem", color: colors.textMain, lineHeight: 1.5 }}>
+        {text}
+      </Typography>
     </Box>
-    <SkeletonBlock height={40} delay={0.4} />
-    <SkeletonBlock height={40} delay={0.5} />
-    <SkeletonBlock height={40} delay={0.6} />
-    <SkeletonBlock
-      height={120}
-      delay={0.8}
-      sx={{ borderRadius: "12px", mt: 1 }}
-    />
-  </Box>
+  </motion.div>
 );
 
+// ─── CHAT DEMO ───────────────────────────────────────────────────────────────
+// Plays through the scenario automatically, replays every ~10 seconds.
+function ChatDemo({ scenarioId }) {
+  const messages = DEMO_SCENARIOS[scenarioId] ?? DEMO_SCENARIOS.rag;
+  const [visible, setVisible] = useState([]);
+  const [typing, setTyping] = useState(false);
+  const [playKey, setPlayKey] = useState(0);
+  const chatEndRef = useRef(null);
+
+  // Reset playKey when scenario switches
+  useEffect(() => { setPlayKey(0); }, [scenarioId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const ts = [];
+
+    const schedule = (fn, delay) => {
+      const id = setTimeout(() => { if (!cancelled) fn(); }, delay);
+      ts.push(id);
+    };
+
+    setVisible([]);
+    setTyping(false);
+
+    let d = 300; // initial pause before first message
+
+    for (const entry of messages) {
+      if (entry.pause) {
+        const d1 = d;
+        schedule(() => setTyping(true), d1);
+        d += entry.pause;
+        schedule(() => setTyping(false), d);
+      } else {
+        const capturedEntry = entry;
+        schedule(() => setVisible((v) => [...v, capturedEntry]), d);
+        d += entry.gap ?? 800;
+      }
+    }
+
+    // Auto-replay after a comfortable pause
+    schedule(() => setPlayKey((k) => k + 1), d + 3200);
+
+    return () => {
+      cancelled = true;
+      ts.forEach(clearTimeout);
+    };
+  }, [scenarioId, playKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [visible, typing]);
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 1.25,
+        p: { xs: 2.5, md: 3 },
+        overflowY: "auto",
+        height: "100%",
+      }}
+    >
+      <AnimatePresence>
+        {visible.map((msg, i) =>
+          msg.sender === "user" ? (
+            <UserBubble key={i} text={msg.text} />
+          ) : (
+            <AgentBubble key={i} text={msg.text} status={msg.status} action={msg.action} />
+          )
+        )}
+        {typing && <TypingBubble key="typing" />}
+      </AnimatePresence>
+      <div ref={chatEndRef} />
+    </Box>
+  );
+}
+
+// ─── MAIN EXPORT ─────────────────────────────────────────────────────────────
 export default function LP_Product() {
   const { t } = useTranslation();
   const sections = t("lp.product.sections", { returnObjects: true }).map((s) => ({
@@ -132,7 +376,7 @@ export default function LP_Product() {
         fontFamily: fontMain,
       }}
     >
-      {/* --- HEADER --- */}
+      {/* Header */}
       <Box textAlign="center" mb={8}>
         <Typography
           variant="h2"
@@ -149,7 +393,7 @@ export default function LP_Product() {
         </Typography>
       </Box>
 
-      {/* --- TAB SWITCHER --- */}
+      {/* Tab switcher */}
       <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
         <Box
           sx={{
@@ -176,9 +420,7 @@ export default function LP_Product() {
                   fontFamily: fontMain,
                   fontWeight: 600,
                   textTransform: "none",
-                  color: isActive
-                    ? colors.switcherActiveText
-                    : colors.switcherInactiveText,
+                  color: isActive ? colors.switcherActiveText : colors.switcherInactiveText,
                   zIndex: 1,
                   transition: "color 0.2s ease",
                   "&:hover": { color: colors.switcherActiveText },
@@ -205,7 +447,7 @@ export default function LP_Product() {
         </Box>
       </Box>
 
-      {/* --- THE DARK CONSOLE --- */}
+      {/* Dark console */}
       <Paper
         elevation={0}
         component={motion.div}
@@ -214,19 +456,16 @@ export default function LP_Product() {
           borderRadius: "32px",
           bgcolor: colors.cardBg,
           overflow: "hidden",
-          // Flex layout ensures equal height by default (alignItems: stretch)
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          position: "relative",
-          boxShadow: "0 20px 50px rgba(44, 36, 32, 0.15)",
-          // Ensures children stretch to fill height
           alignItems: "stretch",
+          boxShadow: "0 20px 50px rgba(44, 36, 32, 0.15)",
         }}
       >
-        {/* LEFT: TEXT CONTENT */}
+        {/* LEFT — text + feature pills */}
         <Box
           sx={{
-            flex: 1, // Balanced 50/50 split
+            flex: 1,
             p: { xs: 4, md: 6, lg: 8 },
             display: "flex",
             flexDirection: "column",
@@ -268,17 +507,7 @@ export default function LP_Product() {
                 {current.subtitle}
               </Typography>
 
-              {/* FIX: Vertical Stack for Features 
-                  flexDirection: "column" ensures 1 item per line.
-              */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column", // Stacks items vertically
-                  alignItems: "flex-start", // Aligns pills to the left
-                  gap: 2, // Spacing between rows
-                }}
-              >
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
                 {current.features.map((item) => (
                   <Box
                     key={item}
@@ -305,12 +534,7 @@ export default function LP_Product() {
                       }}
                     />
                     <Typography
-                      sx={{
-                        fontFamily: fontMain,
-                        fontWeight: 500,
-                        color: colors.textMain,
-                        fontSize: "0.95rem",
-                      }}
+                      sx={{ fontFamily: fontMain, fontWeight: 500, color: colors.textMain, fontSize: "0.95rem" }}
                     >
                       {item}
                     </Typography>
@@ -321,69 +545,102 @@ export default function LP_Product() {
           </AnimatePresence>
         </Box>
 
-        {/* RIGHT: THE WIREFRAME SKELETON */}
+        {/* RIGHT — live chat demo */}
         <Box
           sx={{
-            flex: 1, // Balanced 50/50 split
+            flex: 1,
             position: "relative",
-            bgcolor: "#1E1815",
+            bgcolor: colors.chatBg,
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            p: 4,
-            // Remove fixed heights to let flexbox stretch it
-            minHeight: { xs: "400px", md: "auto" },
+            flexDirection: "column",
+            minHeight: { xs: "420px", md: "480px" },
           }}
         >
+          {/* Top bar — simulated app chrome */}
+          <Box
+            sx={{
+              px: 3,
+              py: 1.5,
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              flexShrink: 0,
+            }}
+          >
+            {["#FF5F57", "#FFBD2E", "#28C840"].map((c) => (
+              <Box key={c} sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: c, opacity: 0.7 }} />
+            ))}
+            <Typography
+              sx={{
+                fontFamily: fontMain,
+                fontSize: "0.75rem",
+                color: "rgba(255,255,255,0.3)",
+                ml: 1,
+                letterSpacing: "0.05em",
+              }}
+            >
+              MedEase · {current.id === "rag" ? "Triage" : "Accommodations"}
+            </Typography>
+          </Box>
+
+          {/* Chat area */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={current.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              style={{
-                width: "100%",
-                height: "100%",
-                // Ensures it doesn't get ridiculously tall if text is short
-                maxHeight: "500px",
+              key={active}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}
+            >
+              <ChatDemo scenarioId={active} />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Bottom input bar — decorative chrome */}
+          <Box
+            sx={{
+              px: 3,
+              py: 2,
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              flexShrink: 0,
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                height: 36,
+                borderRadius: "18px",
+                bgcolor: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                display: "flex",
+                alignItems: "center",
+                px: 2,
+              }}
+            >
+              <Typography sx={{ fontFamily: fontMain, fontSize: "0.78rem", color: "rgba(255,255,255,0.2)" }}>
+                Type a message…
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                bgcolor: colors.accent,
+                opacity: 0.6,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              {/* GLASS DEVICE CONTAINER */}
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "20px",
-                  overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-                  bgcolor: "rgba(255,255,255,0.02)",
-                  position: "relative",
-                }}
-              >
-                {current.type === "chat" ? (
-                  <WireframeChat />
-                ) : (
-                  <WireframeDashboard />
-                )}
-
-                {/* Overlay Gradient */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(180deg, rgba(44,36,32,0) 0%, rgba(44,36,32,0.2) 100%)",
-                    pointerEvents: "none",
-                  }}
-                />
-              </Box>
-            </motion.div>
-          </AnimatePresence>
+              <Typography sx={{ color: "#fff", fontSize: "0.85rem", lineHeight: 1 }}>↑</Typography>
+            </Box>
+          </Box>
         </Box>
       </Paper>
     </Box>
