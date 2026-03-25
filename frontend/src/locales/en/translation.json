@@ -4,7 +4,8 @@
     "medicationHelp": "Medication Help",
     "caregiverMode": "CareGiver Mode",
     "logout": "Sign out",
-    "language": "Language"
+    "language": "Language",
+    "quitDemo": "Quit Demo"
   },
   "menu": {
     "title": "MedEase Menu",

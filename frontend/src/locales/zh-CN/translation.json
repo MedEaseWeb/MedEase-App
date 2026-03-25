@@ -4,7 +4,8 @@
     "medicationHelp": "用药帮助",
     "caregiverMode": "看护者模式",
     "logout": "退出登录",
-    "language": "语言"
+    "language": "语言",
+    "quitDemo": "退出演示"
   },
   "menu": {
     "title": "MedEase 菜单",

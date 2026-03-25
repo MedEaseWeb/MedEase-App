@@ -32,6 +32,7 @@ const TopBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
   const [userEmail, setUserEmail] = useState("");
 
   const isDemo = DEMO_PATHS.some((p) => location.pathname.startsWith(p));
@@ -111,7 +112,7 @@ const TopBar = () => {
                   "&:hover": { borderColor: "#A65D37", color: "#A65D37", bgcolor: "transparent" },
                 }}
               >
-                Quit Demo
+                {t("nav.quitDemo")}
               </Button>
             </>
           ) : (

@@ -4,7 +4,8 @@
     "medicationHelp": "Ayuda con medicamentos",
     "caregiverMode": "Modo cuidador",
     "logout": "Cerrar sesión",
-    "language": "Idioma"
+    "language": "Idioma",
+    "quitDemo": "Salir del Demo"
   },
   "menu": {
     "title": "Menú de MedEase",

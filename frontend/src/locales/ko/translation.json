@@ -4,7 +4,8 @@
     "medicationHelp": "복약 도움",
     "caregiverMode": "보호자 모드",
     "logout": "로그아웃",
-    "language": "언어"
+    "language": "언어",
+    "quitDemo": "데모 종료"
   },
   "menu": {
     "title": "MedEase 메뉴",
