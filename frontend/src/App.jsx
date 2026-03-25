@@ -48,14 +48,7 @@ const PUBLIC_ROUTES = ["/", "/dev/login", "/dev/signup", "/privacy", "/terms"];
 function Layout() {
   const location = useLocation();
   const hideTopBarRoutes = ["/dev/login", "/dev/signup", "/"];
-  const hideSurvey =
-    location.pathname.startsWith("/survey") ||
-    location.pathname.startsWith("/questions-loop") ||
-    location.pathname.startsWith("/home") ||
-    location.pathname.startsWith("/community") ||
-    location.pathname.startsWith("/notes");
-
-  const showTopBar = !hideTopBarRoutes.includes(location.pathname) && !hideSurvey;
+  const showTopBar = !hideTopBarRoutes.includes(location.pathname);
 
   const content = (
     <>

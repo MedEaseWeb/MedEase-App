@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import {
   AppBar,
@@ -25,10 +25,15 @@ const LANGUAGES = [
   { code: "es", label: "Español" },
 ];
 
+const DEMO_PATHS = ["/survey", "/questions-loop", "/home", "/community", "/notes"];
+
 const TopBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout } = useAuth();
   const [userEmail, setUserEmail] = useState("");
+
+  const isDemo = DEMO_PATHS.some((p) => location.pathname.startsWith(p));
 
   useEffect(() => {
     const fetchEmail = async () => {
@@ -85,12 +90,33 @@ const TopBar = () => {
           <Logo imgSize={36} fontSize={26} />
         </Box>
 
-        {/* Right: Profile */}
-        <ProfileMenu
-          userEmail={userEmail}
-          onSettings={() => navigate("/settings")}
-          onLogout={handleLogout}
-        />
+        {/* Right: Demo toggle + Profile */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          {isDemo && (
+            <Button
+              onClick={() => navigate("/")}
+              variant="outlined"
+              sx={{
+                fontFamily: fontMain,
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                textTransform: "none",
+                borderRadius: "10px",
+                borderColor: "#E6DCCA",
+                color: "#2C2420",
+                px: 2,
+                "&:hover": { borderColor: "#A65D37", color: "#A65D37", bgcolor: "transparent" },
+              }}
+            >
+              Quit Demo View
+            </Button>
+          )}
+          <ProfileMenu
+            userEmail={userEmail}
+            onSettings={() => navigate("/settings")}
+            onLogout={handleLogout}
+          />
+        </Box>
       </Toolbar>
     </AppBar>
   );
