@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Link, Divider } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 const colors = {
@@ -27,7 +27,6 @@ export default function LP_Footer() {
       }}
     >
       <Box sx={{ maxWidth: "1400px", mx: "auto" }}>
-        <Divider sx={{ mb: 4, borderColor: colors.border }} />
         <Box
           sx={{
             display: "flex",
