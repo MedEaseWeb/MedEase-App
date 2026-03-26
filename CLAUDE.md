@@ -11,11 +11,12 @@ The chat system is being rebuilt as a **RAG-based multi-agent pipeline** (see `d
 ## Local Development
 
 ```bash
-# Spin up both servers in one command (from repo root):
-./start.sh
+./dev.sh             # start frontend + backend
+./dev.sh backend     # backend only
+./dev.sh frontend    # frontend only
 ```
 
-`start.sh` activates the `medease-backend` conda environment, starts uvicorn on port 8081, and starts the Vite dev server on port 5173. Ctrl+C shuts both down cleanly.
+`dev.sh` activates the `medease-backend` conda environment, starts uvicorn on port 8081, and starts the Vite dev server on port 5173. Ctrl+C shuts down cleanly.
 
 ### Frontend (`/frontend`)
 
