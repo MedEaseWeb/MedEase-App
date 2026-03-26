@@ -1,59 +1,33 @@
 <div align="center">
 
-<img src="frontend/public/medease-logo.svg" alt="MedEase Logo" width="120" />
+<img src="frontend/public/medease-logo.svg" alt="MedEase Logo" width="90" />
 
-# MedEase
+**MedEase: Agentic AI for your post-injury journey**
 
-**An accessibility-focused healthcare assistant for Emory students**
+</div>
 
-Simplify your DAS accommodation journey — from documentation to letters to Q&A, all in one place.
+We replace post-injury panic with precision by intelligently triaging you to the correct care and campus resources based on your university's specific data.
 
+<div align="center">
+  
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python_3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
-[![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
 
 [![Cloudflare Pages](https://img.shields.io/badge/Frontend-Cloudflare_Pages-F38020?style=flat-square&logo=cloudflare&logoColor=white)](https://pages.cloudflare.com)
 [![Google Cloud](https://img.shields.io/badge/Backend-Google_Cloud_App_Engine-4285F4?style=flat-square&logo=googlecloud&logoColor=white)](https://cloud.google.com/appengine)
 
 </div>
 
----
+>[!NOTE]
+>This is the dev repo for this project. For administrative/contextual information, see [MedEaseWeb/MedEase-Meta](https://github.com/MedEaseWeb/MedEase-Meta)
 
-## What is MedEase?
 
-MedEase helps Emory students with disabilities navigate the Disability and Accessibility Services (DAS) process — without phone calls, confusing forms, or walls of institutional text.
+### Architecture
 
-| Feature | Description |
-|---------|-------------|
-| 🤖 **Multi-Agent Chat** | RAG-powered assistant that triages your question to the right specialist agent |
-| 📄 **Accommodation Letters** | Generate DAS accommodation letters in seconds |
-| 💊 **Medication Tracking** | Log and query your medications via natural language |
-| 📋 **Report Simplification** | AI-powered simplification of complex medical documents |
-| 👨‍👩‍👧 **Caregiver Dashboard** | Let caregivers and family stay informed and set reminders |
-| 🔍 **DAS Q&A** | Grounded answers from the Emory DAS corpus — no hallucinations |
-
----
-
-## Demo
-
-> [!NOTE]
-> Screenshots and demo GIFs go here. Drop them in `docs/assets/` and update the links below.
-
-<!--
-<div align="center">
-  <img src="docs/assets/chat-demo.gif" alt="MedEase Chat Demo" width="80%" />
-  <br/>
-  <img src="docs/assets/dashboard-screenshot.png" alt="Caregiver Dashboard" width="80%" />
-</div>
--->
-
----
-
-## Architecture
-
+<details>
+<summary><b>Agent Architecture</b></summary>
 MedEase uses a multi-agent pipeline over Socket.IO. Every message passes through a guardrail and intent classifier before being routed to the right specialist agent.
 
 ```
@@ -77,6 +51,7 @@ Agent          (DAS Q&A)    Letter Agent    Caregiver Agents
              ChromaDB
          (Emory DAS corpus)
 ```
+</details>
 
 <details>
 <summary><b>Agent details</b></summary>
@@ -117,7 +92,7 @@ cd backend && python -m src.rag.indexer
 
 ---
 
-## Getting Started
+### Getting Started
 
 ### Prerequisites
 
@@ -183,7 +158,7 @@ MedEase-App/
 
 ---
 
-## Environment Variables
+### Environment Variables
 
 <details>
 <summary><b>Backend (<code>backend/.env</code>)</b></summary>
@@ -215,7 +190,7 @@ See `backend/src/config.py` for the full list including MongoDB collection name 
 
 ---
 
-## Deployment
+### Deployment
 
 <details>
 <summary><b>Backend — Google Cloud App Engine</b></summary>
