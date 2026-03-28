@@ -6,16 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 MedEase is a full-stack healthcare application with a React/Vite frontend deployed to Cloudflare Pages and a Python FastAPI backend deployed to Google Cloud App Engine. Features include medication management, medical report simplification (AI-powered), caregiver dashboards, Google OAuth/Calendar/Gmail integration, AWS S3 file storage, and real-time chat via Socket.IO.
 
-The chat system is being rebuilt as a **RAG-based multi-agent pipeline** (see `agent-architecture.md`).
+The chat system is being rebuilt as a **RAG-based multi-agent pipeline** (see `docs/agent-architecture.md`).
 
 ## Local Development
 
 ```bash
-# Spin up both servers in one command (from repo root):
-./start.sh
+./dev.sh             # start frontend + backend
+./dev.sh backend     # backend only
+./dev.sh frontend    # frontend only
 ```
 
-`start.sh` activates the `medease-backend` conda environment, starts uvicorn on port 8081, and starts the Vite dev server on port 5173. Ctrl+C shuts both down cleanly.
+`dev.sh` activates the `medease-backend` conda environment, starts uvicorn on port 8081, and starts the Vite dev server on port 5173. Ctrl+C shuts down cleanly.
 
 ### Frontend (`/frontend`)
 
@@ -130,4 +131,4 @@ Frontend `.env` needs: API base URL.
 
 ## Key Reference
 
-- **`agent-architecture.md`** (repo root) — full multi-agent RAG architecture design, agent definitions, data flow walkthroughs, and open decisions. This file is mirrored at `../MedEase-Meta/docs/agent-architecture.md`. The MedEase-Meta workspace (`../MedEase-Meta/`) holds org-level context, cross-project architecture decisions, and the CLAUDE.md for the full organization.
+- **`docs/agent-architecture.md`** — full multi-agent RAG architecture design, agent definitions, data flow walkthroughs, and open decisions. This file is mirrored at `../MedEase-Meta/docs/agent-architecture.md`. The MedEase-Meta workspace (`../MedEase-Meta/`) holds org-level context, cross-project architecture decisions, and the CLAUDE.md for the full organization.
