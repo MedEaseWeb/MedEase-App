@@ -26,12 +26,18 @@ class NShotMedicalClassifier:
         return result["labels"][:top_k], result["scores"][:top_k]
 
 
-classifier = NShotMedicalClassifier()
+_classifier = None
+
+def get_classifier():
+    global _classifier
+    if _classifier is None:
+        _classifier = NShotMedicalClassifier()
+    return _classifier
 
 def stream_classification_result(prompt: str):
     yield "Running classification task...\n"
 
-    labels, scores = classifier.top_labels(prompt)
+    labels, scores = get_classifier().top_labels(prompt)
     yield "\nTop Predictions:\n"
     for label, score in zip(labels, scores):
         yield f"- {label}: {score:.2%}\n"

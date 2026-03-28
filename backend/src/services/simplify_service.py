@@ -3,7 +3,7 @@ from datetime import datetime
 from bson import ObjectId
 from dotenv import load_dotenv
 from openai import OpenAI
-from src.services.classifier_service import classifier, stream_classification_result
+from src.services.classifier_service import get_classifier, stream_classification_result
 from src.database import medical_report_collection
 from typing import AsyncGenerator
 from datetime import datetime
@@ -63,7 +63,7 @@ async def stream_and_capture(prompt: str, user_id: str, report_id: str, user_ema
     buffer = ""
 
     # Step 1: run the guardian (before streaming anything)
-    is_valid = classifier.is_medical(prompt)
+    is_valid = get_classifier().is_medical(prompt)
 
     # Still stream classification result (for frontend display)
     for chunk in stream_classification_result(prompt):
