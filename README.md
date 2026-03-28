@@ -211,24 +211,39 @@ See `backend/src/config.py` for the full list including MongoDB collection name 
 
 ### Deployment
 
+**Branch workflow:** `feat/*` → `dev` → `main`
+Merging to `main` auto-deploys the frontend. Backend requires a manual redeploy.
+
 <details>
 <summary><b>Backend — Google Cloud Run</b></summary>
 
+**First-time setup:**
 ```bash
-gcloud run deploy medease-backend \
-  --source ./backend \
+gcloud auth login
+gcloud config set project medease-491604
+gcloud services enable run.googleapis.com artifactregistry.googleapis.com cloudbuild.googleapis.com
+```
+
+**Deploy (run from repo root or `backend/`):**
+```bash
+cd backend && gcloud run deploy medease-backend \
+  --source . \
   --region us-central1 \
   --allow-unauthenticated \
   --port 8080
 ```
 
-Then set env vars:
+**Set env vars (first deploy only — persists across revisions):**
+
+Via GCP Console → Cloud Run → medease-backend → Edit & Deploy New Revision → Variables & Secrets, or:
 
 ```bash
 gcloud run services update medease-backend \
-  --set-env-vars MONGO_URI=...,SECRET_KEY=...,CHAT_GPT_API_KEY=... \
-  --region us-central1
+  --region us-central1 \
+  --set-env-vars MONGO_URI=...,DB_NAME=...,SECRET_KEY=...,CHAT_GPT_API_KEY=...
 ```
+
+**Live URL:** `https://medease-backend-476216843409.us-central1.run.app`
 
 Runtime: Python 3.12 · Cloud Run · Port 8080
 
@@ -237,7 +252,13 @@ Runtime: Python 3.12 · Cloud Run · Port 8080
 <details>
 <summary><b>Frontend — Cloudflare Pages</b></summary>
 
-Auto-deploys on push to `main` via GitHub Actions: `npm run build` → Cloudflare Pages project `medease`.
+Auto-deploys on merge to `main` via GitHub Actions (`.github/workflows/publish.yml`):
+`npm run build` → Cloudflare Pages project `medease`.
+
+**`VITE_API_URL` is stored in GitHub Secrets** (not Cloudflare env vars) — update it at:
+repo → Settings → Secrets and variables → Actions → `VITE_API_URL`
+
+**Live URL:** `https://medease.pages.dev`
 
 </details>
 
