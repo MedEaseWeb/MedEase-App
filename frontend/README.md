@@ -15,3 +15,5 @@ npm run build     # production build → dist/
 | Variable | Description |
 |---|---|
 | `VITE_API_URL` | Backend API base URL |
+
+updated VITE_API_URL is set inside of the github MedEase-App - secrets and env settings
