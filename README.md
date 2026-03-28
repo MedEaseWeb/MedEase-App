@@ -103,11 +103,26 @@ cd backend && python -m src.rag.indexer
 
 ### Quick Start
 
+**Option A — Docker (recommended)**
+
 ```bash
-# Clone the repo
 git clone https://github.com/MedEaseWeb/MedEase-App.git
 cd MedEase-App
 
+# Fill in backend secrets
+cp backend/.env.example backend/.env
+
+docker compose up --build
+```
+
+| URL | Service |
+|-----|---------|
+| `http://localhost:5173` | Frontend |
+| `http://localhost:8081` | Backend API |
+
+**Option B — Local dev**
+
+```bash
 # Set up the backend environment
 conda create -n medease-backend python=3.12
 conda activate medease-backend
@@ -134,14 +149,18 @@ cp backend/.env.example backend/.env
 
 ```
 MedEase-App/
+├── docker-compose.yml     # Local dev: frontend + backend
 ├── frontend/              # React/Vite SPA
+│   ├── Dockerfile         # Multi-stage: Node build → nginx serve
+│   ├── nginx.conf         # try_files for React Router
 │   ├── src/
 │   │   ├── pages/         # LandingPage, auth, medication, careGiver, utility
 │   │   └── context/       # AuthContext (JWT + user state)
 │   └── public/
 ├── backend/               # FastAPI backend
+│   ├── Dockerfile         # python:3.12-slim, torch CPU-only
 │   ├── main.py            # Entry point; mounts 6 routers + Socket.IO
-│   ├── app.yaml           # GCP App Engine config
+│   ├── app.yaml           # GCP Cloud Run config
 │   ├── requirements.txt
 │   └── src/
 │       ├── agents/        # Multi-agent pipeline
@@ -193,14 +212,25 @@ See `backend/src/config.py` for the full list including MongoDB collection name 
 ### Deployment
 
 <details>
-<summary><b>Backend — Google Cloud App Engine</b></summary>
+<summary><b>Backend — Google Cloud Run</b></summary>
 
 ```bash
-cd backend
-gcloud app deploy app.yaml
+gcloud run deploy medease-backend \
+  --source ./backend \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --port 8080
 ```
 
-Runtime: Python 3.12 · Flex environment · Port 8080
+Then set env vars:
+
+```bash
+gcloud run services update medease-backend \
+  --set-env-vars MONGO_URI=...,SECRET_KEY=...,CHAT_GPT_API_KEY=... \
+  --region us-central1
+```
+
+Runtime: Python 3.12 · Cloud Run · Port 8080
 
 </details>
 
