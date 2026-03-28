@@ -27,6 +27,7 @@ api_app.add_middleware(
         "https://medease.pages.dev",
         "http://localhost:5173",
     ],
+    allow_origin_regex=r"https://[a-z0-9]+\.medease\.pages\.dev",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
