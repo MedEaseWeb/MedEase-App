@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+src/rag/chroma_store/
+venv*/
+venv-fastapi/
+.git/
+app.yaml
