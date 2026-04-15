@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { getDevMode } from "../settings/SettingsPage";
 import {
   Box,
   Typography,
@@ -101,7 +102,7 @@ export default function ChatPage() {
   const sendMessage = () => {
     if (!input.trim() || isStreaming) return;
     setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
-    socket.emit("user_message", { content: input.trim(), locale: i18n.language });
+    socket.emit("user_message", { content: input.trim(), locale: i18n.language, dev_mode: getDevMode() });
     setInput("");
   };
 

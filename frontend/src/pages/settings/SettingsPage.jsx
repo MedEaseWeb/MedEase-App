@@ -1,9 +1,12 @@
-import React from "react";
-import { Box, Typography, Chip, Divider, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Chip, Divider, Button, Switch } from "@mui/material";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+const DEV_MODE_KEY = "medease_dev_mode";
+export const getDevMode = () => localStorage.getItem(DEV_MODE_KEY) === "true";
 
 const colors = {
   bg: "#EBE5DE",
@@ -97,6 +100,13 @@ export default function SettingsPage() {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [devMode, setDevMode] = useState(getDevMode);
+
+  const handleDevModeToggle = (e) => {
+    const next = e.target.checked;
+    setDevMode(next);
+    localStorage.setItem(DEV_MODE_KEY, String(next));
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -197,6 +207,40 @@ export default function SettingsPage() {
               }
               divider={false}
             />
+          </SettingsSection>
+
+          {/* Developer */}
+          <SettingsSection title="Developer">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                px: 3,
+                py: 2.5,
+              }}
+            >
+              <Box>
+                <Typography
+                  sx={{ fontFamily: fontMain, fontWeight: 500, fontSize: "0.9rem", color: colors.textMain }}
+                >
+                  Dev Mode
+                </Typography>
+                <Typography
+                  sx={{ fontFamily: fontMain, fontSize: "0.8rem", color: colors.textSec, mt: 0.25 }}
+                >
+                  Stub LLM replies — no API calls made
+                </Typography>
+              </Box>
+              <Switch
+                checked={devMode}
+                onChange={handleDevModeToggle}
+                sx={{
+                  "& .MuiSwitch-switchBase.Mui-checked": { color: colors.accent },
+                  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { bgcolor: colors.accent },
+                }}
+              />
+            </Box>
           </SettingsSection>
 
           {/* Account */}

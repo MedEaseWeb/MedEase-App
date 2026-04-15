@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { getDevMode } from "../settings/SettingsPage";
 import {
   Box,
   TextField,
@@ -88,11 +89,12 @@ const Chatbox = () => {
     if (!input.trim()) return;
 
     const locale = i18n.language;
+    const dev_mode = getDevMode();
 
     // Reminder flow
     if (reminderMode) {
       setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
-      socket.emit("user_message", { mode: "reminder", content: input.trim(), locale });
+      socket.emit("user_message", { mode: "reminder", content: input.trim(), locale, dev_mode });
       setReminderMode(false);
       setInput("");
       return;
@@ -101,7 +103,7 @@ const Chatbox = () => {
     // Patient data flow
     if (patientDataMode) {
       setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
-      socket.emit("user_message", { mode: "patient_data", content: input.trim(), locale });
+      socket.emit("user_message", { mode: "patient_data", content: input.trim(), locale, dev_mode });
       setPatientDataMode(false);
       setInput("");
       return;
@@ -109,7 +111,7 @@ const Chatbox = () => {
 
     // Normal chat flow
     setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
-    socket.emit("user_message", { content: input.trim(), locale });
+    socket.emit("user_message", { content: input.trim(), locale, dev_mode });
     setInput("");
   };
 
@@ -148,7 +150,7 @@ const Chatbox = () => {
           message = "Unknown option selected";
       }
       setMessages((prev) => [...prev, { text: message, sender: "user" }]);
-      socket.emit("user_message", { content: message, locale: i18n.language });
+      socket.emit("user_message", { content: message, locale: i18n.language, dev_mode: getDevMode() });
     }
   };
 

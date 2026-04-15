@@ -2,8 +2,20 @@
 #
 # Central router. The socket server calls orchestrator.handle() for every
 # user message. Runs: guardrail → intent → specialist agent.
+#
+# DEV MODE: if context.metadata["dev_mode"] is True, all LLM calls are
+# bypassed and a stub response is returned immediately. Toggle via the
+# Settings pane in the frontend — never ships to main.
 
+import itertools
 from src.agents.base_agent import AgentContext, AgentResponse
+
+_DEV_STUBS = itertools.cycle([
+    "**[DEV]** Stub reply #1 — pipeline is connected. No LLM was called.",
+    "**[DEV]** Stub reply #2 — Socket.IO → Orchestrator → stub ✓",
+    "**[DEV]** Stub reply #3 — history, locale, and context are all wired.",
+    "**[DEV]** Stub reply #4 — toggle Dev Mode off in Settings to use real agents.",
+])
 from src.agents.guardrail_agent import GuardrailAgent
 from src.agents.intent_agent import IntentAgent, CONFIDENCE_THRESHOLD
 from src.agents.triage_agent import TriageAgent
@@ -46,6 +58,10 @@ class Orchestrator:
                 agent.api_app = api_app
 
     async def handle(self, user_input: str, context: AgentContext) -> AgentResponse:
+        # ── 0. Dev mode — bypass all LLM calls ───────────────────────────────
+        if context.metadata.get("dev_mode"):
+            return AgentResponse(content=next(_DEV_STUBS), done=True)
+
         # ── 1. Guardrail ──────────────────────────────────────────────────────
         guard = await self.guardrail.check(user_input, context)
         if not guard.allowed:
