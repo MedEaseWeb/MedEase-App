@@ -38,6 +38,7 @@ const LANGUAGES = [
   { code: "zh-CN", label: "中文" },
   { code: "ko", label: "한국어" },
   { code: "es", label: "Español" },
+  { code: "ja", label: "日本語" },
 ];
 
 const fontMain = "'Plus Jakarta Sans', sans-serif";
