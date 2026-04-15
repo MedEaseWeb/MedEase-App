@@ -11,6 +11,7 @@ _LOCALE_NAMES: dict[str, str] = {
     "zh-CN": "Simplified Chinese (中文)",
     "ko":    "Korean (한국어)",
     "es":    "Spanish (español)",
+    "ja":    "Japanese (日本語)",
 }
 
 

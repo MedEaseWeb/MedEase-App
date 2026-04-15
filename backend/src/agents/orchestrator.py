@@ -37,6 +37,12 @@ _DEV_STUBS: dict[str, itertools.cycle] = {
         "**[MODO DEV]** Historial, locale y contexto fluyen correctamente.",
         "**[MODO DEV]** Desactiva el modo Dev en Ajustes para usar los agentes reales.",
     ]),
+    "ja": itertools.cycle([
+        "**[開発モード]** スタブ応答 — パイプライン接続済み。LLM は呼び出されていません。",
+        "**[開発モード]** Socket.IO → オーケストレーター → スタブ ✓ 正常に動作しています。",
+        "**[開発モード]** 履歴・ロケール・コンテキストが正しく流れています。",
+        "**[開発モード]** 実際のエージェントを使用するには、設定で開発モードをオフにしてください。",
+    ]),
 }
 
 
