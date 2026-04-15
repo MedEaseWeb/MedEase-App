@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Typography,
@@ -25,6 +26,7 @@ const colors = {
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
 export default function ChatPage() {
+  const { i18n } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -89,7 +91,7 @@ export default function ChatPage() {
   const sendMessage = () => {
     if (!input.trim() || isStreaming) return;
     setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
-    socket.emit("user_message", input.trim());
+    socket.emit("user_message", { content: input.trim(), locale: i18n.language });
     setInput("");
   };
 

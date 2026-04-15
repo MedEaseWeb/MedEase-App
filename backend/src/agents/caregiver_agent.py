@@ -9,7 +9,7 @@ import httpx
 from openai import AsyncOpenAI
 from src.config import CHAT_GPT_API_KEY
 from src.agenticActions import tools
-from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent
+from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent, language_directive
 
 _client = AsyncOpenAI(api_key=CHAT_GPT_API_KEY)
 
@@ -28,9 +28,11 @@ class CaregiverAgent(BaseAgent):
     async def process(self, user_input: str, context: AgentContext) -> AgentResponse:
         history = context.history + [{"role": "user", "content": user_input}]
 
+        directive = language_directive(context.locale)
+        system = _SYSTEM_PROMPT + (f"\n{directive}" if directive else "")
         gpt_resp = await _client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[{"role": "system", "content": _SYSTEM_PROMPT}, *history],
+            messages=[{"role": "system", "content": system}, *history],
             functions=tools,
             function_call="auto",
         )
@@ -129,5 +131,6 @@ class CaregiverAgent(BaseAgent):
             user_id=context.user_id,
             token=context.token,
             history=history,
+            locale=context.locale,
             metadata=context.metadata,
         )
