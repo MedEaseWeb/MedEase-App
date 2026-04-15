@@ -68,22 +68,25 @@ async def disconnect(sid):
 
 @sio.event
 async def user_message(sid, data):
-    # Normalise data — frontend sends either a plain string or {content, mode, locale}
+    # Normalise data — frontend sends either a plain string or {content, mode, locale, dev_mode}
     if isinstance(data, dict):
         user_text = data.get("content", "")
         locale    = data.get("locale", "en")
+        dev_mode  = bool(data.get("dev_mode", False))
     else:
         user_text = str(data)
         locale    = "en"
+        dev_mode  = False
 
     context = contexts.get(sid)
     if context is None:
         await sio.emit("bot-message", "Session expired. Please refresh.", room=sid)
         return
 
-    # Always keep the token and locale fresh (may change during the session)
+    # Always keep the token, locale, and dev_mode fresh (may change during the session)
     context.token  = sid_to_token.get(sid)
     context.locale = locale
+    context.metadata["dev_mode"] = dev_mode
 
     response = await orchestrator.handle(user_text, context)
 

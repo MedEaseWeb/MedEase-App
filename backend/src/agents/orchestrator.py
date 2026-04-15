@@ -2,8 +2,50 @@
 #
 # Central router. The socket server calls orchestrator.handle() for every
 # user message. Runs: guardrail → intent → specialist agent.
+#
+# DEV MODE: if context.metadata["dev_mode"] is True, all LLM calls are
+# bypassed and a stub response is returned immediately. Toggle via the
+# Settings pane in the frontend — never ships to main.
 
+import asyncio
+import itertools
+from typing import AsyncGenerator
 from src.agents.base_agent import AgentContext, AgentResponse
+
+_DEV_STUBS: dict[str, itertools.cycle] = {
+    "en": itertools.cycle([
+        "**[DEV]** Stub reply — pipeline connected. No LLM was called.",
+        "**[DEV]** Socket.IO → Orchestrator → stub ✓ Everything is wired.",
+        "**[DEV]** History, locale, and context are flowing correctly.",
+        "**[DEV]** Toggle Dev Mode off in Settings to use real agents.",
+    ]),
+    "zh-CN": itertools.cycle([
+        "**[开发模式]** 存根回复 — 管道已连接，未调用任何 LLM。",
+        "**[开发模式]** Socket.IO → 编排器 → 存根 ✓ 一切正常。",
+        "**[开发模式]** 历史记录、语言和上下文均正常传递。",
+        "**[开发模式]** 在设置中关闭开发模式以使用真实代理。",
+    ]),
+    "ko": itertools.cycle([
+        "**[개발 모드]** 스텁 응답 — 파이프라인 연결됨. LLM 호출 없음.",
+        "**[개발 모드]** Socket.IO → 오케스트레이터 → 스텁 ✓ 정상 작동.",
+        "**[개발 모드]** 히스토리, 로케일, 컨텍스트가 올바르게 전달됩니다.",
+        "**[개발 모드]** 실제 에이전트를 사용하려면 설정에서 개발 모드를 끄세요.",
+    ]),
+    "es": itertools.cycle([
+        "**[MODO DEV]** Respuesta stub — pipeline conectado. No se llamó a ningún LLM.",
+        "**[MODO DEV]** Socket.IO → Orquestador → stub ✓ Todo funciona.",
+        "**[MODO DEV]** Historial, locale y contexto fluyen correctamente.",
+        "**[MODO DEV]** Desactiva el modo Dev en Ajustes para usar los agentes reales.",
+    ]),
+}
+
+
+async def _dev_stream(text: str) -> AsyncGenerator[str, None]:
+    """Yield the stub text word-by-word to simulate streaming."""
+    words = text.split(" ")
+    for i, word in enumerate(words):
+        yield word if i == 0 else " " + word
+        await asyncio.sleep(0.045)
 from src.agents.guardrail_agent import GuardrailAgent
 from src.agents.intent_agent import IntentAgent, CONFIDENCE_THRESHOLD
 from src.agents.triage_agent import TriageAgent
@@ -46,6 +88,12 @@ class Orchestrator:
                 agent.api_app = api_app
 
     async def handle(self, user_input: str, context: AgentContext) -> AgentResponse:
+        # ── 0. Dev mode — bypass all LLM calls ───────────────────────────────
+        if context.metadata.get("dev_mode"):
+            stubs = _DEV_STUBS.get(context.locale, _DEV_STUBS["en"])
+            text  = next(stubs)
+            return AgentResponse(content="", stream=True, stream_gen=_dev_stream(text), done=True)
+
         # ── 1. Guardrail ──────────────────────────────────────────────────────
         guard = await self.guardrail.check(user_input, context)
         if not guard.allowed:
