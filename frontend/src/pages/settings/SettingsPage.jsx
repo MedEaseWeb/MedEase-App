@@ -124,7 +124,7 @@ export default function SettingsPage() {
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 96px)",
+        minHeight: "calc(100vh - 64px)",
         bgcolor: colors.bg,
         py: 5,
         px: { xs: 2, sm: 4 },
