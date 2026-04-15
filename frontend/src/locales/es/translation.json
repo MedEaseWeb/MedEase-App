@@ -5,7 +5,9 @@
     "caregiverMode": "Modo cuidador",
     "logout": "Cerrar sesión",
     "language": "Idioma",
-    "quitDemo": "Salir del Demo"
+    "quitDemo": "Salir del Demo",
+    "signedInAs": "Conectado como",
+    "settings": "Configuración"
   },
   "menu": {
     "title": "Menú de MedEase",
@@ -26,7 +28,8 @@
     "diaryButton": "Subir diario fotográfico",
     "accommodationButton": "Carta de adaptación",
     "patientDataPrompt": "¡Claro! Para recuperar los datos de un paciente, proporciona el correo y la clave generada en un solo mensaje. Por ejemplo: 'jane.doe@example.com KEY12345'",
-    "reminderPrompt": "¡Claro! ¿De qué te gustaría que te recordara,\ny cuándo? (p. ej. \"Tomar medicamentos a las 9 AM durante 5 días\")"
+    "reminderPrompt": "¡Claro! ¿De qué te gustaría que te recordara,\ny cuándo? (p. ej. \"Tomar medicamentos a las 9 AM durante 5 días\")",
+    "welcomeMain": "¡Hola! Soy tu asistente de IA de MedEase. Puedo ayudarte con los servicios de Emory DAS, solicitudes de adaptaciones, medicamentos y más. ¿En qué puedo ayudarte hoy?"
   },
   "login": {
     "errorTitle": "Error de inicio de sesión",
@@ -125,30 +128,109 @@
         }
       ],
       "demo": {
-        "chrome": { "rag": "Triage", "chat": "Acomodaciones" },
+        "chrome": {
+          "rag": "Triage",
+          "chat": "Acomodaciones"
+        },
         "rag": [
-          { "sender": "user", "text": "Me torcí la rodilla en el entrenamiento. Lleva 3 días hinchada y no puedo caminar sin dolor.", "gap": 600 },
-          { "pause": 1100 },
-          { "sender": "agent", "text": "Ejecutando triage en la red de atención de Emory…", "status": [
-            { "label": "Tipo de lesión", "value": "Tejido blando · severidad moderada" },
-            { "label": "Atención más cercana", "value": "Salud Estudiantil · Edif. Woodruff" },
-            { "label": "Espera actual", "value": "~15 min · volumen bajo ahora" }
-          ], "gap": 1600 },
-          { "sender": "user", "text": "Resérvame en Salud Estudiantil.", "gap": 500 },
-          { "pause": 950 },
-          { "sender": "agent", "action": { "title": "Cita confirmada", "items": ["Servicios de Salud Estudiantil · Hoy 2:45 PM", "Formulario de ingreso pre-completado con tu lesión", "Indicaciones para caminar enviadas a tu teléfono"], "cta": "Agregar al Calendario →" }, "gap": 0 }
+          {
+            "sender": "user",
+            "text": "Me torcí la rodilla en el entrenamiento. Lleva 3 días hinchada y no puedo caminar sin dolor.",
+            "gap": 600
+          },
+          {
+            "pause": 1100
+          },
+          {
+            "sender": "agent",
+            "text": "Ejecutando triage en la red de atención de Emory…",
+            "status": [
+              {
+                "label": "Tipo de lesión",
+                "value": "Tejido blando · severidad moderada"
+              },
+              {
+                "label": "Atención más cercana",
+                "value": "Salud Estudiantil · Edif. Woodruff"
+              },
+              {
+                "label": "Espera actual",
+                "value": "~15 min · volumen bajo ahora"
+              }
+            ],
+            "gap": 1600
+          },
+          {
+            "sender": "user",
+            "text": "Resérvame en Salud Estudiantil.",
+            "gap": 500
+          },
+          {
+            "pause": 950
+          },
+          {
+            "sender": "agent",
+            "action": {
+              "title": "Cita confirmada",
+              "items": [
+                "Servicios de Salud Estudiantil · Hoy 2:45 PM",
+                "Formulario de ingreso pre-completado con tu lesión",
+                "Indicaciones para caminar enviadas a tu teléfono"
+              ],
+              "cta": "Agregar al Calendario →"
+            },
+            "gap": 0
+          }
         ],
         "chat": [
-          { "sender": "user", "text": "Mi acomodo de DAS vence el viernes. La Prof. Chen no ha respondido y mi parcial es esa tarde.", "gap": 600 },
-          { "pause": 1100 },
-          { "sender": "agent", "text": "Encontré tu archivo de acomodo activo. Situación actual:", "status": [
-            { "label": "Fecha límite", "value": "Viernes · 2 días restantes" },
-            { "label": "Prof. Chen", "value": "Sin respuesta · 4 días pendiente" },
-            { "label": "Acción requerida", "value": "Confirmación del profesor vencida" }
-          ], "gap": 1600 },
-          { "sender": "user", "text": "Manéjalo — envía un seguimiento e incluye a mi asesor de DAS.", "gap": 500 },
-          { "pause": 950 },
-          { "sender": "agent", "action": { "title": "3 acciones completadas", "items": ["Correo de seguimiento enviado a la Prof. Chen", "Asesor de DAS notificado — fecha límite marcada", "Acomodo del parcial marcado como pendiente"], "cta": "Ver Registro de Actividad →" }, "gap": 0 }
+          {
+            "sender": "user",
+            "text": "Mi acomodo de DAS vence el viernes. La Prof. Chen no ha respondido y mi parcial es esa tarde.",
+            "gap": 600
+          },
+          {
+            "pause": 1100
+          },
+          {
+            "sender": "agent",
+            "text": "Encontré tu archivo de acomodo activo. Situación actual:",
+            "status": [
+              {
+                "label": "Fecha límite",
+                "value": "Viernes · 2 días restantes"
+              },
+              {
+                "label": "Prof. Chen",
+                "value": "Sin respuesta · 4 días pendiente"
+              },
+              {
+                "label": "Acción requerida",
+                "value": "Confirmación del profesor vencida"
+              }
+            ],
+            "gap": 1600
+          },
+          {
+            "sender": "user",
+            "text": "Manéjalo — envía un seguimiento e incluye a mi asesor de DAS.",
+            "gap": 500
+          },
+          {
+            "pause": 950
+          },
+          {
+            "sender": "agent",
+            "action": {
+              "title": "3 acciones completadas",
+              "items": [
+                "Correo de seguimiento enviado a la Prof. Chen",
+                "Asesor de DAS notificado — fecha límite marcada",
+                "Acomodo del parcial marcado como pendiente"
+              ],
+              "cta": "Ver Registro de Actividad →"
+            },
+            "gap": 0
+          }
         ]
       }
     },
@@ -172,7 +254,10 @@
     },
     "footer": {
       "legal": {
-        "links": ["Política de Privacidad", "Términos de Servicio"]
+        "links": [
+          "Política de Privacidad",
+          "Términos de Servicio"
+        ]
       },
       "copyright": "© {{year}} MedEase Inc. Todos los derechos reservados."
     },
@@ -180,14 +265,38 @@
       "heading": "Clínicamente Informado. Con Propósito.",
       "subtitle": "MedEase está formado por investigadores de salud, desarrolladores y mentores — enfocados en seguridad, claridad y recuperación estudiantil.",
       "members": [
-        { "name": "Annie He", "role": "Cofundadora de Producto y Negocios", "detail": "Investigadora en Salud e Ingeniera de Software, Emory '25" },
-        { "name": "Rolf Shi", "role": "Cofundador Técnico", "detail": "Investigador AI4H e Ingeniero de Software, Emory '25 & UPenn '27" }
+        {
+          "name": "Annie He",
+          "role": "Cofundadora de Producto y Negocios",
+          "detail": "Investigadora en Salud e Ingeniera de Software, Emory '25"
+        },
+        {
+          "name": "Rolf Shi",
+          "role": "Cofundador Técnico",
+          "detail": "Investigador AI4H e Ingeniero de Software, Emory '25 & UPenn '27"
+        }
       ],
       "advisors": [
-        { "name": "Dr. Phil Wolff", "role": "Laboratorio de Biomarcadores del Lenguaje", "detail": "Mentor" },
-        { "name": "Dr. JinHo Choi", "role": "Laboratorio NLP de Emory", "detail": "Mentor" },
-        { "name": "Sig Mosley", "role": "Capitalista de Riesgo", "detail": "Mentor" },
-        { "name": "Dr. Stuart Zola", "role": "Fundador y Científico Clínico", "detail": "Mentor" }
+        {
+          "name": "Dr. Phil Wolff",
+          "role": "Laboratorio de Biomarcadores del Lenguaje",
+          "detail": "Mentor"
+        },
+        {
+          "name": "Dr. JinHo Choi",
+          "role": "Laboratorio NLP de Emory",
+          "detail": "Mentor"
+        },
+        {
+          "name": "Sig Mosley",
+          "role": "Capitalista de Riesgo",
+          "detail": "Mentor"
+        },
+        {
+          "name": "Dr. Stuart Zola",
+          "role": "Fundador y Científico Clínico",
+          "detail": "Mentor"
+        }
       ]
     },
     "userStories": {
@@ -255,15 +364,28 @@
       "whatHappened": {
         "title": "¿Qué pasó?",
         "description": "Describe brevemente tu lesión o situación. Puedes ser general — esto nos ayuda a anclar tu viaje.",
-        "options": ["Lesión deportiva o de entrenamiento", "Caída o impacto accidental", "Procedimiento médico / condición", "Otro"],
+        "options": [
+          "Lesión deportiva o de entrenamiento",
+          "Caída o impacto accidental",
+          "Procedimiento médico / condición",
+          "Otro"
+        ],
         "placeholder": "Opcional: comparte lo que quieras que sepamos."
       },
       "whenHappened": {
         "title": "¿Cuándo ocurrió?",
         "description": "Esto nos ayuda a entender en qué punto de tu recuperación podrías estar.",
-        "options": ["Hoy", "En la última semana", "Hace más de una semana"],
+        "options": [
+          "Hoy",
+          "En la última semana",
+          "Hace más de una semana"
+        ],
         "detailLabel": "Si quieres, elige un poco más de detalle.",
-        "detailOptions": ["Hace 1–4 semanas", "Hace 1–3 meses", "Hace más de 3 meses"]
+        "detailOptions": [
+          "Hace 1–4 semanas",
+          "Hace 1–3 meses",
+          "Hace más de 3 meses"
+        ]
       },
       "insurance": {
         "title": "¿Tienes seguro médico?",
@@ -273,7 +395,14 @@
         "selectPlan": "Selecciona tu plan (opciones comunes de Emory).",
         "preferNotToSay": "Prefiero no decirlo",
         "skipButton": "Omitir seguro e ir al Bucle de Preguntas",
-        "plans": ["Aetna Student Health", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "Otro / Internacional"]
+        "plans": [
+          "Aetna Student Health",
+          "Anthem BlueCross BlueShield",
+          "Kaiser Permanente",
+          "UnitedHealthcare",
+          "Cigna",
+          "Otro / Internacional"
+        ]
       }
     },
     "end": {
@@ -291,13 +420,23 @@
   "home": {
     "careJourney": {
       "title": "Tu Proceso de Atención",
-      "stages": ["Identificar", "Evaluar", "Elegir atención", "Recibir atención", "Recuperarse"]
+      "stages": [
+        "Identificar",
+        "Evaluar",
+        "Elegir atención",
+        "Recibir atención",
+        "Recuperarse"
+      ]
     },
     "recommendation": {
       "label": "Paso recomendado",
       "suggestion": "Te sugerimos visitar una Clínica de Urgencias",
       "whyLabel": "Por qué:",
-      "whyReasons": ["los síntomas requieren evaluación", "más rápido que urgencias", "menor costo"]
+      "whyReasons": [
+        "los síntomas requieren evaluación",
+        "más rápido que urgencias",
+        "menor costo"
+      ]
     },
     "qitl": {
       "title": "Preguntas en el Bucle",
@@ -320,15 +459,138 @@
         "¿Cuándo debo ver a un médico de nuevo?"
       ],
       "mockResponses": [
-        { "main": "La clínica de urgencias es para problemas médicos que necesitan atención pronto pero no son de riesgo vital.", "bullets": [{ "label": "Ejemplos:", "items": ["fracturas leves", "infecciones", "dolor moderado", "gripe o fiebre"] }, { "label": "Ventajas:", "items": ["menos espera que urgencias", "menor costo", "sin cita previa"] }] },
-        { "main": "Los costos varían según la ubicación y el servicio. Normalmente menores que urgencias.", "bullets": [{ "label": "Rango aproximado:", "items": ["visita sin seguro: suele ser $100–200+", "con seguro: puede aplicarse copago"] }] },
-        { "main": "No necesitas seguro para ser atendido, pero tenerlo generalmente reduce lo que pagas.", "bullets": [{ "label": "Con seguro:", "items": ["lleva tu tarjeta", "puede aplicarse copago o coseguro"] }, { "label": "Sin seguro:", "items": ["pregunta por precio sin seguro", "el pago suele realizarse en la visita"] }] },
-        { "main": "Lleva tu identificación, tarjeta de seguro (si tienes) y una lista de tus medicamentos actuales.", "bullets": [{ "label": "Recomendado:", "items": ["identificación con foto", "tarjeta de seguro", "lista de medicamentos", "resultados de pruebas recientes"] }] },
-        { "main": "La mayoría de las visitas duran entre 30 minutos y varias horas según la demanda.", "bullets": [{ "label": "Proceso típico:", "items": ["registro y espera", "examen y posibles pruebas", "alta con instrucciones"] }] },
-        { "main": "Sigue las instrucciones del envase o de tu médico (p. ej. con comida, hora del día).", "bullets": [{ "label": "Consejos:", "items": ["configura un recordatorio diario", "no omitas dosis sin consultar a tu médico"] }] },
-        { "main": "La recuperación depende de tu condición. Tu médico debería darte un calendario y qué es normal.", "bullets": [{ "label": "General:", "items": ["descansa según indicación", "retorno gradual a la actividad", "vigila síntomas nuevos o que empeoren"] }] },
-        { "main": "Las instrucciones de alta suelen indicar cuándo hacer seguimiento. Si no, llama a la clínica.", "bullets": [{ "label": "Cuándo llamar antes:", "items": ["síntomas que empeoran", "fiebre", "nuevo dolor o hinchazón"] }] },
-        { "main": "Sigue la fecha de seguimiento que te dio tu médico. Llama antes si los síntomas empeoran o te preocupas.", "bullets": [{ "label": "Razones para llamar antes:", "items": ["fiebre", "dolor aumentado", "signos de infección", "efectos secundarios de medicamentos"] }] }
+        {
+          "main": "La clínica de urgencias es para problemas médicos que necesitan atención pronto pero no son de riesgo vital.",
+          "bullets": [
+            {
+              "label": "Ejemplos:",
+              "items": [
+                "fracturas leves",
+                "infecciones",
+                "dolor moderado",
+                "gripe o fiebre"
+              ]
+            },
+            {
+              "label": "Ventajas:",
+              "items": [
+                "menos espera que urgencias",
+                "menor costo",
+                "sin cita previa"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Los costos varían según la ubicación y el servicio. Normalmente menores que urgencias.",
+          "bullets": [
+            {
+              "label": "Rango aproximado:",
+              "items": [
+                "visita sin seguro: suele ser $100–200+",
+                "con seguro: puede aplicarse copago"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "No necesitas seguro para ser atendido, pero tenerlo generalmente reduce lo que pagas.",
+          "bullets": [
+            {
+              "label": "Con seguro:",
+              "items": [
+                "lleva tu tarjeta",
+                "puede aplicarse copago o coseguro"
+              ]
+            },
+            {
+              "label": "Sin seguro:",
+              "items": [
+                "pregunta por precio sin seguro",
+                "el pago suele realizarse en la visita"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Lleva tu identificación, tarjeta de seguro (si tienes) y una lista de tus medicamentos actuales.",
+          "bullets": [
+            {
+              "label": "Recomendado:",
+              "items": [
+                "identificación con foto",
+                "tarjeta de seguro",
+                "lista de medicamentos",
+                "resultados de pruebas recientes"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "La mayoría de las visitas duran entre 30 minutos y varias horas según la demanda.",
+          "bullets": [
+            {
+              "label": "Proceso típico:",
+              "items": [
+                "registro y espera",
+                "examen y posibles pruebas",
+                "alta con instrucciones"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Sigue las instrucciones del envase o de tu médico (p. ej. con comida, hora del día).",
+          "bullets": [
+            {
+              "label": "Consejos:",
+              "items": [
+                "configura un recordatorio diario",
+                "no omitas dosis sin consultar a tu médico"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "La recuperación depende de tu condición. Tu médico debería darte un calendario y qué es normal.",
+          "bullets": [
+            {
+              "label": "General:",
+              "items": [
+                "descansa según indicación",
+                "retorno gradual a la actividad",
+                "vigila síntomas nuevos o que empeoren"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Las instrucciones de alta suelen indicar cuándo hacer seguimiento. Si no, llama a la clínica.",
+          "bullets": [
+            {
+              "label": "Cuándo llamar antes:",
+              "items": [
+                "síntomas que empeoran",
+                "fiebre",
+                "nuevo dolor o hinchazón"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Sigue la fecha de seguimiento que te dio tu médico. Llama antes si los síntomas empeoran o te preocupas.",
+          "bullets": [
+            {
+              "label": "Razones para llamar antes:",
+              "items": [
+                "fiebre",
+                "dolor aumentado",
+                "signos de infección",
+                "efectos secundarios de medicamentos"
+              ]
+            }
+          ]
+        }
       ]
     }
   },
@@ -338,10 +600,22 @@
     "backToCommunity": "Volver a Comunidad",
     "explore": "Explorar",
     "hubs": [
-      { "title": "Encontrar personas como yo", "description": "Conéctate con otros que experimentan lesiones o desafíos similares." },
-      { "title": "Ayudar a personas como yo", "description": "Dona dispositivos o apoya a otros en recuperación." },
-      { "title": "Apoyo local", "description": "Descubre recursos de Emory y Atlanta que pueden ayudarte." },
-      { "title": "Aplicación de salud con IA", "description": "Obtén ayuda de IA para redactar correos, solicitudes y navegar sistemas de salud." }
+      {
+        "title": "Encontrar personas como yo",
+        "description": "Conéctate con otros que experimentan lesiones o desafíos similares."
+      },
+      {
+        "title": "Ayudar a personas como yo",
+        "description": "Dona dispositivos o apoya a otros en recuperación."
+      },
+      {
+        "title": "Apoyo local",
+        "description": "Descubre recursos de Emory y Atlanta que pueden ayudarte."
+      },
+      {
+        "title": "Aplicación de salud con IA",
+        "description": "Obtén ayuda de IA para redactar correos, solicitudes y navegar sistemas de salud."
+      }
     ],
     "findPeople": {
       "title": "Encontrar personas como yo",
@@ -349,14 +623,36 @@
       "searchPlaceholder": "Buscar personas, lesiones o temas",
       "suggestedGroups": "Grupos sugeridos",
       "groups": [
-        { "name": "Conmoción 101", "description": "Apoyo y consejos para la recuperación de conmociones." },
-        { "name": "Recuperación de nadadores", "description": "Para atletas con lesiones de hombro o por uso excesivo." },
-        { "name": "Lesiones de corredores", "description": "Apoyo para rodilla, banda IT y problemas relacionados con correr." },
-        { "name": "Cómo pagar facturas médicas", "description": "Navegando costos y opciones financieras." },
-        { "name": "Negociar con el seguro", "description": "Consejos y experiencias compartidas con el seguro." },
-        { "name": "Cartas de adaptación", "description": "Obtener y usar adaptaciones académicas." }
+        {
+          "name": "Conmoción 101",
+          "description": "Apoyo y consejos para la recuperación de conmociones."
+        },
+        {
+          "name": "Recuperación de nadadores",
+          "description": "Para atletas con lesiones de hombro o por uso excesivo."
+        },
+        {
+          "name": "Lesiones de corredores",
+          "description": "Apoyo para rodilla, banda IT y problemas relacionados con correr."
+        },
+        {
+          "name": "Cómo pagar facturas médicas",
+          "description": "Navegando costos y opciones financieras."
+        },
+        {
+          "name": "Negociar con el seguro",
+          "description": "Consejos y experiencias compartidas con el seguro."
+        },
+        {
+          "name": "Cartas de adaptación",
+          "description": "Obtener y usar adaptaciones académicas."
+        }
       ],
-      "tabs": ["Discusiones", "Recursos", "Miembros"],
+      "tabs": [
+        "Discusiones",
+        "Recursos",
+        "Miembros"
+      ],
       "sharePlaceholder": "Comparte algo con el grupo…",
       "post": "Publicar",
       "close": "Cerrar",
@@ -382,27 +678,74 @@
       "uploadButton": "Arrastra y suelta o haz clic para subir foto",
       "itemName": "Nombre del artículo",
       "conditionLabel": "Estado",
-      "conditions": ["Nuevo", "Como nuevo", "Bueno", "Levemente usado", "Usado"],
+      "conditions": [
+        "Nuevo",
+        "Como nuevo",
+        "Bueno",
+        "Levemente usado",
+        "Usado"
+      ],
       "locationLabel": "Ubicación (ej. Atlanta, área de Emory)",
       "notesLabel": "Notas",
       "cancel": "Cancelar",
       "postDonation": "Publicar donación",
       "donateThis": "Puedo donar esto",
-      "sampleItems": ["Rodillera", "Muletas", "Compresa de hielo", "Soporte de tobillo"]
+      "sampleItems": [
+        "Rodillera",
+        "Muletas",
+        "Compresa de hielo",
+        "Soporte de tobillo"
+      ]
     },
     "localSupport": {
       "title": "Apoyo local",
       "subtitle": "Descubre recursos de Emory y Atlanta que pueden ayudarte.",
-      "filters": ["Todos", "Gratis", "Emory", "Atlanta", "De pago"],
+      "filters": [
+        "Todos",
+        "Gratis",
+        "Emory",
+        "Atlanta",
+        "De pago"
+      ],
       "contact": "Contacto",
       "visitSite": "Visitar sitio",
       "resources": [
-        { "name": "Gobierno estudiantil de Emory", "description": "Defensa estudiantil y recursos.", "location": "Universidad Emory", "contact": "Contactar por portal del campus" },
-        { "name": "Centro de salud estudiantil", "description": "Servicios médicos y de salud mental para estudiantes.", "location": "Universidad Emory", "contact": "404-727-7551" },
-        { "name": "Oficina de apoyo a la discapacidad", "description": "Adaptaciones académicas y apoyo.", "location": "Universidad Emory", "contact": "disability@emory.edu" },
-        { "name": "Banco de alimentos comunitario de Atlanta", "description": "Asistencia alimentaria y programas nutricionales.", "location": "Atlanta, GA", "contact": "Visitar sitio" },
-        { "name": "Sistema de salud Grady", "description": "Sistema hospitalario público; asistencia financiera disponible.", "location": "Atlanta, GA", "contact": "Visitar sitio" },
-        { "name": "Línea de crisis", "description": "Apoyo de salud mental y crisis 24/7.", "location": "Nacional", "contact": "988" }
+        {
+          "name": "Gobierno estudiantil de Emory",
+          "description": "Defensa estudiantil y recursos.",
+          "location": "Universidad Emory",
+          "contact": "Contactar por portal del campus"
+        },
+        {
+          "name": "Centro de salud estudiantil",
+          "description": "Servicios médicos y de salud mental para estudiantes.",
+          "location": "Universidad Emory",
+          "contact": "404-727-7551"
+        },
+        {
+          "name": "Oficina de apoyo a la discapacidad",
+          "description": "Adaptaciones académicas y apoyo.",
+          "location": "Universidad Emory",
+          "contact": "disability@emory.edu"
+        },
+        {
+          "name": "Banco de alimentos comunitario de Atlanta",
+          "description": "Asistencia alimentaria y programas nutricionales.",
+          "location": "Atlanta, GA",
+          "contact": "Visitar sitio"
+        },
+        {
+          "name": "Sistema de salud Grady",
+          "description": "Sistema hospitalario público; asistencia financiera disponible.",
+          "location": "Atlanta, GA",
+          "contact": "Visitar sitio"
+        },
+        {
+          "name": "Línea de crisis",
+          "description": "Apoyo de salud mental y crisis 24/7.",
+          "location": "Nacional",
+          "contact": "988"
+        }
       ]
     },
     "aiHealth": {
@@ -422,13 +765,22 @@
   "notes": {
     "title": "Notas y Calendario",
     "description": "Planifica rutinas médicas y revisa resúmenes de atención en un solo lugar.",
-    "tabs": ["Agenda", "Registros de chat"],
+    "tabs": [
+      "Agenda",
+      "Registros de chat"
+    ],
     "calendar": {
       "previous": "Anterior",
       "today": "Hoy",
       "next": "Siguiente",
       "eventTypesLabel": "Tipos de evento:",
-      "eventTypes": ["Cita médica", "Recordatorio de medicación", "Ejercicio de rehabilitación", "Prueba médica", "Procedimiento de cuidado de recuperación"],
+      "eventTypes": [
+        "Cita médica",
+        "Recordatorio de medicación",
+        "Ejercicio de rehabilitación",
+        "Prueba médica",
+        "Procedimiento de cuidado de recuperación"
+      ],
       "addEvent": "Agregar evento",
       "editEvent": "Editar evento",
       "titleLabel": "Título",
@@ -443,7 +795,15 @@
     "monthView": {
       "thisMonth": "Este mes",
       "noteExplanation": "Los días con un punto tienen un resumen de consulta guardado. Haz clic en una fecha para abrir la nota de ese día.",
-      "dayLabels": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
+      "dayLabels": [
+        "Dom",
+        "Lun",
+        "Mar",
+        "Mié",
+        "Jue",
+        "Vie",
+        "Sáb"
+      ]
     },
     "dayNote": {
       "close": "Cerrar",
@@ -455,5 +815,19 @@
       "noSummary": "No hay resumen de consulta guardado para este día.",
       "noSummaryNote": "Los resúmenes aparecen aquí cuando guardas un chat del asistente de inicio."
     }
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Gestiona tu cuenta y preferencias de institución.",
+    "profile": "Perfil",
+    "emailAddress": "Correo electrónico",
+    "verified": "Verificado",
+    "memberSince": "Miembro desde",
+    "institution": "Institución",
+    "institutionName": "Universidad Emory",
+    "institutionService": "Servicios de Acceso para Discapacitados (DAS)",
+    "active": "Activo",
+    "account": "Cuenta",
+    "signOut": "Cerrar sesión"
   }
 }

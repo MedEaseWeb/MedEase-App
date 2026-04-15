@@ -5,6 +5,25 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 
+# Maps i18n locale codes (from react-i18next) to human-readable language names
+# used in the system-prompt language directive.
+_LOCALE_NAMES: dict[str, str] = {
+    "zh-CN": "Simplified Chinese (中文)",
+    "ko":    "Korean (한국어)",
+    "es":    "Spanish (español)",
+}
+
+
+def language_directive(locale: str) -> str:
+    """
+    Returns a system-prompt sentence instructing the model to respond in the
+    user's language. Returns an empty string for English (the default).
+    """
+    name = _LOCALE_NAMES.get(locale, "")
+    if not name:
+        return ""
+    return f"Respond in {name}."
+
 
 @dataclass
 class AgentContext:
@@ -13,6 +32,7 @@ class AgentContext:
     user_id: str | None
     token: str | None                       # MedEase JWT
     history: list[dict]                     # OpenAI message-format history
+    locale: str = "en"                      # active UI locale from the frontend
     metadata: dict = field(default_factory=dict)  # arbitrary agent-specific state
 
 

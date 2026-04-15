@@ -5,7 +5,7 @@
 
 from openai import AsyncOpenAI
 from src.config import CHAT_GPT_API_KEY
-from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent
+from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent, language_directive
 
 _client = AsyncOpenAI(api_key=CHAT_GPT_API_KEY)
 
@@ -25,8 +25,10 @@ Keep the question brief and friendly. Do not ask multiple questions at once."""
 
 class TriageAgent(BaseAgent):
     async def process(self, user_input: str, context: AgentContext) -> AgentResponse:
+        directive = language_directive(context.locale)
+        system = _SYSTEM_PROMPT + (f"\n{directive}" if directive else "")
         messages = [
-            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "system", "content": system},
             *context.history,
             {"role": "user", "content": user_input},
         ]
@@ -47,6 +49,7 @@ class TriageAgent(BaseAgent):
                 {"role": "user", "content": user_input},
                 {"role": "assistant", "content": reply},
             ],
+            locale=context.locale,
             metadata={**context.metadata, "awaiting_triage_clarification": True},
         )
 

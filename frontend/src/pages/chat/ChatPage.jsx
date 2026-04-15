@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Typography,
@@ -25,18 +26,29 @@ const colors = {
 const fontMain = "'Plus Jakarta Sans', sans-serif";
 
 export default function ChatPage() {
+  const { t, i18n } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const messagesEndRef = useRef(null);
 
+  // Update the welcome message when language changes (only if no conversation started)
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 1 && prev[0].sender === "bot" && !prev[0].streaming) {
+        return [{ text: t("chat.welcomeMain"), sender: "bot", streaming: false }];
+      }
+      return prev;
+    });
+  }, [i18n.language]);
+
   useEffect(() => {
     socket.connect();
 
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       setMessages([
         {
-          text: "Hi! I'm your MedEase AI assistant. I can help you with Emory DAS services, accommodation requests, medications, and more. What can I help you with today?",
+          text: t("chat.welcomeMain"),
           sender: "bot",
           streaming: false,
         },
@@ -74,7 +86,7 @@ export default function ChatPage() {
     });
 
     return () => {
-      clearTimeout(t);
+      clearTimeout(timer);
       socket.off("bot-message");
       socket.off("bot-token");
       socket.off("bot-done");
@@ -89,7 +101,7 @@ export default function ChatPage() {
   const sendMessage = () => {
     if (!input.trim() || isStreaming) return;
     setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
-    socket.emit("user_message", input.trim());
+    socket.emit("user_message", { content: input.trim(), locale: i18n.language });
     setInput("");
   };
 

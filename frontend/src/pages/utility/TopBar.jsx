@@ -236,7 +236,7 @@ function ProfileMenu({ userEmail, onSettings, onLogout }) {
               mb: 0.25,
             }}
           >
-            Signed in as
+            {t("nav.signedInAs")}
           </Typography>
           <Typography
             sx={{
@@ -268,7 +268,7 @@ function ProfileMenu({ userEmail, onSettings, onLogout }) {
             "&:hover": { bgcolor: "rgba(44,36,32,0.05)" },
           }}
         >
-          Settings
+          {t("nav.settings")}
         </MenuItem>
 
         <MenuItem

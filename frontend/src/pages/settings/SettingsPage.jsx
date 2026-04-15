@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Chip, Divider, Button } from "@mui/material";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -93,6 +94,7 @@ function SettingsRow({ label, value, action, divider = true }) {
 }
 
 export default function SettingsPage() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -134,7 +136,7 @@ export default function SettingsPage() {
               mb: 0.75,
             }}
           >
-            Settings
+            {t("settings.title")}
           </Typography>
           <Typography
             sx={{
@@ -144,17 +146,17 @@ export default function SettingsPage() {
               mb: 4,
             }}
           >
-            Manage your account and institution preferences.
+            {t("settings.subtitle")}
           </Typography>
 
           {/* Profile */}
-          <SettingsSection title="Profile">
+          <SettingsSection title={t("settings.profile")}>
             <SettingsRow
-              label="Email address"
+              label={t("settings.emailAddress")}
               value={user?.email ?? "—"}
               action={
                 <Chip
-                  label="Verified"
+                  label={t("settings.verified")}
                   size="small"
                   sx={{
                     bgcolor: "rgba(0,104,74,0.08)",
@@ -168,20 +170,20 @@ export default function SettingsPage() {
               }
             />
             <SettingsRow
-              label="Member since"
+              label={t("settings.memberSince")}
               value={createdAt}
               divider={false}
             />
           </SettingsSection>
 
           {/* Institution */}
-          <SettingsSection title="Institution">
+          <SettingsSection title={t("settings.institution")}>
             <SettingsRow
-              label="Emory University"
-              value="Disability Access Services (DAS)"
+              label={t("settings.institutionName")}
+              value={t("settings.institutionService")}
               action={
                 <Chip
-                  label="Active"
+                  label={t("settings.active")}
                   size="small"
                   sx={{
                     bgcolor: "rgba(0,104,74,0.08)",
@@ -198,7 +200,7 @@ export default function SettingsPage() {
           </SettingsSection>
 
           {/* Account */}
-          <SettingsSection title="Account">
+          <SettingsSection title={t("settings.account")}>
             <Box sx={{ px: 3, py: 2.5 }}>
               <Button
                 fullWidth
@@ -221,7 +223,7 @@ export default function SettingsPage() {
                   },
                 }}
               >
-                Sign out
+                {t("settings.signOut")}
               </Button>
             </Box>
           </SettingsSection>

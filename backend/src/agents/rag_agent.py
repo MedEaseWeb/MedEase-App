@@ -9,7 +9,7 @@ from typing import AsyncGenerator
 
 from openai import AsyncOpenAI
 from src.config import CHAT_GPT_API_KEY
-from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent
+from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent, language_directive
 
 _client = AsyncOpenAI(api_key=CHAT_GPT_API_KEY)
 
@@ -70,8 +70,11 @@ class RAGAgent(BaseAgent):
         else:
             user_prompt = _NO_RAG_PROMPT_TEMPLATE.format(question=user_input)
 
+        directive = language_directive(context.locale)
+        system = _SYSTEM_PROMPT + (f"\n{directive}" if directive else "")
+
         return [
-            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "system", "content": system},
             *context.history[-6:],
             {"role": "user", "content": user_prompt},
         ]

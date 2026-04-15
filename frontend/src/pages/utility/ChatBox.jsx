@@ -14,7 +14,7 @@ import Draggable from "react-draggable";
 import socket from "../../pages/utility/SocketConnection";
 
 const Chatbox = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // Main chat state.
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -87,10 +87,12 @@ const Chatbox = () => {
   const sendMessage = () => {
     if (!input.trim()) return;
 
+    const locale = i18n.language;
+
     // Reminder flow
     if (reminderMode) {
       setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
-      socket.emit("user_message", { mode: "reminder", content: input.trim() });
+      socket.emit("user_message", { mode: "reminder", content: input.trim(), locale });
       setReminderMode(false);
       setInput("");
       return;
@@ -99,10 +101,7 @@ const Chatbox = () => {
     // Patient data flow
     if (patientDataMode) {
       setMessages((m) => [...m, { text: input.trim(), sender: "user" }]);
-      socket.emit("user_message", {
-        mode: "patient_data",
-        content: input.trim(),
-      });
+      socket.emit("user_message", { mode: "patient_data", content: input.trim(), locale });
       setPatientDataMode(false);
       setInput("");
       return;
@@ -110,7 +109,7 @@ const Chatbox = () => {
 
     // Normal chat flow
     setMessages((prev) => [...prev, { text: input.trim(), sender: "user" }]);
-    socket.emit("user_message", input.trim());
+    socket.emit("user_message", { content: input.trim(), locale });
     setInput("");
   };
 
@@ -149,7 +148,7 @@ const Chatbox = () => {
           message = "Unknown option selected";
       }
       setMessages((prev) => [...prev, { text: message, sender: "user" }]);
-      socket.emit("user_message", message);
+      socket.emit("user_message", { content: message, locale: i18n.language });
     }
   };
 

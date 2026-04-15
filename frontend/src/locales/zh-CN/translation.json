@@ -5,7 +5,9 @@
     "caregiverMode": "看护者模式",
     "logout": "退出登录",
     "language": "语言",
-    "quitDemo": "退出演示"
+    "quitDemo": "退出演示",
+    "signedInAs": "当前登录",
+    "settings": "设置"
   },
   "menu": {
     "title": "MedEase 菜单",
@@ -26,7 +28,8 @@
     "diaryButton": "图片日记上传",
     "accommodationButton": "无障碍申请信",
     "patientDataPrompt": "好的！要查询患者数据，请在一条消息中提供患者邮箱和生成的密钥。例如：'jane.doe@example.com KEY12345'",
-    "reminderPrompt": "好的！您想被提醒什么，\n什么时候提醒？（例如：「早上9点服药，持续5天」）"
+    "reminderPrompt": "好的！您想被提醒什么，\n什么时候提醒？（例如：「早上9点服药，持续5天」）",
+    "welcomeMain": "你好！我是你的 MedEase AI 助手。我可以帮助你了解 Emory DAS 服务、住宿申请、药物管理等。今天有什么可以帮到你的？"
   },
   "login": {
     "errorTitle": "登录失败",
@@ -125,30 +128,109 @@
         }
       ],
       "demo": {
-        "chrome": { "rag": "分诊", "chat": "住宿调整" },
+        "chrome": {
+          "rag": "分诊",
+          "chat": "住宿调整"
+        },
         "rag": [
-          { "sender": "user", "text": "我在训练时扭伤了膝盖，已经肿了3天，走路很疼。", "gap": 600 },
-          { "pause": 1100 },
-          { "sender": "agent", "text": "正在对接 Emory 医疗资源网络…", "status": [
-            { "label": "受伤类型", "value": "软组织 · 中度严重" },
-            { "label": "最近诊所", "value": "学生健康中心 · Woodruff 楼" },
-            { "label": "当前等待", "value": "约15分钟 · 目前就诊量低" }
-          ], "gap": 1600 },
-          { "sender": "user", "text": "帮我在学生健康中心预约。", "gap": 500 },
-          { "pause": 950 },
-          { "sender": "agent", "action": { "title": "预约已确认", "items": ["学生健康服务 · 今天 2:45 PM", "入院表格已预填伤情详情", "步行路线已发送至手机"], "cta": "添加到日历 →" }, "gap": 0 }
+          {
+            "sender": "user",
+            "text": "我在训练时扭伤了膝盖，已经肿了3天，走路很疼。",
+            "gap": 600
+          },
+          {
+            "pause": 1100
+          },
+          {
+            "sender": "agent",
+            "text": "正在对接 Emory 医疗资源网络…",
+            "status": [
+              {
+                "label": "受伤类型",
+                "value": "软组织 · 中度严重"
+              },
+              {
+                "label": "最近诊所",
+                "value": "学生健康中心 · Woodruff 楼"
+              },
+              {
+                "label": "当前等待",
+                "value": "约15分钟 · 目前就诊量低"
+              }
+            ],
+            "gap": 1600
+          },
+          {
+            "sender": "user",
+            "text": "帮我在学生健康中心预约。",
+            "gap": 500
+          },
+          {
+            "pause": 950
+          },
+          {
+            "sender": "agent",
+            "action": {
+              "title": "预约已确认",
+              "items": [
+                "学生健康服务 · 今天 2:45 PM",
+                "入院表格已预填伤情详情",
+                "步行路线已发送至手机"
+              ],
+              "cta": "添加到日历 →"
+            },
+            "gap": 0
+          }
         ],
         "chat": [
-          { "sender": "user", "text": "我的 DAS 住宿调整周五到期，陈教授没有回复，而我当天下午有期中考试。", "gap": 600 },
-          { "pause": 1100 },
-          { "sender": "agent", "text": "已找到您当前的住宿调整档案，当前情况：", "status": [
-            { "label": "截止日期", "value": "周五 · 还剩2天" },
-            { "label": "陈教授", "value": "未回复 · 已等待4天" },
-            { "label": "所需操作", "value": "教授确认已逾期" }
-          ], "gap": 1600 },
-          { "sender": "user", "text": "处理一下——发送跟进邮件并通知我的 DAS 顾问。", "gap": 500 },
-          { "pause": 950 },
-          { "sender": "agent", "action": { "title": "已完成3项操作", "items": ["跟进邮件已发送给陈教授", "DAS 顾问已收到通知——截止日期已标记", "期中考试住宿调整标记为待处理"], "cta": "查看活动日志 →" }, "gap": 0 }
+          {
+            "sender": "user",
+            "text": "我的 DAS 住宿调整周五到期，陈教授没有回复，而我当天下午有期中考试。",
+            "gap": 600
+          },
+          {
+            "pause": 1100
+          },
+          {
+            "sender": "agent",
+            "text": "已找到您当前的住宿调整档案，当前情况：",
+            "status": [
+              {
+                "label": "截止日期",
+                "value": "周五 · 还剩2天"
+              },
+              {
+                "label": "陈教授",
+                "value": "未回复 · 已等待4天"
+              },
+              {
+                "label": "所需操作",
+                "value": "教授确认已逾期"
+              }
+            ],
+            "gap": 1600
+          },
+          {
+            "sender": "user",
+            "text": "处理一下——发送跟进邮件并通知我的 DAS 顾问。",
+            "gap": 500
+          },
+          {
+            "pause": 950
+          },
+          {
+            "sender": "agent",
+            "action": {
+              "title": "已完成3项操作",
+              "items": [
+                "跟进邮件已发送给陈教授",
+                "DAS 顾问已收到通知——截止日期已标记",
+                "期中考试住宿调整标记为待处理"
+              ],
+              "cta": "查看活动日志 →"
+            },
+            "gap": 0
+          }
         ]
       }
     },
@@ -172,7 +254,10 @@
     },
     "footer": {
       "legal": {
-        "links": ["隐私政策", "服务条款"]
+        "links": [
+          "隐私政策",
+          "服务条款"
+        ]
       },
       "copyright": "© {{year}} MedEase Inc. 保留所有权利。"
     },
@@ -180,14 +265,38 @@
       "heading": "临床驱动。使命导向。",
       "subtitle": "MedEase 由医疗研究人员、开发者和导师共同塑造，专注于安全、清晰与学生康复。",
       "members": [
-        { "name": "Annie He", "role": "产品与商业联合创始人", "detail": "医疗健康研究员与软件工程师，Emory '25" },
-        { "name": "Rolf Shi", "role": "技术联合创始人", "detail": "AI4H研究员与软件工程师，Emory '25 & UPenn '27" }
+        {
+          "name": "Annie He",
+          "role": "产品与商业联合创始人",
+          "detail": "医疗健康研究员与软件工程师，Emory '25"
+        },
+        {
+          "name": "Rolf Shi",
+          "role": "技术联合创始人",
+          "detail": "AI4H研究员与软件工程师，Emory '25 & UPenn '27"
+        }
       ],
       "advisors": [
-        { "name": "Dr. Phil Wolff", "role": "语言生物标志物实验室", "detail": "导师" },
-        { "name": "Dr. JinHo Choi", "role": "Emory NLP实验室", "detail": "导师" },
-        { "name": "Sig Mosley", "role": "风险投资人", "detail": "导师" },
-        { "name": "Dr. Stuart Zola", "role": "创始人兼临床科学家", "detail": "导师" }
+        {
+          "name": "Dr. Phil Wolff",
+          "role": "语言生物标志物实验室",
+          "detail": "导师"
+        },
+        {
+          "name": "Dr. JinHo Choi",
+          "role": "Emory NLP实验室",
+          "detail": "导师"
+        },
+        {
+          "name": "Sig Mosley",
+          "role": "风险投资人",
+          "detail": "导师"
+        },
+        {
+          "name": "Dr. Stuart Zola",
+          "role": "创始人兼临床科学家",
+          "detail": "导师"
+        }
       ]
     },
     "userStories": {
@@ -255,15 +364,28 @@
       "whatHappened": {
         "title": "发生了什么？",
         "description": "简要描述您的受伤或状况，概括即可——这有助于我们锚定您的旅程。",
-        "options": ["运动或训练伤", "意外摔倒或碰撞", "医疗手术/状况", "其他"],
+        "options": [
+          "运动或训练伤",
+          "意外摔倒或碰撞",
+          "医疗手术/状况",
+          "其他"
+        ],
         "placeholder": "可选：分享您希望我们了解的内容。"
       },
       "whenHappened": {
         "title": "何时发生的？",
         "description": "这有助于我们了解您在康复时间线上所处的阶段。",
-        "options": ["今天", "最近一周内", "一周以前"],
+        "options": [
+          "今天",
+          "最近一周内",
+          "一周以前"
+        ],
         "detailLabel": "如需进一步说明，请选择。",
-        "detailOptions": ["1–4 周前", "1–3 个月前", "3 个月以前"]
+        "detailOptions": [
+          "1–4 周前",
+          "1–3 个月前",
+          "3 个月以前"
+        ]
       },
       "insurance": {
         "title": "您有保险吗？",
@@ -273,7 +395,14 @@
         "selectPlan": "选择您的保险计划（常见埃默里选项）。",
         "preferNotToSay": "不愿透露",
         "skipButton": "跳过保险，直接进入问题循环",
-        "plans": ["Aetna 学生健康险", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "其他 / 国际保险"]
+        "plans": [
+          "Aetna 学生健康险",
+          "Anthem BlueCross BlueShield",
+          "Kaiser Permanente",
+          "UnitedHealthcare",
+          "Cigna",
+          "其他 / 国际保险"
+        ]
       }
     },
     "end": {
@@ -291,13 +420,23 @@
   "home": {
     "careJourney": {
       "title": "您的就医旅程",
-      "stages": ["识别", "评估", "选择医疗", "获得医疗", "康复"]
+      "stages": [
+        "识别",
+        "评估",
+        "选择医疗",
+        "获得医疗",
+        "康复"
+      ]
     },
     "recommendation": {
       "label": "推荐步骤",
       "suggestion": "建议前往急诊护理中心",
       "whyLabel": "原因：",
-      "whyReasons": ["症状需要评估", "比急诊室更快", "费用更低"]
+      "whyReasons": [
+        "症状需要评估",
+        "比急诊室更快",
+        "费用更低"
+      ]
     },
     "qitl": {
       "title": "循环问答",
@@ -320,15 +459,138 @@
         "我应该何时再次就诊？"
       ],
       "mockResponses": [
-        { "main": "急诊护理适用于需要及时处理但非危及生命的医疗问题。", "bullets": [{ "label": "示例：", "items": ["轻微骨折", "感染", "中度疼痛", "流感或发烧"] }, { "label": "优势：", "items": ["等待时间比急诊室短", "费用更低", "无需预约"] }] },
-        { "main": "费用因地点和服务而异，通常低于急诊室。", "bullets": [{ "label": "大致范围：", "items": ["无保险时就诊费通常为 $100–200+", "有保险时：可能需支付共付额"] }] },
-        { "main": "就诊急诊护理不需要保险，但有保险通常会降低您的自付费用。", "bullets": [{ "label": "有保险：", "items": ["携带保险卡", "可能需支付共付额或共同保险"] }, { "label": "无保险：", "items": ["询问自费价格", "通常在就诊时付款"] }] },
-        { "main": "请携带身份证、保险卡（如有）和当前用药清单。", "bullets": [{ "label": "建议携带：", "items": ["照片身份证", "保险卡", "用药清单", "近期检查结果"] }] },
-        { "main": "大多数急诊护理就诊需要30分钟至几小时，具体取决于繁忙程度。", "bullets": [{ "label": "典型流程：", "items": ["登记和等待", "检查和可能的检测", "出院并附带指导说明"] }] },
-        { "main": "请按照标签上或医生的说明服药（例如随餐服用、一天中的特定时间）。", "bullets": [{ "label": "小贴士：", "items": ["设置每日提醒", "未经医生同意不要漏服"] }] },
-        { "main": "康复情况取决于您的病情。您的医生应给您提供时间表和正常反应说明。", "bullets": [{ "label": "一般建议：", "items": ["按建议休息", "逐渐恢复活动", "注意新出现或加重的症状"] }] },
-        { "main": "您的出院说明通常会注明何时复诊。如果没有，请致电诊所询问。", "bullets": [{ "label": "需要提前致电的情况：", "items": ["症状加重", "发烧", "新出现的疼痛或肿胀"] }] },
-        { "main": "请按照医生给您的复诊日期就诊。如果症状加重或感到担忧，请提前联系。", "bullets": [{ "label": "需要提前致电的原因：", "items": ["发烧", "疼痛加剧", "感染迹象", "药物副作用"] }] }
+        {
+          "main": "急诊护理适用于需要及时处理但非危及生命的医疗问题。",
+          "bullets": [
+            {
+              "label": "示例：",
+              "items": [
+                "轻微骨折",
+                "感染",
+                "中度疼痛",
+                "流感或发烧"
+              ]
+            },
+            {
+              "label": "优势：",
+              "items": [
+                "等待时间比急诊室短",
+                "费用更低",
+                "无需预约"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "费用因地点和服务而异，通常低于急诊室。",
+          "bullets": [
+            {
+              "label": "大致范围：",
+              "items": [
+                "无保险时就诊费通常为 $100–200+",
+                "有保险时：可能需支付共付额"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "就诊急诊护理不需要保险，但有保险通常会降低您的自付费用。",
+          "bullets": [
+            {
+              "label": "有保险：",
+              "items": [
+                "携带保险卡",
+                "可能需支付共付额或共同保险"
+              ]
+            },
+            {
+              "label": "无保险：",
+              "items": [
+                "询问自费价格",
+                "通常在就诊时付款"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "请携带身份证、保险卡（如有）和当前用药清单。",
+          "bullets": [
+            {
+              "label": "建议携带：",
+              "items": [
+                "照片身份证",
+                "保险卡",
+                "用药清单",
+                "近期检查结果"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "大多数急诊护理就诊需要30分钟至几小时，具体取决于繁忙程度。",
+          "bullets": [
+            {
+              "label": "典型流程：",
+              "items": [
+                "登记和等待",
+                "检查和可能的检测",
+                "出院并附带指导说明"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "请按照标签上或医生的说明服药（例如随餐服用、一天中的特定时间）。",
+          "bullets": [
+            {
+              "label": "小贴士：",
+              "items": [
+                "设置每日提醒",
+                "未经医生同意不要漏服"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "康复情况取决于您的病情。您的医生应给您提供时间表和正常反应说明。",
+          "bullets": [
+            {
+              "label": "一般建议：",
+              "items": [
+                "按建议休息",
+                "逐渐恢复活动",
+                "注意新出现或加重的症状"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "您的出院说明通常会注明何时复诊。如果没有，请致电诊所询问。",
+          "bullets": [
+            {
+              "label": "需要提前致电的情况：",
+              "items": [
+                "症状加重",
+                "发烧",
+                "新出现的疼痛或肿胀"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "请按照医生给您的复诊日期就诊。如果症状加重或感到担忧，请提前联系。",
+          "bullets": [
+            {
+              "label": "需要提前致电的原因：",
+              "items": [
+                "发烧",
+                "疼痛加剧",
+                "感染迹象",
+                "药物副作用"
+              ]
+            }
+          ]
+        }
       ]
     }
   },
@@ -338,10 +600,22 @@
     "backToCommunity": "返回社区",
     "explore": "探索",
     "hubs": [
-      { "title": "寻找同路人", "description": "与有相似伤病经历的人建立联系。" },
-      { "title": "帮助同路人", "description": "捐赠设备或支持其他康复中的学生。" },
-      { "title": "本地支持", "description": "发现埃默里和亚特兰大本地可以帮助您的资源。" },
-      { "title": "AI 健康应用", "description": "获取 AI 帮助撰写邮件、申请，并导航医疗系统。" }
+      {
+        "title": "寻找同路人",
+        "description": "与有相似伤病经历的人建立联系。"
+      },
+      {
+        "title": "帮助同路人",
+        "description": "捐赠设备或支持其他康复中的学生。"
+      },
+      {
+        "title": "本地支持",
+        "description": "发现埃默里和亚特兰大本地可以帮助您的资源。"
+      },
+      {
+        "title": "AI 健康应用",
+        "description": "获取 AI 帮助撰写邮件、申请，并导航医疗系统。"
+      }
     ],
     "findPeople": {
       "title": "寻找同路人",
@@ -349,14 +623,36 @@
       "searchPlaceholder": "搜索人员、伤病或话题",
       "suggestedGroups": "推荐小组",
       "groups": [
-        { "name": "脑震荡 101", "description": "脑震荡康复的支持与技巧。" },
-        { "name": "游泳运动员康复", "description": "适合肩部或过度使用伤病的运动员。" },
-        { "name": "跑步伤病", "description": "膝盖、髂胫束及跑步相关支持。" },
-        { "name": "如何支付医疗费", "description": "费用导航与财务选项。" },
-        { "name": "与保险公司谈判", "description": "保险经验与建议分享。" },
-        { "name": "住宿调整申请信", "description": "获取并使用学术住宿调整。" }
+        {
+          "name": "脑震荡 101",
+          "description": "脑震荡康复的支持与技巧。"
+        },
+        {
+          "name": "游泳运动员康复",
+          "description": "适合肩部或过度使用伤病的运动员。"
+        },
+        {
+          "name": "跑步伤病",
+          "description": "膝盖、髂胫束及跑步相关支持。"
+        },
+        {
+          "name": "如何支付医疗费",
+          "description": "费用导航与财务选项。"
+        },
+        {
+          "name": "与保险公司谈判",
+          "description": "保险经验与建议分享。"
+        },
+        {
+          "name": "住宿调整申请信",
+          "description": "获取并使用学术住宿调整。"
+        }
       ],
-      "tabs": ["讨论", "资源", "成员"],
+      "tabs": [
+        "讨论",
+        "资源",
+        "成员"
+      ],
       "sharePlaceholder": "与小组分享内容…",
       "post": "发布",
       "close": "关闭",
@@ -382,27 +678,74 @@
       "uploadButton": "拖放或点击上传照片",
       "itemName": "物品名称",
       "conditionLabel": "状态",
-      "conditions": ["全新", "几乎全新", "良好", "轻微使用", "已使用"],
+      "conditions": [
+        "全新",
+        "几乎全新",
+        "良好",
+        "轻微使用",
+        "已使用"
+      ],
       "locationLabel": "地点（例如：亚特兰大、埃默里周边）",
       "notesLabel": "备注",
       "cancel": "取消",
       "postDonation": "发布捐赠",
       "donateThis": "我可以捐赠此物",
-      "sampleItems": ["护膝", "拐杖", "冰敷袋", "踝部支撑"]
+      "sampleItems": [
+        "护膝",
+        "拐杖",
+        "冰敷袋",
+        "踝部支撑"
+      ]
     },
     "localSupport": {
       "title": "本地支持",
       "subtitle": "发现埃默里和亚特兰大本地可以帮助您的资源。",
-      "filters": ["全部", "免费", "埃默里", "亚特兰大", "付费"],
+      "filters": [
+        "全部",
+        "免费",
+        "埃默里",
+        "亚特兰大",
+        "付费"
+      ],
       "contact": "联系",
       "visitSite": "访问网站",
       "resources": [
-        { "name": "埃默里学生政府", "description": "学生权益倡导与资源。", "location": "埃默里大学", "contact": "通过校园门户联系" },
-        { "name": "学生健康中心", "description": "面向学生的医疗和心理健康服务。", "location": "埃默里大学", "contact": "404-727-7551" },
-        { "name": "残障支持办公室", "description": "学术住宿调整与支持。", "location": "埃默里大学", "contact": "disability@emory.edu" },
-        { "name": "亚特兰大社区食物银行", "description": "食物援助与营养计划。", "location": "亚特兰大，佐治亚州", "contact": "访问网站" },
-        { "name": "格雷迪医疗系统", "description": "公立医院系统；提供财务援助。", "location": "亚特兰大，佐治亚州", "contact": "访问网站" },
-        { "name": "危机热线", "description": "24/7 心理健康与危机支持。", "location": "全国", "contact": "988" }
+        {
+          "name": "埃默里学生政府",
+          "description": "学生权益倡导与资源。",
+          "location": "埃默里大学",
+          "contact": "通过校园门户联系"
+        },
+        {
+          "name": "学生健康中心",
+          "description": "面向学生的医疗和心理健康服务。",
+          "location": "埃默里大学",
+          "contact": "404-727-7551"
+        },
+        {
+          "name": "残障支持办公室",
+          "description": "学术住宿调整与支持。",
+          "location": "埃默里大学",
+          "contact": "disability@emory.edu"
+        },
+        {
+          "name": "亚特兰大社区食物银行",
+          "description": "食物援助与营养计划。",
+          "location": "亚特兰大，佐治亚州",
+          "contact": "访问网站"
+        },
+        {
+          "name": "格雷迪医疗系统",
+          "description": "公立医院系统；提供财务援助。",
+          "location": "亚特兰大，佐治亚州",
+          "contact": "访问网站"
+        },
+        {
+          "name": "危机热线",
+          "description": "24/7 心理健康与危机支持。",
+          "location": "全国",
+          "contact": "988"
+        }
       ]
     },
     "aiHealth": {
@@ -422,13 +765,22 @@
   "notes": {
     "title": "笔记与日历",
     "description": "在一处规划医疗日程，查看就医摘要。",
-    "tabs": ["日程", "聊天记录"],
+    "tabs": [
+      "日程",
+      "聊天记录"
+    ],
     "calendar": {
       "previous": "上一个",
       "today": "今天",
       "next": "下一个",
       "eventTypesLabel": "事件类型：",
-      "eventTypes": ["医疗预约", "用药提醒", "康复训练", "医疗检查", "康复护理"],
+      "eventTypes": [
+        "医疗预约",
+        "用药提醒",
+        "康复训练",
+        "医疗检查",
+        "康复护理"
+      ],
       "addEvent": "添加事件",
       "editEvent": "编辑事件",
       "titleLabel": "标题",
@@ -443,7 +795,15 @@
     "monthView": {
       "thisMonth": "本月",
       "noteExplanation": "有圆点的日期已保存就诊摘要，点击日期查看当天笔记。",
-      "dayLabels": ["日", "一", "二", "三", "四", "五", "六"]
+      "dayLabels": [
+        "日",
+        "一",
+        "二",
+        "三",
+        "四",
+        "五",
+        "六"
+      ]
     },
     "dayNote": {
       "close": "关闭",
@@ -455,5 +815,19 @@
       "noSummary": "当天没有保存的就诊摘要。",
       "noSummaryNote": "当您从主页助手保存聊天记录时，摘要将显示在此处。"
     }
+  },
+  "settings": {
+    "title": "设置",
+    "subtitle": "管理您的账户和机构偏好设置。",
+    "profile": "个人信息",
+    "emailAddress": "电子邮件",
+    "verified": "已验证",
+    "memberSince": "注册日期",
+    "institution": "机构",
+    "institutionName": "埃默里大学",
+    "institutionService": "残障与无障碍服务 (DAS)",
+    "active": "已激活",
+    "account": "账户",
+    "signOut": "退出登录"
   }
 }
