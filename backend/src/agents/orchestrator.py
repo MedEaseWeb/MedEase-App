@@ -137,6 +137,7 @@ class Orchestrator:
             user_id=context.user_id,
             token=context.token,
             history=context.history,
+            locale=context.locale,
             metadata={
                 **context.metadata,
                 "intent": intent_result.intent,
