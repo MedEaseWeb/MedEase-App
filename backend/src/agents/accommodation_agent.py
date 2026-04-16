@@ -6,7 +6,7 @@
 import json
 from openai import AsyncOpenAI
 from src.config import CHAT_GPT_API_KEY
-from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent
+from src.agents.base_agent import AgentContext, AgentResponse, BaseAgent, language_directive
 
 _client = AsyncOpenAI(api_key=CHAT_GPT_API_KEY)
 
@@ -59,12 +59,13 @@ class AccommodationAgent(BaseAgent):
                     {"role": "user", "content": user_input},
                     {"role": "assistant", "content": reply},
                 ],
+                locale=context.locale,
                 metadata={**context.metadata, "accommodation_fields": fields},
             )
             return AgentResponse(content=reply, updated_context=updated, done=True)
 
         # All fields present — generate the letter
-        letter = await self._generate_letter(fields)
+        letter = await self._generate_letter(fields, locale=context.locale)
         # Clear fields from metadata after generation
         updated_metadata = {k: v for k, v in context.metadata.items() if k != "accommodation_fields"}
         updated = AgentContext(
@@ -75,6 +76,7 @@ class AccommodationAgent(BaseAgent):
                 {"role": "user", "content": user_input},
                 {"role": "assistant", "content": letter},
             ],
+            locale=context.locale,
             metadata=updated_metadata,
         )
         return AgentResponse(content=letter, updated_context=updated, done=True)
@@ -104,8 +106,10 @@ Return only the newly found fields as a JSON object. Return {{}} if nothing new 
 
     async def _ask_for_fields(self, user_input: str, fields: dict, context: AgentContext) -> str:
         """Ask a follow-up question for the next missing field."""
+        directive = language_directive(context.locale)
+        gather_prompt = _GATHER_SYSTEM_PROMPT + (f"\n{directive}" if directive else "")
         messages = [
-            {"role": "system", "content": _GATHER_SYSTEM_PROMPT},
+            {"role": "system", "content": gather_prompt},
             *context.history[-4:],
             {"role": "user", "content": f"Fields collected so far: {json.dumps(fields)}"},
             {"role": "user", "content": user_input},
@@ -117,12 +121,14 @@ Return only the newly found fields as a JSON object. Return {{}} if nothing new 
         )
         return response.choices[0].message.content
 
-    async def _generate_letter(self, fields: dict) -> str:
+    async def _generate_letter(self, fields: dict, locale: str = "en") -> str:
         user_prompt = _LETTER_USER_TEMPLATE.format(**fields)
+        directive = language_directive(locale)
+        letter_prompt = _LETTER_SYSTEM_PROMPT + (f"\n{directive}" if directive else "")
         response = await _client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": _LETTER_SYSTEM_PROMPT},
+                {"role": "system", "content": letter_prompt},
                 {"role": "user", "content": user_prompt},
             ],
             temperature=0.3,

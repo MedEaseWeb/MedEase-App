@@ -1,8 +1,12 @@
-import React from "react";
-import { Box, Typography, Chip, Divider, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Chip, Divider, Button, Switch } from "@mui/material";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+const DEV_MODE_KEY = "medease_dev_mode";
+export const getDevMode = () => localStorage.getItem(DEV_MODE_KEY) === "true";
 
 const colors = {
   bg: "#EBE5DE",
@@ -93,8 +97,16 @@ function SettingsRow({ label, value, action, divider = true }) {
 }
 
 export default function SettingsPage() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [devMode, setDevMode] = useState(getDevMode);
+
+  const handleDevModeToggle = (e) => {
+    const next = e.target.checked;
+    setDevMode(next);
+    localStorage.setItem(DEV_MODE_KEY, String(next));
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -112,7 +124,7 @@ export default function SettingsPage() {
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 96px)",
+        minHeight: "calc(100vh - 64px)",
         bgcolor: colors.bg,
         py: 5,
         px: { xs: 2, sm: 4 },
@@ -134,7 +146,7 @@ export default function SettingsPage() {
               mb: 0.75,
             }}
           >
-            Settings
+            {t("settings.title")}
           </Typography>
           <Typography
             sx={{
@@ -144,17 +156,17 @@ export default function SettingsPage() {
               mb: 4,
             }}
           >
-            Manage your account and institution preferences.
+            {t("settings.subtitle")}
           </Typography>
 
           {/* Profile */}
-          <SettingsSection title="Profile">
+          <SettingsSection title={t("settings.profile")}>
             <SettingsRow
-              label="Email address"
+              label={t("settings.emailAddress")}
               value={user?.email ?? "—"}
               action={
                 <Chip
-                  label="Verified"
+                  label={t("settings.verified")}
                   size="small"
                   sx={{
                     bgcolor: "rgba(0,104,74,0.08)",
@@ -168,20 +180,20 @@ export default function SettingsPage() {
               }
             />
             <SettingsRow
-              label="Member since"
+              label={t("settings.memberSince")}
               value={createdAt}
               divider={false}
             />
           </SettingsSection>
 
           {/* Institution */}
-          <SettingsSection title="Institution">
+          <SettingsSection title={t("settings.institution")}>
             <SettingsRow
-              label="Emory University"
-              value="Disability Access Services (DAS)"
+              label={t("settings.institutionName")}
+              value={t("settings.institutionService")}
               action={
                 <Chip
-                  label="Active"
+                  label={t("settings.active")}
                   size="small"
                   sx={{
                     bgcolor: "rgba(0,104,74,0.08)",
@@ -197,8 +209,42 @@ export default function SettingsPage() {
             />
           </SettingsSection>
 
+          {/* Developer */}
+          <SettingsSection title="Developer">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                px: 3,
+                py: 2.5,
+              }}
+            >
+              <Box>
+                <Typography
+                  sx={{ fontFamily: fontMain, fontWeight: 500, fontSize: "0.9rem", color: colors.textMain }}
+                >
+                  Dev Mode
+                </Typography>
+                <Typography
+                  sx={{ fontFamily: fontMain, fontSize: "0.8rem", color: colors.textSec, mt: 0.25 }}
+                >
+                  Stub LLM replies — no API calls made
+                </Typography>
+              </Box>
+              <Switch
+                checked={devMode}
+                onChange={handleDevModeToggle}
+                sx={{
+                  "& .MuiSwitch-switchBase.Mui-checked": { color: colors.accent },
+                  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { bgcolor: colors.accent },
+                }}
+              />
+            </Box>
+          </SettingsSection>
+
           {/* Account */}
-          <SettingsSection title="Account">
+          <SettingsSection title={t("settings.account")}>
             <Box sx={{ px: 3, py: 2.5 }}>
               <Button
                 fullWidth
@@ -221,7 +267,7 @@ export default function SettingsPage() {
                   },
                 }}
               >
-                Sign out
+                {t("settings.signOut")}
               </Button>
             </Box>
           </SettingsSection>

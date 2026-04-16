@@ -5,7 +5,9 @@
     "caregiverMode": "CareGiver Mode",
     "logout": "Sign out",
     "language": "Language",
-    "quitDemo": "Quit Demo"
+    "quitDemo": "Quit Demo",
+    "signedInAs": "Signed in as",
+    "settings": "Settings"
   },
   "menu": {
     "title": "MedEase Menu",
@@ -26,7 +28,8 @@
     "diaryButton": "Picture Diary Upload",
     "accommodationButton": "Accommodation Letter",
     "patientDataPrompt": "Sure! To retrieve a patient's data, please provide the patient's email and generated key in one message. For example: 'jane.doe@example.com KEY12345'",
-    "reminderPrompt": "Sure! What would you like to be reminded about,\nand when? (e.g. \"Take meds at 9 AM for 5 days\")"
+    "reminderPrompt": "Sure! What would you like to be reminded about,\nand when? (e.g. \"Take meds at 9 AM for 5 days\")",
+    "welcomeMain": "Hi! I’m your MedEase AI assistant. I can help you with Emory DAS services, accommodation requests, medications, and more. What can I help you with today?"
   },
   "login": {
     "errorTitle": "Login failed",
@@ -125,30 +128,109 @@
         }
       ],
       "demo": {
-        "chrome": { "rag": "Triage", "chat": "Accommodations" },
+        "chrome": {
+          "rag": "Triage",
+          "chat": "Accommodations"
+        },
         "rag": [
-          { "sender": "user", "text": "Twisted my knee at practice. It's been swollen for 3 days and I can't walk without pain.", "gap": 600 },
-          { "pause": 1100 },
-          { "sender": "agent", "text": "Running triage against Emory's care network…", "status": [
-            { "label": "Injury pattern", "value": "Soft tissue · moderate severity" },
-            { "label": "Nearest care", "value": "Student Health · Woodruff Bldg" },
-            { "label": "Current wait", "value": "~15 min · low volume right now" }
-          ], "gap": 1600 },
-          { "sender": "user", "text": "Book me in at Student Health.", "gap": 500 },
-          { "pause": 950 },
-          { "sender": "agent", "action": { "title": "Appointment confirmed", "items": ["Student Health Services · Today 2:45 PM", "Intake form pre-filled with your injury details", "Walking directions sent to your phone"], "cta": "Add to Calendar →" }, "gap": 0 }
+          {
+            "sender": "user",
+            "text": "Twisted my knee at practice. It's been swollen for 3 days and I can't walk without pain.",
+            "gap": 600
+          },
+          {
+            "pause": 1100
+          },
+          {
+            "sender": "agent",
+            "text": "Running triage against Emory's care network…",
+            "status": [
+              {
+                "label": "Injury pattern",
+                "value": "Soft tissue · moderate severity"
+              },
+              {
+                "label": "Nearest care",
+                "value": "Student Health · Woodruff Bldg"
+              },
+              {
+                "label": "Current wait",
+                "value": "~15 min · low volume right now"
+              }
+            ],
+            "gap": 1600
+          },
+          {
+            "sender": "user",
+            "text": "Book me in at Student Health.",
+            "gap": 500
+          },
+          {
+            "pause": 950
+          },
+          {
+            "sender": "agent",
+            "action": {
+              "title": "Appointment confirmed",
+              "items": [
+                "Student Health Services · Today 2:45 PM",
+                "Intake form pre-filled with your injury details",
+                "Walking directions sent to your phone"
+              ],
+              "cta": "Add to Calendar →"
+            },
+            "gap": 0
+          }
         ],
         "chat": [
-          { "sender": "user", "text": "My DAS accommodation expires Friday. Prof. Chen hasn't responded and my midterm is that afternoon.", "gap": 600 },
-          { "pause": 1100 },
-          { "sender": "agent", "text": "Found your active accommodation file. Here's the current situation:", "status": [
-            { "label": "Deadline", "value": "Friday · 2 days remaining" },
-            { "label": "Prof. Chen", "value": "No response · 4 days pending" },
-            { "label": "Required action", "value": "Professor acknowledgment overdue" }
-          ], "gap": 1600 },
-          { "sender": "user", "text": "Handle it — send a follow-up and loop in my DAS advisor.", "gap": 500 },
-          { "pause": 950 },
-          { "sender": "agent", "action": { "title": "3 actions completed", "items": ["Follow-up email sent to Prof. Chen", "DAS advisor notified — deadline flagged", "Midterm accommodation marked as pending"], "cta": "View Activity Log →" }, "gap": 0 }
+          {
+            "sender": "user",
+            "text": "My DAS accommodation expires Friday. Prof. Chen hasn't responded and my midterm is that afternoon.",
+            "gap": 600
+          },
+          {
+            "pause": 1100
+          },
+          {
+            "sender": "agent",
+            "text": "Found your active accommodation file. Here's the current situation:",
+            "status": [
+              {
+                "label": "Deadline",
+                "value": "Friday · 2 days remaining"
+              },
+              {
+                "label": "Prof. Chen",
+                "value": "No response · 4 days pending"
+              },
+              {
+                "label": "Required action",
+                "value": "Professor acknowledgment overdue"
+              }
+            ],
+            "gap": 1600
+          },
+          {
+            "sender": "user",
+            "text": "Handle it — send a follow-up and loop in my DAS advisor.",
+            "gap": 500
+          },
+          {
+            "pause": 950
+          },
+          {
+            "sender": "agent",
+            "action": {
+              "title": "3 actions completed",
+              "items": [
+                "Follow-up email sent to Prof. Chen",
+                "DAS advisor notified — deadline flagged",
+                "Midterm accommodation marked as pending"
+              ],
+              "cta": "View Activity Log →"
+            },
+            "gap": 0
+          }
         ]
       }
     },
@@ -172,7 +254,10 @@
     },
     "footer": {
       "legal": {
-        "links": ["Privacy Policy", "Terms of Service"]
+        "links": [
+          "Privacy Policy",
+          "Terms of Service"
+        ]
       },
       "copyright": "© {{year}} MedEase Inc. All rights reserved."
     },
@@ -180,14 +265,38 @@
       "heading": "Clinically Informed. Mission Driven.",
       "subtitle": "MedEase is shaped by healthcare researchers, builders, and mentors — focused on safety, clarity, and student recovery.",
       "members": [
-        { "name": "Annie He", "role": "Product & Business Co-founder", "detail": "Healthcare Researcher and Software Engineer, Emory '25" },
-        { "name": "Rolf Shi", "role": "Technical Co-founder", "detail": "AI4H Researcher and Software Engineer, Emory '25 & UPenn '27" }
+        {
+          "name": "Annie He",
+          "role": "Product & Business Co-founder",
+          "detail": "Healthcare Researcher and Software Engineer, Emory '25"
+        },
+        {
+          "name": "Rolf Shi",
+          "role": "Technical Co-founder",
+          "detail": "AI4H Researcher and Software Engineer, Emory '25 & UPenn '27"
+        }
       ],
       "advisors": [
-        { "name": "Dr. Phil Wolff", "role": "Language Biomarker Lab", "detail": "Mentor" },
-        { "name": "Dr. JinHo Choi", "role": "Emory NLP Lab", "detail": "Mentor" },
-        { "name": "Sig Mosley", "role": "Venture Capitalist", "detail": "Mentor" },
-        { "name": "Dr. Stuart Zola", "role": "Founder & Clinical Scientist", "detail": "Mentor" }
+        {
+          "name": "Dr. Phil Wolff",
+          "role": "Language Biomarker Lab",
+          "detail": "Mentor"
+        },
+        {
+          "name": "Dr. JinHo Choi",
+          "role": "Emory NLP Lab",
+          "detail": "Mentor"
+        },
+        {
+          "name": "Sig Mosley",
+          "role": "Venture Capitalist",
+          "detail": "Mentor"
+        },
+        {
+          "name": "Dr. Stuart Zola",
+          "role": "Founder & Clinical Scientist",
+          "detail": "Mentor"
+        }
       ]
     },
     "userStories": {
@@ -255,15 +364,28 @@
       "whatHappened": {
         "title": "What happened?",
         "description": "Briefly describe your injury or situation. You can keep it high level — this helps us anchor your journey.",
-        "options": ["Sports or training injury", "Accidental fall or impact", "Medical procedure / condition", "Other"],
+        "options": [
+          "Sports or training injury",
+          "Accidental fall or impact",
+          "Medical procedure / condition",
+          "Other"
+        ],
         "placeholder": "Optional: share anything you'd like us to know."
       },
       "whenHappened": {
         "title": "When did it happen?",
         "description": "This helps us understand where you might be in your recovery timeline.",
-        "options": ["Today", "Within the last week", "More than a week ago"],
+        "options": [
+          "Today",
+          "Within the last week",
+          "More than a week ago"
+        ],
         "detailLabel": "If you want, choose a little more detail.",
-        "detailOptions": ["1–4 weeks ago", "1–3 months ago", "More than 3 months ago"]
+        "detailOptions": [
+          "1–4 weeks ago",
+          "1–3 months ago",
+          "More than 3 months ago"
+        ]
       },
       "insurance": {
         "title": "Do you have insurance?",
@@ -273,7 +395,14 @@
         "selectPlan": "Select your plan (common Emory options).",
         "preferNotToSay": "Prefer not to say",
         "skipButton": "Skip insurance and go to Questions Loop",
-        "plans": ["Aetna Student Health", "Anthem BlueCross BlueShield", "Kaiser Permanente", "UnitedHealthcare", "Cigna", "Other / International"]
+        "plans": [
+          "Aetna Student Health",
+          "Anthem BlueCross BlueShield",
+          "Kaiser Permanente",
+          "UnitedHealthcare",
+          "Cigna",
+          "Other / International"
+        ]
       }
     },
     "end": {
@@ -291,13 +420,23 @@
   "home": {
     "careJourney": {
       "title": "Your Care Journey",
-      "stages": ["Identify", "Assess", "Choose Care", "Get Care", "Recover"]
+      "stages": [
+        "Identify",
+        "Assess",
+        "Choose Care",
+        "Get Care",
+        "Recover"
+      ]
     },
     "recommendation": {
       "label": "Recommended Step",
       "suggestion": "We suggest visiting Urgent Care",
       "whyLabel": "Why:",
-      "whyReasons": ["symptoms require evaluation", "faster than ER", "lower cost"]
+      "whyReasons": [
+        "symptoms require evaluation",
+        "faster than ER",
+        "lower cost"
+      ]
     },
     "qitl": {
       "title": "Questions in the Loop",
@@ -320,15 +459,138 @@
         "When should I see a doctor again?"
       ],
       "mockResponses": [
-        { "main": "Urgent Care is for medical issues that need attention soon but are not life-threatening.", "bullets": [{ "label": "Examples:", "items": ["minor fractures", "infections", "moderate pain", "flu or fever"] }, { "label": "Benefits:", "items": ["shorter wait times than ER", "lower cost", "walk-in availability"] }] },
-        { "main": "Costs vary by location and service. Typically lower than the ER.", "bullets": [{ "label": "Rough range:", "items": ["visit fee often $100–200+ without insurance", "with insurance: copay may apply"] }] },
-        { "main": "You don't need insurance to be seen at urgent care, but it usually lowers what you pay.", "bullets": [{ "label": "With insurance:", "items": ["bring your card", "copay or coinsurance may apply"] }, { "label": "Without insurance:", "items": ["ask for self-pay pricing", "payment is typically due at visit"] }] },
-        { "main": "Bring ID, insurance card (if you have one), and a list of current medications.", "bullets": [{ "label": "Helpful:", "items": ["photo ID", "insurance card", "medication list", "any recent test results"] }] },
-        { "main": "Most urgent care visits are 30 minutes to a few hours, depending on how busy they are.", "bullets": [{ "label": "Typical:", "items": ["check-in and wait", "exam and possibly tests", "discharge with instructions"] }] },
-        { "main": "Follow the instructions on the label or from your provider (e.g. with food, time of day).", "bullets": [{ "label": "Tips:", "items": ["set a daily reminder", "don't skip doses without asking your doctor"] }] },
-        { "main": "Recovery depends on your condition. Your provider should give you a timeline and what's normal.", "bullets": [{ "label": "General:", "items": ["rest as advised", "gradual return to activity", "watch for new or worse symptoms"] }] },
-        { "main": "Your discharge instructions usually say when to follow up. If not, call the clinic to ask.", "bullets": [{ "label": "When to call sooner:", "items": ["worsening symptoms", "fever", "new pain or swelling"] }] },
-        { "main": "Follow the follow-up date your provider gave you. Call sooner if symptoms worsen or you're worried.", "bullets": [{ "label": "Reasons to call earlier:", "items": ["fever", "increased pain", "signs of infection", "medication side effects"] }] }
+        {
+          "main": "Urgent Care is for medical issues that need attention soon but are not life-threatening.",
+          "bullets": [
+            {
+              "label": "Examples:",
+              "items": [
+                "minor fractures",
+                "infections",
+                "moderate pain",
+                "flu or fever"
+              ]
+            },
+            {
+              "label": "Benefits:",
+              "items": [
+                "shorter wait times than ER",
+                "lower cost",
+                "walk-in availability"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Costs vary by location and service. Typically lower than the ER.",
+          "bullets": [
+            {
+              "label": "Rough range:",
+              "items": [
+                "visit fee often $100–200+ without insurance",
+                "with insurance: copay may apply"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "You don't need insurance to be seen at urgent care, but it usually lowers what you pay.",
+          "bullets": [
+            {
+              "label": "With insurance:",
+              "items": [
+                "bring your card",
+                "copay or coinsurance may apply"
+              ]
+            },
+            {
+              "label": "Without insurance:",
+              "items": [
+                "ask for self-pay pricing",
+                "payment is typically due at visit"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Bring ID, insurance card (if you have one), and a list of current medications.",
+          "bullets": [
+            {
+              "label": "Helpful:",
+              "items": [
+                "photo ID",
+                "insurance card",
+                "medication list",
+                "any recent test results"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Most urgent care visits are 30 minutes to a few hours, depending on how busy they are.",
+          "bullets": [
+            {
+              "label": "Typical:",
+              "items": [
+                "check-in and wait",
+                "exam and possibly tests",
+                "discharge with instructions"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Follow the instructions on the label or from your provider (e.g. with food, time of day).",
+          "bullets": [
+            {
+              "label": "Tips:",
+              "items": [
+                "set a daily reminder",
+                "don't skip doses without asking your doctor"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Recovery depends on your condition. Your provider should give you a timeline and what's normal.",
+          "bullets": [
+            {
+              "label": "General:",
+              "items": [
+                "rest as advised",
+                "gradual return to activity",
+                "watch for new or worse symptoms"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Your discharge instructions usually say when to follow up. If not, call the clinic to ask.",
+          "bullets": [
+            {
+              "label": "When to call sooner:",
+              "items": [
+                "worsening symptoms",
+                "fever",
+                "new pain or swelling"
+              ]
+            }
+          ]
+        },
+        {
+          "main": "Follow the follow-up date your provider gave you. Call sooner if symptoms worsen or you're worried.",
+          "bullets": [
+            {
+              "label": "Reasons to call earlier:",
+              "items": [
+                "fever",
+                "increased pain",
+                "signs of infection",
+                "medication side effects"
+              ]
+            }
+          ]
+        }
       ]
     }
   },
@@ -338,10 +600,22 @@
     "backToCommunity": "Back to Community",
     "explore": "Explore",
     "hubs": [
-      { "title": "Find People Like Me", "description": "Connect with others experiencing similar injuries or challenges." },
-      { "title": "Help People Like Me", "description": "Donate devices or support others recovering from injuries." },
-      { "title": "Local Support", "description": "Discover Emory and local Atlanta resources that can help you." },
-      { "title": "AI Health Application", "description": "Get AI help writing emails, applications, and navigating health systems." }
+      {
+        "title": "Find People Like Me",
+        "description": "Connect with others experiencing similar injuries or challenges."
+      },
+      {
+        "title": "Help People Like Me",
+        "description": "Donate devices or support others recovering from injuries."
+      },
+      {
+        "title": "Local Support",
+        "description": "Discover Emory and local Atlanta resources that can help you."
+      },
+      {
+        "title": "AI Health Application",
+        "description": "Get AI help writing emails, applications, and navigating health systems."
+      }
     ],
     "findPeople": {
       "title": "Find People Like Me",
@@ -349,14 +623,36 @@
       "searchPlaceholder": "Search people, injuries, or topics",
       "suggestedGroups": "Suggested Groups",
       "groups": [
-        { "name": "Concussion 101", "description": "Support and tips for concussion recovery." },
-        { "name": "Swimmers Recovery", "description": "For athletes managing shoulder or overuse injuries." },
-        { "name": "Runners Injuries", "description": "Knee, IT band, and running-related support." },
-        { "name": "How to Pay Medical Bills", "description": "Navigating costs and financial options." },
-        { "name": "Negotiating Insurance", "description": "Tips and shared experiences with insurance." },
-        { "name": "Accommodation Letters", "description": "Getting and using academic accommodations." }
+        {
+          "name": "Concussion 101",
+          "description": "Support and tips for concussion recovery."
+        },
+        {
+          "name": "Swimmers Recovery",
+          "description": "For athletes managing shoulder or overuse injuries."
+        },
+        {
+          "name": "Runners Injuries",
+          "description": "Knee, IT band, and running-related support."
+        },
+        {
+          "name": "How to Pay Medical Bills",
+          "description": "Navigating costs and financial options."
+        },
+        {
+          "name": "Negotiating Insurance",
+          "description": "Tips and shared experiences with insurance."
+        },
+        {
+          "name": "Accommodation Letters",
+          "description": "Getting and using academic accommodations."
+        }
       ],
-      "tabs": ["Discussions", "Resources", "Members"],
+      "tabs": [
+        "Discussions",
+        "Resources",
+        "Members"
+      ],
       "sharePlaceholder": "Share something with the group…",
       "post": "Post",
       "close": "Close",
@@ -382,27 +678,74 @@
       "uploadButton": "Drag & drop or click to upload photo",
       "itemName": "Item name",
       "conditionLabel": "Condition",
-      "conditions": ["New", "Like new", "Good", "Gently used", "Used"],
+      "conditions": [
+        "New",
+        "Like new",
+        "Good",
+        "Gently used",
+        "Used"
+      ],
       "locationLabel": "Location (e.g. Atlanta, Emory area)",
       "notesLabel": "Notes",
       "cancel": "Cancel",
       "postDonation": "Post donation",
       "donateThis": "I can donate this",
-      "sampleItems": ["Knee brace", "Crutches", "Ice pack wrap", "Ankle support"]
+      "sampleItems": [
+        "Knee brace",
+        "Crutches",
+        "Ice pack wrap",
+        "Ankle support"
+      ]
     },
     "localSupport": {
       "title": "Local Support",
       "subtitle": "Discover Emory and local Atlanta resources that can help you.",
-      "filters": ["All", "Free", "Emory", "Atlanta", "Paid"],
+      "filters": [
+        "All",
+        "Free",
+        "Emory",
+        "Atlanta",
+        "Paid"
+      ],
       "contact": "Contact",
       "visitSite": "Visit site",
       "resources": [
-        { "name": "Emory Student Government", "description": "Student advocacy and resources.", "location": "Emory University", "contact": "Contact via campus portal" },
-        { "name": "Student Health Center", "description": "Medical and mental health services for students.", "location": "Emory University", "contact": "404-727-7551" },
-        { "name": "Disability Support Office", "description": "Academic accommodations and support.", "location": "Emory University", "contact": "disability@emory.edu" },
-        { "name": "Atlanta Community Food Bank", "description": "Food assistance and nutrition programs.", "location": "Atlanta, GA", "contact": "Visit site" },
-        { "name": "Grady Health System", "description": "Public hospital system; financial assistance available.", "location": "Atlanta, GA", "contact": "Visit site" },
-        { "name": "Crisis Line", "description": "24/7 mental health and crisis support.", "location": "National", "contact": "988" }
+        {
+          "name": "Emory Student Government",
+          "description": "Student advocacy and resources.",
+          "location": "Emory University",
+          "contact": "Contact via campus portal"
+        },
+        {
+          "name": "Student Health Center",
+          "description": "Medical and mental health services for students.",
+          "location": "Emory University",
+          "contact": "404-727-7551"
+        },
+        {
+          "name": "Disability Support Office",
+          "description": "Academic accommodations and support.",
+          "location": "Emory University",
+          "contact": "disability@emory.edu"
+        },
+        {
+          "name": "Atlanta Community Food Bank",
+          "description": "Food assistance and nutrition programs.",
+          "location": "Atlanta, GA",
+          "contact": "Visit site"
+        },
+        {
+          "name": "Grady Health System",
+          "description": "Public hospital system; financial assistance available.",
+          "location": "Atlanta, GA",
+          "contact": "Visit site"
+        },
+        {
+          "name": "Crisis Line",
+          "description": "24/7 mental health and crisis support.",
+          "location": "National",
+          "contact": "988"
+        }
       ]
     },
     "aiHealth": {
@@ -422,13 +765,22 @@
   "notes": {
     "title": "Notes & Calendar",
     "description": "Plan medical routines and review your care summaries in one place.",
-    "tabs": ["Schedule", "Chat Records"],
+    "tabs": [
+      "Schedule",
+      "Chat Records"
+    ],
     "calendar": {
       "previous": "Previous",
       "today": "Today",
       "next": "Next",
       "eventTypesLabel": "Event types:",
-      "eventTypes": ["Medical appointment", "Medication reminder", "Rehabilitation exercise", "Medical test", "Recovery care procedure"],
+      "eventTypes": [
+        "Medical appointment",
+        "Medication reminder",
+        "Rehabilitation exercise",
+        "Medical test",
+        "Recovery care procedure"
+      ],
       "addEvent": "Add event",
       "editEvent": "Edit event",
       "titleLabel": "Title",
@@ -443,7 +795,15 @@
     "monthView": {
       "thisMonth": "This month",
       "noteExplanation": "Days with a dot have a saved consultation summary. Click a date to open that day's note.",
-      "dayLabels": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+      "dayLabels": [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ]
     },
     "dayNote": {
       "close": "Close",
@@ -455,5 +815,19 @@
       "noSummary": "No saved consultation summary for this day.",
       "noSummaryNote": "Summaries appear here when you save a chat from the Home assistant."
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account and institution preferences.",
+    "profile": "Profile",
+    "emailAddress": "Email address",
+    "verified": "Verified",
+    "memberSince": "Member since",
+    "institution": "Institution",
+    "institutionName": "Emory University",
+    "institutionService": "Disability Access Services (DAS)",
+    "active": "Active",
+    "account": "Account",
+    "signOut": "Sign out"
   }
 }
