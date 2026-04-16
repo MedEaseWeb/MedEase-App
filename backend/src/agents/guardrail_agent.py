@@ -6,7 +6,7 @@
 import json
 from openai import AsyncOpenAI
 from src.config import CHAT_GPT_API_KEY
-from src.agents.base_agent import AgentContext, GuardrailResult
+from src.agents.base_agent import AgentContext, GuardrailResult, language_directive
 
 _client = AsyncOpenAI(api_key=CHAT_GPT_API_KEY)
 
@@ -32,10 +32,13 @@ Return ONLY valid JSON — no markdown, no extra text."""
 
 class GuardrailAgent:
     async def check(self, user_input: str, context: AgentContext) -> GuardrailResult:
+        directive = language_directive(context.locale)
+        system = _SYSTEM_PROMPT + (f"\n{directive} Apply this to the 'reason' field only." if directive else "")
+
         response = await _client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": _SYSTEM_PROMPT},
+                {"role": "system", "content": system},
                 {"role": "user", "content": user_input},
             ],
             response_format={"type": "json_object"},

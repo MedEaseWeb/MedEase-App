@@ -12,6 +12,22 @@ import itertools
 from typing import AsyncGenerator
 from src.agents.base_agent import AgentContext, AgentResponse
 
+_BLOCKED_PREFIX: dict[str, str] = {
+    "en":    "I'm not able to help with that.",
+    "zh-CN": "抱歉，我无法协助处理这个请求。",
+    "ko":    "죄송합니다, 해당 요청을 처리할 수 없습니다.",
+    "es":    "No puedo ayudarte con eso.",
+    "ja":    "申し訳ありませんが、それについてはお手伝いできません。",
+}
+
+_OUT_OF_SCOPE: dict[str, str] = {
+    "en":    "That's outside what I can help with here. For healthcare questions try the relevant section of the app; for DAS questions visit the Emory DAS office directly.",
+    "zh-CN": "这超出了我能够协助的范围。如需医疗相关问题，请使用应用中的相关功能；如需 DAS 相关问题，请直接联系 Emory DAS 办公室。",
+    "ko":    "이는 제가 도울 수 있는 범위를 벗어납니다. 의료 관련 질문은 앱의 해당 섹션을 이용하시고, DAS 관련 질문은 Emory DAS 사무소에 직접 문의하세요.",
+    "es":    "Eso está fuera de lo que puedo ayudarte aquí. Para preguntas de salud, usa la sección correspondiente de la app; para preguntas sobre DAS, visita directamente la oficina de Emory DAS.",
+    "ja":    "それは私がお手伝いできる範囲外です。医療に関するご質問はアプリの該当セクションをご利用ください。DAS に関するご質問は、Emory DAS オフィスに直接お問い合わせください。",
+}
+
 _DEV_STUBS: dict[str, itertools.cycle] = {
     "en": itertools.cycle([
         "**[DEV]** Stub reply — pipeline connected. No LLM was called.",
@@ -103,10 +119,9 @@ class Orchestrator:
         # ── 1. Guardrail ──────────────────────────────────────────────────────
         guard = await self.guardrail.check(user_input, context)
         if not guard.allowed:
-            return AgentResponse(
-                content=f"I'm not able to help with that. {guard.block_reason or ''}".strip(),
-                done=True,
-            )
+            prefix = _BLOCKED_PREFIX.get(context.locale, _BLOCKED_PREFIX["en"])
+            reason = f" {guard.block_reason}" if guard.block_reason else ""
+            return AgentResponse(content=f"{prefix}{reason}", done=True)
         sanitized = guard.sanitized_input
 
         # ── 2. Intent classification ──────────────────────────────────────────
@@ -121,11 +136,7 @@ class Orchestrator:
 
         if intent_result.intent == "out_of_scope":
             return AgentResponse(
-                content=(
-                    "That's outside what I can help with here. "
-                    "For healthcare questions try the relevant section of the app; "
-                    "for DAS questions visit the Emory DAS office directly."
-                ),
+                content=_OUT_OF_SCOPE.get(context.locale, _OUT_OF_SCOPE["en"]),
                 done=True,
             )
 
