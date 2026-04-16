@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MedEase is a full-stack healthcare application with a React/Vite frontend deployed to Cloudflare Pages and a Python FastAPI backend deployed to Google Cloud App Engine. Features include medication management, medical report simplification (AI-powered), caregiver dashboards, Google OAuth/Calendar/Gmail integration, AWS S3 file storage, and real-time chat via Socket.IO.
+MedEase is a full-stack healthcare application with a React/Vite frontend deployed to Cloudflare Pages and a FastAPI backend deployed to GCP Cloud Run. Core features: RAG-based multi-agent chat, waitlist, i18n (en/zh-CN/ko/es/ja), demo workflow.
 
-The chat system is being rebuilt as a **RAG-based multi-agent pipeline** (see `docs/agent-architecture.md`).
+See `docs/agent-architecture.md` for the full multi-agent pipeline design.
 
 ## Local Development
 
@@ -34,7 +34,7 @@ npm run preview      # Preview production build
 # Conda environment (preferred):
 conda activate medease-backend
 
-# Or venv fallback (Python 3.12 required — torch incompatible with 3.13):
+# Or venv fallback (Python 3.12 required):
 python3.12 -m venv venv-fastapi
 source venv-fastapi/bin/activate
 
@@ -58,21 +58,19 @@ python -m src.rag.indexer
 - **`main.jsx`** — entry point; wraps app in `AuthProvider`
 - **`App.jsx`** — router; public routes + protected routes (via `ProtectedRoutes`)
 - **`context/AuthContext.jsx`** — global auth state (JWT token, user info)
-- **`pages/`** — one directory per feature: `LandingPage/`, `auth/`, `medication/`, `reportsimplification/`, `careGiver/`, `utility/`
-- **`pages/utility/ChatBox.jsx`** — draggable chat widget; connects to Socket.IO
+- **`pages/`** — `LandingPage/`, `auth/`, `chat/`, `settings/`, `UserSurvey/`, `QuestionsInTheLoop/`, `Community/`, `Notes/`, `utility/`
+- **`pages/utility/TopBar.jsx`** — shared top bar with language switcher
 - **`pages/utility/SocketConnection.jsx`** — Socket.IO client setup
 
-Protected routes: `/reportsimplifier`, `/medication`, `/caregiver`
+Protected routes: `/dashboard`, `/settings`
 
 ### Backend (`backend/`)
 
-- **`main.py`** — FastAPI app; mounts 6 routers and Socket.IO; calls `socket_server.set_api_app()` to wire agents
+- **`main.py`** — FastAPI app; mounts 3 routers and Socket.IO; calls `socket_server.set_api_app()` to wire agents
 - **`src/config.py`** — loads all secrets/config from `.env`
 - **`src/database.py`** — async MongoDB connection via Motor; exposes collection objects
-- **`src/routes/`** — one file per domain: `auth.py`, `medication.py`, `caregiver.py`, `google.py`, `simplify.py`, `general.py`
-- **`src/models/`** — Pydantic v2 schemas for request/response validation
-- **`src/services/`** — business logic; `simplify_service.py` (4-step HuggingFace pipeline), `classifier_service.py` (BART-MNLI zero-shot)
-- **`src/LLMmodel/ChatGPT.py`** — OpenAI wrapper for structured medication extraction
+- **`src/routes/`** — `auth.py` (registration/login/JWT), `general.py` (user profile, patient key), `waitlist.py`
+- **`src/models/`** — Pydantic v2 schemas: `userModel.py`, `waitlistModel.py`
 - **`src/socket_server.py`** — thin Socket.IO layer; delegates all logic to `Orchestrator`
 
 ### Multi-Agent Chat System (`backend/src/agents/`)
@@ -107,25 +105,22 @@ Vector store: ChromaDB (local, persistent at `src/rag/chroma_store/`). Embedding
 
 | Prefix | File | Purpose |
 |--------|------|---------|
-| `/auth` | `routes/auth.py` | Registration, login, JWT |
-| `/medication` | `routes/medication.py` | Medication tracking |
-| `/caregiver` | `routes/caregiver.py` | Caregiver/patient management |
-| `/google` | `routes/google.py` | OAuth, Calendar, Gmail |
-| `/simplify` | `routes/simplify.py` | AI document simplification |
-| `/general` | `routes/general.py` | Utility endpoints |
+| `/auth` | `routes/auth.py` | Registration, login, JWT — pending replacement by Firebase Auth (ADR-006) |
+| `/general` | `routes/general.py` | User profile email, patient key generation |
+| `/waitlist` | `routes/waitlist.py` | Landing page waitlist join |
 
 ### MongoDB Collections
 
-Defined as env vars loaded in `config.py`: users, medications, Google Calendar events, Gmail data, patient keys, patient data, picture diary, and medical reports.
+`config.py` loads: `userInfo`, `waitlist`, `patientKeys`. Remaining collections (`medication`, `medicalReport`, `patientData`, `patientDiary`) are referenced in `database.py` but their route files have been removed (ADR-007). Full migration to Firestore pending (ADR-006).
 
 ### Deployment
 
-- **Frontend**: GitHub Actions on push to `main` → `npm run build` → Cloudflare Pages (`medease` project)
-- **Backend**: Google Cloud App Engine (`app.yaml`); Python 3.12, uvicorn on port 8080
+- **Frontend**: Cloudflare Pages — auto-deploys on push to `main` via GitHub Actions; live at `https://medease.pages.dev`
+- **Backend**: GCP Cloud Run, project `medease-491604`, region `us-central1`; deploy with `gcloud run deploy medease-backend --source . --region us-central1 --allow-unauthenticated --port 8080` from `backend/`; live at `https://medease-backend-476216843409.us-central1.run.app`
 
 ## Environment Variables
 
-Backend `.env` needs: MongoDB URI + collection names, JWT secret, OpenAI API key, Google OAuth credentials (client ID, secret, redirect URIs), AWS S3 credentials.
+Backend `.env` needs: MongoDB URI + collection names, JWT secret, OpenAI API key.
 
 Frontend `.env` needs: API base URL.
 
