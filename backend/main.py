@@ -2,11 +2,7 @@
 from fastapi import FastAPI
 from src.database import database
 from src.routes.auth import auth_router
-from src.routes.medication import medication_router
 from src.routes.general import general_router
-from src.routes.google import google_oauth_router
-from src.routes.caregiver import caregiver_router
-from src.routes.simplify import router as simplify_router
 from src.routes.waitlist import waitlist_router
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import _rate_limit_exceeded_handler
@@ -34,13 +30,9 @@ api_app.add_middleware(
 )
 
 # Mount routers
-api_app.include_router(auth_router,         prefix="/auth")
-api_app.include_router(medication_router,   prefix="/medication")
-api_app.include_router(general_router,      prefix="/general")
-api_app.include_router(google_oauth_router, prefix="/google")
-api_app.include_router(caregiver_router,    prefix="/caregiver")
-api_app.include_router(simplify_router,     prefix="/simplify")
-api_app.include_router(waitlist_router,     prefix="/waitlist")
+api_app.include_router(auth_router,   prefix="/auth")
+api_app.include_router(general_router, prefix="/general")
+api_app.include_router(waitlist_router, prefix="/waitlist")
 
 @api_app.get("/")
 def hello_world():
